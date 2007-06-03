@@ -255,7 +255,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 			jHelpButton = new JButton();
 			jHelpButton.setActionCommand("Help");
 			jHelpButton.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("help.png")));
+				.getResource("icons/help.png")));
 			jHelpButton.setBounds(11, 380, 28, 28);
 			jHelpButton.addActionListener(this);
 		}

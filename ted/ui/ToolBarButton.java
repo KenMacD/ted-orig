@@ -18,7 +18,7 @@ public class ToolBarButton extends JToggleButton
 		this.addActionListener(parent);
 		
 		//Set the image or, if that's invalid, equivalent text.
-		ImageIcon icon = createImageIcon(parentname+"-"+name+".png");
+		ImageIcon icon = createImageIcon("icons/"+parentname+"-"+name+".png");
 		if (icon != null) 
 		{
 			this.setIcon(icon);

@@ -313,7 +313,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 						latest_Button.setActionCommand("getlatest"); //$NON-NLS-1$
 						latest_Button.setIcon(new ImageIcon(
 								getClass().getClassLoader().getResource(
-									"bril.png"))); //$NON-NLS-1$
+									"icons/bril.png"))); //$NON-NLS-1$
 					}
 					{
 						jLabel2 = new JLabel();
@@ -404,7 +404,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 					feedsToolBar.add(jButtonAdd);
 					jButtonAdd.setFont(normalFont);
 					jButtonAdd.setIcon(new ImageIcon(getClass()
-						.getClassLoader().getResource("Aid.png"))); //$NON-NLS-1$
+						.getClassLoader().getResource("icons/Aid.png"))); //$NON-NLS-1$
 					jButtonAdd.setActionCommand("addfeed"); //$NON-NLS-1$
 					jButtonAdd.setToolTipText(Lang
 						.getString("TedEpisodeDialog.ButtonToolTipAddFeed")); //$NON-NLS-1$
@@ -422,7 +422,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 						jButtonDelete.setBounds(96, 248, 105, 21);
 						jButtonDelete.setFont(normalFont);
 						jButtonDelete.setIcon(new ImageIcon(getClass()
-							.getClassLoader().getResource("Cancel.png"))); //$NON-NLS-1$
+							.getClassLoader().getResource("icons/Cancel.png"))); //$NON-NLS-1$
 						jButtonDelete.setText(Lang
 							.getString("TedEpisodeDialog.ButtonDeleteFeed")); //$NON-NLS-1$
 							{
@@ -464,7 +464,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 							jButtonMoveFeedDown.addActionListener(TedEL);
 							jButtonMoveFeedDown.setIcon(new ImageIcon(
 								getClass().getClassLoader().getResource(
-									"down.png"))); //$NON-NLS-1$
+									"icons/down.png"))); //$NON-NLS-1$
 
 									jButtonMoveFeedUp = new JButton();
 									feedsToolBar.add(jButtonMoveFeedUp);
@@ -481,7 +481,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 										21);
 									jButtonMoveFeedUp.setIcon(new ImageIcon(
 										getClass().getClassLoader()
-											.getResource("up.png"))); //$NON-NLS-1$
+											.getResource("icons/up.png"))); //$NON-NLS-1$
 									jButtonMoveFeedUp.addActionListener(TedEL);
 
 						jButtonDelete.addActionListener(TedEL);

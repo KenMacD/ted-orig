@@ -111,7 +111,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 		generalPanel.add(SaveDir_Button, new CellConstraints("6, 8, 1, 1, default, default"));
 		SaveDir_Button.setActionCommand("open dir");
 		SaveDir_Button.setIcon(new ImageIcon(getClass().getClassLoader()
-			.getResource("dir.png")));
+			.getResource("icons/dir.png")));
 		SaveDir_Button.setBounds(343, 98, 35, 28);
 		SaveDir_Button.addActionListener(this);
 

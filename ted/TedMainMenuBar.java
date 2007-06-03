@@ -107,9 +107,9 @@ public class TedMainMenuBar extends JMenuBar
 			// set status
 			/*TODO: Duplicated code: same as TedTablePopupMenu*/
 			{
-				ImageIcon showPaused 	= new ImageIcon(getClass().getClassLoader().getResource("pause.png")); //$NON-NLS-1$
-				ImageIcon showPlay		 = new ImageIcon(getClass().getClassLoader().getResource("play.png")); //$NON-NLS-1$
-				ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("stop.png")); //$NON-NLS-1$
+				ImageIcon showPaused 	= new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
+				ImageIcon showPlay		 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
+				ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
 				
 				menuStatus = new JMenu(  ); //$NON-NLS-1$
 				

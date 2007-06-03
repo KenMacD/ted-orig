@@ -121,7 +121,7 @@ public class EditShowDialog extends javax.swing.JDialog
 		jHelpButton = new JButton();
 		getContentPane().add(jHelpButton);
 		jHelpButton.setIcon(new ImageIcon(getClass()
-				.getClassLoader().getResource("help.png")));
+				.getClassLoader().getResource("icons/help.png")));
 		jHelpButton.setActionCommand("Help");
 		jHelpButton.setBounds(11, 380, 28, 28);
 		//jHelpButton.addActionListener(TCListener);

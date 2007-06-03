@@ -292,7 +292,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 
 	public void setValues(TedSerie serie)
 	{
-		this.feedsTableModel.setSeriesFeeds(serie.getFeeds());
+		//this.feedsTableModel.setSeriesFeeds(serie.getFeeds());
 		
 	}
 
@@ -354,7 +354,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 		Element e = p.readXMLFile(TedIO.XML_SHOWS_FILE);
 		items = p.getPopupItems(e);
 		
-		findRSSPopupMenu = new ted.TedPopupMenu(this,items);
+		//findRSSPopupMenu = new ted.TedPopupMenu(this,items);
 	}
 
 }

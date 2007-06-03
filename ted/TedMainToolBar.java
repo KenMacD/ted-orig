@@ -28,8 +28,8 @@ public class TedMainToolBar extends JToolBar
 	private TedMainToolBarButton btn_Delete;
 	private TedMainToolBarButton btn_Parse;
 	
-	private String stopCheckingIcon = "StopChecking.png"; //$NON-NLS-1$
-	private String startCheckingIcon = "Refresh.png"; //$NON-NLS-1$
+	private String stopCheckingIcon = "icons/StopChecking.png"; //$NON-NLS-1$
+	private String startCheckingIcon = "icons/Refresh.png"; //$NON-NLS-1$
 	
 	public TedMainToolBar()
 	{
@@ -46,20 +46,20 @@ public class TedMainToolBar extends JToolBar
 	
 	private void initButtons(TedMainDialog tMain)
 	{
-		btn_AddShow = new TedMainToolBarButton("Aid.png", 
+		btn_AddShow = new TedMainToolBarButton("icons/Aid.png", 
 				"TedMainDialog.ButtonAddShow",
 				"TedMainDialog.ButtonToolTipAddShow",
 				"New", tMain);
 		
 		this.add(btn_AddShow);
 		
-		btn_Delete = new TedMainToolBarButton("Cancel.png",
+		btn_Delete = new TedMainToolBarButton("icons/Cancel.png",
 				"TedMainDialog.ButtonDeleteShow",
 				"TedMainDialog.ButtonToolTipDeleteShow",
 				"Delete", tMain);
 		this.add(btn_Delete);
 		
-		btn_Edit = new TedMainToolBarButton("Edit.png",
+		btn_Edit = new TedMainToolBarButton("icons/Edit.png",
 				"TedMainDialog.ButtonEditShow",
 				"TedMainDialog.ButtonToolTipEditShow",
 				"Edit", tMain);

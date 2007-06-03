@@ -69,9 +69,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	private static final double tedVersion = 0.81;
 	
 //	 menu images
-	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icon-ted2.png")); //$NON-NLS-1$
-	private ImageIcon tedIdleIcon = new ImageIcon(getClass().getClassLoader().getResource("icon-ted.gif")); //$NON-NLS-1$
-	private ImageIcon tedActiveIcon = new ImageIcon(getClass().getClassLoader().getResource("icon-active-ted.gif")); //$NON-NLS-1$
+	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
+	private ImageIcon tedIdleIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
+	private ImageIcon tedActiveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
 	
 	private JLabel label_count;
 	private JScrollPane jScrollPane1;
