@@ -37,6 +37,7 @@ import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedSerieFeed;
 import ted.TedXMLParser;
+import ted.ui.TableRenderer;
 
 
 /**
@@ -64,7 +65,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	private JButton jOpenButton;
 	private JButton jButtonDelete;
 	private JToolBar feedsToolBar;
-	private TedFeedsTableModel feedsTableModel;
+	private TedFeedsTableModel feedsTableModel = new TedFeedsTableModel();
 	MouseListener popupListener = new PopupListener();
 	private TedPopupMenu findRSSPopupMenu;
 
@@ -91,7 +92,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 			feedsToolBar.add(jButtonAdd);
 			jButtonAdd.setActionCommand("addfeed");
 			jButtonAdd.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("Aid.png")));
+				.getResource("icons/Aid.png")));
 			jButtonAdd.setPreferredSize(new java.awt.Dimension(119, 21));
 			jButtonAdd.setBounds(15, 248, 77, 21);
 
@@ -99,7 +100,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 			feedsToolBar.add(jButtonDelete);
 			jButtonDelete.setActionCommand("deletefeed");
 			jButtonDelete.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("Cancel.png")));
+				.getResource("icons/Cancel.png")));
 			jButtonDelete.setBounds(96, 248, 105, 21);
 
 			jOpenButton = new JButton();
@@ -115,14 +116,14 @@ public class FeedsPanel extends JPanel implements ActionListener
 			feedsToolBar.add(jButtonMoveFeedDown);
 			jButtonMoveFeedDown.setActionCommand("movefeeddown");
 			jButtonMoveFeedDown.setIcon(new ImageIcon(getClass()
-				.getClassLoader().getResource("down.png")));
+				.getClassLoader().getResource("icons/down.png")));
 			jButtonMoveFeedDown.setBounds(384, 248, 35, 21);
 
 			jButtonMoveFeedUp = new JButton();
 			feedsToolBar.add(jButtonMoveFeedUp);
 			jButtonMoveFeedUp.setActionCommand("movefeedup");
 			jButtonMoveFeedUp.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("up.png")));
+				.getResource("icons/up.png")));
 			jButtonMoveFeedUp.setBounds(420, 248, 35, 21);
 			jButtonMoveFeedUp.addActionListener(this);
 
@@ -141,13 +142,15 @@ public class FeedsPanel extends JPanel implements ActionListener
 			jScrollPane1.setPreferredSize(new java.awt.Dimension(453, 243));
 			jScrollPane1.setBounds(14, 133, 441, 84);
 
-			feedsTableModel = new TedFeedsTableModel();
 			feedsTable = new JTable();
 			jScrollPane1.setViewportView(feedsTable);
 			feedsTable.setModel(feedsTableModel);
 			feedsTable.setAutoCreateColumnsFromModel(true);
 			feedsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 			feedsTable.setEditingRow(1);
+			
+			TableRenderer tr = new TableRenderer();
+			feedsTable.setDefaultRenderer(Object.class, tr);
 			
 //			 make sure the first column is always 16 width
 			TableColumn	column = feedsTable.getColumnModel().getColumn(0);
@@ -186,6 +189,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			
 		}
 		
@@ -194,7 +198,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	/**
 	 * Add a new feed to the table
 	 */
-	public void addFeed()
+	private void addFeed()
 	{
 		TedSerieFeed newFeed = new TedSerieFeed("", 0, true); //$NON-NLS-1$
 		int row = feedsTableModel.addSerie(newFeed);
@@ -214,7 +218,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 		feedsTable.editCellAt(row, 1);
 	}
 	
-	public void addFeed(String s)
+	private void addFeed(String s)
 	{
 		TedSerieFeed newFeed = new TedSerieFeed(s, 0);
 		feedsTableModel.addSerie(newFeed);
@@ -223,7 +227,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	/**
 	 * Delete the selected feed from the table
 	 */
-	public void deleteSelectedFeed()
+	private void deleteSelectedFeed()
 	{
 		// ASK for confirmation?
 		// TODO: if nothing selected -> error
@@ -237,7 +241,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	/**
 	 * Open the url of the selected feed in the browser of the user
 	 */
-	public void openRSSFeed() 
+	private void openRSSFeed() 
 	{
 		// open rss url
 		try 
@@ -258,7 +262,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 		}
 	}
 	
-	public void moveSelectedFeedUp()
+	private void moveSelectedFeedUp()
 	{
 		int selectedRow = feedsTable.getSelectedRow();
 		if (selectedRow > 0)
@@ -269,7 +273,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 		
 	}
 
-	public void moveSelectedFeedDown()
+	private void moveSelectedFeedDown()
 	{
 		int selectedRow = feedsTable.getSelectedRow();
 		if (selectedRow != -1 && selectedRow < feedsTableModel.getRowCount()-1)		
@@ -292,7 +296,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 
 	public void setValues(TedSerie serie)
 	{
-		//this.feedsTableModel.setSeriesFeeds(serie.getFeeds());
+		this.feedsTableModel.setSeriesFeeds(serie.getFeeds());
 		
 	}
 

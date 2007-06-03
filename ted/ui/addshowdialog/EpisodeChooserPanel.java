@@ -190,7 +190,7 @@ public class EpisodeChooserPanel extends JPanel
 	
 	private Canvas getActivityCanvas() {
 		if (activityCanvas == null) {
-			activityCanvas = new ImageCanvas("activity.gif");
+			activityCanvas = new ImageCanvas("icons/activity.gif");
 			activityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
 		}
 		return activityCanvas;

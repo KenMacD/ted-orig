@@ -1,5 +1,6 @@
 package ted.ui.addshowdialog;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -82,6 +83,9 @@ public class AddShowDialog extends JDialog implements ActionListener
 
 	private void initGUI() {
 		try {
+			
+
+		    
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
 				"max(p;5dlu), max(m;28px), 10dlu:grow, 9dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)",
@@ -122,6 +126,17 @@ public class AddShowDialog extends JDialog implements ActionListener
 				}});
 
 			this.setSize(700, 500);
+			
+//			Get the screen size
+		    Toolkit toolkit = Toolkit.getDefaultToolkit();
+		    Dimension screenSize = toolkit.getScreenSize();
+
+		    //Calculate the frame location
+		    int x = (screenSize.width - this.getWidth()) / 2;
+		    int y = (screenSize.height - this.getHeight()) / 2;
+
+		    //Set the new frame location
+		    this.setLocation(x, y);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
