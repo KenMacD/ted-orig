@@ -21,6 +21,7 @@ import javax.swing.SpinnerNumberModel;
 import ted.TedSerie;
 import ted.TedTableProgressbarRenderer;
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 import ted.ui.TableRenderer;
 
 
@@ -40,17 +41,13 @@ public class EpisodeChooserPanel extends JPanel
 {
 	
 	private JTable episodesTable;
-	private JSpinner seasonSpinner;
-	private JLabel EpisodeLabel;
-	private JLabel seasonLabel;
-	private JSpinner episodeSpinner;
 	private JScrollPane episodesScrollPane;
 	private EpisodesTableModel episodesTableModel = new EpisodesTableModel();
-	
-	private SpinnerNumberModel episodeSpinnerModel = new SpinnerNumberModel();
-	private SpinnerNumberModel seasonSpinnerModel = new SpinnerNumberModel();
+
 	private Canvas activityCanvas;
 	TedTableProgressbarRenderer ttpr;
+	
+	private StandardStructure selectedStructure;
 
 	public EpisodeChooserPanel()
 	{
@@ -65,12 +62,16 @@ public class EpisodeChooserPanel extends JPanel
 		//int selectedRow = episodesTable.convertRowIndexToModel(viewRow);
 		if (selectedRow >= 0)
 		{
-			//SeasonEpisode selected = (SeasonEpisode)episodesTableModel.getStandardStructureAt(selectedRow);
-			//Integer episode = new Integer (selected.getEpisode());
-			//Integer season = new Integer (selected.getSeason());
-			//this.episodeSpinner.setValue(episode);
-			//this.seasonSpinner.setValue(season);
+			selectedStructure = episodesTableModel.getStandardStructureAt(selectedRow);
+		
+			// TODO: if double click, add the show with selected season/episode
+			if (evt.getClickCount() > 1)
+			{
+			
+			}
 		}
+		
+		
 	}
 
 	private JTable getEpisodesTable() 
@@ -79,9 +80,6 @@ public class EpisodeChooserPanel extends JPanel
 			
 			episodesTable = new JTable();
 			episodesTable.setModel(episodesTableModel);
-			//TableRowSorter sorter = new TableRowSorter(episodesTable.getModel());
-			//episodesTable.setRowSorter(sorter);
-
 			
 			episodesTable.setAutoCreateColumnsFromModel(true);
 			episodesTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
@@ -120,15 +118,11 @@ public class EpisodeChooserPanel extends JPanel
 		try {
 			
 			FormLayout thisLayout = new FormLayout(
-				"25dlu, max(p;15dlu):grow, 30dlu, 5dlu, 31dlu, 5dlu, 25dlu, 5dlu, 29dlu",
-				"max(p;15dlu), 30dlu:grow, 16dlu");
+				"25dlu:grow, 16px, 25dlu:grow",
+				"max(p;15dlu), 30dlu:grow");
 			this.setLayout(thisLayout);
-			this.add(getEpisodesScrollPane(), new CellConstraints("1, 1, 9, 2, default, default"));
-			this.add(getSeasonSpinner(), new CellConstraints("5, 3, 1, 1, default, default"));
-			this.add(getEpisodeSpinner(), new CellConstraints("9, 3, 1, 1, default, default"));
-			this.add(getSeasonLabel(), new CellConstraints("3, 3, 1, 1, default, default"));
-			this.add(getEpisodeLabel(), new CellConstraints("7, 3, 1, 1, default, default"));
-			this.add(getActivityCanvas(), new CellConstraints("1, 3, 1, 1, default, default"));
+			this.add(getEpisodesScrollPane(), new CellConstraints("1, 1, 3, 2, default, default"));
+			this.add(getActivityCanvas(), new CellConstraints("2, 2, 1, 1, default, default"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,62 +140,22 @@ public class EpisodeChooserPanel extends JPanel
 		
 	}
 	
-	private JSpinner getSeasonSpinner() {
-		if (seasonSpinner == null) {
-			seasonSpinner = new JSpinner();
-			seasonSpinner.setModel(this.seasonSpinnerModel);
-		}
-		return seasonSpinner;
-	}
-	
-	private JSpinner getEpisodeSpinner() {
-		if (episodeSpinner == null) {
-			episodeSpinner = new JSpinner();
-			episodeSpinner.setModel(this.episodeSpinnerModel);
-		}
-		return episodeSpinner;
-	}
-	
-	private JLabel getSeasonLabel() {
-		if (seasonLabel == null) {
-			seasonLabel = new JLabel();
-			seasonLabel.setText("Season");
-		}
-		return seasonLabel;
-	}
-	
-	private JLabel getEpisodeLabel() {
-		if (EpisodeLabel == null) {
-			EpisodeLabel = new JLabel();
-			EpisodeLabel.setText("Episode");
-		}
-		return EpisodeLabel;
-	}
-
-	public int getSelectedEpisode()
-	{		
-		return this.episodeSpinnerModel.getNumber().intValue();
-	}
-
-	public int getSelectedSeason()
-	{
-		return this.seasonSpinnerModel.getNumber().intValue();
-	}
-	
 	private Canvas getActivityCanvas() {
 		if (activityCanvas == null) {
 			activityCanvas = new ImageCanvas("icons/activity.gif");
 			activityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
+			activityCanvas.setBackground(this.episodesTable.getBackground());
 		}
 		return activityCanvas;
 	}
 	
 	public void setActivityStatus(boolean active)
 	{
-		this.seasonLabel.setVisible(!active);
-		this.seasonSpinner.setVisible(!active);
-		this.EpisodeLabel.setVisible(!active);
-		this.episodeSpinner.setVisible(!active);
 		this.activityCanvas.setVisible(active);
+	}
+
+	public StandardStructure getSelectedStructure() 
+	{
+		return this.selectedStructure;
 	}
 }

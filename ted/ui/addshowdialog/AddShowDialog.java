@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -15,16 +16,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import org.w3c.dom.Element;
 
 import ted.BrowserLauncher;
 import ted.Lang;
+import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedLog;
 import ted.TedMainDialog;
 import ted.TedSerie;
 import ted.TedXMLParser;
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
 import ted.datastructures.SimpleTedSerie;
 import ted.ui.TableRenderer;
 import ted.ui.editshowdialog.EditShowDialog;
@@ -168,9 +174,6 @@ public class AddShowDialog extends JDialog implements ActionListener
 		return showsScrollPane;
 	}
 	
-	
-	
-	
 	private void showsTableMouseClicked(MouseEvent evt)
 	{
 		int selectedRow = showsTable.getSelectedRow();
@@ -178,10 +181,21 @@ public class AddShowDialog extends JDialog implements ActionListener
 		{
 			SimpleTedSerie selectedShow = this.showsTableModel.getSerieAt(selectedRow);
 			this.showNameLabel.setText(selectedShow.getName());
-			EpisodeParserThread ept = new EpisodeParserThread(this, this.episodeChooserPanel, selectedShow, this.getShowInfoPane());
-			ept.start();
 			
+			TedXMLParser parser = new TedXMLParser();
+			Element series = parser.readXMLFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 			
+			TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
+			
+			ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
+			sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
+			EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie);
+			ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
+			
+			sit.start();
+			ept.start();	
+			
+			this.setSelectedSerie(selectedSerie);
 		}
 		
 	}
@@ -216,9 +230,19 @@ public class AddShowDialog extends JDialog implements ActionListener
 			if (selectedSerie != null)
 			{
 				// set season and episode settings
-				selectedSerie.setCurrentEpisode(this.episodeChooserPanel.getSelectedEpisode());
-				selectedSerie.setCurrentSeason(this.episodeChooserPanel.getSelectedSeason());
-				
+				//selectedSerie.setCurrentEpisode(this.episodeChooserPanel.getSelectedEpisode());
+				//selectedSerie.setCurrentSeason(this.episodeChooserPanel.getSelectedSeason());
+				if (selectedSerie.isDaily())
+				{
+					DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
+					((TedDailySerie)selectedSerie).setLatestDownloadDate(dd.getDay(), dd.getMonth(), dd.getYear());
+				}
+				else
+				{
+					SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
+					selectedSerie.setCurrentEpisode(se.getEpisode());
+					selectedSerie.setCurrentSeason(se.getSeason());
+				}
 				tedMain.addSerie(selectedSerie);
 				this.setVisible(false);
 			}
@@ -272,6 +296,21 @@ public class AddShowDialog extends JDialog implements ActionListener
 			showInfoPane.setEditable( false );
 			showInfoPane.setPreferredSize(new java.awt.Dimension(325, 128));
 			//showInfoPane.setText("jTextPane1");
+			
+			//	Set up the JEditorPane to handle clicks on hyperlinks
+		    showInfoPane.addHyperlinkListener(new HyperlinkListener() {
+		      public void hyperlinkUpdate(HyperlinkEvent e) {
+			// Handle clicks; ignore mouseovers and other link-related events
+			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+			  // Get the HREF of the link and display it.
+				try {
+					BrowserLauncher.openURL(e.getDescription());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+				}
+			}
+		      }
+		    });
 			
 		}
 		return showInfoPane;

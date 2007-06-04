@@ -252,17 +252,20 @@ public class TedTable extends JTable
 	 */
 	public void DeleteSelectedShow()
 	{
-		// ask the user if he really wants to delete the show
-		int answer = JOptionPane.showOptionDialog(this,
-                Lang.getString("TedMainDialog.DialogConfirmDeleteBegin") + " " + serieTableModel.getSerieAt(this.getSelectedRow()).getName() + Lang.getString("TedMainDialog.DialogConfirmDeleteEnd"), //$NON-NLS-1$ //$NON-NLS-2$
-                "ted", //$NON-NLS-1$
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
-		
-		if (answer == JOptionPane.YES_OPTION)
+		if (this.getSelectedRow() >= 0)
 		{
-			serieTableModel.removeSerieAt(this.getSelectedRow());
-			tedMain.saveShows();
+			// ask the user if he really wants to delete the show
+			int answer = JOptionPane.showOptionDialog(this,
+	                Lang.getString("TedMainDialog.DialogConfirmDeleteBegin") + " " + serieTableModel.getSerieAt(this.getSelectedRow()).getName() + Lang.getString("TedMainDialog.DialogConfirmDeleteEnd"), //$NON-NLS-1$ //$NON-NLS-2$
+	                "ted", //$NON-NLS-1$
+	                JOptionPane.YES_NO_OPTION,
+	                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+			
+			if (answer == JOptionPane.YES_OPTION)
+			{
+				serieTableModel.removeSerieAt(this.getSelectedRow());
+				tedMain.saveShows();
+			}
 		}
 	}
 
