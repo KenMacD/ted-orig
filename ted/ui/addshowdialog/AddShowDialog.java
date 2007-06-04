@@ -27,6 +27,7 @@ import ted.TedSerie;
 import ted.TedXMLParser;
 import ted.datastructures.SimpleTedSerie;
 import ted.ui.TableRenderer;
+import ted.ui.editshowdialog.EditShowDialog;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -65,6 +66,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JLabel selectEpisodeLabel;
 	private JButton jHelpButton;
 	private JScrollPane showInfoScrollPane;
+	private JButton buttonAddEmptyShow;
 
 	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel();
 	
@@ -105,6 +107,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, bottom"));
 			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 4, 1, left, bottom"));
 			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, bottom"));
+			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 11, 2, 1, default, default"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());
 			
@@ -236,6 +239,15 @@ public class AddShowDialog extends JDialog implements ActionListener
 				
 			}
 		}
+		else if (command.equals("addempty"))
+		{
+			// create an edit show dialog with an empty show and hide add show dialog
+			
+			TedSerie temp = new TedSerie();
+			EditShowDialog esd = new EditShowDialog(tedMain, temp, true);
+			this.setVisible(false);
+			esd.setVisible(true);
+		}
 		
 	}
 
@@ -301,6 +313,16 @@ public class AddShowDialog extends JDialog implements ActionListener
 
 		}
 		return showNameLabel;
+	}
+	
+	private JButton getButtonAddEmptyShow() {
+		if (buttonAddEmptyShow == null) {
+			buttonAddEmptyShow = new JButton();
+			buttonAddEmptyShow.setText("Add your own show");
+			buttonAddEmptyShow.addActionListener(this);
+			buttonAddEmptyShow.setActionCommand("addempty");
+		}
+		return buttonAddEmptyShow;
 	}
 
 }
