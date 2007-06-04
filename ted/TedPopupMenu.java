@@ -26,6 +26,8 @@ import javax.swing.JPopupMenu;
  *
  */
 
+import ted.ui.editshowdialog.EditShowDialog;
+
 /**
  * @author Joost
  * The TedPopupMenu receives a Vector of TedPopupItems. These menu items are seperated by
@@ -43,16 +45,16 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	private Vector general  = new Vector();
 	private TedPopupItem help;
 
-	private TedEpisodeDialog dialog;
+	private EditShowDialog dialog;
 
 	/**
 	 * Constructs a new TedPopupMenu
 	 * @param v The vector containing the JPopupItems
-	 * @param d The Episode Dialog that initialized this menu
+	 * @param dialog2 The Episode Dialog that initialized this menu
 	 */
-	public TedPopupMenu(TedEpisodeDialog d, Vector v)
+	public TedPopupMenu(EditShowDialog dialog2, Vector v)
 	{
-		dialog = d;
+		dialog = dialog2;
 		
 		// make a copy determine which action has to be done later on
 		this.allItems = v;
@@ -180,7 +182,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		 
 		 if(selectedValue == 0) //Yes
 		 {
-			 String name = dialog.getEpisodeName();
+			 String name = dialog.getShowName();
 			 if(!name.equals(""))
 			 {
 				 // do action based on type

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.TextField;
 import javax.swing.JLabel;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -159,6 +160,21 @@ public class FilterPanel extends JPanel
 			e.printStackTrace();
 		}
 	}
+	
+	public void addKeywords(String key)
+	{
+		String oldKeywords = this.keyword_text.getText();
+		String newKeywords;
+		if(!oldKeywords.contains(key))
+		{
+			if(!oldKeywords.equals(""))
+				newKeywords = "((" + oldKeywords + ")&" + key + ')';
+			else 
+				newKeywords = key;
+			
+			this.keyword_text.setText(newKeywords);
+		}
+	}
 
 	public void setValues(TedSerie serie)
 	{
@@ -166,6 +182,93 @@ public class FilterPanel extends JPanel
 		text_maxSize.setText(""+serie.getMaxSize());
 		text_minSeeders.setText(""+serie.getMinNumOfSeeders());
 		keyword_text.setText(""+serie.getKeywords());
+		
+	}
+
+	public boolean checkValues() 
+	{
+		int cs = 0;
+		int ce = 0;
+		int min = 0;
+		int max = 0;
+		int breakep;
+		int minSeeders = 0;
+		
+		
+		
+		try
+		{
+			min = Integer.parseInt(text_minSize.getText());
+		}
+		catch (NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMinimumSize")); //$NON-NLS-1$
+			return false;
+		}
+		try
+		{
+			max = Integer.parseInt(text_maxSize.getText());
+		}
+		catch (NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMaximumSize")); //$NON-NLS-1$
+			return false;
+		}
+		try
+		{
+			minSeeders = Integer.parseInt(text_minSeeders.getText());
+		}
+		catch (NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMinimumSeeders")); //$NON-NLS-1$
+			return false;
+		}
+		if(min>max)
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMinLargerThanMax")); //$NON-NLS-1$
+			return false;
+		}
+		if(!checkBrackets(keyword_text.getText()))
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogBrackets")); //$NON-NLS-1$
+			return false;
+		}	
+		return true;
+	}
+	
+	private boolean checkBrackets(String s)
+	{
+		boolean result = false;
+		int count = 0;
+		char c;
+		
+		for(int i=0; i<s.length(); i++)
+		{
+			c = s.charAt(i);
+			if(c=='(')
+				count++;
+			else if(c==')')
+				count--;
+		}
+		
+		if(count==0)
+			result = true;
+		
+		return result;
+	}
+
+	public void saveValues(TedSerie currentSerie) 
+	{
+		if (this.checkValues())
+		{
+			int min = Integer.parseInt(text_minSize.getText());
+			int max = Integer.parseInt(text_maxSize.getText());
+			int minSeeders = Integer.parseInt(text_minSeeders.getText());
+			currentSerie.setMinSize(min);
+			currentSerie.setMaxSize(max);
+			currentSerie.setKeywords(keyword_text.getText().toLowerCase());
+			currentSerie.setMinNumOfSeeders(minSeeders);
+		}
 		
 	}
 

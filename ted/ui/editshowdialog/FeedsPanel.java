@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,6 +29,7 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 
 import ted.BrowserLauncher;
 import ted.Lang;
@@ -65,12 +67,14 @@ public class FeedsPanel extends JPanel implements ActionListener
 	private JButton jOpenButton;
 	private JButton jButtonDelete;
 	private JToolBar feedsToolBar;
+	private JButton button_Save;
 	private TedFeedsTableModel feedsTableModel = new TedFeedsTableModel();
 	MouseListener popupListener = new PopupListener();
 	private TedPopupMenu findRSSPopupMenu;
 
-	public FeedsPanel()
+	public FeedsPanel(TedPopupMenu tpm)
 	{
+		this.findRSSPopupMenu = tpm;
 		this.initUI();
 	}
 
@@ -85,8 +89,9 @@ public class FeedsPanel extends JPanel implements ActionListener
 			feedsToolBar = new JToolBar();
 			this.add(feedsToolBar, BorderLayout.CENTER);
 			feedsToolBar.setFloatable(false);
-			feedsToolBar.setBounds(14, 217, 441, 28);
-			feedsToolBar.setPreferredSize(new java.awt.Dimension(231, 32));
+			//feedsToolBar.setBounds(14, 217, 441, 28);
+			//feedsToolBar.setPreferredSize(new java.awt.Dimension(231, 32));
+			feedsToolBar.setBorderPainted(false);
 
 			jButtonAdd = new JButton();
 			feedsToolBar.add(jButtonAdd);
@@ -95,6 +100,10 @@ public class FeedsPanel extends JPanel implements ActionListener
 				.getResource("icons/Aid.png")));
 			jButtonAdd.setPreferredSize(new java.awt.Dimension(119, 21));
 			jButtonAdd.setBounds(15, 248, 77, 21);
+			
+			jFindButton = new JButton();
+			feedsToolBar.add(jFindButton);
+			jFindButton.setBounds(280, 248, 70, 21);
 
 			jButtonDelete = new JButton();
 			feedsToolBar.add(jButtonDelete);
@@ -108,9 +117,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 			jOpenButton.setActionCommand("openfeed");
 			jOpenButton.setBounds(205, 248, 70, 21);
 
-			jFindButton = new JButton();
-			feedsToolBar.add(jFindButton);
-			jFindButton.setBounds(280, 248, 70, 21);
+			
 
 			jButtonMoveFeedDown = new JButton();
 			feedsToolBar.add(jButtonMoveFeedDown);
@@ -218,9 +225,9 @@ public class FeedsPanel extends JPanel implements ActionListener
 		feedsTable.editCellAt(row, 1);
 	}
 	
-	private void addFeed(String s)
+	void addFeed(String s)
 	{
-		TedSerieFeed newFeed = new TedSerieFeed(s, 0);
+		TedSerieFeed newFeed = new TedSerieFeed(s, 0, true);
 		feedsTableModel.addSerie(newFeed);
 	}
 	
@@ -347,18 +354,24 @@ public class FeedsPanel extends JPanel implements ActionListener
 	    }
 	}
 	
-	private void initPopupMenu()
+	
+
+	public boolean checkValues() 
+	{	
+		if (feedsTableModel.getRowCount() == 0)
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
+			return false;
+		}
+		return true;
+	}
+
+	public void saveValues(TedSerie currentSerie) 
 	{
-		//rssNames = new Vector();
-		//rssLocations = new Vector();
-		
-		Vector items = new Vector();
-		
-		TedXMLParser p = new TedXMLParser();
-		Element e = p.readXMLFile(TedIO.XML_SHOWS_FILE);
-		items = p.getPopupItems(e);
-		
-		//findRSSPopupMenu = new ted.TedPopupMenu(this,items);
+		if (this.checkValues())
+		{
+			currentSerie.setFeeds(feedsTableModel.getSerieFeeds());
+		}
 	}
 
 }

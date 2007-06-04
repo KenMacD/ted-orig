@@ -5,15 +5,24 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.w3c.dom.Element;
+
+import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedConfigDialogToolBar;
+import ted.TedIO;
 import ted.TedMainDialog;
+import ted.TedPopupMenu;
 import ted.TedSerie;
+import ted.TedXMLParser;
 
 
 /**
@@ -28,10 +37,10 @@ import ted.TedSerie;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class EditShowDialog extends javax.swing.JDialog
+public class EditShowDialog extends javax.swing.JDialog implements ActionListener
 {
 	
-	private int width = 400;
+	private int width = 500;
 	private int height = 450;
 
 	/**
@@ -44,9 +53,12 @@ public class EditShowDialog extends javax.swing.JDialog
 	private boolean newSerie;
 	private JButton jHelpButton;
 	private GeneralPanel generalPanel;
+	private JButton button_Save;
+	private JButton jButton1;
 	private FeedsPanel feedsPanel;
 	private FilterPanel filterPanel;
 	private SchedulePanel schedulePanel;
+	private TedPopupMenu findRSSPopupMenu;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -108,11 +120,11 @@ public class EditShowDialog extends javax.swing.JDialog
 		
 		jShowTabs = new JPanel(new CardLayout());
 		getContentPane().add(jShowTabs);
-		jShowTabs.setBounds(0, 75, 400, 300);
+		jShowTabs.setBounds(0, 75, width, 300);
 		
 		EditShowToolBar toolBarPanel = new EditShowToolBar(this);
 		getContentPane().add(toolBarPanel);
-		toolBarPanel.setBounds(0, 0, 400, 70);
+		toolBarPanel.setBounds(0, 0, width, 70);
 		
 		//jConfigTabs.setModel(toolBarPanel);
 		
@@ -124,13 +136,32 @@ public class EditShowDialog extends javax.swing.JDialog
 				.getClassLoader().getResource("icons/help.png")));
 		jHelpButton.setActionCommand("Help");
 		jHelpButton.setBounds(11, 380, 28, 28);
+		jHelpButton.addActionListener(this);
+		{
+			jButton1 = new JButton();
+			getContentPane().add(jButton1);
+			jButton1.setActionCommand("cancel");
+			jButton1.setText(Lang.getString("TedEpisodeDialog.ButtonCancel"));
+			jButton1.setToolTipText(Lang.getString("TedEpisodeDialog.ButtonToolTipCancel"));
+			jButton1.setBounds(273, 380, 98, 28);
+			jButton1.addActionListener(this);
+		}
+		{
+			button_Save = new JButton();
+			getContentPane().add(button_Save);
+			button_Save.setActionCommand("save");
+			button_Save.setText(Lang.getString("TedEpisodeDialog.ButtonSave"));
+			button_Save.setToolTipText(Lang.getString("TedEpisodeDialog.ButtonToolTipSave"));
+			button_Save.setBounds(382, 380, 98, 28);
+			button_Save.addActionListener(this);
+		}
 		//jHelpButton.addActionListener(TCListener);
 		
 		generalPanel = new GeneralPanel();
 		jShowTabs.add("general", generalPanel);
 		generalPanel.setValues(this.currentSerie);
 		
-		feedsPanel = new FeedsPanel();
+		feedsPanel = new FeedsPanel(this.initPopupMenu());
 		jShowTabs.add("feeds", feedsPanel);
 		feedsPanel.setValues(this.currentSerie);
 		
@@ -143,11 +174,88 @@ public class EditShowDialog extends javax.swing.JDialog
 		schedulePanel.setValues(this.currentSerie);
 		
 	}
+	
+	private TedPopupMenu initPopupMenu()
+	{	
+		Vector items = new Vector();
+		
+		TedXMLParser p = new TedXMLParser();
+		Element e = p.readXMLFile(TedIO.XML_SHOWS_FILE);
+		items = p.getPopupItems(e);
+		
+		return new ted.TedPopupMenu(this, items);
+	}
 
 	public void showPanel(String command)
 	{
 		CardLayout cl = (CardLayout)(jShowTabs.getLayout());
 	    cl.show(jShowTabs, command);		
+	}
+
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		String action = arg0.getActionCommand();
+		if (action.equals("save"))
+		{
+			this.saveShow();
+		}
+		else if (action.equals("cancel"))
+		{
+			this.setVisible(false);
+		}
+		else if (action.equals("Help"))
+		{
+			// launch documentation website
+			try 
+			{
+				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Edit_show"); //$NON-NLS-1$
+			} 
+			catch (Exception err)
+			{
+				
+			}
+		}
+		
+	}
+
+	private void saveShow() 
+	{
+		if (this.generalPanel.checkValues() && this.feedsPanel.checkValues() && this.filterPanel.checkValues() && this.schedulePanel.checkValues())
+		{
+			this.generalPanel.saveValues(this.currentSerie);
+			this.feedsPanel.saveValues(this.currentSerie);
+			this.filterPanel.saveValues(this.currentSerie);
+			this.schedulePanel.saveValues(this.currentSerie);
+			
+			this.setVisible(false);
+				
+			if (newSerie)
+			{
+				tedDialog.addSerie(currentSerie);
+			}
+			
+			tedDialog.saveShows();
+			currentSerie.checkDate();
+			currentSerie.resetStatus();
+		}
+		
+	}
+
+	public String getShowName() 
+	{
+		return this.generalPanel.getShowName();
+	}
+
+	public void addKeywords(String words) 
+	{
+		this.filterPanel.addKeywords(words);
+		
+	}
+
+	public void addFeed(String url) 
+	{
+		this.feedsPanel.addFeed(url);
+		
 	}
 
 }

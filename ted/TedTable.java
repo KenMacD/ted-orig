@@ -16,6 +16,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 //import javax.swing.table.TableRowSorter;
 
+import ted.ui.editshowdialog.EditShowDialog;
+
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -144,7 +146,7 @@ public class TedTable extends JTable
 		// else show the EpisodeDialog of the selected show
 		if (evt.getClickCount() == 2)
 		{			
-			TedEpisodeDialog henk = new TedEpisodeDialog(tedMain, selectedserie, false);
+			EditShowDialog henk = new EditShowDialog(tedMain, selectedserie, false);
 			henk.setVisible(true);			
 		}
 		// or did the user click right?

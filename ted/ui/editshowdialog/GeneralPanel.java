@@ -4,6 +4,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import java.awt.Dimension;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -50,7 +51,7 @@ public class GeneralPanel extends JPanel
 			this.add(generalPanel);
 			generalPanel.setPreferredSize(new Dimension(width, height));
 			FormLayout lookFeelPanelLayout = new FormLayout(
-					"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
+				"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
 				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
 			generalPanel.setLayout(lookFeelPanelLayout);
 
@@ -82,6 +83,30 @@ public class GeneralPanel extends JPanel
 	{
 		this.textName.setText(serie.getName());
 		this.checkUpdatePresets.setSelected(serie.isUsePresets());
+	}
+
+	public boolean checkValues() 
+	{
+		if (textName.getText().equals("")) //$NON-NLS-1$
+		{
+			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogShowName")); //$NON-NLS-1$
+			return false;
+		}
+		return true;
+	}
+
+	public void saveValues(TedSerie currentSerie) 
+	{
+		if (this.checkValues())
+		{
+			currentSerie.setName(textName.getText());
+			currentSerie.setUsePresets(checkUpdatePresets.isSelected());
+		}
+	}
+
+	public String getShowName() 
+	{
+		return this.textName.getText();
 	}
 
 }

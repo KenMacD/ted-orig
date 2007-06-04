@@ -963,7 +963,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 		Element e = p.readXMLFile(TedIO.XML_SHOWS_FILE);
 		items = p.getPopupItems(e);
 		
-		findRSSPopupMenu = new TedPopupMenu(this,items);
+		//findRSSPopupMenu = new TedPopupMenu(this,items);
 	}
 	
 	private void setValues(TedSerie serie)
