@@ -31,10 +31,13 @@ public class GeneralPanel extends JPanel
 {
 	private int width = 400;
 	private int height = 300;
-	private JPanel generalPanel;
+	//private JPanel generalPanel;
+	private JLabel labelLookingFor;
 	private JTextField textName;
 	private JCheckBox checkUpdatePresets;
 	private JLabel labelName;
+	private DatePanel datePanel;
+	private SeasonEpisodePanel seasonEpisodePanel;
 
 	public GeneralPanel()
 	{
@@ -47,29 +50,39 @@ public class GeneralPanel extends JPanel
 		{
 			this.setPreferredSize(new Dimension(width, height));
 
-			generalPanel = new JPanel();
-			this.add(generalPanel);
-			generalPanel.setPreferredSize(new Dimension(width, height));
+			//this.add(generalPanel);
+			this.setPreferredSize(new Dimension(width, height));
 			FormLayout lookFeelPanelLayout = new FormLayout(
-				"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
-				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
-			generalPanel.setLayout(lookFeelPanelLayout);
+				"max(p;6dlu), 15dlu:grow, max(p;16dlu)",
+				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
+			this.setLayout(lookFeelPanelLayout);
 
 			labelName = new JLabel();
-			generalPanel.add(labelName, new CellConstraints("3, 2, 1, 1, default, default"));
+			this.add(labelName, new CellConstraints("2, 2, 1, 1, default, default"));
 			labelName.setText(Lang.getString("TedEpisodeDialog.LabelName"));
 			labelName.setBounds(18, 101, 98, 28);
 
 			textName = new JTextField();
-			generalPanel.add(textName, new CellConstraints("3, 4, 1, 1, default, default"));
+			this.add(textName, new CellConstraints("2, 4, 1, 1, default, default"));
 			textName.setBounds(133, 105, 322, 21);
 
 			checkUpdatePresets = new JCheckBox();
-			generalPanel.add(checkUpdatePresets, new CellConstraints("3, 6, 1, 1, default, default"));
+			this.add(checkUpdatePresets, new CellConstraints("2, 9, 1, 1, default, default"));
 			checkUpdatePresets.setText(Lang
 				.getString("TedEpisodeDialog.CheckAutoUpdate"));
 			checkUpdatePresets.setOpaque(false);
 			checkUpdatePresets.setBounds(10, 49, 448, 28);
+			
+			datePanel = new DatePanel();
+			this.add(datePanel, new CellConstraints("2, 7, 1, 1, default, default"));
+			
+			seasonEpisodePanel = new SeasonEpisodePanel();
+			this.add(seasonEpisodePanel, new CellConstraints("2, 7, 1, 1, default, default"));
+			{
+				labelLookingFor = new JLabel();
+				this.add(labelLookingFor, new CellConstraints("2, 6, 1, 1, default, default"));
+				labelLookingFor.setText(Lang.getString("TedEpisodeDialog.LabelSeasonEpisode"));
+			}
 
 		}
 		catch (Exception e)
@@ -83,6 +96,24 @@ public class GeneralPanel extends JPanel
 	{
 		this.textName.setText(serie.getName());
 		this.checkUpdatePresets.setSelected(serie.isUsePresets());
+		
+		if (serie.isDaily())
+		{
+			// display date panel
+			this.datePanel.setVisible(true);
+			this.seasonEpisodePanel.setVisible(false);
+			
+			// set date
+		}
+		else
+		{
+			// display season episode panel
+			this.datePanel.setVisible(false);
+			this.seasonEpisodePanel.setVisible(true);
+			
+			// set season/episode
+			this.seasonEpisodePanel.setSeasonEpisode(serie.getCurrentSeason(), serie.getCurrentEpisode());
+		}
 	}
 
 	public boolean checkValues() 
@@ -101,6 +132,18 @@ public class GeneralPanel extends JPanel
 		{
 			currentSerie.setName(textName.getText());
 			currentSerie.setUsePresets(checkUpdatePresets.isSelected());
+			
+			if (currentSerie.isDaily())
+			{
+				// set date
+				
+			}
+			else
+			{
+				// set season and episode
+				currentSerie.setCurrentEpisode(this.seasonEpisodePanel.getEpisode());
+				currentSerie.setCurrentSeason(this.seasonEpisodePanel.getSeason());
+			}
 		}
 	}
 

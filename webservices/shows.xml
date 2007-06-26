@@ -271,6 +271,15 @@
 			<tv_com>http://www.tv.com/show/24125/summary.html</tv_com>
 		</show>
 		<show>
+<name>The Daily Show</name>
+<feeds>
+<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
+</feeds>
+<daily>True</daily>
+<seeders>50</seeders>
+
+</show>
+		<show>
 			<name>Desperate Housewives</name>
 			<feeds>
 				<feed>http://www.mininova.org/rss.xml?sub=183</feed>
