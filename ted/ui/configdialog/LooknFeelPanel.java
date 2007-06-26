@@ -38,6 +38,9 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 	 */
 	private static final long serialVersionUID = -6042247710601857318L;
 	private JPanel lookFeelPanel;
+	private JCheckBox checkLogToFile;
+	private JCheckBox checkAllowLogging;
+	private JSeparator jSeparator1;
 	private JCheckBox checkStartMinimized;
 	private JCheckBox checkAlertNewTorrent;
 	private JSeparator jSeparator4;
@@ -66,11 +69,11 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 		lookFeelPanel.setPreferredSize(new Dimension(width, height));
 		FormLayout lookFeelPanelLayout = new FormLayout(
 			"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
-			"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
+			"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
 		lookFeelPanel.setLayout(lookFeelPanelLayout);
 
 		labelLanguage = new JLabel();
-		lookFeelPanel.add(labelLanguage, new CellConstraints("2, 8, 2, 1, default, default"));
+		lookFeelPanel.add(labelLanguage, new CellConstraints("2, 11, 2, 1, default, default"));
 		labelLanguage.setText(Lang.getString("TedConfigDialog.LabelLanguage"));
 		labelLanguage.setBounds(231, 483, 371, 28);
 
@@ -98,7 +101,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 		jSeparator5.setBounds(-28, 266, 350, 7);
 
 		comboLanguages = new JComboBox();
-		lookFeelPanel.add(comboLanguages, new CellConstraints("2, 9, 2, 1, default, default"));
+		lookFeelPanel.add(comboLanguages, new CellConstraints("2, 12, 2, 1, default, default"));
 		//comboLanguages.setSelectedIndex(toSelect);
 		comboLanguages.setBounds(21, 530, 343, 28);
 
@@ -112,6 +115,20 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 		jSeparator4 = new JSeparator();
 		lookFeelPanel.add(jSeparator4, new CellConstraints("2, 4, 2, 1, default, default"));
 		jSeparator4.setBounds(14, 45, 350, 7);
+		{
+			jSeparator1 = new JSeparator();
+			lookFeelPanel.add(jSeparator1, new CellConstraints("2, 10, 2, 1, default, default"));
+		}
+		{
+			checkAllowLogging = new JCheckBox();
+			lookFeelPanel.add(checkAllowLogging, new CellConstraints("2, 8, 2, 1, default, default"));
+			checkAllowLogging.setText(Lang.getString("TedLog.AllowLogging"));
+		}
+		{
+			checkLogToFile = new JCheckBox();
+			lookFeelPanel.add(checkLogToFile, new CellConstraints("2, 9, 2, 1, default, default"));
+			checkLogToFile.setText(Lang.getString("TedLog.LogToFile"));
+		}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,6 +142,9 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 	{
 		checkAlertNewTorrent.setSelected(TedConfig.isShowHurray());
 		checkAlertErrors.setSelected(TedConfig.isShowErrors());
+		
+		checkAllowLogging.setSelected(TedConfig.isAllowLogging());
+		checkLogToFile.setSelected(TedConfig.isLogToFile());
 		
 		// when the os ted runs on does not support a tray icon
 		if (!TedSystemInfo.osSupportsTray())
@@ -183,16 +203,17 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 		boolean alertError = checkAlertErrors.isSelected();
 		boolean startMinimized = checkStartMinimized.isSelected();
 		boolean addSysTray = checkAddSystemTray.isSelected();
+		boolean allowLog = checkAllowLogging.isSelected();
+		boolean logToFile = checkLogToFile.isSelected();
 		Locale languageSetting = locales[this.comboLanguages.getSelectedIndex()];
 	
 		TedConfig.setShowHurray(alertHurray);
 		TedConfig.setShowErrors(alertError);
 		TedConfig.setStartMinimized(startMinimized);
 		TedConfig.setAddSysTray(addSysTray);
-		TedConfig.setLocale(languageSetting);	
-		
-		
-		
+		TedConfig.setAllowLogging(allowLog);
+		TedConfig.setLogToFile(logToFile);
+		TedConfig.setLocale(languageSetting);		
 	}
 
 	public void actionPerformed(ActionEvent arg0)
@@ -212,5 +233,4 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 		}
 		
 	}
-
 }

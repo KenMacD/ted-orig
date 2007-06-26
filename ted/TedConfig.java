@@ -53,6 +53,8 @@ public class TedConfig //implements Serializable
 	private static boolean getCompressed = true;
 	private static String filterExtensions = "zip, rar, r01";
 	private static int timesParsedSinceLastCheck = 0; 
+	private static boolean allowLogging = true;
+	private static boolean logToFile = true;
 
 
 	/****************************************************
@@ -481,5 +483,27 @@ public class TedConfig //implements Serializable
 	public static void setTimesParsedSinceLastCheck(int timesParsed) 
 	{
 		timesParsedSinceLastCheck = timesParsed;
+	}
+
+	public static void setAllowLogging(boolean allowLog) 
+	{
+		allowLogging = allowLog;
+		TedLog.setAllowLogging(allowLog);
+	}
+
+	public static void setLogToFile(boolean logToFile2) 
+	{
+		logToFile = logToFile2;
+		TedLog.setWriteToFile(logToFile2);
+	}
+
+	public static boolean isAllowLogging() 
+	{
+		return allowLogging;
+	}
+	
+	public static boolean isLogToFile() 
+	{
+		return logToFile;
 	}
 }

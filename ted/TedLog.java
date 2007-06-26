@@ -30,6 +30,7 @@ public class TedLog
     private static final int DEBUG_MESSAGE = 0;
     private static final int ERROR_MESSAGE = 1;
     private static boolean writeToFile;
+    private static boolean allowLogging = true;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -51,22 +52,23 @@ public class TedLog
 	 */
 	private static void addEntry(int level, String s)
 	{
-		Calendar c = new GregorianCalendar();
-		Date d = new Date(c.getTimeInMillis());
-        String entry = d.toString() + ": " + s + System.getProperty("line.separator");
-        
-        //just in case something goes wrong, at least we get a msg
-        try 
-        {
-            TedLogDialog t = TedLogDialog.getInstance();
-            t.addEntry(entry);
-        } 
-        catch (Exception e)
-        {
-            System.out.println(entry);
-        }
-        
-       
+		if(allowLogging)
+		{
+			Calendar c = new GregorianCalendar();
+			Date d = new Date(c.getTimeInMillis());
+	        String entry = d.toString() + ": " + s + System.getProperty("line.separator");
+	        
+	        //just in case something goes wrong, at least we get a msg
+	        try 
+	        {
+	            TedLogDialog t = TedLogDialog.getInstance();
+	            t.addEntry(entry);
+	        } 
+	        catch (Exception e)
+	        {
+	            System.out.println(entry);
+	        }
+		} 
 	}
     
     /**
@@ -99,6 +101,11 @@ public class TedLog
 	public static void setWriteToFile(boolean b) 
 	{
 		writeToFile = b;	
+	}
+	
+	public static void setAllowLogging(boolean b)
+	{
+		allowLogging = b;
 	}
 	
 	public static boolean isWriteToFile()

@@ -204,7 +204,9 @@ public class TedIO
 			fw.append("add_tray=" + TedConfig.isAddSysTray() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 			fw.append("downloadcompressed=" + TedConfig.getDoNotDownloadCompressed() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 			fw.append("filterextensions=" + TedConfig.getFilterExtensions() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("loglines=" + t.getLines()); //$NON-NLS-1$
+			fw.append("loglines=" + t.getLines() + "\n"); //$NON-NLS-1$
+			fw.append("allowlogging=" + TedConfig.isAllowLogging() + "\n"); //$NON-NLS-1$
+			fw.append("logtofile=" + TedConfig.isLogToFile()); //$NON-NLS-1$
 			
 			fw.close();
 		}
@@ -370,7 +372,15 @@ public class TedIO
 				{
 					TedLogDialog t = TedLogDialog.getInstance();
 					t.setMaxLines(Integer.parseInt(tokenizer.nextToken()));
-				}	
+				}
+				else if(token.equals("allowlogging")) //$NON-NLS-1$
+				{
+					TedConfig.setAllowLogging(Boolean.parseBoolean(tokenizer.nextToken()));
+				}
+				else if(token.equals("logtofile")) //$NON-NLS-1$
+				{
+					TedConfig.setLogToFile(Boolean.parseBoolean(tokenizer.nextToken()));
+				}
 			}
 			
 			TedConfig.setLocale(tempCountry, tempLanguage);
