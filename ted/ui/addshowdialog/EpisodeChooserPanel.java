@@ -5,22 +5,16 @@ import java.awt.Canvas;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-import javax.swing.JLabel;
 
 import com.jgoodies.forms.layout.FormLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
-//import javax.swing.table.TableRowSorter;
 
-import ted.TedSerie;
 import ted.TedTableProgressbarRenderer;
-import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
 import ted.ui.TableRenderer;
 

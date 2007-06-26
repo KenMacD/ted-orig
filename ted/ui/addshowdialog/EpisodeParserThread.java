@@ -4,6 +4,9 @@ import java.util.Vector;
 
 import ted.TedParser;
 import ted.TedSerie;
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -52,12 +55,42 @@ public class EpisodeParserThread extends Thread
 	{
 		if(selectedSerie!=null)
 		{	
+			// parse all feeds in the show
 			TedParser showParser = new TedParser();
 			Vector seasonEpisodes = showParser.getItems(selectedSerie);
+			
+			// add the next upcoming episode	
+			if (seasonEpisodes.size() > 0)
+			{
+				if (selectedSerie.isDaily())
+				{
+					DailyDate sRow = (DailyDate)seasonEpisodes.get(0);
+					DailyDate upcoming = new DailyDate();
+					upcoming.setDate(sRow.getDate());
+					upcoming.setQuality(0);
+					upcoming.setPublishDate(null);
+					
+					seasonEpisodes.add(0, upcoming);
+					
+				}
+				else
+				{
+					SeasonEpisode sRow = (SeasonEpisode) seasonEpisodes.get(0);
+					SeasonEpisode upcoming = new SeasonEpisode();
+					upcoming.setEpisode(sRow.getEpisode()+1);
+					upcoming.setSeason(sRow.getSeason());
+					upcoming.setQuality(0);
+					upcoming.setPublishDate(null);
+					
+					seasonEpisodes.add(0, upcoming);
+				}
+			}
+				
+			// add vector to chooser panel
 			this.episodeChooserPanel.setSeasonEpisodes(seasonEpisodes);
 		}
 		
+		// disable avtivity image
 		this.episodeChooserPanel.setActivityStatus(false);
-	
 	}
 }

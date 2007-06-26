@@ -41,7 +41,12 @@ public class ShowInfoThread extends Thread
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
-					showInfoPane.setText("Error retrieving show information. Cannot read information page.");
+					showInfoPane.setText("Error retrieving show information. Cannot read information page. Check your internet connection.");
+					e.printStackTrace();
+				}
+				catch (Exception e)
+				{
+					showInfoPane.setText("Error retrieving show information. Cannot read information page. Check your internet connection.");
 					e.printStackTrace();
 				}
 			}
