@@ -65,11 +65,11 @@ public class SeasonEpisode extends StandardStructure implements Comparable
 	/**
 	 * @return Returns the publishDate.
 	 */
-	public String getFormattedPublishDate()
+	/*public String getFormattedPublishDate()
 	{
 		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		return df.format(this.getPublishDate());
-	}
+	}*/
 	
 	public String toString()
 	{

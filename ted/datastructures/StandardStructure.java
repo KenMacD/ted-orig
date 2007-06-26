@@ -38,8 +38,15 @@ public class StandardStructure
 	 */
 	public String getFormattedPublishDate()
 	{
-		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-		return df.format(this.publishDate);
+		if (this.publishDate != null)
+		{
+			DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+			return df.format(this.publishDate);
+		}
+		else
+		{
+			return "unknown";
+		}
 	}
 	
 	/**
