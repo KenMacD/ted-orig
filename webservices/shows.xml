@@ -173,6 +173,19 @@
 
 		</show>
 		<show>
+			<name>Big Love</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=big+love&amp;show_name_exact=true&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=big+love</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/25834/summary.html</tv_com>
+
+		</show>
+		<show>
 			<name>Blakes 7</name>
 			<feeds>
 				<feed>http://www.mininova.org/rss.xml?sub=174</feed>
@@ -185,18 +198,18 @@
 			<tv_com>http://www.tv.com/show/3281/summary.html</tv_com>
 
 		</show>
-<show>
-		<name>Bones</name>
-		<feeds>
-			<feed>http://www.mininova.org/rss.xml?sub=269</feed>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=bones</feed>
-			<feed>http://tvrss.net/search/index.php?show_name=Bones&amp;show_name_exact=true&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>450</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/33332/summary.html</tv_com>
-	</show>
+		<show>
+			<name>Bones</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss.xml?sub=269</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=bones</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Bones&amp;show_name_exact=true&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>450</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/33332/summary.html</tv_com>
+		</show>
 
 		<show>
 			<name>Boston Legal</name>
@@ -212,16 +225,25 @@
 			<tv_com>http://www.tv.com/show/25525/summary.html</tv_com>
 		</show>
 		<show>
-		<name>Cold Case</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Cold%20Case&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-			<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=cold%20case&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/16989/summary.html</tv_com>
-	</show>
+			<name>Colbert Report</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?show_name=colbert+report&amp;rss&amp;mode=rss</feed>
+			</feeds>
+			<daily>True</daily>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/45593/summary.html</tv_com>
+		</show>
+		<show>
+			<name>Cold Case</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Cold%20Case&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=cold%20case&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/16989/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Criminal Minds</name>
 			<feeds>
@@ -271,14 +293,15 @@
 			<tv_com>http://www.tv.com/show/24125/summary.html</tv_com>
 		</show>
 		<show>
-<name>The Daily Show</name>
-<feeds>
-<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
-</feeds>
-<daily>True</daily>
-<seeders>50</seeders>
+			<name>The Daily Show</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
+			</feeds>
+			<daily>True</daily>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/1293/summary.html</tv_com>
 
-</show>
+		</show>
 		<show>
 			<name>Desperate Housewives</name>
 			<feeds>
@@ -307,26 +330,26 @@
 		</show>
 		<show>
 		<name>Dirt</name>
-		<feeds>
-			<feed>http://tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Dirt&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=dirt</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>400</maximumsize>
-		<seeders>30</seeders>
-		<tv_com>http://www.tv.com/show/60202/summary.html</tv_com>
-	</show>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Dirt&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=dirt</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>30</seeders>
+			<tv_com>http://www.tv.com/show/60202/summary.html</tv_com>
+		</show>
 		<show>
-		<name>Dresden Files</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=dresden+</feed>
-			<feed>http://www.tvrss.net/search/index.php?show_name=dresden+files&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>20</seeders>
-		<tv_com>http://www.tv.com/show/50381/summary.html</tv_com>
-	</show>
+			<name>Dresden Files</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=dresden+</feed>
+				<feed>http://www.tvrss.net/search/index.php?show_name=dresden+files&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>http://www.tv.com/show/50381/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Entourage</name>
 			<feeds>
@@ -380,16 +403,16 @@
 			<tv_com>http://www.tv.com/show/33212/summary.html</tv_com>
 
 		</show>
-			<show>
-		<name>Extreme Engineering</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Extreme%20Engineering&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>15</seeders>
-		<tv_com>http://www.tv.com/show/19831/summary.html</tv_com>
-	</show>
+		<show>
+			<name>Extreme Engineering</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Extreme%20Engineering&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>http://www.tv.com/show/19831/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Family Guy</name>
 			<feeds>
@@ -404,16 +427,16 @@
 
 		</show>
 		<show>
-		<name>Friday Night Lights</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=friday%20night%20lights&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-			<feed>http://tvrss.net/search/index.php?show_name=Friday+Night+Lights&amp;show_name_exact=true&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/58137/summary.html</tv_com>
-	</show>
+			<name>Friday Night Lights</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=friday%20night%20lights&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Friday+Night+Lights&amp;show_name_exact=true&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/58137/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Futurama</name>
 			<feeds>
@@ -438,6 +461,20 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>http://www.tv.com/show/44/summary.html</tv_com>
+
+		</show>
+		<show>
+			<name>Ghost Whisperer</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?show_name=ghost+whisperer&amp;mode=rss&amp;show_name_exact=true&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss.xml?sub=338</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=ghost+whisperer</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/33483/summary.html</tv_com>
 
 		</show>
 		<show>
@@ -531,15 +568,15 @@
 
 		</show>
 		<show>
-		<name>Little Mosque on the Prairie</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Little%20Mosque%20on%20the%20Prairie</feed>
-			<feed>http://tvrss.net/search/index.php?show_name=Little+Mosque+On+The+Prairie&amp;show_name_exact=true&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>100</minimumsize>
-		<maximumsize>400</maximumsize>
-		<seeders>10</seeders>
-		<tv_com>http://www.tv.com/show/67584/summary.html</tv_com>
+			<name>Little Mosque on the Prairie</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Little%20Mosque%20on%20the%20Prairie</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Little+Mosque+On+The+Prairie&amp;show_name_exact=true&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>http://www.tv.com/show/67584/summary.html</tv_com>
 		</show>
 		<show>
 			<name>Lost</name>
@@ -556,38 +593,38 @@
 
 		</show>
 		<show>
-		<name>Medium</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=medium&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-			<feed>http://tvrss.net/search/index.php?show_name=Medium&amp;show_name_exact=true&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/22414/summary.html</tv_com>
-	</show>
-<show>
-		<name>Men In Trees</name>
-		<feeds>
-			<feed>http://tvrss.net/search/index.php?show_name=Men+In+Trees&amp;show_name_exact=true&amp;mode=rss</feed>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=men+in+trees</feed>
-		</feeds>
-		<minimumsize>400</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>30</seeders>
-		<tv_com>http://www.tv.com/show/58460/summary.html</tv_com>
-	</show>
+			<name>Medium</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=medium&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Medium&amp;show_name_exact=true&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/22414/summary.html</tv_com>
+		</show>
 		<show>
-		<name>Monk</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=monk</feed>
-			<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=monk&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>15</seeders>
-		<tv_com>http://www.tv.com/show/9130/summary.html</tv_com>
-	</show>
+			<name>Men In Trees</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Men+In+Trees&amp;show_name_exact=true&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=men+in+trees</feed>
+			</feeds>
+			<minimumsize>400</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>30</seeders>
+			<tv_com>http://www.tv.com/show/58460/summary.html</tv_com>
+		</show>
+		<show>
+			<name>Monk</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=monk</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=monk&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>http://www.tv.com/show/9130/summary.html</tv_com>
+		</show>
 
 		<show>
 			<name>My Name is Earl</name>
@@ -603,16 +640,16 @@
 
 		</show>
 		<show>
-		<name>Mythbusters</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=mythbusters</feed>
-			<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=mythbusters&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/22839/summary.html</tv_com>
-	</show>
+			<name>Mythbusters</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=mythbusters</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=mythbusters&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/22839/summary.html</tv_com>
+		</show>
 
 
 		<show>
@@ -644,15 +681,15 @@
 		</show>
 		<show>
 		<name>Numb3rs</name>
-		<feeds>
-			<feed>http://tvrss.net/search/index.php?show_name=Numb3rs&amp;show_name_exact=true&amp;mode=rss</feed>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=numb3rs&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/25043/summary.html</tv_com>
-	</show>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Numb3rs&amp;show_name_exact=true&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=numb3rs&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/25043/summary.html</tv_com>
+		</show>
 		<show>
 			<name>One Tree Hill</name>
 			<feeds>
@@ -668,15 +705,15 @@
 		</show>
 		<show>
 		<name>Penn and Teller Bullshit</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=bullshit&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-			<feed>http://tvrss.net/search/index.php?show_name=Penn+%26+Teller%3A+Bullshit%21&amp;show_name_exact=true&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>200</minimumsize>
-		<maximumsize>400</maximumsize>
-		<seeders>50</seeders>
-		<tv_com>http://www.tv.com/show/17579/summary.html</tv_com>
-	</show>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=bullshit&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Penn+%26+Teller%3A+Bullshit%21&amp;show_name_exact=true&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>200</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/17579/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Prison Break</name>
 			<feeds>
@@ -704,16 +741,16 @@
 
 		</show>
 		<show>
-		<name>Saturday Night Live</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Saturday%20Night%20Live</feed>
-			<feed>http://tvrss.net/search/index.php?show_name=Saturday%20Night%20Live&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>400</minimumsize>
-		<maximumsize>800</maximumsize>
-		<seeders>20</seeders>
-		<tv_com>http://www.tv.com/show/365/summary.html</tv_com>
-	</show>
+			<name>Saturday Night Live</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Saturday%20Night%20Live</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Saturday%20Night%20Live&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>400</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>http://www.tv.com/show/365/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Scrubs</name>
 			<feeds>
@@ -754,6 +791,18 @@
 
 		</show>
 		<show>
+			<name>So You Think You Can Dance</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=so+you+think+you+can+dance&amp;show_name_exact=true&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/35810/summary.html</tv_com>
+
+		</show>
+		<show>
 			<name>South Park</name>
 			<feeds>
 				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;maincat=4&amp;subcat=0&amp;db=2&amp;query=south park</feed>
@@ -767,16 +816,16 @@
 
 		</show>
 		<show>
-		<name>Spooks</name>
-		<feeds>
-			<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Spooks&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=spooks&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>700</maximumsize>
-		<seeders>15</seeders>
-		<tv_com>http://www.tv.com/show/10812/summary.html</tv_com>
-	</show>
+			<name>Spooks</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Spooks&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=spooks&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>700</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>http://www.tv.com/show/10812/summary.html</tv_com>
+		</show>
 		<show>
 			<name>Stargate</name>
 			<feeds>
@@ -855,11 +904,11 @@
 
 		</show>
 		<show>
-		<name>The Adventures of Sarah Jane</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=The%20Adventures%20Of%20Sarah%20Jane%20&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-		</feeds>
-	</show>
+			<name>The Adventures of Sarah Jane</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=The%20Adventures%20Of%20Sarah%20Jane%20&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+			</feeds>
+		</show>
 		<show>
 			<name>The Amazing Race</name>
 			<feeds>
@@ -939,13 +988,13 @@
 
 		</show>
 		<show>
-		<name>Threshold</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=threshold&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-			<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=threshold&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-		</feeds>
-		<tv_com>http://www.tv.com/show/32983/summary.html</tv_com>
-	</show>
+			<name>Threshold</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=threshold&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=threshold&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+			</feeds>
+			<tv_com>http://www.tv.com/show/32983/summary.html</tv_com>
+		</show>
 
 		<show>
 			<name>Top Gear</name>
@@ -986,6 +1035,20 @@
 
 		</show>
 		<show>
+			<name>Two And A Half Men</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Two+and+a+Half+Men&amp;show_name_exact=true&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss.xml?sub=401</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=two+and+a+half+men</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>200</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/17206/summary.html</tv_com>
+
+		</show>
+		<show>
 			<name>Ugly Betty</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Ugly+Betty&amp;show_name_exact=true&amp;mode=rss</feed>
@@ -1011,15 +1074,15 @@
 
 		</show>
 		<show>
-		<name>Without a Trace</name>
-		<feeds>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Without%20A%20Trace&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
-			<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=without%20a%20trace&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
-		</feeds>
-		<minimumsize>300</minimumsize>
-		<maximumsize>500</maximumsize>
-		<seeders>50</seeders>
-	</show>
+			<name>Without a Trace</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Without%20A%20Trace&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=without%20a%20trace&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+		</show>
 		<show>
 			<name>Weeds</name>
 			<feeds>
