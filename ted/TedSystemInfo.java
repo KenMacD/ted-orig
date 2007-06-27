@@ -167,5 +167,37 @@ public class TedSystemInfo
 			return false;
 		}
 	}
+	
+	/**
+	 * @return If the current Java vendor is supported by ted
+	 */
+	public static boolean isSupportedJavaVendor()
+	{
+		String vendor = TedSystemInfo.getJavaVendor();
+		vendor.toLowerCase();
+		
+		if (vendor.contains("sun"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * @return If the current Java is supported by ted
+	 */
+	public static boolean isSupportedJava()
+	{
+		if(isSupportedJavaVersion())
+			if(osIsWindows())
+				return true;
+			else if(isSupportedJavaVendor())
+				return true;
+		
+		return false;			
+	}
 
 }

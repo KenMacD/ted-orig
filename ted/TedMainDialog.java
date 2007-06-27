@@ -123,7 +123,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		TedSystemInfo.setSaveInLocalDir(saveInLocalDir);
 		
 		// check if the java version is correct
-		if (TedSystemInfo.isSupportedJavaVersion())
+		if (TedSystemInfo.isSupportedJava())
 		{
 			initGUI();
 		}
@@ -233,7 +233,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.getContentPane().add(ttPopupMenu);
 			
 			// add table to scrollpanel
-			serieTable = new TedTable(this, ttPopupMenu);	
+			serieTable = new TedTable(this, ttPopupMenu);
 			jScrollPane1.setViewportView(serieTable);
 			
 			

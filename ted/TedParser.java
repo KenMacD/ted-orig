@@ -156,8 +156,9 @@ public class TedParser
 	        				}
 	        				else
 	        				{
-	        					if((((TedDailySerie)serie).getLatestDownloadDateInMillis()) < 
-	        						getDailyDateFromItem(item).getDate().getTimeInMillis())
+	        					DailyDate date = getDailyDateFromItem(item);	  
+	        					if(date!=null && ((((TedDailySerie)serie).getLatestDownloadDateInMillis()) < 
+	        							date.getDate().getTimeInMillis()))
 	        					{
 	        						this.addDailyItem(item, serie);	
 	        					}

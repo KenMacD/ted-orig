@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.table.AbstractTableModel;
 
+
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -24,7 +25,7 @@ import javax.swing.table.AbstractTableModel;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedTableModel extends AbstractTableModel 
+public class TedTableModel extends AbstractTableModel
 {
 	/****************************************************
 	 * GLOBAL VARIABLES
