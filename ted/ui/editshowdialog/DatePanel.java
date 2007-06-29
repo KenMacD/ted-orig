@@ -33,11 +33,14 @@ public class DatePanel extends JPanel
 	private String[] days  = initString(1, 31);
 	private String[] years;
 	
+	private int yearOffset;
+	
 	public DatePanel()
 	{
+		
 		this.initGUI();
 	}
-	
+
 	/**
 	 * Initialize a array with strings
 	 * @param low first value of the array
@@ -56,15 +59,17 @@ public class DatePanel extends JPanel
 		return strings;
 	}
 
-	private void initGUI() {
+	private void initGUI()
+	{
 		try {
 			{
 				Calendar c = new GregorianCalendar();
 			
 				int year2 = c.get(Calendar.YEAR);
+				yearOffset = year2;
 				years = initString(year2, year2+5);
 				
-				this.setPreferredSize(new java.awt.Dimension(363, 38));
+				//this.setPreferredSize(new java.awt.Dimension(363, 40));
 				{
 					ComboBoxModel jFromBreakDayModel = new DefaultComboBoxModel(
 							days);
@@ -93,6 +98,53 @@ public class DatePanel extends JPanel
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Set the date to display in the date panel
+	 * @param date
+	 */
+	public void setDate(long date) 
+	{
+		Calendar c = new GregorianCalendar();
+		c.setTimeInMillis(date);
+		
+		// update years in datepanel according to date to display
+		int year2 = c.get(Calendar.YEAR);
+		yearOffset = year2;
+		years = initString(year2, year2+5);
+		ComboBoxModel jFromBreakYearModel = new DefaultComboBoxModel(
+				years);
+		jFromBreakYear.setModel(jFromBreakYearModel);
+		
+		jFromBreakDay.setSelectedIndex(c.get(Calendar.DAY_OF_MONTH)-1);
+		jFromBreakMonth.setSelectedIndex(c.get(Calendar.MONTH));
+		jFromBreakYear.setSelectedIndex(c.get(Calendar.YEAR) - yearOffset);
+		
+	}
+
+	/**
+	 * @return the selected day
+	 */
+	public int getDay() 
+	{
+		return this.jFromBreakDay.getSelectedIndex()+1;
+	}
+
+	/**
+	 * @return the selected month
+	 */
+	public int getMonth() 
+	{
+		return this.jFromBreakMonth.getSelectedIndex();
+	}
+
+	/**
+	 * @return the selected year
+	 */
+	public int getYear() 
+	{
+		return this.jFromBreakYear.getSelectedIndex() + yearOffset;
 	}
 
 }

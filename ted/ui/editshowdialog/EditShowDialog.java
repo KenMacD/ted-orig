@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
 import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedConfigDialogToolBar;
+import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedMainDialog;
 import ted.TedPopupMenu;
@@ -157,7 +158,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		}
 		//jHelpButton.addActionListener(TCListener);
 		
-		generalPanel = new GeneralPanel();
+		generalPanel = new GeneralPanel(this);
 		jShowTabs.add("general", generalPanel);
 		generalPanel.setValues(this.currentSerie);
 		
@@ -197,7 +198,18 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		String action = arg0.getActionCommand();
 		if (action.equals("save"))
 		{
-			this.saveShow();
+			if (this.saveShow(currentSerie))
+			{
+			
+				this.setVisible(false);
+				
+				if (newSerie)
+				{
+					tedDialog.addSerie(currentSerie);
+				}
+				
+				tedDialog.saveShows();
+			}
 		}
 		else if (action.equals("cancel"))
 		{
@@ -215,28 +227,51 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				
 			}
 		}
+		else if (action.equals("popupepisodedialog"))
+		{
+			// create a temp show with filled in values
+			TedSerie temp;
+			if (this.currentSerie.isDaily())
+			{
+				temp = new TedDailySerie();
+			}
+			else
+			{
+				temp = new TedSerie();
+			}
+			
+			if (this.saveShow(temp))
+			{
+			
+				// popup a select episode dialog
+				EpisodeChooserDialog ecd = new EpisodeChooserDialog(this);
+				ecd.loadEpisodes(temp);
+				ecd.setVisible(true);
+				
+				// get selected episode
+				
+				// set it to settings panel
+			}
+		}
 		
 	}
 
-	private void saveShow() 
+	private boolean saveShow(TedSerie show) 
 	{
 		if (this.generalPanel.checkValues() && this.feedsPanel.checkValues() && this.filterPanel.checkValues() && this.schedulePanel.checkValues())
 		{
-			this.generalPanel.saveValues(this.currentSerie);
-			this.feedsPanel.saveValues(this.currentSerie);
-			this.filterPanel.saveValues(this.currentSerie);
-			this.schedulePanel.saveValues(this.currentSerie);
-			
-			this.setVisible(false);
+			this.generalPanel.saveValues(show);
+			this.feedsPanel.saveValues(show);
+			this.filterPanel.saveValues(show);
+			this.schedulePanel.saveValues(show);
 				
-			if (newSerie)
-			{
-				tedDialog.addSerie(currentSerie);
-			}
-			
-			tedDialog.saveShows();
-			currentSerie.checkDate();
-			currentSerie.resetStatus();
+			show.checkDate();
+			show.resetStatus();
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 		
 	}

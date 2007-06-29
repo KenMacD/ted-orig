@@ -175,6 +175,7 @@ public class TedSystemInfo
 	{
 		String vendor = TedSystemInfo.getJavaVendor();
 		vendor.toLowerCase();
+		System.out.println(vendor);
 		
 		if (vendor.contains("sun"))
 		{
@@ -192,7 +193,7 @@ public class TedSystemInfo
 	public static boolean isSupportedJava()
 	{
 		if(isSupportedJavaVersion())
-			if(osIsWindows())
+			if(osIsWindows() || osIsMac())
 				return true;
 			else if(isSupportedJavaVendor())
 				return true;

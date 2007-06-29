@@ -2,6 +2,10 @@ package ted.ui.editshowdialog;
 import com.jgoodies.forms.layout.CellConstraints;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,6 +16,7 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.layout.FormLayout;
 
 import ted.Lang;
+import ted.TedDailySerie;
 import ted.TedSerie;
 
 
@@ -30,17 +35,20 @@ import ted.TedSerie;
 public class GeneralPanel extends JPanel
 {
 	private int width = 400;
+	private JButton popupEpisodeDialogButton;
 	private int height = 300;
 	//private JPanel generalPanel;
 	private JLabel labelLookingFor;
 	private JTextField textName;
 	private JCheckBox checkUpdatePresets;
 	private JLabel labelName;
-	private DatePanel datePanel;
+	private DailyPanel dailyPanel;
 	private SeasonEpisodePanel seasonEpisodePanel;
+	private EditShowDialog editShowDialog;
 
-	public GeneralPanel()
+	public GeneralPanel(EditShowDialog parent)
 	{
+		editShowDialog = parent;
 		this.initUI();
 	}
 
@@ -73,8 +81,8 @@ public class GeneralPanel extends JPanel
 			checkUpdatePresets.setOpaque(false);
 			checkUpdatePresets.setBounds(10, 49, 448, 28);
 			
-			datePanel = new DatePanel();
-			this.add(datePanel, new CellConstraints("2, 7, 1, 1, default, default"));
+			dailyPanel = new DailyPanel();
+			this.add(dailyPanel, new CellConstraints("2, 7, 1, 1, default, default"));
 			
 			seasonEpisodePanel = new SeasonEpisodePanel();
 			this.add(seasonEpisodePanel, new CellConstraints("2, 7, 1, 1, default, default"));
@@ -82,6 +90,14 @@ public class GeneralPanel extends JPanel
 				labelLookingFor = new JLabel();
 				this.add(labelLookingFor, new CellConstraints("2, 6, 1, 1, default, default"));
 				labelLookingFor.setText(Lang.getString("TedEpisodeDialog.LabelSeasonEpisode"));
+			}
+			{
+				popupEpisodeDialogButton = new JButton();
+				this.add(popupEpisodeDialogButton, new CellConstraints("2, 8, 1, 1, default, default"));
+				popupEpisodeDialogButton
+					.setText("Select from available episodes");
+				popupEpisodeDialogButton.setActionCommand("popupepisodedialog");
+				popupEpisodeDialogButton.addActionListener(editShowDialog);
 			}
 
 		}
@@ -100,15 +116,14 @@ public class GeneralPanel extends JPanel
 		if (serie.isDaily())
 		{
 			// display date panel
-			this.datePanel.setVisible(true);
+			this.dailyPanel.setVisible(true);
+			this.dailyPanel.setValues((TedDailySerie) serie);
 			this.seasonEpisodePanel.setVisible(false);
-			
-			// set date
 		}
 		else
 		{
 			// display season episode panel
-			this.datePanel.setVisible(false);
+			this.dailyPanel.setVisible(false);
 			this.seasonEpisodePanel.setVisible(true);
 			
 			// set season/episode
@@ -135,7 +150,8 @@ public class GeneralPanel extends JPanel
 			
 			if (currentSerie.isDaily())
 			{
-				// set date
+				// set date and max downloads
+				this.dailyPanel.saveValues((TedDailySerie)currentSerie);
 				
 			}
 			else
