@@ -25,6 +25,10 @@ import ted.Lang;
 */
 public class DatePanel extends JPanel 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5496935878161614311L;
 	private JComboBox jFromBreakDay;
 	private JComboBox jFromBreakMonth;
 	private JComboBox jFromBreakYear;

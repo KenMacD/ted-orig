@@ -2,6 +2,8 @@ package ted.ui.editshowdialog;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
@@ -10,6 +12,7 @@ import javax.swing.JPanel;
 
 import ted.Lang;
 import ted.TedSerie;
+import ted.datastructures.StandardStructure;
 import ted.ui.addshowdialog.EpisodeChooserPanel;
 import ted.ui.addshowdialog.EpisodeParserThread;
 
@@ -26,7 +29,7 @@ import ted.ui.addshowdialog.EpisodeParserThread;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class EpisodeChooserDialog extends JDialog
+public class EpisodeChooserDialog extends JDialog implements ActionListener
 {
 
 	/**
@@ -36,16 +39,20 @@ public class EpisodeChooserDialog extends JDialog
 	private JButton cancelButton;
 	private JButton okButton;
 	private EpisodeChooserPanel episodeChooserPanel;
+	private EditShowDialog editShowDialog;
 
-	public EpisodeChooserDialog(JDialog frame)
-	{
+	public EpisodeChooserDialog(EditShowDialog frame)
+	{	
 		super(frame);
 		this.setModal(true);
 		this.setResizable(false);
 		this.initGUI();
+		
+		editShowDialog = frame;
 	}
 	
-	private void initGUI() {
+	private void initGUI() 
+	{
 		try {
 			{
 				this.setLayout(null);
@@ -53,12 +60,16 @@ public class EpisodeChooserDialog extends JDialog
 				this.add(okButton);
 				okButton.setText(Lang.getString("TedGeneral.ButtonOk"));
 				okButton.setBounds(280, 238, 98, 28);
+				okButton.addActionListener(this);
+				okButton.setActionCommand("ok");
 			}
 			{
 				cancelButton = new JButton();
 				this.add(cancelButton);
 				cancelButton.setText(Lang.getString("TedEpisodeDialog.ButtonCancel"));
 				cancelButton.setBounds(189, 238, 84, 28);
+				cancelButton.addActionListener(this);
+				cancelButton.setActionCommand("cancel");
 				
 				episodeChooserPanel = new EpisodeChooserPanel();
 				this.add(episodeChooserPanel);
@@ -85,12 +96,46 @@ public class EpisodeChooserDialog extends JDialog
 		}
 	}
 	
+	/**
+	 * Load the available episodes from the feeds of the show
+	 * @param show
+	 */
 	public void loadEpisodes(TedSerie show)
 	{
 		EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, show);
 		ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
 		
 		ept.start();		
+	}
+
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		String action = arg0.getActionCommand();
+		
+		if (action.equals("ok"))
+		{
+			StandardStructure selectedStructure = this.episodeChooserPanel.getSelectedStructure();
+			// get selected episode and send it to the edit show dialog
+			if (selectedStructure != null)
+			{		
+				editShowDialog.setEpisode(selectedStructure);
+				
+				this.setVisible(false);
+			}
+			else
+			{
+				//TODO: display error message? user has to select something
+				// or let the episodeChooserPanel implement such a message
+			}
+			
+			// close dialog
+		}
+		else if (action.equals("cancel"))
+		{
+			// close dialog
+			this.setVisible(false);
+		}
+		
 	}
 
 }

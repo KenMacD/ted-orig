@@ -135,6 +135,24 @@ public class TedFeedsTableModel extends AbstractTableModel
 	 */
 	public Vector getSerieFeeds() 
 	{
+		
+		
+		TedSerieFeed temp;
+		
+		// remove all feeds with an empty url
+		for (int i = 0; i < tableData.size(); i++)
+		{
+			temp = (TedSerieFeed)tableData.get(i);
+
+			if (temp.getUrl().equals("")) //$NON-NLS-1$
+			{
+				tableData.remove(i);
+				i--;
+			}
+		}
+		
+		fireTableDataChanged();
+		
 		return tableData;
 	}
 

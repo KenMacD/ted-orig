@@ -18,6 +18,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import ted.Lang;
 import ted.TedDailySerie;
 import ted.TedSerie;
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 
 /**
@@ -167,5 +170,16 @@ public class GeneralPanel extends JPanel
 	{
 		return this.textName.getText();
 	}
+
+	public void setEpisode(DailyDate selectedStructure) 
+	{
+		this.dailyPanel.setDate(selectedStructure.getDate().getTimeInMillis());
+		
+	}
+	public void setEpisode(SeasonEpisode selectedStructure) 
+	{		
+		this.seasonEpisodePanel.setSeasonEpisode(selectedStructure.getSeason(), selectedStructure.getEpisode());
+	}
+	
 
 }

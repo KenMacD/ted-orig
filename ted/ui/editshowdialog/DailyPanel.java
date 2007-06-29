@@ -1,16 +1,14 @@
 package ted.ui.editshowdialog;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 
 import ted.Lang;
 import ted.TedDailySerie;
-import ted.TedSerie;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 
 /**
@@ -32,6 +30,10 @@ import ted.TedSerie;
  */
 public class DailyPanel extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7912966362467037259L;
 	DatePanel datePanel;
 	private JLabel maxEpisodesLabel2;
 	private JSpinner episodeSpinner;
@@ -100,6 +102,16 @@ public class DailyPanel extends JPanel
 		
 		// get number of episodes to download
 		serie.setMaxDownloads(episodeSpinnerModel.getNumber().intValue());
+		
+	}
+
+	/**
+	 * Set the date to display in the panel
+	 * @param time
+	 */
+	public void setDate (long time) 
+	{
+		this.datePanel.setDate(time);
 		
 	}
 

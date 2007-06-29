@@ -817,19 +817,7 @@ public class TedSerie implements Serializable
 	 */
 	public void setFeeds(Vector serieFeeds)
 	{
-		TedSerieFeed temp;
 		
-		// remove all feeds with an empty url
-		for (int i = 0; i < serieFeeds.size(); i++)
-		{
-			temp = (TedSerieFeed)serieFeeds.get(i);
-
-			if (temp.getUrl().equals("")) //$NON-NLS-1$
-			{
-				serieFeeds.remove(i);
-				i--;
-			}
-		}
 		
 		this.feeds = serieFeeds;
 	}

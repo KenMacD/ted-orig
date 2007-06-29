@@ -30,6 +30,10 @@ import ted.TedSerie;
 public class FilterPanel extends JPanel
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4433322536308265906L;
 	private int width = 400;
 	private JLabel label_minSize;
 	private JTextField text_maxSize;
@@ -39,7 +43,6 @@ public class FilterPanel extends JPanel
 	private JLabel label_keywords2;
 	private JLabel label_keywords1;
 	private JSeparator jSeparator1;
-	private JLabel jLabel10;
 	private JLabel label_Seeders;
 	private JTextField text_minSeeders;
 	private JLabel label_seederFilters;
@@ -187,15 +190,10 @@ public class FilterPanel extends JPanel
 
 	public boolean checkValues() 
 	{
-		int cs = 0;
-		int ce = 0;
 		int min = 0;
 		int max = 0;
-		int breakep;
 		int minSeeders = 0;
-		
-		
-		
+			
 		try
 		{
 			min = Integer.parseInt(text_minSize.getText());

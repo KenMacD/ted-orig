@@ -24,6 +24,9 @@ import ted.TedMainDialog;
 import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedXMLParser;
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 
 /**
@@ -198,21 +201,25 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		String action = arg0.getActionCommand();
 		if (action.equals("save"))
 		{
+			// save the values from the different tabs in the serie
 			if (this.saveShow(currentSerie))
 			{
-			
+				// close the dialog		
 				this.setVisible(false);
 				
 				if (newSerie)
 				{
+					// add the show to teds main window
 					tedDialog.addSerie(currentSerie);
 				}
 				
+				// save the changed shows
 				tedDialog.saveShows();
 			}
 		}
 		else if (action.equals("cancel"))
 		{
+			// close the dialog
 			this.setVisible(false);
 		}
 		else if (action.equals("Help"))
@@ -290,6 +297,19 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	public void addFeed(String url) 
 	{
 		this.feedsPanel.addFeed(url);
+		
+	}
+
+	public void setEpisode(StandardStructure selectedStructure) 
+	{
+		if (this.currentSerie.isDaily())
+		{
+			this.generalPanel.setEpisode((DailyDate)selectedStructure);
+		}
+		else
+		{
+			this.generalPanel.setEpisode((SeasonEpisode)selectedStructure);
+		}
 		
 	}
 

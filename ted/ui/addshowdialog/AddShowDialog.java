@@ -18,6 +18,8 @@ import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.w3c.dom.Element;
 
@@ -129,10 +131,11 @@ public class AddShowDialog extends JDialog implements ActionListener
 			showsTable.setShowHorizontalLines(false);
 			showsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
-			showsTable.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					showsTableMouseClicked(evt);
-				}});
+			showsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent arg0) {
+					showsTableSelectionChanged();
+					
+				}});		
 
 			this.setSize(700, 500);
 			
@@ -146,7 +149,9 @@ public class AddShowDialog extends JDialog implements ActionListener
 
 		    //Set the new frame location
 		    this.setLocation(x, y);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -174,7 +179,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 		return showsScrollPane;
 	}
 	
-	private void showsTableMouseClicked(MouseEvent evt)
+	private void showsTableSelectionChanged()
 	{
 		int selectedRow = showsTable.getSelectedRow();
 		if (selectedRow >= 0)
@@ -197,7 +202,6 @@ public class AddShowDialog extends JDialog implements ActionListener
 			
 			this.setSelectedSerie(selectedSerie);
 		}
-		
 	}
 	
 	private JButton getOkButton() {

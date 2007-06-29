@@ -34,6 +34,10 @@ import ted.ui.TableRenderer;
 public class EpisodeChooserPanel extends JPanel
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8763021531797512857L;
 	private JTable episodesTable;
 	private JScrollPane episodesScrollPane;
 	private EpisodesTableModel episodesTableModel = new EpisodesTableModel();
@@ -59,6 +63,8 @@ public class EpisodeChooserPanel extends JPanel
 			selectedStructure = episodesTableModel.getStandardStructureAt(selectedRow);
 		
 			// TODO: if double click, add the show with selected season/episode
+			// beware, this panel is used in multiple dialogs. make sure they all implement the
+			// callback function
 			if (evt.getClickCount() > 1)
 			{
 			
@@ -124,7 +130,7 @@ public class EpisodeChooserPanel extends JPanel
 
 	public void setSeasonEpisodes(Vector seasonEpisodes)
 	{
-		this.episodesTableModel.setSeasonEpisodes(seasonEpisodes);		
+		this.episodesTableModel.setSeasonEpisodes(seasonEpisodes);	
 		ttpr.setMaximum(this.episodesTableModel.getMaxQuality());
 	}
 
@@ -150,6 +156,7 @@ public class EpisodeChooserPanel extends JPanel
 
 	public StandardStructure getSelectedStructure() 
 	{
+		// TODO: display error message when no structure is selected?
 		return this.selectedStructure;
 	}
 }
