@@ -67,6 +67,7 @@ public class EpisodeParserThread extends Thread
 					DailyDate sRow = (DailyDate)seasonEpisodes.get(0);
 					DailyDate upcoming = new DailyDate();
 					upcoming.setDate(sRow.getDate());
+					upcoming.setDay(upcoming.getDay()+1);
 					upcoming.setQuality(0);
 					upcoming.setPublishDate(null);
 					

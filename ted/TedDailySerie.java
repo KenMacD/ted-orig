@@ -39,7 +39,7 @@ public class TedDailySerie extends TedSerie
 		latestDownloadDate = d;
 	}
 	
-	public void setLatestDownloadDateInMillis(long millis)
+	public void setLatestDownloadDate(long millis)
 	{
 		GregorianCalendar d = new GregorianCalendar();
 		d.setTimeInMillis(millis);

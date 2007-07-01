@@ -111,10 +111,11 @@ public class DatePanel extends JPanel
 	public void setDate(long date) 
 	{
 		Calendar c = new GregorianCalendar();
+		Calendar c2 = new GregorianCalendar();
 		c.setTimeInMillis(date);
 		
 		// update years in datepanel according to date to display
-		int year2 = c.get(Calendar.YEAR);
+		int year2 = c2.get(Calendar.YEAR);
 		yearOffset = year2;
 		years = initString(year2, year2+5);
 		ComboBoxModel jFromBreakYearModel = new DefaultComboBoxModel(

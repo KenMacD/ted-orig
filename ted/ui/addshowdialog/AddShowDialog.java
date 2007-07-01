@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -239,7 +240,8 @@ public class AddShowDialog extends JDialog implements ActionListener
 				if (selectedSerie.isDaily())
 				{
 					DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
-					((TedDailySerie)selectedSerie).setLatestDownloadDate(dd.getDay(), dd.getMonth(), dd.getYear());
+					GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay()-1);
+					((TedDailySerie)selectedSerie).setLatestDownloadDate(d.getTimeInMillis());
 				}
 				else
 				{

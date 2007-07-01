@@ -73,8 +73,9 @@ public class SeasonEpisodePanel extends JPanel
 			e.printStackTrace();
 		}
 		
-		this.episodeSpinnerModel.setMinimum(0);
-		this.seasonSpinnerModel.setMinimum(0);
+		Integer value = new Integer(0);
+		this.episodeSpinnerModel.setMinimum(value);
+		this.seasonSpinnerModel.setMinimum(value);
 	}
 
 	/**

@@ -122,6 +122,7 @@ public class GeneralPanel extends JPanel
 			this.dailyPanel.setVisible(true);
 			this.dailyPanel.setValues((TedDailySerie) serie);
 			this.seasonEpisodePanel.setVisible(false);
+			this.labelLookingFor.setText(Lang.getString("TedEpisodeDialog.LabelDailyInfo"));
 		}
 		else
 		{

@@ -49,7 +49,7 @@ public class DailyPanel extends JPanel
 			{
 				
 				FormLayout thisLayout = new FormLayout(
-					"max(p;5dlu), max(p;5dlu), max(p;5dlu), 15dlu:grow, max(p;5dlu)",
+					"max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, 15dlu:grow, max(p;5dlu)",
 					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu)");
 				this.setLayout(thisLayout);
 				this.setPreferredSize(new java.awt.Dimension(290, 80));
@@ -62,11 +62,12 @@ public class DailyPanel extends JPanel
 				this.add(episodeSpinner, new CellConstraints("3, 2, 1, 1, default, default"));
 				episodeSpinner.setModel(episodeSpinnerModel);
 				episodeSpinner.setPreferredSize(new java.awt.Dimension(62, 21));
-				this.episodeSpinnerModel.setMinimum(1);
+				Integer value = new Integer(1);
+				this.episodeSpinnerModel.setMinimum(value);
 			}
 			{
 				maxEpisodesLabel2 = new JLabel();
-				this.add(maxEpisodesLabel2, new CellConstraints("4, 2, 1, 1, default, default"));
+				this.add(maxEpisodesLabel2, new CellConstraints("5, 2, 1, 1, default, default"));
 				maxEpisodesLabel2.setText(Lang.getString("TedEpisodeDialog.LabelDailyMaxEpisodes2"));
 			}
 		} catch (Exception e) {

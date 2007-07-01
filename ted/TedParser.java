@@ -722,7 +722,7 @@ public class TedParser
 			if(newDate>oldDate)
 			{
 				oldDate=newDate;
-				((TedDailySerie)serie).setLatestDownloadDateInMillis(oldDate);
+				((TedDailySerie)serie).setLatestDownloadDate(oldDate);
 			}
 			
 			try 
@@ -1156,7 +1156,7 @@ public class TedParser
 			return null;
 		}
 		
-		if (se.getSeason() < 50 && se.getEpisode() < 50)
+		if (!(serie.getName().equals(""+se.getSeason())) && se.getSeason() < 50 && se.getEpisode() < 50)
 		{
 			return se;
 		}
