@@ -330,6 +330,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 				.getResource("icons/help.png")));
 			jHelpButton.setBounds(11, 380, 28, 28);
 			jHelpButton.addActionListener(this);
+			jHelpButton.setToolTipText(Lang.getString("TedGeneral.ButtonHelpToolTip"));
 		}
 		return jHelpButton;
 	}
@@ -337,7 +338,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JLabel getSelectShowLabel() {
 		if (selectShowLabel == null) {
 			selectShowLabel = new JLabel();
-			selectShowLabel.setText("Select a show");
+			selectShowLabel.setText(Lang.getString("TedAddShowDialog.LabelSelectShow"));
 		}
 		return selectShowLabel;
 	}
@@ -346,7 +347,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 		if (selectEpisodeLabel == null) {
 			selectEpisodeLabel = new JLabel();
 			selectEpisodeLabel
-				.setText("Select the episode you want to download");
+				.setText(Lang.getString("TedAddShowDialog.LabelSelectEpisode"));
 		}
 		return selectEpisodeLabel;
 	}
@@ -363,7 +364,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JButton getButtonAddEmptyShow() {
 		if (buttonAddEmptyShow == null) {
 			buttonAddEmptyShow = new JButton();
-			buttonAddEmptyShow.setText("Add your own show");
+			buttonAddEmptyShow.setText(Lang.getString("TedAddShowDialog.ButtonAddCustomShow"));
 			buttonAddEmptyShow.addActionListener(this);
 			buttonAddEmptyShow.setActionCommand("addempty");
 		}

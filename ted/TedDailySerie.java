@@ -2,6 +2,9 @@ package ted;
 
 import java.util.GregorianCalendar;
 
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
+
 public class TedDailySerie extends TedSerie
 {
 
@@ -80,5 +83,13 @@ public class TedDailySerie extends TedSerie
 	public void setMaxDownloads(int maxDownloads) 
 	{
 		this.maxDownloads = maxDownloads;
+	}
+	
+	public String getSearchForString() 
+	{
+		DailyDate dd = new DailyDate();
+		dd.setDate(this.latestDownloadDate);
+		
+		return this.getMaxDownloads() + " " + Lang.getString("TedTableModel.LabelDaily") +" " + dd.toString();
 	}
 }

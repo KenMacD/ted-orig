@@ -34,7 +34,7 @@ public class ShowsTableModel extends AbstractTableModel
 	 ****************************************************/
 	private static final long serialVersionUID = -7286125312855308470L;
 	private Vector tableData = new Vector();
-	private String[] tableColumns = {"Show"};
+	private String[] tableColumns = {""};
 	
 	/****************************************************
 	 * PUBLIC METHODS

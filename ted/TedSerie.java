@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import ted.datastructures.SeasonEpisode;
+
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -1011,5 +1013,13 @@ public class TedSerie implements Serializable
 	public boolean isDaily()
 	{
 		return this.isDaily;
+	}
+
+	public String getSearchForString() 
+	{
+		SeasonEpisode se = new SeasonEpisode();
+		se.setSeason(this.currentSeason);
+		se.setEpisode(this.currentEpisode);
+		return se.toString();
 	}
 }

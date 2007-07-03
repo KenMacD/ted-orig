@@ -6,6 +6,7 @@ import java.net.URL;
 
 import javax.swing.JEditorPane;
 
+import ted.Lang;
 import ted.TedSerie;
 
 
@@ -22,7 +23,7 @@ public class ShowInfoThread extends Thread
 	
 	public void run()
 	{
-		showInfoPane.setText("Loading show information...");
+		showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.LabelLoadingInfo"));
 		if(currentSerie!=null)
 		{	
 			if (currentSerie.getTVcom() != "" && currentSerie.getTVcom() != null)
@@ -35,18 +36,17 @@ public class ShowInfoThread extends Thread
 					//this.addShowDialog.repaint();
 				} catch (MalformedURLException e)
 				{
-					// TODO Auto-generated catch block
-					showInfoPane.setText("Error retrieving show information. Malformed URL.");
+					showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.ErrorMalformedURL"));
 					e.printStackTrace();
-				} catch (IOException e)
+				} 
+				catch (IOException e)
 				{
-					// TODO Auto-generated catch block
-					showInfoPane.setText("Error retrieving show information. Cannot read information page. Check your internet connection.");
+					showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.ErrorIO"));
 					e.printStackTrace();
 				}
 				catch (Exception e)
 				{
-					showInfoPane.setText("Error retrieving show information. Cannot read information page. Check your internet connection.");
+					showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.ErrorUnknown"));
 					e.printStackTrace();
 				}
 			}

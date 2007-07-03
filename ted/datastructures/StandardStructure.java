@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import ted.Lang;
+
 public class StandardStructure 
 {
 	int quality = 0;
@@ -45,7 +47,7 @@ public class StandardStructure
 		}
 		else
 		{
-			return "unknown";
+			return Lang.getString("TedAddShowDialog.EpisodesTable.Upcoming");
 		}
 	}
 	

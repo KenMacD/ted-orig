@@ -75,7 +75,8 @@ public class DailyDate  extends StandardStructure implements Comparable
 	
 	public String toString()
 	{
-		return "" + Year + "-" + Month + "-" + Day; 
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+		return df.format(this.getDate().getTime());
 	}
 
 	public int getSeeders() 

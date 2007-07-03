@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -38,6 +39,8 @@ import ted.datastructures.StandardStructure;
 public class GeneralPanel extends JPanel
 {
 	private int width = 400;
+	private JSeparator jSeparator1;
+	private JSeparator jSeparator4;
 	private JButton popupEpisodeDialogButton;
 	private int height = 300;
 	//private JPanel generalPanel;
@@ -65,7 +68,7 @@ public class GeneralPanel extends JPanel
 			this.setPreferredSize(new Dimension(width, height));
 			FormLayout lookFeelPanelLayout = new FormLayout(
 				"max(p;6dlu), 15dlu:grow, max(p;16dlu)",
-				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
+				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), 17dlu");
 			this.setLayout(lookFeelPanelLayout);
 
 			labelName = new JLabel();
@@ -78,7 +81,7 @@ public class GeneralPanel extends JPanel
 			textName.setBounds(133, 105, 322, 21);
 
 			checkUpdatePresets = new JCheckBox();
-			this.add(checkUpdatePresets, new CellConstraints("2, 9, 1, 1, default, default"));
+			this.add(checkUpdatePresets, new CellConstraints("2, 10, 1, 1, default, default"));
 			checkUpdatePresets.setText(Lang
 				.getString("TedEpisodeDialog.CheckAutoUpdate"));
 			checkUpdatePresets.setOpaque(false);
@@ -98,9 +101,18 @@ public class GeneralPanel extends JPanel
 				popupEpisodeDialogButton = new JButton();
 				this.add(popupEpisodeDialogButton, new CellConstraints("2, 8, 1, 1, default, default"));
 				popupEpisodeDialogButton
-					.setText("Select from available episodes");
+					.setText(Lang.getString("TedEpisodeDialog.ButtonSelectFromList"));
+				popupEpisodeDialogButton.setToolTipText(Lang.getString("TedEpisodeDialog.ButtonSelectFromListToolTip"));
 				popupEpisodeDialogButton.setActionCommand("popupepisodedialog");
 				popupEpisodeDialogButton.addActionListener(editShowDialog);
+			}
+			{
+				jSeparator4 = new JSeparator();
+				this.add(jSeparator4, new CellConstraints("2, 5, 1, 1, default, default"));
+			}
+			{
+				jSeparator1 = new JSeparator();
+				this.add(jSeparator1, new CellConstraints("2, 9, 1, 1, default, default"));
 			}
 
 		}
@@ -122,7 +134,6 @@ public class GeneralPanel extends JPanel
 			this.dailyPanel.setVisible(true);
 			this.dailyPanel.setValues((TedDailySerie) serie);
 			this.seasonEpisodePanel.setVisible(false);
-			this.labelLookingFor.setText(Lang.getString("TedEpisodeDialog.LabelDailyInfo"));
 		}
 		else
 		{

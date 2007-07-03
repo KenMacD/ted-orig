@@ -141,6 +141,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		jHelpButton.setActionCommand("Help");
 		jHelpButton.setBounds(11, 380, 28, 28);
 		jHelpButton.addActionListener(this);
+		jHelpButton.setToolTipText(Lang.getString("TedGeneral.ButtonHelpToolTip"));
 		{
 			jButton1 = new JButton();
 			getContentPane().add(jButton1);

@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import ted.Lang;
+
 public class SeasonEpisode extends StandardStructure implements Comparable
 {
 	private int season = 0;
@@ -62,17 +64,9 @@ public class SeasonEpisode extends StandardStructure implements Comparable
 		return 0;
 	}
 	
-	/**
-	 * @return Returns the publishDate.
-	 */
-	/*public String getFormattedPublishDate()
-	{
-		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-		return df.format(this.getPublishDate());
-	}*/
 	
 	public String toString()
 	{
-		return "Season: "+ this.season + ", Episode: " + this.episode;
+		return Lang.getString("TedTableModel.Season")+": "+ this.season + ", " + Lang.getString("TedTableModel.Episode")+": "+ this.episode;
 	}
 }

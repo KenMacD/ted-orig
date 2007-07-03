@@ -95,7 +95,7 @@ public class TedTable extends JTable
 	{
 //		 set all preferred sizes of the columns
 		TableColumn	column;				
-		for (int i = 0; i < 7; i++) 
+		for (int i = 0; i < serieTableModel.getColumnCount(); i++) 
 		{
 		    column = this.getColumnModel().getColumn(i);
 		    if (i == 0) // icon column
@@ -103,13 +103,18 @@ public class TedTable extends JTable
 		    	column.setMaxWidth(20);
 				column.setMinWidth(20);
 		    }
-		    if (i == 2 || i == 3 || i == 4) // number columns
+		    if (i == 2) // season/episode column
+		    {
+		    	column.setPreferredWidth(60);
+		    	column.setMinWidth(150);
+		    }
+		    if (i == 3) // number columns
 		    {
 		    	column.setPreferredWidth(30);
 		    	column.setMinWidth(75);
 		    	//column.setMaxWidth(75);
 		    } 
-		    else if (i == 5) // progress column
+		    else if (i == 4) // progress column
 		    {
 		    	column.setPreferredWidth(20);
 		    	column.setMinWidth(75);
