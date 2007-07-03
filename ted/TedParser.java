@@ -1050,7 +1050,7 @@ public class TedParser
 			String match = mDate.group();
 			String split[] = match.split("-");
 			dd.setYear(Integer.parseInt(split[0]));
-			dd.setMonth(Integer.parseInt(split[1]));
+			dd.setMonth(Integer.parseInt(split[1])-1);
 			dd.setDay(Integer.parseInt(split[2]));
 		}
 		

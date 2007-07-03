@@ -78,7 +78,7 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener
 				
 			}
 			{
-				this.setSize(385, 295);
+				this.setSize(393, 307);
 				
 //				Get the screen size
 			    Toolkit toolkit = Toolkit.getDefaultToolkit();
