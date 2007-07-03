@@ -144,9 +144,7 @@ public class TedTable extends JTable
 		int viewRow = this.getSelectedRow();
 		int row = viewRow;
 		//int row = this.convertRowIndexToModel(viewRow);
-		TedSerie selectedserie = selectedserie = serieTableModel.getSerieAt(row);
-		
-		
+		TedSerie selectedserie = serieTableModel.getSerieAt(row);	
 		
 		// else show the EpisodeDialog of the selected show
 		if (evt.getClickCount() == 2)
@@ -274,6 +272,9 @@ public class TedTable extends JTable
 		}
 	}
 
+	/**
+	 * Update all texts in the tedtable
+	 */
 	public void updateText()
 	{
 		serieTableModel.updateText();

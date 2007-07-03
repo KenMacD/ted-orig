@@ -12,16 +12,14 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import ted.datastructures.DailyDate;
-import ted.datastructures.SeasonEpisode;
-import ted.datastructures.StandardStructure;
-
 import net.sf.torrentsniffer.bencoding.BencodingException;
 import net.sf.torrentsniffer.torrent.TorrentException;
 import net.sf.torrentsniffer.torrent.TorrentFile;
 import net.sf.torrentsniffer.torrent.TorrentImpl;
 import net.sf.torrentsniffer.torrent.TorrentInfo;
 import net.sf.torrentsniffer.torrent.TorrentState;
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
 
 import com.sun.cnpi.rss.elements.Channel;
 import com.sun.cnpi.rss.elements.Item;

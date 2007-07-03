@@ -137,25 +137,10 @@ public class ShowsTableModel extends AbstractTableModel
 	{
 		fireTableDataChanged();		
 	}
-	
-	/*public Class getColumnClass(int columnIndex)
-	{
-		// make sure we display the icon of the status correctly
-		// looks like this is considered a dirty hack but who cares :D
-		if (columnIndex == 0)
-		{
-			return ImageIcon.class;
-		}
-		else if (columnIndex == 5)
-		{
-			return JProgressBar.class;
-		}
-		else
-		{
-			return Object.class;
-		}
-	}*/
 
+	/**
+	 * Update displayed text
+	 */
 	public void updateText()
 	{
 		

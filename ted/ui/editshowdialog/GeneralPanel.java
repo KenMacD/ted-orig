@@ -1,27 +1,22 @@
 package ted.ui.editshowdialog;
-import com.jgoodies.forms.layout.CellConstraints;
-
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-
-import com.jgoodies.forms.layout.FormLayout;
 
 import ted.Lang;
 import ted.TedDailySerie;
 import ted.TedSerie;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
-import ted.datastructures.StandardStructure;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 
 /**
@@ -36,8 +31,17 @@ import ted.datastructures.StandardStructure;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
+/**
+ * Panel that displays general settings for a tedshow
+ * @author roel
+ *
+ */
 public class GeneralPanel extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7836753687519373743L;
 	private int width = 400;
 	private JSeparator jSeparator1;
 	private JSeparator jSeparator4;
@@ -123,6 +127,10 @@ public class GeneralPanel extends JPanel
 		
 	}
 
+	/**
+	 * Add values of a show to the general panel
+	 * @param serie
+	 */
 	public void setValues(TedSerie serie)
 	{
 		this.textName.setText(serie.getName());
@@ -146,8 +154,12 @@ public class GeneralPanel extends JPanel
 		}
 	}
 
+	/**
+	 * @return Wheter all values in the panel are valid
+	 */
 	public boolean checkValues() 
 	{
+		// check show name
 		if (textName.getText().equals("")) //$NON-NLS-1$
 		{
 			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogShowName")); //$NON-NLS-1$
@@ -156,6 +168,10 @@ public class GeneralPanel extends JPanel
 		return true;
 	}
 
+	/**
+	 * Save filled in values into the show
+	 * @param currentSerie
+	 */
 	public void saveValues(TedSerie currentSerie) 
 	{
 		if (this.checkValues())
@@ -178,16 +194,27 @@ public class GeneralPanel extends JPanel
 		}
 	}
 
+	/**
+	 * @return The name of the show
+	 */
 	public String getShowName() 
 	{
 		return this.textName.getText();
 	}
 
+	/**
+	 * Set a date in the general panel
+	 * @param selectedStructure
+	 */
 	public void setEpisode(DailyDate selectedStructure) 
 	{
 		this.dailyPanel.setDate(selectedStructure.getDate().getTimeInMillis());
 		
 	}
+	/**
+	 * Set a season/episode in the general panel
+	 * @param selectedStructure
+	 */
 	public void setEpisode(SeasonEpisode selectedStructure) 
 	{		
 		this.seasonEpisodePanel.setSeasonEpisode(selectedStructure.getSeason(), selectedStructure.getEpisode());

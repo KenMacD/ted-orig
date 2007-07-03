@@ -28,13 +28,13 @@ public class TedXMLParser
 	}
 
 	/**
-	 * Use this to read the XML file for further use
-	 * @param args The location of the XML file
+	 * Use this to read the XML file from a file for further use
+	 * @param args The location of the XML file (Location in filesystem)
 	 * @return Element with contents of the XML file or null if file not exists
 	 */
-	public Element readXMLFile(String args)
+	public Element readXMLFromFile(String args)
 	{	
-		// get the factory
+//		 get the factory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
 		// using factory get an instance of document builder
@@ -47,6 +47,45 @@ public class TedXMLParser
 
 			// parse using builder to get DOM representation of the XML file
 			Document dom = db.parse(file);
+			
+			return dom.getDocumentElement();
+		} 
+		catch (SAXException e1) 
+		{
+			TedLog.error(e1, "XML parsing error, shows.xml couldn't be found");
+		} 
+		catch (IOException e1) 
+		{
+			TedLog.error(e1, "XML parsing error, shows.xml couldn't be read");
+		} 
+		catch (ParserConfigurationException e1) 
+		{
+			TedLog.error(e1, "XML parser error");
+		}
+		
+		// if file not exists return null
+		return null;
+	}
+	
+	/**
+	 * Use this to read the XML file from a url for further use
+	 * @param args The location of the XML file (URL!!)
+	 * @return Element with contents of the XML file or null if file not exists
+	 */
+	public Element readXMLFromURL(String url)
+	{
+//		 get the factory
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+		// using factory get an instance of document builder
+		DocumentBuilder db;
+		
+		try 
+		{
+			db = dbf.newDocumentBuilder();
+
+			// parse using builder to get DOM representation of the XML file
+			Document dom = db.parse(url);
 			
 			return dom.getDocumentElement();
 		} 

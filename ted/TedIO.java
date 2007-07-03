@@ -452,7 +452,7 @@ public class TedIO
 		TedLog.debug("Checking for new version of show definitions XML"); //$NON-NLS-1$
 		
 		TedXMLParser parser = new TedXMLParser();
-		Element el = parser.readXMLFile(this.XMLurl);
+		Element el = parser.readXMLFromURL(this.XMLurl);
 		if (el != null)
 		{
 			onlineversion = parser.getVersion(el);
@@ -557,7 +557,7 @@ public class TedIO
 	    	int rows = mainTable.getRowCount();
 	
 			TedXMLParser parser = new TedXMLParser();
-			Element el = parser.readXMLFile(location);
+			Element el = parser.readXMLFromURL(location);
 			
 			for(int i=0; i<rows; i++)
 			{		
@@ -652,7 +652,7 @@ public class TedIO
 			{
 				// get the version of the XML file
 				TedXMLParser parser = new TedXMLParser();
-				Element el = parser.readXMLFile(XML_SHOWS_FILE);
+				Element el = parser.readXMLFromURL(XML_SHOWS_FILE);
 				onlineVersion = parser.getVersion(el);
 			}
 			

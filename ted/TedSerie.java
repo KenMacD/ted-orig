@@ -803,17 +803,6 @@ public class TedSerie implements Serializable
 	}
 	
 	/**
-	 * @return Return if this is a serie (true) or a watcher (false)
-	 
-	public boolean getIsSerie() 
-	{
-		if(this.getClass().toString().equals("class ted.TedWatcher")) //$NON-NLS-1$
-			return false;
-		else
-			return true;
-	}*/
-
-	/**
 	 * Set the feeds for this serie
 	 * @param serieFeeds
 	 */
@@ -1015,6 +1004,9 @@ public class TedSerie implements Serializable
 		return this.isDaily;
 	}
 
+	/**
+	 * @return A text that displays where this show is searching for
+	 */
 	public String getSearchForString() 
 	{
 		SeasonEpisode se = new SeasonEpisode();

@@ -185,12 +185,16 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		Vector items = new Vector();
 		
 		TedXMLParser p = new TedXMLParser();
-		Element e = p.readXMLFile(TedIO.XML_SHOWS_FILE);
+		Element e = p.readXMLFromFile(TedIO.XML_SHOWS_FILE);
 		items = p.getPopupItems(e);
 		
 		return new ted.TedPopupMenu(this, items);
 	}
 
+	/**
+	 * Show a specific panel
+	 * @param command
+	 */
 	public void showPanel(String command)
 	{
 		CardLayout cl = (CardLayout)(jShowTabs.getLayout());
@@ -255,15 +259,16 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				EpisodeChooserDialog ecd = new EpisodeChooserDialog(this);
 				ecd.loadEpisodes(temp);
 				ecd.setVisible(true);
-				
-				// get selected episode
-				
-				// set it to settings panel
 			}
 		}
 		
 	}
 
+	/**
+	 * Save the values of the panels in a show
+	 * @param show
+	 * @return if the filled in values were valid
+	 */
 	private boolean saveShow(TedSerie show) 
 	{
 		if (this.generalPanel.checkValues() && this.feedsPanel.checkValues() && this.filterPanel.checkValues() && this.schedulePanel.checkValues())
@@ -284,23 +289,38 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		
 	}
 
+	/**
+	 * @return The name of the show
+	 */
 	public String getShowName() 
 	{
 		return this.generalPanel.getShowName();
 	}
 
+	/**
+	 * Add keywords to the show
+	 * @param words
+	 */
 	public void addKeywords(String words) 
 	{
 		this.filterPanel.addKeywords(words);
 		
 	}
 
+	/**
+	 * Add a feed to the show
+	 * @param url
+	 */
 	public void addFeed(String url) 
 	{
 		this.feedsPanel.addFeed(url);
 		
 	}
 
+	/**
+	 * Set a dailydate or a seasonepisode as current episode for the displayed show
+	 * @param selectedStructure
+	 */
 	public void setEpisode(StandardStructure selectedStructure) 
 	{
 		if (this.currentSerie.isDaily())

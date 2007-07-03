@@ -3,7 +3,6 @@ package ted;
 import java.util.GregorianCalendar;
 
 import ted.datastructures.DailyDate;
-import ted.datastructures.SeasonEpisode;
 
 public class TedDailySerie extends TedSerie
 {
@@ -90,6 +89,13 @@ public class TedDailySerie extends TedSerie
 		DailyDate dd = new DailyDate();
 		dd.setDate(this.latestDownloadDate);
 		
-		return this.getMaxDownloads() + " " + Lang.getString("TedTableModel.LabelDaily") +" " + dd.toString();
+		String text = "TedTableModel.LabelDailySingle";
+		
+		if (this.maxDownloads > 1)
+		{
+			text = "TedTableModel.LabelDailyMultiple";
+		}
+		
+		return Lang.getString(text) +" " + dd.toString();
 	}
 }

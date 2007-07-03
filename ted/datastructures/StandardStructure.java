@@ -60,6 +60,9 @@ public class StandardStructure
 		c.setTimeInMillis(publishDate);
 		this.publishDate = c.getTime();
 	}
+	/**
+	 * @param publishDate The Pubish date
+	 */
 	public void setPublishDate(Date publishDate)
 	{
 		this.publishDate = publishDate;

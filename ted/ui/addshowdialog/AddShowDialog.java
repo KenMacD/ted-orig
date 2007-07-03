@@ -3,8 +3,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -63,8 +61,6 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JTable showsTable;
 	private JButton cancelButton;
 	private JButton okButton;
-	//private JTable episodesTable;
-	//private JScrollPane episodesScrollPane;
 	private JScrollPane showsScrollPane;
 	private ShowsTableModel showsTableModel;
 	private TedSerie selectedSerie;
@@ -157,12 +153,16 @@ public class AddShowDialog extends JDialog implements ActionListener
 		}
 	}
 	
+	/**
+	 * Read the shownames from the xml file
+	 * @return Vector with names
+	 */
 	private Vector readShowNames()
 	{
 		Vector names = new Vector();		
 		
 		TedXMLParser parser = new TedXMLParser();
-		Element shows = parser.readXMLFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+		Element shows = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 		
 		if(shows!=null)
 			names = parser.getNames(shows);
@@ -180,19 +180,26 @@ public class AddShowDialog extends JDialog implements ActionListener
 		return showsScrollPane;
 	}
 	
+	/**
+	 * Called whenever the selection of a show is changed in the dialog
+	 */
 	private void showsTableSelectionChanged()
 	{
+		// get the selected show
 		int selectedRow = showsTable.getSelectedRow();
 		if (selectedRow >= 0)
 		{
+			// get the simple info of the show
 			SimpleTedSerie selectedShow = this.showsTableModel.getSerieAt(selectedRow);
 			this.showNameLabel.setText(selectedShow.getName());
 			
+			// get the details of the show
 			TedXMLParser parser = new TedXMLParser();
-			Element series = parser.readXMLFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+			Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 			
 			TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
 			
+			// retrieve the show info and the episodes from the web
 			ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
 			sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
 			EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie);
@@ -201,6 +208,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 			sit.start();
 			ept.start();	
 			
+			// set the selected show
 			this.setSelectedSerie(selectedSerie);
 		}
 	}
@@ -235,8 +243,6 @@ public class AddShowDialog extends JDialog implements ActionListener
 			if (selectedSerie != null)
 			{
 				// set season and episode settings
-				//selectedSerie.setCurrentEpisode(this.episodeChooserPanel.getSelectedEpisode());
-				//selectedSerie.setCurrentSeason(this.episodeChooserPanel.getSelectedSeason());
 				if (selectedSerie.isDaily())
 				{
 					DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
@@ -249,7 +255,11 @@ public class AddShowDialog extends JDialog implements ActionListener
 					selectedSerie.setCurrentEpisode(se.getEpisode());
 					selectedSerie.setCurrentSeason(se.getSeason());
 				}
+				
+				// add the serie
 				tedMain.addSerie(selectedSerie);
+				
+				// close the dialog
 				this.setVisible(false);
 			}
 		}
@@ -262,6 +272,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 		{
 			try 
 			{
+				// open the help page of ted
 				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Add_show"); //$NON-NLS-1$
 			} 
 			catch (Exception err)
@@ -271,8 +282,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 		}
 		else if (command.equals("addempty"))
 		{
-			// create an edit show dialog with an empty show and hide add show dialog
-			
+			// create an edit show dialog with an empty show and hide add show dialog		
 			TedSerie temp = new TedSerie();
 			EditShowDialog esd = new EditShowDialog(tedMain, temp, true);
 			this.setVisible(false);

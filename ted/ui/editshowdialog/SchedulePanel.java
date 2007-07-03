@@ -40,6 +40,10 @@ import ted.TedSerie;
 */
 public class SchedulePanel extends JPanel implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8342065043462454211L;
 	private int width = 400;
 	private JCheckBox jCheckThursday;
 	private JComboBox jFromBreakDay;

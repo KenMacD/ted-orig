@@ -960,7 +960,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 		Vector items = new Vector();
 		
 		TedXMLParser p = new TedXMLParser();
-		Element e = p.readXMLFile(TedIO.XML_SHOWS_FILE);
+		Element e = p.readXMLFromFile(TedIO.XML_SHOWS_FILE);
 		items = p.getPopupItems(e);
 		
 		//findRSSPopupMenu = new TedPopupMenu(this,items);
@@ -992,7 +992,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 		names.addElement(Lang.getString("TedEpisodeDialog.FeedsListSelectOne")); //$NON-NLS-1$
 		
 		TedXMLParser parser = new TedXMLParser();
-		Element shows = parser.readXMLFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+		Element shows = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 		
 		/*if(shows!=null)
 			//parser.getNames(shows, names);
@@ -1290,7 +1290,7 @@ public class TedEpisodeDialog extends javax.swing.JDialog
 			feedsTableModel.deleteAllRows();
 			
 			TedXMLParser parser = new TedXMLParser();
-			Element series = parser.readXMLFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+			Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 			TedSerie serie  = parser.getSerie(series, name);
 
 			if(serie!=null)

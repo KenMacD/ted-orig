@@ -10,9 +10,21 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -36,7 +48,6 @@ public class TedAboutDialog extends javax.swing.JDialog
 	 ****************************************************/
 	private static final long serialVersionUID = -4699341387814031284L;
 	private JPanel aboutPanel;
-	private JLabel labelWebsite;
 	private Image logo;
 	private double version;
 	
@@ -68,11 +79,6 @@ public class TedAboutDialog extends javax.swing.JDialog
 			this.getContentPane().add(aboutPanel, BorderLayout.CENTER);
 			Color background = new Color(63, 63, 63);
 			aboutPanel.setBackground(background);
-			{
-				labelWebsite = new JLabel();
-				aboutPanel.add(labelWebsite);
-				labelWebsite.setText("http://www.rulecam.net/ted/");
-			}
 		}
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -95,6 +101,7 @@ public class TedAboutDialog extends javax.swing.JDialog
 		g.setColor(Color.WHITE);
 		g.drawString("ted v" + version, 10, 170);
 		g.drawString("Created by Roel and Joost", 10, 190);
+		g.drawString(Lang.getString("Lang.TranslatorCredits"), 10, 210);
 		String s1 = "The authors of this software can't be held";
 		String s2 = "responsible for any damage or illegal usage";
 		String s3 = "you may experience";

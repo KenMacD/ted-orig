@@ -6,11 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JToolBar;
 
-import ted.TedConfigDialog;
 import ted.ui.ToolBarButton;
 
 public class EditShowToolBar extends JToolBar implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 293340525572515270L;
 	private ToolBarButton generalButton;
 	private ToolBarButton feedsButton;
 	private ToolBarButton filterButton;
