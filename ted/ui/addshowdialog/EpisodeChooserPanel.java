@@ -130,12 +130,14 @@ public class EpisodeChooserPanel extends JPanel
 
 	public void setSeasonEpisodes(Vector seasonEpisodes)
 	{
+		this.selectedStructure = null;
 		this.episodesTableModel.setSeasonEpisodes(seasonEpisodes);	
 		ttpr.setMaximum(this.episodesTableModel.getMaxQuality());
 	}
 
 	public void clear()
 	{
+		this.selectedStructure = null;
 		this.episodesTableModel.clear();
 		
 	}
