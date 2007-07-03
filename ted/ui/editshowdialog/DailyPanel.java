@@ -103,7 +103,10 @@ public class DailyPanel extends JPanel
 		if(episodes.intValue()>0)
 			this.episodeSpinner.setValue(""+episodes.intValue());
 		else
+		{
+			maxEpisodesLabel1.setText("");
 			this.episodeSpinner.setValue(Lang.getString("TedGeneral.All"));
+		}
 		
 	}
 	
