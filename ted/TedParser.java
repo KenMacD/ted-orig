@@ -718,25 +718,31 @@ public class TedParser
 		long newDate = 0;
 		for(int i=0; i<maxDownloads; i++)
 		{
+			// get the current daily date
 			dd = (DailyDate)dailyItems.get(i);
-			this.bestTorrentUrl = dd.getUrl(); 
-			
-			dd.setDay(dd.getDay()+1);
-			newDate = dd.getDate().getTimeInMillis();
-			
-			if(newDate>oldDate)
-			{
-				oldDate=newDate;
-				((TedDailySerie)serie).setLatestDownloadDate(oldDate);
-			}
+			// get url
+			this.bestTorrentUrl = dd.getUrl(); 	
 			
 			try 
 			{
-				downloadBest(serie);
-			} catch (Exception e)
+				downloadBest((TedDailySerie)serie, dd);
+			} 
+			catch (Exception e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			// add one day, to search for next episode
+			dd.setDay(dd.getDay()+1);
+			newDate = dd.getDate().getTimeInMillis();
+			
+			// when the new date is larger than the lastdownload date
+			if(newDate>oldDate)
+			{
+				// update olddate
+				oldDate=newDate;
+				((TedDailySerie)serie).setLatestDownloadDate(oldDate);
 			}
 		}
 	}
@@ -752,17 +758,14 @@ public class TedParser
 		foundTorrent = false;
 		if (this.bestTorrentUrl != null)
 		{
-			boolean isDaily = serie.isDaily(); //TODO: check still needed if watcher not is used?
 			int season = serie.getCurrentSeason();
 			int episode = serie.getCurrentEpisode();
 			
 			// download torrent
 			String fileName; 
 			
-			if(!isDaily)
-				fileName = serie.getName()+"s"+season+"e"+episode; //$NON-NLS-1$ //$NON-NLS-2$
-			else
-				fileName = serie.getName();
+			fileName = serie.getName()+"-s"+season+"_e"+episode; //$NON-NLS-1$ //$NON-NLS-2$
+			
 				
 			TedIO tio = new TedIO();
 			try
@@ -779,22 +782,12 @@ public class TedParser
 			String message;
 			
 			
-			if(!isDaily)
-				message = 	Lang.getString("TedParser.BalloonFoundTorrent1") + " " + season + " " + 
+			message = 	Lang.getString("TedParser.BalloonFoundTorrent1") + " " + season + " " + 
 							Lang.getString("TedParser.BalloonFoundTorrent2") + " " + episode + " " +
 							Lang.getString("TedParser.BalloonFoundTorrent3") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			else
-				message = Lang.getString("TedParser.BallonFoundEntry") + " " + serie.getName(); //$NON-NLS-1$
 			
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
-			
-			serie.setStatusString(Lang.getString("TedParser.SerieStatusDownloaded1") + " " + season + " " + Lang.getString("TedParser.SerieStatusDownloaded1") + " " + episode + ".", tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			
-			//ADD TO MONITOR W.I.P.
-			//TedFolderMonitor t = TedFolderMonitor.getInstance();
-			//t.addFileToMonitor(bestTorrentInfo.getName().toString());
-			
-			
+
 			// check if this episode is the break episode
 			if (serie.checkBreakEpisode(episode))
 			{
@@ -805,19 +798,16 @@ public class TedParser
 				foundTorrent = true;
 			}
 			
-			if(!isDaily)
-			{
-				// update serie to look for next episode
-				serie.setCurrentEpisode(episode+1);
-				serie.setCurrentSeason(season);
-			}
+			// update serie to look for next episode
+			serie.setCurrentEpisode(episode+1);
+			serie.setCurrentSeason(season);
 			
 			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 			
 			// save the shows
 			tMainDialog.saveShows();
 			
-//			 if no episode is found set the date of this serie
+			// if no episode is found set the date of this serie
 	        // otherwise ted checks again the whole feed
 	        if(foundTorrent)
 	        {
@@ -827,12 +817,64 @@ public class TedParser
 		        		serie.setStatus(TedSerie.STATUS_PAUSE);
 		        	}
 		        	
-		        	if(!serie.isDaily)
-		        	{
-		        		// but we have to parse the serie until we have all the availble torrents
-		        		ParseSerie(serie, tMainDialog);
-		        	}
+		        	// but we have to parse the serie until we have all the availble torrents
+		        	ParseSerie(serie, tMainDialog);
 	        }			
+		}
+		else
+		{
+			serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
+		}
+		
+		this.bestTorrentUrl = null;
+	}
+	private void downloadBest(TedDailySerie serie, DailyDate dd) throws Exception
+	{
+		foundTorrent = false;
+		if (this.bestTorrentUrl != null)
+		{	
+			// download torrent
+			String fileName; 
+			
+			// make filename containing the date
+			fileName = serie.getName()+"-"+dd.getYear()+"_"+(dd.getMonth()+1)+"_"+dd.getDay();
+				
+			TedIO tio = new TedIO();
+			try
+			{
+				tio.downloadTorrent(this.bestTorrentUrl, fileName);
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
+			
+			// announce to user and update serie
+			// everything went okay, notify user and save the changes
+			String message;
+			
+			message = Lang.getString("TedParser.BalloonFoundDailyTorrent1") + " " + dd.toString() + " "
+			+ Lang.getString("TedParser.BalloonFoundDailyTorrent2") + " "+ serie.getName(); //$NON-NLS-1$
+			
+			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
+
+			foundTorrent = true;
+			
+			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
+			
+			// save the shows
+			tMainDialog.saveShows();
+			
+			// if no episode is found set the date of this serie
+	        // otherwise ted checks again the whole feed
+	        if(foundTorrent)
+	        {
+		        	// we found something so we can pause the serie again
+		        	if (serie.isUseEpisodeSchedule())
+		        	{
+		        		serie.setStatus(TedSerie.STATUS_PAUSE);
+		        	}
+		    }			
 		}
 		else
 		{
