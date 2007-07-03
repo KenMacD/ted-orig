@@ -705,8 +705,14 @@ public class TedParser
 	{
 		Collections.sort(dailyItems);
 		
-		int maxDownloads = Math.min(dailyItems.size(), ((TedDailySerie)serie).getMaxDownloads());
-				
+		int maxDailyDownloads = ((TedDailySerie)serie).getMaxDownloads();
+		int maxDownloads;
+		if(maxDailyDownloads==0)
+			maxDownloads = dailyItems.size();
+		else
+			maxDownloads = Math.min(dailyItems.size(), maxDailyDownloads);
+		
+		
 		DailyDate dd;
 		long oldDate = ((TedDailySerie)serie).getLatestDownloadDateInMillis();
 		long newDate = 0;

@@ -22,7 +22,7 @@ public class TedDailySerie extends TedSerie
 		latestParseDate.setTimeInMillis(0);
 		latestDownloadDate = new GregorianCalendar();
 		latestDownloadDate.setTimeInMillis(0);
-		maxDownloads = 1;
+		maxDownloads = 0;
 	}
 	
 	public long getLatestDownloadDateInMillis()

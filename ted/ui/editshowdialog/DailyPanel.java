@@ -2,6 +2,7 @@ package ted.ui.editshowdialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 
 import ted.Lang;
@@ -38,7 +39,7 @@ public class DailyPanel extends JPanel
 	private JLabel maxEpisodesLabel2;
 	private JLabel maxEpisodesLabel1;
 	private JSpinner episodeSpinner;
-	private SpinnerNumberModel episodeSpinnerModel = new SpinnerNumberModel();
+	private SpinnerListModel episodeSpinnerModel;
 
 	public DailyPanel ()
 	{
@@ -60,11 +61,18 @@ public class DailyPanel extends JPanel
 				this.add(datePanel, new CellConstraints("2, 3, 5, 1, left, default"));
 				
 				episodeSpinner = new JSpinner();
+				String[] items = new String[21];
+				items[0]="all";
+				for(int i=1; i<21; i++)
+					items[i]=""+i;
+				episodeSpinnerModel = new SpinnerListModel(items);
+				
 				this.add(episodeSpinner, new CellConstraints("4, 2, 1, 1, default, default"));
+				
 				episodeSpinner.setModel(episodeSpinnerModel);
 				episodeSpinner.setPreferredSize(new java.awt.Dimension(62, 21));
-				Integer value = new Integer(1);
-				this.episodeSpinnerModel.setMinimum(value);
+				//Integer value = new Integer(1);
+				//this.episodeSpinnerModel.setMinimum(value);
 			}
 			{
 				maxEpisodesLabel2 = new JLabel();
@@ -92,7 +100,11 @@ public class DailyPanel extends JPanel
 		
 		// get number of episodes to download
 		Integer episodes = new Integer (serie.getMaxDownloads());
-		this.episodeSpinner.setValue(episodes);		
+		if(episodes.intValue()>0)
+			this.episodeSpinner.setValue(""+episodes.intValue());
+		else
+			this.episodeSpinner.setValue("all");
+		
 	}
 	
 	/**
@@ -108,7 +120,13 @@ public class DailyPanel extends JPanel
 		serie.setLatestDownloadDate(day, month, year);
 		
 		// get number of episodes to download
-		serie.setMaxDownloads(episodeSpinnerModel.getNumber().intValue());
+		int number;
+		Object value = episodeSpinner.getValue();
+		if(value.toString().equals("all"))
+			number = 0;
+		else number = Integer.parseInt(value.toString());
+		
+		serie.setMaxDownloads(number);
 		
 	}
 
