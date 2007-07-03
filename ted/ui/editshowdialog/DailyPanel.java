@@ -62,7 +62,7 @@ public class DailyPanel extends JPanel
 				
 				episodeSpinner = new JSpinner();
 				String[] items = new String[21];
-				items[0]="all";
+				items[0]=Lang.getString("TedGeneral.All");
 				for(int i=1; i<21; i++)
 					items[i]=""+i;
 				episodeSpinnerModel = new SpinnerListModel(items);
@@ -103,7 +103,7 @@ public class DailyPanel extends JPanel
 		if(episodes.intValue()>0)
 			this.episodeSpinner.setValue(""+episodes.intValue());
 		else
-			this.episodeSpinner.setValue("all");
+			this.episodeSpinner.setValue(Lang.getString("TedGeneral.All"));
 		
 	}
 	
@@ -122,7 +122,7 @@ public class DailyPanel extends JPanel
 		// get number of episodes to download
 		int number;
 		Object value = episodeSpinner.getValue();
-		if(value.toString().equals("all"))
+		if(value.toString().equals(Lang.getString("TedGeneral.All")))
 			number = 0;
 		else number = Integer.parseInt(value.toString());
 		

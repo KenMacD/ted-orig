@@ -74,11 +74,19 @@ public class TedDailySerie extends TedSerie
 		super.currentEpisode = -1;
 	}
 
+	/**
+	 * Returns an integer representing the number of entries ted should download at most
+	 * @return 0 represents "all", other integers are 'normal'
+	 */
 	public int getMaxDownloads() 
 	{
 		return maxDownloads;
 	}
 
+	/**
+	 * Sets an integer representing the number of entries ted should download at most
+	 * @param maxDownloads 0 0 represents "all", other integers are 'normal'
+	 */
 	public void setMaxDownloads(int maxDownloads) 
 	{
 		this.maxDownloads = maxDownloads;
