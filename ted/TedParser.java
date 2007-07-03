@@ -157,7 +157,7 @@ public class TedParser
 	        				else
 	        				{
 	        					DailyDate date = getDailyDateFromItem(item);	  
-	        					if(date!=null && ((((TedDailySerie)serie).getLatestDownloadDateInMillis()) < 
+	        					if(date!=null && ((((TedDailySerie)serie).getLatestDownloadDateInMillis()) <= 
 	        							date.getDate().getTimeInMillis()))
 	        					{
 	        						this.addDailyItem(item, serie);	
@@ -717,6 +717,7 @@ public class TedParser
 			dd = (DailyDate)dailyItems.get(i);
 			this.bestTorrentUrl = dd.getUrl(); 
 			
+			dd.setDay(dd.getDay()+1);
 			newDate = dd.getDate().getTimeInMillis();
 			
 			if(newDate>oldDate)

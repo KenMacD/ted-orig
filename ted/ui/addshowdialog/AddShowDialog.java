@@ -240,7 +240,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 				if (selectedSerie.isDaily())
 				{
 					DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
-					GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay()-1);
+					GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay());
 					((TedDailySerie)selectedSerie).setLatestDownloadDate(d.getTimeInMillis());
 				}
 				else
