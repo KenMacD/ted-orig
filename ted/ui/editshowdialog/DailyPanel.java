@@ -37,7 +37,6 @@ public class DailyPanel extends JPanel
 	private static final long serialVersionUID = 7912966362467037259L;
 	DatePanel datePanel;
 	private JLabel maxEpisodesLabel2;
-	private JLabel maxEpisodesLabel1;
 	private JSpinner episodeSpinner;
 	private SpinnerListModel episodeSpinnerModel;
 
@@ -51,14 +50,14 @@ public class DailyPanel extends JPanel
 			{
 				
 				FormLayout thisLayout = new FormLayout(
-					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, 15dlu:grow, max(p;5dlu)",
+					"max(p;5dlu), max(p;5dlu), 5dlu, 15dlu:grow, max(p;5dlu)",
 					"max(p;5dlu), max(p;5dlu), max(p;5dlu)");
 				this.setLayout(thisLayout);
 				this.setPreferredSize(new java.awt.Dimension(290, 67));
 			}
 			{
 				datePanel = new DatePanel();
-				this.add(datePanel, new CellConstraints("2, 3, 5, 1, left, default"));
+				this.add(datePanel, new CellConstraints("2, 3, 4, 1, left, default"));
 				
 				episodeSpinner = new JSpinner();
 				String[] items = new String[21];
@@ -67,7 +66,7 @@ public class DailyPanel extends JPanel
 					items[i]=""+i;
 				episodeSpinnerModel = new SpinnerListModel(items);
 				
-				this.add(episodeSpinner, new CellConstraints("4, 2, 1, 1, default, default"));
+				this.add(episodeSpinner, new CellConstraints("2, 2, 1, 1, default, default"));
 				
 				episodeSpinner.setModel(episodeSpinnerModel);
 				episodeSpinner.setPreferredSize(new java.awt.Dimension(62, 21));
@@ -76,13 +75,8 @@ public class DailyPanel extends JPanel
 			}
 			{
 				maxEpisodesLabel2 = new JLabel();
-				this.add(maxEpisodesLabel2, new CellConstraints("6, 2, 1, 1, default, default"));
+				this.add(maxEpisodesLabel2, new CellConstraints("4, 2, 1, 1, default, default"));
 				maxEpisodesLabel2.setText(Lang.getString("TedEpisodeDialog.LabelDailyMaxEpisodes2"));
-			}
-			{
-				maxEpisodesLabel1 = new JLabel();
-				this.add(maxEpisodesLabel1, new CellConstraints("2, 2, 1, 1, default, default"));
-				maxEpisodesLabel1.setText(Lang.getString("TedEpisodeDialog.LabelDailyMaxEpisodes1"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,7 +98,6 @@ public class DailyPanel extends JPanel
 			this.episodeSpinner.setValue(""+episodes.intValue());
 		else
 		{
-			maxEpisodesLabel1.setText("");
 			this.episodeSpinner.setValue(Lang.getString("TedGeneral.All"));
 		}
 		

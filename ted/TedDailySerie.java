@@ -97,9 +97,13 @@ public class TedDailySerie extends TedSerie
 		DailyDate dd = new DailyDate();
 		dd.setDate(this.latestDownloadDate);
 		
-		String text = "TedTableModel.LabelDailySingle";
+		String text;
+		if (this.getMaxDownloads() == 1)
+		{
+			text = "TedTableModel.LabelDailySingle";
+		}
 		
-		if (this.maxDownloads > 1)
+		else
 		{
 			text = "TedTableModel.LabelDailyMultiple";
 		}

@@ -44,6 +44,7 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem aboutItem;
 	
 	private TedMainDialog tMain;
+	private JMenu jMenu6;
 	
 	/**
 	 * Main menubar for ted
@@ -157,6 +158,12 @@ public class TedMainMenuBar extends JMenuBar
 			}
 		}
 		
+		// donate menu
+		jMenu6 = new JMenu();
+		this.add(jMenu6);
+		jMenu6.addActionListener(tMain);
+		jMenu6.setActionCommand("Donate");
+		
 		// Help Menu
 		jMenu5 = new JMenu();
 		this.add(jMenu5);
@@ -251,7 +258,7 @@ public class TedMainMenuBar extends JMenuBar
 	
 		webItem.setText(Lang.getString("TedMainMenuBar.Help.TedOnline")); //$NON-NLS-1$
 	
-		donateItem.setText(Lang.getString("TedMainMenuBar.Help.Donate")); //$NON-NLS-1$
+		this.donateItem.setText(Lang.getString("TedMainMenuBar.Help.Donate")); //$NON-NLS-1$
 		aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
 	
 		

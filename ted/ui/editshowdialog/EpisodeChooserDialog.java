@@ -62,11 +62,12 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener
 				okButton.setBounds(280, 238, 98, 28);
 				okButton.addActionListener(this);
 				okButton.setActionCommand("ok");
+				this.getRootPane().setDefaultButton(okButton);
 			}
 			{
 				cancelButton = new JButton();
 				this.add(cancelButton);
-				cancelButton.setText(Lang.getString("TedEpisodeDialog.ButtonCancel"));
+				cancelButton.setText(Lang.getString("TedGeneral.ButtonCancel"));
 				cancelButton.setBounds(189, 238, 84, 28);
 				cancelButton.addActionListener(this);
 				cancelButton.setActionCommand("cancel");

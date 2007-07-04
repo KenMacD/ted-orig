@@ -745,6 +745,7 @@ public class TedParser
 				((TedDailySerie)serie).setLatestDownloadDate(oldDate);
 			}
 		}
+		serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog);
 	}
 	
 	/**

@@ -216,9 +216,10 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JButton getOkButton() {
 		if (okButton == null) {
 			okButton = new JButton();
-			okButton.setText("Ok");
+			okButton.setText(Lang.getString("TedGeneral.ButtonAdd"));
 			okButton.setActionCommand("OK");
 			okButton.addActionListener(this);
+			this.getRootPane().setDefaultButton(okButton);
 		}
 		return okButton;
 	}
@@ -226,7 +227,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JButton getCancelButton() {
 		if (cancelButton == null) {
 			cancelButton = new JButton();
-			cancelButton.setText("Cancel");
+			cancelButton.setText(Lang.getString("TedGeneral.ButtonCancel"));
 			cancelButton.setActionCommand("Cancel");
 			cancelButton.addActionListener(this);
 		}

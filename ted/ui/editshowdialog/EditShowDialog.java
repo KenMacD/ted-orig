@@ -146,8 +146,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			jButton1 = new JButton();
 			getContentPane().add(jButton1);
 			jButton1.setActionCommand("cancel");
-			jButton1.setText(Lang.getString("TedEpisodeDialog.ButtonCancel"));
-			jButton1.setToolTipText(Lang.getString("TedEpisodeDialog.ButtonToolTipCancel"));
+			jButton1.setText(Lang.getString("TedGeneral.ButtonCancel"));
 			jButton1.setBounds(273, 380, 98, 28);
 			jButton1.addActionListener(this);
 		}
@@ -155,10 +154,17 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			button_Save = new JButton();
 			getContentPane().add(button_Save);
 			button_Save.setActionCommand("save");
-			button_Save.setText(Lang.getString("TedEpisodeDialog.ButtonSave"));
-			button_Save.setToolTipText(Lang.getString("TedEpisodeDialog.ButtonToolTipSave"));
+			if (this.newSerie)
+			{
+				button_Save.setText(Lang.getString("TedGeneral.ButtonAdd"));
+			}
+			else
+			{
+				button_Save.setText(Lang.getString("TedGeneral.ButtonSave"));
+			}
 			button_Save.setBounds(382, 380, 98, 28);
 			button_Save.addActionListener(this);
+			this.getRootPane().setDefaultButton(button_Save);
 		}
 		//jHelpButton.addActionListener(TCListener);
 		
