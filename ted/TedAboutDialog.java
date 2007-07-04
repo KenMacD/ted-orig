@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 /**
- * TED: Torrent Episode Downloader (2005 - 2006)
+ * TED: Torrent Episode Downloader (2005 - 2007)
  * 
  * This is the about dialog of ted, it shows some trivial information
  * 

@@ -69,10 +69,10 @@ public class TedParser
 	public void ParseSerie(TedSerie serie, TedMainDialog main)
 	{		
 		this.tMainDialog = main;
+		
 		// reset globals
 		foundTorrent = false;
 		double progress = 0;
-		//int toDo = 0;
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
 		this.bestTorrentState = null;
@@ -87,7 +87,6 @@ public class TedParser
 		TedSerieFeed currentFeed;
 		serie.setProgress(0, tMainDialog);
 		// walk through all the feeds for this show
-		//toDo += feeds.size();
 		
 		double progressPerFeed;
 		if(feeds.size()==0)
@@ -118,7 +117,6 @@ public class TedParser
 				
 				// create an RSS parser
 				parser = RssParserFactory.createDefault();
-				//parser.
 				
 				rss = parser.parse(urlc.getInputStream());
 				Channel channel = rss.getChannel();
@@ -154,7 +152,10 @@ public class TedParser
 	        				}
 	        				else
 	        				{
-	        					DailyDate date = getDailyDateFromItem(item);	  
+	        					// retrieve date from string
+	        					DailyDate date = getDailyDateFromItem(item);
+	        					// if date isn't found or date of item is older than latest downloaded item
+	        					// don't download item
 	        					if(date!=null && ((((TedDailySerie)serie).getLatestDownloadDateInMillis()) <= 
 	        							date.getDate().getTimeInMillis()))
 	        					{
@@ -310,7 +311,6 @@ public class TedParser
 			else
 			{	
 				// save found torrent to file
-				//String fileName = serie.getName()+"s"+season+"e"+episode;
 			
 				try
 				{
@@ -319,7 +319,6 @@ public class TedParser
 				catch (Exception e)
 				{
 					TedLog.error(e, "Error checking torrent"); //$NON-NLS-1$
-					//e.printStackTrace();
 				}
 			}
 		}
@@ -400,6 +399,12 @@ public class TedParser
 		
 	}
 	
+	/**
+	 * If the torrent of this satifies serie filters add it to the 
+	 * download array of the daily serie
+	 * @param item the item which has to be checked
+	 * @param serie the daily serie which filters the torrents has to satisfy 
+	 */
 	private void addDailyItem(Item item, TedSerie serie)
 	{
 		TedIO tIO = new TedIO();
@@ -410,8 +415,11 @@ public class TedParser
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
 		
+		// check seeders, size and keyword filters
 		checkIfBest(torrentUrl, serie);
 		
+		// if torrent satifies check if we havn't found a better torrent
+		// with the same date
 		if(this.bestTorrentUrl!=null)
 		{
 			DailyDate dd = getDailyDateFromItem(item);
@@ -422,7 +430,11 @@ public class TedParser
 		}
 	}
 	
-	
+	/**
+	 * Check if there isn't a better item already available selected for download 
+	 * @param dd the DailyDate which has to be compared to the other items in the
+	 * download array
+	 */
 	private void checkIfBestDaily(DailyDate dd) 
 	{
 		for(int i=0; i<dailyItems.size(); i++)
@@ -701,10 +713,16 @@ public class TedParser
 			return false;
 	}
 	
+	/**
+	 * For the given serie download at most the max number of shows the user has set up
+	 * from the download array
+	 * @param serie the serie for which the items have to be downloaded
+	 */
 	private void downloadBestDaily(TedSerie serie)
 	{
 		Collections.sort(dailyItems);
 		
+		// if 0 is selected download everything, otherwise the given number
 		int maxDailyDownloads = ((TedDailySerie)serie).getMaxDownloads();
 		int maxDownloads;
 		if(maxDailyDownloads==0)
@@ -829,6 +847,14 @@ public class TedParser
 		
 		this.bestTorrentUrl = null;
 	}
+	
+	/**
+	 * Downloads the currently best torrent to the userset location of this daily show
+	 * Announces download via balloon if succesful
+	 * @param serie a TedDailySerie
+	 * @param dd the DailyDate containing the download url
+	 * @throws Exception
+	 */
 	private void downloadBest(TedDailySerie serie, DailyDate dd) throws Exception
 	{
 		foundTorrent = false;
