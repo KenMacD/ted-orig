@@ -199,6 +199,10 @@ public class AddShowDialog extends JDialog implements ActionListener
 			
 			TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
 			
+			// create a new infoPane to (correctly) show the information
+			showInfoPane = null;
+			showInfoScrollPane.setViewportView(this.getShowInfoPane());
+			
 			// retrieve the show info and the episodes from the web
 			ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
 			sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
@@ -311,7 +315,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 			showInfoPane = new JTextPane();
 			showInfoPane.setContentType( "text/html" );
 			showInfoPane.setEditable( false );
-			showInfoPane.setPreferredSize(new java.awt.Dimension(325, 128));
+			//showInfoPane.setPreferredSize(new java.awt.Dimension(325, 128));
 			//showInfoPane.setText("jTextPane1");
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks
