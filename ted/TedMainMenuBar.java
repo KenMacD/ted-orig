@@ -42,6 +42,8 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem synchronizeMenuItem;
 	private JMenuItem RSSItem;
 	private JMenuItem aboutItem;
+	private JMenu supportMenu;
+	private JMenuItem buyDVDItem;
 	
 	private TedMainDialog tMain;
 	private JMenu jMenu6;
@@ -158,11 +160,21 @@ public class TedMainMenuBar extends JMenuBar
 			}
 		}
 		
-		// donate menu
-		jMenu6 = new JMenu();
-		this.add(jMenu6);
-		jMenu6.addActionListener(tMain);
-		jMenu6.setActionCommand("Donate");
+		// support menu
+		supportMenu = new JMenu();
+		this.add(supportMenu);
+		
+		// buy dvd item
+		buyDVDItem = new JMenuItem();
+		buyDVDItem.addActionListener(tMain);
+		buyDVDItem.setActionCommand("buydvd");
+		supportMenu.add(buyDVDItem);
+		
+		//donate!!
+		donateItem = new JMenuItem();
+		supportMenu.add(donateItem);
+		donateItem.setActionCommand("Donate"); //$NON-NLS-1$
+		donateItem.addActionListener(tMain);
 		
 		// Help Menu
 		jMenu5 = new JMenu();
@@ -200,11 +212,7 @@ public class TedMainMenuBar extends JMenuBar
 			webItem.setActionCommand("opensite"); //$NON-NLS-1$
 			webItem.addActionListener(tMain);
 			jMenu5.add(webItem);
-			// donate!!
-			donateItem = new JMenuItem();
-			jMenu5.add(donateItem);
-			donateItem.setActionCommand("Donate"); //$NON-NLS-1$
-			donateItem.addActionListener(tMain);
+			
 			// sperate
 			jSeparator1 = new JSeparator();
 			jMenu5.add(jSeparator1);
@@ -245,6 +253,9 @@ public class TedMainMenuBar extends JMenuBar
 		
 		logMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.ShowLog")); //$NON-NLS-1$
 		
+		// support menu
+		supportMenu.setText(Lang.getString("TedMainMenuBar.Support"));
+		buyDVDItem.setText(Lang.getString("TedMainMenuBar.Support.BuyDVDs"));
 		
 		// help menu
 		jMenu5.setText(Lang.getString("TedMainMenuBar.Help")); //$NON-NLS-1$

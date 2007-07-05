@@ -196,13 +196,12 @@ public class TedTable extends JTable
 	 */
 	public void setSelectedStatus(int status) 
 	{
-		int pos = this.getSelectedRow();
-		if (pos >= 0)
-		{
-			TedSerie selectedserie = serieTableModel.getSerieAt(pos);
-			selectedserie.setStatus(status);
-			selectedserie.setLastDatesToToday();
-		}		
+			TedSerie selectedserie = this.getSelectedShow();
+			if (selectedserie != null)
+			{
+				selectedserie.setStatus(status);
+				selectedserie.setLastDatesToToday();	
+			}
 	}
 
 	/**
@@ -212,6 +211,22 @@ public class TedTable extends JTable
 	public TedSerie getSerieAt(int i)
 	{
 		return serieTableModel.getSerieAt(i);
+	}
+	
+	/**
+	 * @return the selected show or null when no show is selected
+	 */
+	public TedSerie getSelectedShow()
+	{
+		int pos = this.getSelectedRow();
+		if (pos >= 0)
+		{
+			return this.getSerieAt(pos);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**

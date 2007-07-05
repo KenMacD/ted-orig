@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -770,6 +771,49 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 				ep.printStackTrace();
 			}			
 		}
+		else if (action.equals("buydvd")) //$NON-NLS-1$
+		{
+			// try to open the amazon.com website
+			try 
+			{
+				BrowserLauncher.openURL("http://www.amazon.com/b?%5Fencoding=UTF8&node=163450&tag=tedprog-20&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
+			} 
+			catch (IOException ep) 
+			{
+				// error launching ted website
+				// TODO: add error message
+				System.out.println("Error opening amazon.com website"); //$NON-NLS-1$
+				ep.printStackTrace();
+			}			
+		}
+		else if (action.equals("buyDVDselectedshow"))
+		{
+			// try to open the amazon.com website
+			
+			// get selected showname
+			TedSerie selectedSerie = serieTable.getSelectedShow();
+			
+			if (selectedSerie != null)
+			{
+				String name = selectedSerie.getName();
+				try 
+				{
+					// open search for dvds
+					name = URLEncoder.encode(name, "UTF-8");
+					
+					BrowserLauncher.openURL("http://www.amazon.com/gp/search?ie=UTF8&keywords="+name+"&tag=tedprog-20&index=dvd&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
+				} 
+				catch (Exception ep) 
+				{
+					// error launching ted website
+					// TODO: add error message
+					System.out.println("Error opening amazon.com website"); //$NON-NLS-1$
+					ep.printStackTrace();
+				}	
+			}
+		}
+		
+		
 		else if(action.equals("PressAction")) //$NON-NLS-1$
 		{
 			this.setVisible(true);

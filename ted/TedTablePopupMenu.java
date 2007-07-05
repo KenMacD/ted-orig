@@ -37,6 +37,7 @@ public class TedTablePopupMenu extends JPopupMenu
 	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
 	private JMenuItem menuDelete;
 	private JMenuItem menuEdit;
+	private JMenuItem buyDVD;
 	JMenuItem menuParse;
 	JMenu menuStatus;
 	JMenuItem statusCheck;
@@ -83,10 +84,16 @@ public class TedTablePopupMenu extends JPopupMenu
 		statusHold.setActionCommand("setstatushold"); //$NON-NLS-1$
 		statusHold.setIcon(showStopped);
 		
+		buyDVD = new JMenuItem ();
+		buyDVD.addActionListener(mainDialog);
+		buyDVD.setActionCommand("buyDVDselectedshow");
+		
+		
 		this.add( menuEdit );
 		this.add( menuDelete );
 		this.add( menuParse );
 		this.add( menuStatus );
+		this.add( buyDVD);
 		
 		menuStatus.add(statusCheck);
 		menuStatus.add(statusPause);
@@ -107,6 +114,7 @@ public class TedTablePopupMenu extends JPopupMenu
 		statusCheck.setText(Lang.getString("TedTablePopupMenu.SetStatus.Check")); //$NON-NLS-1$
 		statusPause.setText(Lang.getString("TedTablePopupMenu.SetStatus.Pause")); //$NON-NLS-1$
 		statusHold.setText(Lang.getString("TedTablePopupMenu.SetStatus.Hold")); //$NON-NLS-1$
+		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));
 		
 	}
 	
