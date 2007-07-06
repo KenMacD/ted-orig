@@ -205,7 +205,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			
 			TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
 			
-			buyDVDLabel.setText("<html><u>Buy a DVD of "+ selectedSerie.getName() +" and support ted!</u></html>");
+			buyDVDLabel.setText("<html><u>"+ Lang.getString("TedAddShowDialog.LabelSupportTed1")+ " " + selectedSerie.getName() +" " + Lang.getString("TedAddShowDialog.LabelSupportTed2") +"</u></html>");
 			
 			// create a new infoPane to (correctly) show the information
 			showInfoPane = null;
