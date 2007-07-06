@@ -776,7 +776,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			// try to open the amazon.com website
 			try 
 			{
-				BrowserLauncher.openURL("http://www.amazon.com/b?%5Fencoding=UTF8&node=163450&tag=tedprog-20&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
+				BrowserLauncher.openURL("http://www.amazon.com/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.com%2Fb%3Fie%3DUTF8%26node%3D356468011%26pf%5Frd%5Fm%3DATVPDKIKX0DER%26pf%5Frd%5Fs%3Dbrowse%26pf%5Frd%5Fr%3D0J6C629W7ABBNCGRZR3J%26pf%5Frd%5Ft%3D101%26pf%5Frd%5Fp%3D292543201%26pf%5Frd%5Fi%3D173580&tag=tedprog-20&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
 			} 
 			catch (IOException ep) 
 			{
@@ -796,20 +796,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			if (selectedSerie != null)
 			{
 				String name = selectedSerie.getName();
-				try 
-				{
-					// open search for dvds
-					name = URLEncoder.encode(name, "UTF-8");
-					
-					BrowserLauncher.openURL("http://www.amazon.com/gp/search?ie=UTF8&keywords="+name+"&tag=tedprog-20&index=dvd&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
-				} 
-				catch (Exception ep) 
-				{
-					// error launching ted website
-					// TODO: add error message
-					System.out.println("Error opening amazon.com website"); //$NON-NLS-1$
-					ep.printStackTrace();
-				}	
+				this.openBuyLink(name);
+				
 			}
 		}
 		
@@ -1055,5 +1043,31 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	public void setStatusString(String status)
 	{
 		this.label_count.setText(status);
+	}
+
+
+
+
+	/**
+	 * Open buy dvd website of amazon.com for specific show
+	 * @param name name of the show
+	 */
+	public void openBuyLink(String name) 
+	{
+		try 
+		{
+			// open search for dvds
+			name = URLEncoder.encode(name, "UTF-8");
+			
+			BrowserLauncher.openURL("http://www.amazon.com/gp/search?ie=UTF8&keywords="+name+"&tag=tedprog-20&index=dvd&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
+		} 
+		catch (Exception ep) 
+		{
+			// error launching ted website
+			// TODO: add error message
+			System.out.println("Error opening amazon.com website"); //$NON-NLS-1$
+			ep.printStackTrace();
+		}	
+		
 	}
 }

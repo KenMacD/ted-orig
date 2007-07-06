@@ -1,8 +1,12 @@
 package ted.ui.addshowdialog;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -52,7 +56,7 @@ import com.jgoodies.forms.layout.FormLayout;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AddShowDialog extends JDialog implements ActionListener
+public class AddShowDialog extends JDialog implements ActionListener, MouseListener
 {
 	/**
 	 * 
@@ -71,6 +75,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 	private JLabel selectEpisodeLabel;
 	private JButton jHelpButton;
 	private JScrollPane showInfoScrollPane;
+	private JLabel buyDVDLabel;
 	private JButton buttonAddEmptyShow;
 
 	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel();
@@ -104,7 +109,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));
 			getShowsScrollPane().setViewportView(showsTable);
 			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 6, fill, fill"));
-			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 8, 4, 4, fill, fill"));
+			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 8, 4, 2, fill, fill"));
 			getContentPane().add(getOkButton(), new CellConstraints("8, 13, 1, 1, default, default"));
 			getContentPane().add(getCancelButton(), new CellConstraints("6, 13, 1, 1, default, default"));
 			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("5, 4, 4, 1, fill, fill"));
@@ -113,6 +118,7 @@ public class AddShowDialog extends JDialog implements ActionListener
 			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 4, 1, left, bottom"));
 			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, bottom"));
 			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 11, 2, 1, default, default"));
+			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 11, 4, 1, left, default"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());
 			
@@ -198,6 +204,8 @@ public class AddShowDialog extends JDialog implements ActionListener
 			Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 			
 			TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
+			
+			buyDVDLabel.setText("<html><u>Buy a DVD of "+ selectedSerie.getName() +" and support ted!</u></html>");
 			
 			// create a new infoPane to (correctly) show the information
 			showInfoPane = null;
@@ -384,6 +392,45 @@ public class AddShowDialog extends JDialog implements ActionListener
 			buttonAddEmptyShow.setActionCommand("addempty");
 		}
 		return buttonAddEmptyShow;
+	}
+	
+	private JLabel getBuyDVDLabel() {
+		if (buyDVDLabel == null) {
+			buyDVDLabel = new JLabel();
+			buyDVDLabel.setText("");
+			buyDVDLabel.setForeground(Color.BLUE);
+			buyDVDLabel.setFont(new java.awt.Font("Dialog",1,12));
+			buyDVDLabel.addMouseListener(this);
+			buyDVDLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
+		return buyDVDLabel;
+	}
+
+	public void mouseClicked(MouseEvent arg0) 
+	{
+		// clicked on label to buy dvd
+		this.tedMain.openBuyLink(this.selectedSerie.getName());
+		
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
