@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 
 import ted.TedTableProgressbarRenderer;
 import ted.datastructures.StandardStructure;
+import ted.interfaces.EpisodeChooserListener;
 import ted.ui.TableRenderer;
 
 
@@ -46,10 +47,17 @@ public class EpisodeChooserPanel extends JPanel
 	TedTableProgressbarRenderer ttpr;
 	
 	private StandardStructure selectedStructure;
+	private EpisodeChooserListener episodesChooserListener;
 
-	public EpisodeChooserPanel()
+	/*public EpisodeChooserPanel()
 	{
 		//this.getContentPane().add(getEpisodesScrollPane());
+		this.initGUI();
+	}*/
+	
+	public EpisodeChooserPanel(EpisodeChooserListener ecld)
+	{
+		this.episodesChooserListener = ecld;
 		this.initGUI();
 	}
 	
@@ -60,8 +68,12 @@ public class EpisodeChooserPanel extends JPanel
 		//int selectedRow = episodesTable.convertRowIndexToModel(viewRow);
 		if (selectedRow >= 0)
 		{
+			
 			selectedStructure = episodesTableModel.getStandardStructureAt(selectedRow);
 		
+			
+			// call event on ecld
+			this.episodesChooserListener.episodeSelectionChanged();
 			// TODO: if double click, add the show with selected season/episode
 			// beware, this panel is used in multiple dialogs. make sure they all implement the
 			// callback function

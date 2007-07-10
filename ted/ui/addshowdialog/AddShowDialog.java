@@ -37,6 +37,7 @@ import ted.TedXMLParser;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.SimpleTedSerie;
+import ted.interfaces.EpisodeChooserListener;
 import ted.ui.TableRenderer;
 import ted.ui.editshowdialog.EditShowDialog;
 
@@ -56,7 +57,7 @@ import com.jgoodies.forms.layout.FormLayout;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AddShowDialog extends JDialog implements ActionListener, MouseListener
+public class AddShowDialog extends JDialog implements ActionListener, MouseListener, EpisodeChooserListener
 {
 	/**
 	 * 
@@ -78,10 +79,11 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JLabel buyDVDLabel;
 	private JButton buttonAddEmptyShow;
 
-	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel();
+	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel(this);
 	
 	public AddShowDialog()
 	{
+		super();
 		this.initGUI();
 	}
 	
@@ -191,8 +193,12 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	 */
 	private void showsTableSelectionChanged()
 	{
+		// disable ok button
+		this.okButton.setEnabled(false);
+		
 		// get the selected show
 		int selectedRow = showsTable.getSelectedRow();
+		
 		if (selectedRow >= 0)
 		{
 			// get the simple info of the show
@@ -232,6 +238,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			okButton.setActionCommand("OK");
 			okButton.addActionListener(this);
 			this.getRootPane().setDefaultButton(okButton);
+			this.okButton.setEnabled(false);
 		}
 		return okButton;
 	}
@@ -430,6 +437,23 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void episodeSelectionChanged() 
+	{
+		// called when episode selection is changed.
+		
+		// check if episode and show selected
+		if (selectedSerie != null && this.episodeChooserPanel.getSelectedStructure() != null)
+		{
+			// enable add button
+			this.okButton.setEnabled(true);
+		}
+		else
+		{
+			this.okButton.setEnabled(false);
+		}
 		
 	}
 

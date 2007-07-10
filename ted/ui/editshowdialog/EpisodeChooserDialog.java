@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import ted.Lang;
 import ted.TedSerie;
 import ted.datastructures.StandardStructure;
+import ted.interfaces.EpisodeChooserListener;
 import ted.ui.addshowdialog.EpisodeChooserPanel;
 import ted.ui.addshowdialog.EpisodeParserThread;
 
@@ -29,7 +30,7 @@ import ted.ui.addshowdialog.EpisodeParserThread;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class EpisodeChooserDialog extends JDialog implements ActionListener
+public class EpisodeChooserDialog extends JDialog implements ActionListener, EpisodeChooserListener
 {
 
 	/**
@@ -62,6 +63,7 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener
 				okButton.setBounds(280, 238, 98, 28);
 				okButton.addActionListener(this);
 				okButton.setActionCommand("ok");
+				this.okButton.setEnabled(false);
 				this.getRootPane().setDefaultButton(okButton);
 			}
 			{
@@ -72,7 +74,7 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener
 				cancelButton.addActionListener(this);
 				cancelButton.setActionCommand("cancel");
 				
-				episodeChooserPanel = new EpisodeChooserPanel();
+				episodeChooserPanel = new EpisodeChooserPanel(this);
 				this.add(episodeChooserPanel);
 				episodeChooserPanel.setBounds(0, 0, 385, 231);
 				
@@ -135,6 +137,21 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener
 		{
 			// close dialog
 			this.setVisible(false);
+		}
+		
+	}
+
+	public void episodeSelectionChanged() 
+	{
+		// if episode is selected
+		if (this.episodeChooserPanel.getSelectedStructure() != null)
+		{
+			// enable ok button
+			this.okButton.setEnabled(true);
+		}
+		else
+		{
+			this.okButton.setEnabled(false);
 		}
 		
 	}
