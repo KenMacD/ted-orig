@@ -82,7 +82,7 @@ public class TedAboutDialog extends javax.swing.JDialog
 		}
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		logo = toolkit.getImage(getClass().getClassLoader().getResource("logo.jpg"));
+		logo = toolkit.getImage(getClass().getClassLoader().getResource("icons/logo.jpg"));
 		MediaTracker mediaTracker = new MediaTracker(this);
 		mediaTracker.addImage(logo, 0);
 		this.repaint();

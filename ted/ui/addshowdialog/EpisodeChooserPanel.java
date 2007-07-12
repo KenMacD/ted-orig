@@ -2,6 +2,8 @@ package ted.ui.addshowdialog;
 import com.jgoodies.forms.layout.CellConstraints;
 
 import java.awt.Canvas;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
@@ -15,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumn;
 
 import ted.TedTableProgressbarRenderer;
 import ted.datastructures.StandardStructure;
@@ -48,46 +51,53 @@ public class EpisodeChooserPanel extends JPanel
 	private Canvas activityCanvas;
 	TedTableProgressbarRenderer ttpr;
 	
-	private StandardStructure selectedStructure;
+	private StandardStructure selectedStructure = null;
 	private EpisodeChooserListener episodesChooserListener;
 
+	/**
+	 * Create a episode chooser panel
+	 * @param ecld Listener for events on the table
+	 */
 	public EpisodeChooserPanel(EpisodeChooserListener ecld)
 	{
 		this.episodesChooserListener = ecld;
 		this.initGUI();
 	}
 	
+	/**
+	 * Called when the user clicks in the table. Updates the selected episode and
+	 * responds to double clicks
+	 * @param evt
+	 */
 	public void episodesTableMouseClicked(MouseEvent evt)
 	{
 		this.tableSelectionChanged();
 		
-		// TODO: if double click, add the show with selected season/episode
+		// if double click, add the show with selected season/episode
 		// beware, this panel is used in multiple dialogs. make sure they all implement the
 		// callback function
 		if (evt.getClickCount() > 1 && selectedStructure != null)
 		{
 			this.episodesChooserListener.doubleClickOnEpisodeList();
-		}
-		
-		
-		
+		}		
 	}
 	
+	/**
+	 * Called when the selection in the table is changed
+	 */
 	private void tableSelectionChanged() 
 	{
-		int viewRow = episodesTable.getSelectedRow();
-		int selectedRow = viewRow;
-		//int selectedRow = episodesTable.convertRowIndexToModel(viewRow);
+		// getselected row
+		int selectedRow = episodesTable.getSelectedRow();
+
 		if (selectedRow >= 0)
 		{
-			
+			// update the selected structure
 			selectedStructure = episodesTableModel.getStandardStructureAt(selectedRow);
 		
-			
 			// call event on ecld
 			this.episodesChooserListener.episodeSelectionChanged();
-		}
-		
+		}	
 	}
 
 	private JTable getEpisodesTable() 
@@ -124,6 +134,12 @@ public class EpisodeChooserPanel extends JPanel
 			episodesTable.setRowHeight(episodesTable.getRowHeight()+5);
 			
 			episodesTable.setDefaultRenderer(JProgressBar.class, ttpr);
+			
+			// make sure first column (with episodes) is wider than the rest
+			TableColumn	column;				
+			column = episodesTable.getColumnModel().getColumn(0);
+			column.setPreferredWidth(60);
+	    	column.setMinWidth(150);
 		}
 		return episodesTable;
 	}
@@ -151,6 +167,10 @@ public class EpisodeChooserPanel extends JPanel
 		}
 	}
 
+	/**
+	 * Add a vector of episodes to the table
+	 * @param seasonEpisodes
+	 */
 	public void setSeasonEpisodes(Vector seasonEpisodes)
 	{
 		this.selectedStructure = null;
@@ -158,30 +178,41 @@ public class EpisodeChooserPanel extends JPanel
 		ttpr.setMaximum(this.episodesTableModel.getMaxQuality());
 	}
 
+	/**
+	 * Clears the table
+	 */
 	public void clear()
 	{
 		this.selectedStructure = null;
-		this.episodesTableModel.clear();
-		
+		this.episodesTableModel.clear();	
 	}
 	
 	private Canvas getActivityCanvas() {
 		if (activityCanvas == null) {
-			activityCanvas = new ImageCanvas("icons/activity.gif");
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Image activityIm = toolkit.getImage(getClass().getClassLoader().getResource("icons/activity.gif"));
+			
+			activityCanvas = new ImageCanvas(activityIm.getSource());
 			activityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
 			activityCanvas.setBackground(this.episodesTable.getBackground());
 		}
 		return activityCanvas;
 	}
 	
+	/**
+	 * When activity status is true, a activity icon is shown
+	 * @param active
+	 */
 	public void setActivityStatus(boolean active)
 	{
 		this.activityCanvas.setVisible(active);
 	}
 
+	/**
+	 * @return selected episode in the list
+	 */
 	public StandardStructure getSelectedStructure() 
 	{
-		// TODO: display error message when no structure is selected?
 		return this.selectedStructure;
 	}
 }
