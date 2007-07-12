@@ -51,12 +51,6 @@ public class EpisodeChooserPanel extends JPanel
 	private StandardStructure selectedStructure;
 	private EpisodeChooserListener episodesChooserListener;
 
-	/*public EpisodeChooserPanel()
-	{
-		//this.getContentPane().add(getEpisodesScrollPane());
-		this.initGUI();
-	}*/
-	
 	public EpisodeChooserPanel(EpisodeChooserListener ecld)
 	{
 		this.episodesChooserListener = ecld;
@@ -72,7 +66,7 @@ public class EpisodeChooserPanel extends JPanel
 		// callback function
 		if (evt.getClickCount() > 1 && selectedStructure != null)
 		{
-		
+			this.episodesChooserListener.doubleClickOnEpisodeList();
 		}
 		
 		

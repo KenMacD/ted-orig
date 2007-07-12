@@ -117,26 +117,33 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 		
 		if (action.equals("ok"))
 		{
-			StandardStructure selectedStructure = this.episodeChooserPanel.getSelectedStructure();
-			// get selected episode and send it to the edit show dialog
-			if (selectedStructure != null)
-			{		
-				editShowDialog.setEpisode(selectedStructure);
-				
-				this.setVisible(false);
-			}
-			else
-			{
-				//TODO: display error message? user has to select something
-				// or let the episodeChooserPanel implement such a message
-			}
-			
-			// close dialog
+			this.confirmSelection();
 		}
 		else if (action.equals("cancel"))
 		{
 			// close dialog
 			this.setVisible(false);
+		}
+		
+	}
+
+	/**
+	 * Confirm selection of season/episode by user, give values to edit show dialog
+	 */
+	private void confirmSelection() 
+	{
+		StandardStructure selectedStructure = this.episodeChooserPanel.getSelectedStructure();
+		// get selected episode and send it to the edit show dialog
+		if (selectedStructure != null)
+		{		
+			editShowDialog.setEpisode(selectedStructure);
+			
+			this.setVisible(false);
+		}
+		else
+		{
+			//TODO: display error message? user has to select something
+			// or let the episodeChooserPanel implement such a message
 		}
 		
 	}
@@ -153,6 +160,12 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 		{
 			this.okButton.setEnabled(false);
 		}
+		
+	}
+
+	public void doubleClickOnEpisodeList() 
+	{
+		this.confirmSelection();
 		
 	}
 

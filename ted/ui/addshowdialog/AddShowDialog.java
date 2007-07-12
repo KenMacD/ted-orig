@@ -259,29 +259,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		
 		if (command.equals("OK"))
 		{
-			// add show
-			if (selectedSerie != null)
-			{
-				// set season and episode settings
-				if (selectedSerie.isDaily())
-				{
-					DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
-					GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay());
-					((TedDailySerie)selectedSerie).setLatestDownloadDate(d.getTimeInMillis());
-				}
-				else
-				{
-					SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
-					selectedSerie.setCurrentEpisode(se.getEpisode());
-					selectedSerie.setCurrentSeason(se.getSeason());
-				}
-				
-				// add the serie
-				tedMain.addSerie(selectedSerie);
-				
-				// close the dialog
-				this.setVisible(false);
-			}
+			this.addShow();
 		}
 		else if (command.equals("Cancel"))
 		{
@@ -307,6 +285,37 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			EditShowDialog esd = new EditShowDialog(tedMain, temp, true);
 			this.setVisible(false);
 			esd.setVisible(true);
+		}
+		
+	}
+
+	/**
+	 * Add the selected show with the selected season/episode to teds show list
+	 */
+	private void addShow() 
+	{
+		// add show
+		if (selectedSerie != null)
+		{
+			// set season and episode settings
+			if (selectedSerie.isDaily())
+			{
+				DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
+				GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay());
+				((TedDailySerie)selectedSerie).setLatestDownloadDate(d.getTimeInMillis());
+			}
+			else
+			{
+				SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
+				selectedSerie.setCurrentEpisode(se.getEpisode());
+				selectedSerie.setCurrentSeason(se.getSeason());
+			}
+			
+			// add the serie
+			tedMain.addSerie(selectedSerie);
+			
+			// close the dialog
+			this.setVisible(false);
 		}
 		
 	}
@@ -455,6 +464,15 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.okButton.setEnabled(false);
 		}
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see ted.interfaces.EpisodeChooserListener#doubleClickOnEpisodeList()
+	 */
+	public void doubleClickOnEpisodeList() 
+	{
+		// add show
+		this.addShow();
 	}
 
 }
