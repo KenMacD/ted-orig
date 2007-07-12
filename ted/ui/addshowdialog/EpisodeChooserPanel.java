@@ -13,6 +13,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ted.TedTableProgressbarRenderer;
 import ted.datastructures.StandardStructure;
@@ -63,6 +65,22 @@ public class EpisodeChooserPanel extends JPanel
 	
 	public void episodesTableMouseClicked(MouseEvent evt)
 	{
+		this.tableSelectionChanged();
+		
+		// TODO: if double click, add the show with selected season/episode
+		// beware, this panel is used in multiple dialogs. make sure they all implement the
+		// callback function
+		if (evt.getClickCount() > 1 && selectedStructure != null)
+		{
+		
+		}
+		
+		
+		
+	}
+	
+	private void tableSelectionChanged() 
+	{
 		int viewRow = episodesTable.getSelectedRow();
 		int selectedRow = viewRow;
 		//int selectedRow = episodesTable.convertRowIndexToModel(viewRow);
@@ -74,15 +92,7 @@ public class EpisodeChooserPanel extends JPanel
 			
 			// call event on ecld
 			this.episodesChooserListener.episodeSelectionChanged();
-			// TODO: if double click, add the show with selected season/episode
-			// beware, this panel is used in multiple dialogs. make sure they all implement the
-			// callback function
-			if (evt.getClickCount() > 1)
-			{
-			
-			}
 		}
-		
 		
 	}
 
@@ -105,6 +115,13 @@ public class EpisodeChooserPanel extends JPanel
 				public void mouseClicked(MouseEvent evt) {
 					episodesTableMouseClicked(evt);
 				}});
+			episodesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent arg0) {
+					tableSelectionChanged();
+					
+				}
+
+				});
 			ttpr = new TedTableProgressbarRenderer(0, 100);
 			ttpr.setStringPainted(false);
 			
