@@ -46,20 +46,20 @@ public class TedMainToolBar extends JToolBar
 	
 	private void initButtons(TedMainDialog tMain)
 	{
-		btn_AddShow = new TedMainToolBarButton("icons/Aid.png", 
+		btn_AddShow = new TedMainToolBarButton("icons/TedMainDialog.addshow.png", 
 				"TedMainDialog.ButtonAddShow",
 				"TedMainDialog.ButtonToolTipAddShow",
 				"New", tMain);
 		
 		this.add(btn_AddShow);
 		
-		btn_Delete = new TedMainToolBarButton("icons/Cancel.png",
+		btn_Delete = new TedMainToolBarButton("icons/TedMainDialog.deleteshow.png",
 				"TedMainDialog.ButtonDeleteShow",
 				"TedMainDialog.ButtonToolTipDeleteShow",
 				"Delete", tMain);
 		this.add(btn_Delete);
 		
-		btn_Edit = new TedMainToolBarButton("icons/Edit.png",
+		btn_Edit = new TedMainToolBarButton("icons/TedMainDialog.editshow.png",
 				"TedMainDialog.ButtonEditShow",
 				"TedMainDialog.ButtonToolTipEditShow",
 				"Edit", tMain);
