@@ -41,7 +41,7 @@ public class ShowInfoThread extends Thread
 				try
 				{
 					// open the showinfo url and display
-					url = new URL("http://www.rulecam.net/ted/showinfo.php?tvcom="+currentSerie.getTVcom());
+					url = new URL("http://ted.sourceforge.net/showinfo.php?tvcom="+currentSerie.getTVcom());
 					showInfoPane.setPage(url);
 				} 
 				catch (MalformedURLException e)
