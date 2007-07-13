@@ -105,6 +105,19 @@
 
 		</show>
 		<show>
+			<name>America's Next Top Model</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Americas+Next+Top+Model</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=americas+next+top+model&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/14888/summary.html</tv_com>
+
+		</show>
+		<show>
 			<name>American Dad!</name>
 			<feeds>
 				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=american%20dad&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
@@ -223,6 +236,19 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>http://www.tv.com/show/25525/summary.html</tv_com>
+		</show>
+		<show>
+			<name>Burn Notice</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Burn+Notice</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Burn+Notice&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/69107/summary.html</tv_com>
+
 		</show>
 		<show>
 			<name>Colbert Report</name>
@@ -519,6 +545,19 @@
 
 		</show>
 		<show>
+			<name>Inked</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=inked</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=inked&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/37096/summary.html</tv_com>
+
+		</show>
+		<show>
 			<name>Jericho</name>
 			<feeds>
 				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=jericho&amp;mcat=4&amp;scat=0</feed>
@@ -528,6 +567,19 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>http://www.tv.com/show/58068/summary.html</tv_com>
+
+		</show>
+		<show>
+			<name>Kyle XY</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=kyle+xy</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=kyle+xy&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/35825/summary.html</tv_com>
 
 		</show>
 		<show>
@@ -703,6 +755,19 @@
 			<tv_com>http://www.tv.com/show/16942/summary.html</tv_com>
 
 		</show>
+		<show>
+			<name>Painkiller Jane</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Painkiller+Jane</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Painkiller+Jane&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/32707/summary.html</tv_com>
+
+		</show>		
 		<show>
 		<name>Penn and Teller Bullshit</name>
 			<feeds>
@@ -948,7 +1013,7 @@
 			<seeders>50</seeders>
 			<tv_com>http://www.tv.com/show/314/summary.html</tv_com>
 
-		</show>		
+		</show>
 		<show>
 			<name>The OC</name>
 			<feeds>
@@ -985,6 +1050,31 @@
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>http://www.tv.com/show/33480/summary.html</tv_com>
+
+		</show>	
+		<show>
+			<name>The Universe</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=the+universe</feed>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=the+universe&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/73410/summary.html</tv_com>
+
+		</show>	
+		<show>
+			<name>The Wire</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=the+wire&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>http://www.tv.com/show/8800/summary.html</tv_com>
 
 		</show>
 		<show>
