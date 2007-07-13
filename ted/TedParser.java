@@ -1242,26 +1242,39 @@ public class TedParser
 
 
 
+	/**
+	 * Returns a vector where all the doubles from the parameter vector are removed
+	 * @param seasonEpisodes
+	 * @return
+	 */
 	private Vector removeDoublesSE(Vector seasonEpisodes)
 	{
+		// sort the seasons and episodes in ascending order
 		Collections.sort(seasonEpisodes);
 		
+		// create new empty vector
 		Vector singleVector = new Vector();
 		
 		if (seasonEpisodes.size() > 0)
 		{
+			// get the first
 			SeasonEpisode currentSE = (SeasonEpisode)seasonEpisodes.get(0);
 			
 			currentSE.setQuality(1);
 		
+			// loop through all the season and episodes to remove any doubles
 			for (int i = 1; i < seasonEpisodes.size(); i++)
 			{
+				// get the next
 				SeasonEpisode se = (SeasonEpisode)seasonEpisodes.get(i);
 				
+				// if it is the same as the current
 				if (se.compareTo(currentSE) == 0)
 				{
+					// add one to the quality
 					currentSE.setQuality(currentSE.getQuality()+1);
 					
+					// set the correct publishdate
 					if (se.getPublishDate().compareTo(currentSE.getPublishDate()) < 0)
 					{
 						currentSE.setPublishDate(se.getPublishDate());
@@ -1269,12 +1282,15 @@ public class TedParser
 				}
 				else
 				{
+					// new current, so add the previous current to the vector
 					singleVector.add(currentSE);
 					currentSE = se;
 					currentSE.setQuality(1);
-				}
-				
+				}	
 			}
+			
+			// add the last to the vector
+			singleVector.add(currentSE);
 		}
 		
 		return singleVector;
@@ -1313,6 +1329,9 @@ public class TedParser
 				}
 				
 			}
+			
+			// add the last to the vector
+			singleVector.add(currentSE);
 		}
 		
 		return singleVector;
