@@ -23,6 +23,16 @@ public class DailyDate  extends StandardStructure implements Comparable
 	}
 	
 	/**
+	 * This method creates a DailyDate with a set date
+	 */
+	public DailyDate(int day, int month, int year)
+	{
+		this.Day = day;
+		this.Month = month;
+		this.Year = year;
+	}
+	
+	/**
 	 * 
 	 * @param year The year to be set in this DailyDate
 	 */

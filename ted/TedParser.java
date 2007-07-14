@@ -1115,17 +1115,101 @@ public class TedParser
 		
 		String title = item.getTitle().toString().toLowerCase();
 		
-		String sMatch = "((\\d)+)-((\\d)+)-((\\d)+)";
+		// Match title on the following format:
+		// #-#-# (where # stands for one or more integers)
+		// (#.#.# is also checked for)
+		String sMatch = "((\\d)+)\\p{Punct}((\\d)+)\\p{Punct}((\\d)+)";
 		Pattern pDate = Pattern.compile(sMatch);
 		Matcher mDate = pDate.matcher(title);
 		
 		if(mDate.find())
 		{
 			String match = mDate.group();
-			String split[] = match.split("-");
-			dd.setYear(Integer.parseInt(split[0]));
-			dd.setMonth(Integer.parseInt(split[1])-1);
-			dd.setDay(Integer.parseInt(split[2]));
+			String split[] = match.split("\\p{Punct}");
+			
+			// Check for different patterns
+			// If value > 999 (e.g. > 2000) that's the year
+			int firstItem  = Integer.parseInt(split[0]);
+			int secondItem = Integer.parseInt(split[1]);
+			int thirdItem  = Integer.parseInt(split[2]);
+			
+			// yyyy-mm-dd
+			if(firstItem>999)
+			{
+				dd.setYear(firstItem);
+				dd.setMonth(secondItem-1);
+				dd.setDay(thirdItem);
+			}
+			else
+			{
+				if(thirdItem<999)
+					thirdItem += 2000;
+
+				dd.setYear(thirdItem);
+				
+				// dd-mm-yyyy
+				// dd-mm-yy
+				if(firstItem>12)
+				{
+					dd.setDay(firstItem);
+					dd.setMonth(secondItem-1);
+				}
+				// mm-dd-yyyy
+				// mm-dd-yy
+				else if(secondItem>12)
+				{
+					dd.setDay(secondItem);
+					dd.setMonth(firstItem-1);
+				}
+				else
+				{
+					// it's unclear if the first or the second item
+					// represents the day (or month).
+					// try to find out by looking at the publish date
+					// of the torrent.
+					DailyDate monthFirstDate = new DailyDate(secondItem, firstItem-1, thirdItem);
+					DailyDate dayFirstDate = new DailyDate(firstItem, secondItem-1, thirdItem);
+					long monthMillis = monthFirstDate.getDate().getTimeInMillis();
+					long dayMillis = dayFirstDate.getDate().getTimeInMillis();
+					long pdMillis = dd.getPublishDate().getTime();
+					boolean monthFirst = false;
+					
+					// both have a date larger than publish date
+					if(monthMillis>pdMillis && dayMillis>pdMillis)
+					{
+						// none of the dates is valid
+						dd.setYear(0);
+					}
+					// month date is larger than publish date
+					else if(monthMillis>pdMillis)
+					{
+						monthFirst = false;
+					}
+					// day date is larger than publish date
+					else if(dayMillis>pdMillis)
+					{
+						monthFirst = true;
+					}
+					// month date is nearest to the publsh date
+					// so first item is probably the month
+					else if(pdMillis-monthMillis < pdMillis-dayMillis)
+					{
+						monthFirst = true;
+					}
+					
+					// set date, year was already set
+					if(monthFirst)
+					{
+						dd.setDay(secondItem);
+						dd.setMonth(firstItem-1);
+					}
+					else
+					{
+						dd.setDay(firstItem);
+						dd.setMonth(secondItem-1);
+					}
+				}
+			}
 		}
 		
 		if(dd.getYear()!=0)
