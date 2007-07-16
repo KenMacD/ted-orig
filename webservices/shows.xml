@@ -22,9 +22,9 @@
 		</location>
 		<location>
 			<name>Mininova</name>
-			<feed>http://www.mininova.org/cat/8</feed>
+			<feed>http://www.mininova.org/rss/#NAME#/8</feed>
 			<website>http://www.mininova.org</website>
-			<type>1</type>
+			<type>0</type>
 		</location>	
 		<location>
 			<name>sharetv.org</name>

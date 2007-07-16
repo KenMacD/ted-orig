@@ -105,16 +105,10 @@ public class TedTable extends JTable
 		    }
 		    if (i == 2) // season/episode column
 		    {
-		    	column.setPreferredWidth(60);
-		    	column.setMinWidth(150);
+		    	column.setPreferredWidth(300);
+		    	//column.setMinWidth(150);
 		    }
-		    if (i == 3) // number columns
-		    {
-		    	column.setPreferredWidth(30);
-		    	column.setMinWidth(75);
-		    	//column.setMaxWidth(75);
-		    } 
-		    else if (i == 4) // progress column
+		    else if (i == 3) // progress column
 		    {
 		    	column.setPreferredWidth(20);
 		    	column.setMinWidth(75);

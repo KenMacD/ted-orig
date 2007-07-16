@@ -2,7 +2,6 @@ package ted.ui.editshowdialog;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,6 @@ import org.w3c.dom.Element;
 
 import ted.BrowserLauncher;
 import ted.Lang;
-import ted.TedConfigDialogToolBar;
 import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedMainDialog;
@@ -62,7 +60,6 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private FeedsPanel feedsPanel;
 	private FilterPanel filterPanel;
 	private SchedulePanel schedulePanel;
-	private TedPopupMenu findRSSPopupMenu;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -170,7 +167,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		
 		generalPanel = new GeneralPanel(this);
 		jShowTabs.add("general", generalPanel);
-		generalPanel.setValues(this.currentSerie);
+		generalPanel.setValues(this.currentSerie, newSerie);
 		
 		feedsPanel = new FeedsPanel(this.initPopupMenu());
 		jShowTabs.add("feeds", feedsPanel);
@@ -266,6 +263,30 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				ecd.loadEpisodes(temp);
 				ecd.setVisible(true);
 			}
+		}
+		else if (action.equals("switch"))
+		{
+			// switch show type
+			if (this.currentSerie.isDaily())
+			{
+				TedSerie copy = new TedSerie();
+//				 copy items that are listed on the general panel
+				copy.setName(generalPanel.getShowName());
+				copy.setUsePresets(generalPanel.isUsePresets());
+				this.currentSerie = copy;
+				
+				
+			}
+			else
+			{
+				TedDailySerie copy = new TedDailySerie();
+//				 copy items that are listed on the general panel
+				copy.setName(generalPanel.getShowName());
+				copy.setUsePresets(generalPanel.isUsePresets());
+				this.currentSerie = copy;
+
+			}
+			this.generalPanel.setValues(this.currentSerie, this.newSerie);
 		}
 		
 	}

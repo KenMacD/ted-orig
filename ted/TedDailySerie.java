@@ -30,9 +30,9 @@ public class TedDailySerie extends TedSerie
 	{
 		this.isDaily = true;
 		latestParseDate = new GregorianCalendar();
-		latestParseDate.setTimeInMillis(0);
+		//latestParseDate.setTimeInMillis(0);
 		latestDownloadDate = new GregorianCalendar();
-		latestDownloadDate.setTimeInMillis(0);
+		//latestDownloadDate.setTimeInMillis(0);
 		maxDownloads = 0;
 	}
 	
