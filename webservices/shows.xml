@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>17</version>
+	<version>18</version>
 	<rsslocations>
 		<location>
 			<name>Torrentspy</name>
@@ -32,6 +32,12 @@
 			<website>http://sharetv.org</website>
 			<type>1</type>
 		</location>		
+		<location>
+			<name>XTVi</name>
+			<feed>http://www.xtvi.com/all_tv_shows/</feed>
+			<website>http://www.xtvi.com/</website>
+			<type>1</type>
+		</location>	
 		<location>
 			<name>Torrentreactor</name>
 			<feed>http://www.torrentreactor.net/browse.php?id=8</feed>
@@ -74,7 +80,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/251/summary.html</tv_com>
+			<tv_com>251</tv_com>
 
 		</show>
 		<show>
@@ -88,7 +94,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/3866/summary.html</tv_com>
+			<tv_com>3866</tv_com>
 
 		</show>
 		<show>
@@ -101,8 +107,33 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/58326/summary.html</tv_com>
+			<tv_com>58326</tv_com>
 
+		</show>
+		<show>
+			<name>Age of Love</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Age%20of%20Love</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Age%20of%20Love&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>15</seeders>
+			<daily>False</daily>
+			<tv_com>72221</tv_com>
+		</show>
+		<show>
+			<name>America's Got Talent</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=America&apos;s%20Got%20Talent</feed>
+				<feed>http://www.mininova.org/rss/America&apos;s%20Got%20Talent/8</feed>
+				<feed>http://btjunkie.org/rss.xml?query=America&apos;s%20Got%20Talent</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<daily>False</daily>
+			<tv_com>58710</tv_com>
+			
 		</show>
 		<show>
 			<name>America's Next Top Model</name>
@@ -114,7 +145,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/14888/summary.html</tv_com>
+			<tv_com>14888</tv_com>
 
 		</show>
 		<show>
@@ -128,7 +159,7 @@
 			<minimumsize>100</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/21935/summary.html</tv_com>
+			<tv_com>21935</tv_com>
 
 		</show>
 		<show>
@@ -141,7 +172,20 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/11307/summary.html</tv_com>
+			<tv_com>11307</tv_com>
+		</show>
+		<show>
+			<name>American Inventor</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/American%20Inventor/8</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=American%20Inventor</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=American%20Inventor&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>20</seeders>
+			<daily>False</daily>
+			<tv_com>53003</tv_com>
 		</show>
 		<show>
 			<name>Battlestar Galactica</name>
@@ -154,7 +198,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/23557/summary.html</tv_com>
+			<tv_com>23557</tv_com>
 
 		</show>
 		<show>
@@ -168,7 +212,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/32037/summary.html</tv_com>
+			<tv_com>32037</tv_com>
 
 		</show>
 		<show>
@@ -182,7 +226,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/4673/summary.html</tv_com>
+			<tv_com>4673</tv_com>
 
 		</show>
 		<show>
@@ -195,7 +239,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/25834/summary.html</tv_com>
+			<tv_com>25834</tv_com>
 
 		</show>
 		<show>
@@ -208,7 +252,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/3281/summary.html</tv_com>
+			<tv_com>3281</tv_com>
 
 		</show>
 		<show>
@@ -221,7 +265,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>450</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/33332/summary.html</tv_com>
+			<tv_com>33332</tv_com>
 		</show>
 
 		<show>
@@ -235,7 +279,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/25525/summary.html</tv_com>
+			<tv_com>25525</tv_com>
 		</show>
 		<show>
 			<name>Burn Notice</name>
@@ -247,7 +291,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/69107/summary.html</tv_com>
+			<tv_com>69107</tv_com>
 
 		</show>
 		<show>
@@ -257,7 +301,7 @@
 			</feeds>
 			<daily>True</daily>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/45593/summary.html</tv_com>
+			<tv_com>45593</tv_com>
 		</show>
 		<show>
 			<name>Cold Case</name>
@@ -268,7 +312,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/16989/summary.html</tv_com>
+			<tv_com>16989</tv_com>
 		</show>
 		<show>
 			<name>Criminal Minds</name>
@@ -280,7 +324,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/33484/summary.html</tv_com>
+			<tv_com>33484</tv_com>
 		</show>
 
 		<show>
@@ -294,7 +338,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/19/summary.html</tv_com>
+			<tv_com>19</tv_com>
 		</show>
 		<show>
 			<name>CSI Miami</name>
@@ -305,7 +349,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/8460/summary.html</tv_com>
+			<tv_com>8460</tv_com>
 		</show>
 		<show>
 			<name>CSI NY</name>
@@ -316,18 +360,9 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/24125/summary.html</tv_com>
+			<tv_com>24125</tv_com>
 		</show>
-		<show>
-			<name>The Daily Show</name>
-			<feeds>
-				<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
-			</feeds>
-			<daily>True</daily>
-			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/1293/summary.html</tv_com>
-
-		</show>
+		
 		<show>
 			<name>Desperate Housewives</name>
 			<feeds>
@@ -339,7 +374,18 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/24641/summary.html</tv_com>
+			<tv_com>24641</tv_com>
+		</show>
+		<show>
+			<name>Destination Truth</name>
+			<feeds>
+				<feed>http://btjunkie.org/rss.xml?query=Destination%20Truth</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Destination%20Truth</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<daily>False</daily>
+			<tv_com>67856</tv_com>
 		</show>
 		<show>
 			<name>Dexter</name>
@@ -351,7 +397,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/62683/summary.html</tv_com>
+			<tv_com>62683</tv_com>
 
 		</show>
 		<show>
@@ -363,7 +409,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>30</seeders>
-			<tv_com>http://www.tv.com/show/60202/summary.html</tv_com>
+			<tv_com>60202</tv_com>
 		</show>
 		<show>
 			<name>Dresden Files</name>
@@ -374,7 +420,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>20</seeders>
-			<tv_com>http://www.tv.com/show/50381/summary.html</tv_com>
+			<tv_com>50381</tv_com>
 		</show>
 		<show>
 			<name>Entourage</name>
@@ -386,7 +432,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/27346/summary.html</tv_com>
+			<tv_com>27346</tv_com>
 
 		</show>
 		<show>
@@ -400,7 +446,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/111/summary.html</tv_com>
+			<tv_com>111</tv_com>
 
 		</show>
 		<show>
@@ -413,7 +459,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/58448/summary.html</tv_com>
+			<tv_com>58448</tv_com>
 
 		</show>
 		<show>
@@ -426,7 +472,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/33212/summary.html</tv_com>
+			<tv_com>33212</tv_com>
 
 		</show>
 		<show>
@@ -437,7 +483,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>15</seeders>
-			<tv_com>http://www.tv.com/show/19831/summary.html</tv_com>
+			<tv_com>19831</tv_com>
 		</show>
 		<show>
 			<name>Family Guy</name>
@@ -461,7 +507,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/58137/summary.html</tv_com>
+			<tv_com>58137</tv_com>
 		</show>
 		<show>
 			<name>Futurama</name>
@@ -472,7 +518,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/249/summary.html</tv_com>
+			<tv_com>249</tv_com>
 
 		</show>
 		<show>
@@ -486,8 +532,20 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/44/summary.html</tv_com>
+			<tv_com>44</tv_com>
 
+		</show>
+		<show>
+			<name>Ghost Hunters</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Ghost%20Hunters&amp;mode=rss</feed>
+				<feed>http://btjunkie.org/rss.xml?query=Ghost%20Hunters</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Ghost%20Hunters</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<daily>False</daily>
+			<tv_com>7400</tv_com>
 		</show>
 		<show>
 			<name>Ghost Whisperer</name>
@@ -500,8 +558,19 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/33483/summary.html</tv_com>
+			<tv_com>33483</tv_com>
 
+		</show>
+		<show>
+			<name>Greek</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Greek&amp;mode=rss</feed>
+				<feed>http://sharetv.org/rss/greek</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<daily>False</daily>
+			<tv_com>71239</tv_com>
 		</show>
 		<show>
 			<name>Greys Anatomy</name>
@@ -514,8 +583,31 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/24440/summary.html</tv_com>
+			<tv_com>24440</tv_com>
 
+		</show>
+		<show>
+			<name>Heartland</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Heartland</feed>
+				<feed>http://btjunkie.org/rss.xml?query=Heartland</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<daily>False</daily>
+			<tv_com>71537</tv_com>
+		</show>
+		<show>
+			<name>Hell's Kitchen</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Hell&apos;s%20Kitchen/8</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Hell&apos;s%20Kitchen&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>5</seeders>
+			<daily>False</daily>
+			<tv_com>29085</tv_com>
 		</show>
 		<show>
 			<name>Heroes</name>
@@ -528,7 +620,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/17552/summary.html</tv_com>
+			<tv_com>17552</tv_com>
 
 		</show>
 		<show>
@@ -541,7 +633,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/22374/summary.html</tv_com>
+			<tv_com>22374</tv_com>
 
 		</show>
 		<show>
@@ -554,7 +646,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/37096/summary.html</tv_com>
+			<tv_com>37096</tv_com>
 
 		</show>
 		<show>
@@ -566,7 +658,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/58068/summary.html</tv_com>
+			<tv_com>58068</tv_com>
 
 		</show>
 		<show>
@@ -579,7 +671,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/35825/summary.html</tv_com>
+			<tv_com>35825</tv_com>
 
 		</show>
 		<show>
@@ -591,8 +683,32 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/17210/summary.html</tv_com>
+			<tv_com>17210</tv_com>
 
+		</show>
+		<show>
+			<name>Last Comic Standing</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Last%20Comic%20Standing&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Last%20Comic%20Standing</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>25</seeders>
+			<daily>False</daily>
+			<tv_com>19647</tv_com>
+		</show>
+		<show>
+			<name>Late Night with Conan O'Brien</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Conan+O+Brien&amp;show_name_exact=true&amp;mode=rss</feed>
+				<feed>http://btjunkie.org/rss.xml?query=Conan%20O%20Brien</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>30</seeders>
+			<daily>True</daily>
+			<tv_com>4748</tv_com>
 		</show>
 		<show>
 			<name>Law And Order</name>
@@ -604,7 +720,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/180/summary.html</tv_com>
+			<tv_com>180</tv_com>
 
 		</show>
 		<show>
@@ -616,7 +732,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/16862/summary.html</tv_com>
+			<tv_com>16862</tv_com>
 
 		</show>
 		<show>
@@ -628,7 +744,7 @@
 			<minimumsize>100</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>10</seeders>
-			<tv_com>http://www.tv.com/show/67584/summary.html</tv_com>
+			<tv_com>67584</tv_com>
 		</show>
 		<show>
 			<name>Lost</name>
@@ -641,7 +757,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/24313/summary.html</tv_com>
+			<tv_com>24313</tv_com>
 
 		</show>
 		<show>
@@ -653,7 +769,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/22414/summary.html</tv_com>
+			<tv_com>22414</tv_com>
 		</show>
 		<show>
 			<name>Men In Trees</name>
@@ -664,7 +780,7 @@
 			<minimumsize>400</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>30</seeders>
-			<tv_com>http://www.tv.com/show/58460/summary.html</tv_com>
+			<tv_com>58460</tv_com>
 		</show>
 		<show>
 			<name>Monk</name>
@@ -675,7 +791,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>15</seeders>
-			<tv_com>http://www.tv.com/show/9130/summary.html</tv_com>
+			<tv_com>9130</tv_com>
 		</show>
 
 		<show>
@@ -688,7 +804,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/31988/summary.html</tv_com>
+			<tv_com>31988</tv_com>
 
 		</show>
 		<show>
@@ -700,7 +816,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/22839/summary.html</tv_com>
+			<tv_com>22839</tv_com>
 		</show>
 
 
@@ -714,7 +830,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/16772/summary.html</tv_com>
+			<tv_com>16772</tv_com>
 
 		</show>
 
@@ -728,7 +844,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/17095/summary.html</tv_com>
+			<tv_com>17095</tv_com>
 
 		</show>
 		<show>
@@ -740,7 +856,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/25043/summary.html</tv_com>
+			<tv_com>25043</tv_com>
 		</show>
 		<show>
 			<name>One Tree Hill</name>
@@ -752,7 +868,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/16942/summary.html</tv_com>
+			<tv_com>16942</tv_com>
 
 		</show>
 		<show>
@@ -765,7 +881,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/32707/summary.html</tv_com>
+			<tv_com>32707</tv_com>
 
 		</show>		
 		<show>
@@ -777,7 +893,7 @@
 			<minimumsize>200</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/17579/summary.html</tv_com>
+			<tv_com>17579</tv_com>
 		</show>
 		<show>
 			<name>Prison Break</name>
@@ -789,8 +905,33 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/31635/summary.html</tv_com>
+			<tv_com>31635</tv_com>
 
+		</show>
+		<show>
+			<name>Psych</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Psych&amp;mode=rss</feed>
+				<feed>http://btjunkie.org/rss.xml?query=Psych</feed>
+				<feed>http://www.xtvi.com/rss.php?id=86</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>10</seeders>
+			<daily>False</daily>
+			<tv_com>59369</tv_com>
+		</show>
+		<show>
+			<name>Rescue Me</name>
+			<feeds>
+				<feed>http://www.xtvi.com/rss.php?id=82</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Rescue%20Me&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>24321</tv_com>
 		</show>
 		<show>
 			<name>Rome</name>
@@ -802,7 +943,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/23351/summary.html</tv_com>
+			<tv_com>23351</tv_com>
 
 		</show>
 		<show>
@@ -814,7 +955,7 @@
 			<minimumsize>400</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>20</seeders>
-			<tv_com>http://www.tv.com/show/365/summary.html</tv_com>
+			<tv_com>365</tv_com>
 		</show>
 		<show>
 			<name>Scrubs</name>
@@ -826,7 +967,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/3613/summary.html</tv_com>
+			<tv_com>3613</tv_com>
 
 		</show>
 		<show>
@@ -839,7 +980,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/3223/summary.html</tv_com>
+			<tv_com>3223</tv_com>
 
 		</show>
 		<show>
@@ -852,7 +993,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/1718/summary.html</tv_com>
+			<tv_com>1718</tv_com>
 
 		</show>
 		<show>
@@ -864,7 +1005,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/35810/summary.html</tv_com>
+			<tv_com>35810</tv_com>
 
 		</show>
 		<show>
@@ -877,7 +1018,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/344/summary.html</tv_com>
+			<tv_com>344</tv_com>
 
 		</show>
 		<show>
@@ -889,7 +1030,19 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>700</maximumsize>
 			<seeders>15</seeders>
-			<tv_com>http://www.tv.com/show/10812/summary.html</tv_com>
+			<tv_com>10812</tv_com>
+		</show>
+		<show>
+			<name>Standoff</name>
+			<feeds>
+				<feed>http://www.xtvi.com/rss.php?id=113</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Standoff&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>30</seeders>
+			<daily>False</daily>
+			<tv_com>58389</tv_com>
 		</show>
 		<show>
 			<name>Stargate</name>
@@ -913,7 +1066,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/11415/summary.html</tv_com>
+			<tv_com>11415</tv_com>
 
 		</show>
 		<show>
@@ -926,7 +1079,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/185/summary.html</tv_com>
+			<tv_com>185</tv_com>
 
 		</show>
 		<show>
@@ -939,7 +1092,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/58214/summary.html</tv_com>
+			<tv_com>58214</tv_com>
 
 		</show>
 		<show>
@@ -952,7 +1105,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/30144/summary.html</tv_com>
+			<tv_com>30144</tv_com>
 
 		</show>
 		<show>
@@ -965,7 +1118,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/23350/summary.html</tv_com>
+			<tv_com>23350</tv_com>
 
 		</show>
 		<show>
@@ -984,10 +1137,94 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/6686/summary.html</tv_com>
+			<tv_com>6686</tv_com>
+
+		</show>
+		<show>
+			<name>The Closer</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=The%20Closer</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Closer&amp;mode=rss</feed>
+				<feed>http://www.xtvi.com/rss.php?id=45</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>10</seeders>
+			<daily>False</daily>
+			<tv_com>28972</tv_com>
+		</show>
+		<show>
+			<name>The Daily Show</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
+			</feeds>
+			<daily>True</daily>
+			<seeders>50</seeders>
+			<tv_com>1293</tv_com>
 
 		</show>
 		
+		<show>
+			<name>The Dead Zone</name>
+			<feeds>
+				<feed>http://www.xtvi.com/rss.php?id=83</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Dead%20Zone&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>7420</tv_com>
+		</show>
+
+		<show>
+			<name>The Loop</name>
+			<feeds>
+				<feed>http://btjunkie.org/rss.xml?query=The%20Loop</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Loop&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>200</maximumsize>
+			<daily>False</daily>
+			<tv_com>31306</tv_com>
+		</show>
+		<show>
+			<name>The OC</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The+OC&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=the+oc&amp;mcat=4&amp;scat=0</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>200</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>16960</tv_com>
+
+		</show>
+		<show>
+			<name>The Office USA</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=the%20office%20us&amp;mcat=4&amp;scat=0</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>200</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>22343</tv_com>
+
+		</show>
+		<show>
+			<name>The Simple Life</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Simple%20Life&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=The%20Simple%20Life</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>22312</tv_com>
+		</show>
 		<show>
 			<name>The Simpsons</name>
 			<feeds>
@@ -998,7 +1235,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/146/summary.html</tv_com>
+			<tv_com>146</tv_com>
 
 		</show>
 		<show>
@@ -1011,34 +1248,22 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/314/summary.html</tv_com>
+			<tv_com>314</tv_com>
 
 		</show>
 		<show>
-			<name>The OC</name>
+			<name>The Tonight Show with Jay Leno</name>
 			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The+OC&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
-				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=the+oc&amp;mcat=4&amp;scat=0</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Jay%20Leno&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Jay%20Leno</feed>
 			</feeds>
-			<daily>False</daily>
-			<minimumsize>200</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/16960/summary.html</tv_com>
-
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>35</seeders>
+			<daily>True</daily>
+			<tv_com>10020</tv_com>
 		</show>
-		<show>
-			<name>The Office USA</name>
-			<feeds>
-				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=the%20office%20us&amp;mcat=4&amp;scat=0</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/22343/summary.html</tv_com>
-
-		</show>
+		
 		<show>
 			<name>The Unit</name>
 			<feeds>
@@ -1049,7 +1274,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/33480/summary.html</tv_com>
+			<tv_com>33480</tv_com>
 
 		</show>	
 		<show>
@@ -1062,7 +1287,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/73410/summary.html</tv_com>
+			<tv_com>73410</tv_com>
 
 		</show>	
 		<show>
@@ -1074,7 +1299,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/8800/summary.html</tv_com>
+			<tv_com>8800</tv_com>
 
 		</show>
 		<show>
@@ -1083,7 +1308,20 @@
 				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=threshold&amp;maincat=4&amp;subcat=0&amp;db=2</feed>
 				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=threshold&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
 			</feeds>
-			<tv_com>http://www.tv.com/show/32983/summary.html</tv_com>
+			<tv_com>32983</tv_com>
+		</show>
+		
+		<show>
+			<name>Top Chef</name>
+			<feeds>
+				<feed>http://btjunkie.org/rss.xml?query=Top%20Chef</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Top%20Chef</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>15</seeders>
+			<daily>False</daily>
+			<tv_com>55264</tv_com>
 		</show>
 
 		<show>
@@ -1096,7 +1334,7 @@
 			<minimumsize>500</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/27682/summary.html</tv_com>
+			<tv_com>27682</tv_com>
 
 		</show>
 		<show>
@@ -1109,7 +1347,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/50470/summary.html</tv_com>
+			<tv_com>50470</tv_com>
 
 		</show>
 		<show>
@@ -1121,7 +1359,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/14786/summary.html</tv_com>
+			<tv_com>14786</tv_com>
 
 		</show>
 		<show>
@@ -1135,7 +1373,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/17206/summary.html</tv_com>
+			<tv_com>17206</tv_com>
 
 		</show>
 		<show>
@@ -1147,7 +1385,7 @@
 			<minimumsize>250</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/58486/summary.html</tv_com>
+			<tv_com>58486</tv_com>
 
 		</show>
 		<show>
@@ -1160,7 +1398,7 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/24272/summary.html</tv_com>
+			<tv_com>24272</tv_com>
 
 		</show>
 		<show>
@@ -1183,7 +1421,7 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>http://www.tv.com/show/28829/summary.html</tv_com>
+			<tv_com>28829</tv_com>
 
 		</show>
 		<show>
