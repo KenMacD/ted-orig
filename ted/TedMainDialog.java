@@ -776,31 +776,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			// try to open the amazon.com website
 			try 
 			{
-				int rows = serieTable.getRowCount();
-				if (rows > 0)
-				{
-					// loop through all the shows and put names in address
-					
-					String names = "";
-					for (int i = 0; i < rows ; i++)
-					{
-						String spacer = "|";
-						if (i == rows-1)
-						{
-							spacer = "";
-						}
-						TedSerie serie = serieTable.getSerieAt(i);
-						String name = URLEncoder.encode("\""+serie.getName()+"\""+spacer, "UTF-8");
-						names += name;
-					}
-					
-					BrowserLauncher.openURL("http://www.amazon.com/gp/search?ie=UTF8&keywords="+names+"&tag=tedprog-20&index=dvd&linkCode=ur2&camp=1789&creative=9325&sort=salesrank"); //$NON-NLS-1$
-					
-				}
-				else
-				{
-					BrowserLauncher.openURL("http://www.amazon.com/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.com%2Fb%3Fie%3DUTF8%26node%3D356468011%26pf%5Frd%5Fm%3DATVPDKIKX0DER%26pf%5Frd%5Fs%3Dbrowse%26pf%5Frd%5Fr%3D0J6C629W7ABBNCGRZR3J%26pf%5Frd%5Ft%3D101%26pf%5Frd%5Fp%3D292543201%26pf%5Frd%5Fi%3D173580&tag=tedprog-20&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
-				}
+				BrowserLauncher.openURL("http://www.amazon.com/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.com%2Fb%3Fie%3DUTF8%26node%3D356468011%26pf%5Frd%5Fm%3DATVPDKIKX0DER%26pf%5Frd%5Fs%3Dbrowse%26pf%5Frd%5Fr%3D0J6C629W7ABBNCGRZR3J%26pf%5Frd%5Ft%3D101%26pf%5Frd%5Fp%3D292543201%26pf%5Frd%5Fi%3D173580&tag=tedprog-20&linkCode=ur2&camp=1789&creative=9325"); //$NON-NLS-1$
 			} 
 			catch (IOException ep) 
 			{
@@ -867,6 +843,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			TedIO tio = new TedIO();
 			tio.UpdateShow(this, false, serieTable);
 			serieTable.fireTableDataChanged();
+		}
+		else if(action.equals("translate"))
+		{
+			TedTranslateDialog trans = new TedTranslateDialog();
+			trans.setVisible(true);
 		}
 	}
 	
@@ -1095,5 +1076,3 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 	}
 }
-
-	

@@ -44,6 +44,7 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem aboutItem;
 	private JMenu supportMenu;
 	private JMenuItem buyDVDItem;
+	private JMenuItem translateItem;
 	
 	private TedMainDialog tMain;
 	private JMenu jMenu6;
@@ -204,6 +205,11 @@ public class TedMainMenuBar extends JMenuBar
 			jMenu5.add(synchronizeMenuItem);
 			synchronizeMenuItem.addActionListener(tMain);
 			synchronizeMenuItem.setActionCommand("synchronize"); //$NON-NLS-1$
+			// Translate ted
+			translateItem = new JMenuItem();
+			jMenu5.add(translateItem);
+			translateItem.addActionListener(tMain);
+			translateItem.setActionCommand("translate");
 			// seperate
 			jSeparator1 = new JSeparator();
 			jMenu5.add(jSeparator1);
@@ -267,6 +273,8 @@ public class TedMainMenuBar extends JMenuBar
 	
 		synchronizeMenuItem.setText(Lang.getString("TedMainMenuBar.Help.SynchronizeShows")); //$NON-NLS-1$
 	
+		translateItem.setText(Lang.getString("TedMainMenuBar.Help.Translate"));
+		
 		webItem.setText(Lang.getString("TedMainMenuBar.Help.TedOnline")); //$NON-NLS-1$
 	
 		this.donateItem.setText(Lang.getString("TedMainMenuBar.Help.Donate")); //$NON-NLS-1$

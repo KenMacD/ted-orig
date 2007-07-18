@@ -33,7 +33,7 @@ public class TedTableModel extends AbstractTableModel
 	private static final long serialVersionUID = -7286125312855308470L;
 	private Vector tableData = new Vector();
 	private String[] tableColumns = {" ", Lang.getString("TedTableModel.Name")  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            , Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$;
+            , Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Feeds"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$;
 	private ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
 	private ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
 	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
@@ -59,9 +59,14 @@ public class TedTableModel extends AbstractTableModel
 				return sRow.getName();
 			case 2:
 				return sRow.getSearchForString();
-			case 4:
-				return sRow.getStatusString();
 			case 3:
+			{
+				temp = new Integer(sRow.getFeeds().size());
+				return temp; //$NON-NLS-1$
+			}
+			case 5:
+				return sRow.getStatusString();
+			case 4:
 				return sRow.getProgress()+""; //$NON-NLS-1$
 			case 0:
 				if (sRow.getActivity() == TedSerie.IS_PARSING)
@@ -173,9 +178,13 @@ public class TedTableModel extends AbstractTableModel
 		{
 			return ImageIcon.class;
 		}
-		else if (columnIndex == 3)
+		else if (columnIndex == 4)
 		{
 			return JProgressBar.class;
+		}
+		else if (columnIndex == 3)
+		{
+			return Integer.class;
 		}
 		else
 		{
@@ -189,7 +198,7 @@ public class TedTableModel extends AbstractTableModel
 	public void updateText()
 	{
 		tableColumns = new String[] {" ", Lang.getString("TedTableModel.Name"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	            Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	            Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Feeds"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		
 	}
 

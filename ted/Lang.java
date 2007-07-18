@@ -187,7 +187,7 @@ public class Lang
 			{
 				e.printStackTrace();
 				TedLog.error("Failed to load resource bundle. One possible cause is "
-								+ "that you have installed Azureus into a directory "
+								+ "that you have installed ted into a directory "
 								+ "with a '!' in it. If so, please remove the '!'.");
 			}
 

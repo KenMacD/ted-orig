@@ -1,7 +1,5 @@
 package ted.ui.editshowdialog;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -45,7 +43,6 @@ public class GeneralPanel extends JPanel
 	 */
 	private static final long serialVersionUID = 7836753687519373743L;
 	private int width = 400;
-	private JButton switchButton;
 	private JSeparator jSeparator1;
 	private JSeparator jSeparator4;
 	private JButton popupEpisodeDialogButton;
@@ -75,7 +72,7 @@ public class GeneralPanel extends JPanel
 			this.setPreferredSize(new Dimension(width, height));
 			FormLayout lookFeelPanelLayout = new FormLayout(
 				"max(p;6dlu), 15dlu:grow, max(p;16dlu)",
-				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;0dlu), 5dlu, max(p;15dlu), 17dlu");
+				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), 17dlu");
 			this.setLayout(lookFeelPanelLayout);
 
 			labelName = new JLabel();
@@ -88,7 +85,7 @@ public class GeneralPanel extends JPanel
 			textName.setBounds(133, 105, 322, 21);
 
 			checkUpdatePresets = new JCheckBox();
-			this.add(checkUpdatePresets, new CellConstraints("2, 11, 1, 1, default, default"));
+			this.add(checkUpdatePresets, new CellConstraints("2, 10, 1, 1, default, default"));
 			checkUpdatePresets.setText(Lang
 				.getString("TedEpisodeDialog.CheckAutoUpdate"));
 			checkUpdatePresets.setOpaque(false);
@@ -119,13 +116,7 @@ public class GeneralPanel extends JPanel
 			}
 			{
 				jSeparator1 = new JSeparator();
-				this.add(jSeparator1, new CellConstraints("2, 10, 1, 1, default, default"));
-			}
-			{
-				switchButton = new JButton();
-				this.add(switchButton, new CellConstraints("2, 9, 1, 1, default, default"));
-				switchButton.setActionCommand("switch");
-				switchButton.addActionListener(editShowDialog);
+				this.add(jSeparator1, new CellConstraints("2, 9, 1, 1, default, default"));
 			}
 
 		}
@@ -140,7 +131,7 @@ public class GeneralPanel extends JPanel
 	 * Add values of a show to the general panel
 	 * @param serie
 	 */
-	public void setValues(TedSerie serie, boolean isNew)
+	public void setValues(TedSerie serie)
 	{
 		this.textName.setText(serie.getName());
 		this.checkUpdatePresets.setSelected(serie.isUsePresets());
@@ -148,42 +139,19 @@ public class GeneralPanel extends JPanel
 		if (serie.isDaily())
 		{
 			// display date panel
-			this.displayDaily(serie);
-			
+			this.dailyPanel.setVisible(true);
+			this.dailyPanel.setValues((TedDailySerie) serie);
+			this.seasonEpisodePanel.setVisible(false);
 		}
 		else
 		{
-			this.displaySE(serie);
+			// display season episode panel
+			this.dailyPanel.setVisible(false);
+			this.seasonEpisodePanel.setVisible(true);
+			
+			// set season/episode
+			this.seasonEpisodePanel.setSeasonEpisode(serie.getCurrentSeason(), serie.getCurrentEpisode());
 		}
-		
-		if (!isNew)
-		{
-			this.switchButton.setVisible(false);
-			this.remove(this.switchButton);
-		}
-		
-	}
-
-	private void displaySE(TedSerie serie) 
-	{
-		// display season episode panel
-		this.dailyPanel.setVisible(false);
-		this.seasonEpisodePanel.setVisible(true);
-		
-		// set season/episode
-		this.seasonEpisodePanel.setSeasonEpisode(serie.getCurrentSeason(), serie.getCurrentEpisode());
-		this.switchButton.setText(Lang
-				.getString("TedEpisodeDialog.ButtonSwitchShowTypeToDaily"));
-	}
-
-	private void displayDaily(TedSerie serie) 
-	{
-		this.dailyPanel.setVisible(true);
-		this.dailyPanel.setValues((TedDailySerie) serie);
-		this.seasonEpisodePanel.setVisible(false);	
-		
-		this.switchButton.setText(Lang
-				.getString("TedEpisodeDialog.ButtonSwitchShowTypeToSE"));
 	}
 
 	/**
@@ -250,11 +218,6 @@ public class GeneralPanel extends JPanel
 	public void setEpisode(SeasonEpisode selectedStructure) 
 	{		
 		this.seasonEpisodePanel.setSeasonEpisode(selectedStructure.getSeason(), selectedStructure.getEpisode());
-	}
-
-	public boolean isUsePresets() 
-	{
-		return this.checkUpdatePresets.isSelected();
 	}
 	
 
