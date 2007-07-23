@@ -58,7 +58,6 @@ public class FeedsPanel extends JPanel implements ActionListener
 {
 	private int width = 400;
 	private int height = 300;
-	private JButton jButtonAdd;
 	private JButton jButtonMoveFeedUp;
 	private JScrollPane jScrollPane1;
 	private JTable feedsTable;
@@ -92,18 +91,12 @@ public class FeedsPanel extends JPanel implements ActionListener
 			//feedsToolBar.setBounds(14, 217, 441, 28);
 			//feedsToolBar.setPreferredSize(new java.awt.Dimension(231, 32));
 			feedsToolBar.setBorderPainted(false);
-
-			jButtonAdd = new JButton();
-			feedsToolBar.add(jButtonAdd);
-			jButtonAdd.setActionCommand("addfeed");
-			jButtonAdd.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("icons/Aid.png")));
-			jButtonAdd.setPreferredSize(new java.awt.Dimension(119, 21));
-			jButtonAdd.setBounds(15, 248, 77, 21);
 			
 			jFindButton = new JButton();
 			feedsToolBar.add(jFindButton);
 			jFindButton.setBounds(280, 248, 70, 21);
+			jFindButton.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("icons/Aid.png")));
 
 			jButtonDelete = new JButton();
 			feedsToolBar.add(jButtonDelete);
@@ -142,8 +135,6 @@ public class FeedsPanel extends JPanel implements ActionListener
 
 			jButtonDelete.addActionListener(this);
 
-			jButtonAdd.addActionListener(this);
-
 			jScrollPane1 = new JScrollPane();
 			this.add(jScrollPane1, BorderLayout.NORTH);
 			jScrollPane1.setPreferredSize(new java.awt.Dimension(453, 243));
@@ -169,11 +160,6 @@ public class FeedsPanel extends JPanel implements ActionListener
 			column.setMaxWidth(100);
 			column.setMinWidth(100);
 
-			jButtonAdd
-				.setText(Lang.getString("TedEpisodeDialog.ButtonAddFeed"));
-			jButtonAdd.setToolTipText(Lang
-				.getString("TedEpisodeDialog.ButtonToolTipAddFeed"));
-
 			jButtonDelete.setText(Lang
 				.getString("TedEpisodeDialog.ButtonDeleteFeed"));
 			jButtonDelete.setToolTipText(Lang
@@ -183,9 +169,9 @@ public class FeedsPanel extends JPanel implements ActionListener
 			jOpenButton.setToolTipText(Lang
 				.getString("TedEpisodeDialog.ButtonToolTipOpen"));
 
-			jFindButton.setText(Lang.getString("TedEpisodeDialog.ButtonFind"));
+			jFindButton.setText(Lang.getString("TedEpisodeDialog.ButtonAddFeed"));
 			jFindButton.setToolTipText(Lang
-				.getString("TedEpisodeDialog.ButtonToolTipFind"));
+				.getString("TedEpisodeDialog.ButtonToolTipAddFeed"));
 
 			jButtonMoveFeedDown.setToolTipText(Lang
 				.getString("TedEpisodeDialog.ButtonToolTipMoveFeedDown"));
@@ -205,7 +191,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	/**
 	 * Add a new feed to the table
 	 */
-	private void addFeed()
+	public void addFeed()
 	{
 		TedSerieFeed newFeed = new TedSerieFeed("", 0, true); //$NON-NLS-1$
 		int row = feedsTableModel.addSerie(newFeed);
@@ -225,7 +211,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 		feedsTable.editCellAt(row, 1);
 	}
 	
-	void addFeed(String s)
+	public void addFeed(String s)
 	{
 		TedSerieFeed newFeed = new TedSerieFeed(s, 0, true);
 		feedsTableModel.addSerie(newFeed);

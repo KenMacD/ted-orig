@@ -343,6 +343,15 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		this.feedsPanel.addFeed(url);
 		
 	}
+	
+	/**
+	 * Add a feed to the show 
+	 */
+	public void addFeed() 
+	{
+		this.feedsPanel.addFeed();
+		
+	}
 
 	/**
 	 * Set a dailydate or a seasonepisode as current episode for the displayed show

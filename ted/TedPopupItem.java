@@ -36,6 +36,7 @@ public class TedPopupItem
 	public final static int IS_CATEGORY_BASED = 1;
 	public final static int IS_GENERAL_FEED = 2;
 	public final static int IS_HELP = 3;
+	public final static int IS_EMPTY = 4;
 	
 	/**
 	 * @param name The displayed name of the menu item

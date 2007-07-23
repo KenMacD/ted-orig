@@ -44,6 +44,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	private Vector category = new Vector();
 	private Vector general  = new Vector();
 	private TedPopupItem help;
+	private TedPopupItem empty;
 
 	private EditShowDialog dialog;
 
@@ -62,12 +63,19 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		// divide the vector in groups
 		this.divideMenu(allItems);
 		
+		// add the "add empty" item
+		String s = Lang.getString("TedEpisodeDialog.FeedsTable.UserDefined");
+		JMenuItem item = new JMenuItem(s);
+		item.addActionListener(this);
+		item.setActionCommand(s);
+		this.add(item);
+		this.addSeparator();
+		
 		// add the groups to the menu (divided by a seperator)
 		this.setMenu(search);
 		this.setMenu(category);
 		this.setMenu(general);
 		
-		String s;
 		try
 		{
 			// retrieve help item text
@@ -80,13 +88,13 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		}
 		
 		// add help item to menu
-		JMenuItem item = new JMenuItem(s);
+		item = new JMenuItem(s);
 		item.addActionListener(this);
 		item.setActionCommand(item.getName());
 		this.add(item);
 	}
 	
-	/*
+	/**
 	 * Divides the given vector in groups based on the type of the 
 	 * JPopupItem 
 	 */
@@ -105,10 +113,12 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 				general.add(item);
 			else if(item.getType()==TedPopupItem.IS_HELP)
 				help = item;
+			else if(item.getType()==TedPopupItem.IS_EMPTY)
+				empty = item;
 		}
 	}
 	
-	/*
+	/**
 	 * Add the items from the vector to the menu
 	 */
 	private void setMenu(Vector v)
@@ -147,6 +157,10 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 					this.openOptionDialog(item.getUrl(), item.getWebsite(), item.getType());
 				else if(item.getType()==TedPopupItem.IS_HELP)
 					this.openUrl(item.getUrl());
+				else if(item.getType()==TedPopupItem.IS_EMPTY)
+					dialog.addFeed();
+				
+				return;
 			}
 		}
 	}

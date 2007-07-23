@@ -3,6 +3,10 @@
 	<version>18</version>
 	<rsslocations>
 		<location>
+			<name>User defined</name>
+			<type>4</type>
+		</location>		
+		<location>
 			<name>Torrentspy</name>
 			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=#NAME#</feed>
 			<website>http://www.torrentspy.com/</website>
