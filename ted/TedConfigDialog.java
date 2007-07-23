@@ -179,7 +179,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		jConfigTabs.add("general", generalPanel);
 		generalPanel.setValues();
 		
-		looknfeelPanel = new LooknFeelPanel();
+		looknfeelPanel = new LooknFeelPanel(main);
 		jConfigTabs.add("looknfeel", looknfeelPanel);
 		looknfeelPanel.setValues();
 		

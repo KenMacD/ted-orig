@@ -1,7 +1,11 @@
 package ted.ui.configdialog;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Locale;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -16,6 +20,7 @@ import javax.swing.JSeparator;
 
 import ted.Lang;
 import ted.TedConfig;
+import ted.TedMainDialog;
 import ted.TedSystemInfo;
 
 
@@ -31,13 +36,14 @@ import ted.TedSystemInfo;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class LooknFeelPanel extends JPanel implements ActionListener
+public class LooknFeelPanel extends JPanel implements ActionListener, MouseListener
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6042247710601857318L;
 	private JPanel lookFeelPanel;
+	private JLabel labelUpdate;
 	private JCheckBox checkLogToFile;
 	private JCheckBox checkAllowLogging;
 	private JSeparator jSeparator1;
@@ -52,9 +58,16 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 	private int width = 400;
 	private int height = 300;
 	private Locale[] locales = Lang.getAvailableLocales();
+	private TedMainDialog tMain;
 	
 	public LooknFeelPanel()
 	{
+		this.initGUI();
+	}
+	
+	public LooknFeelPanel(TedMainDialog dialog)
+	{
+		this.tMain = dialog;
 		this.initGUI();
 	}
 	
@@ -69,7 +82,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 		lookFeelPanel.setPreferredSize(new Dimension(width, height));
 		FormLayout lookFeelPanelLayout = new FormLayout(
 			"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
-			"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu");
+			"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu)");
 		lookFeelPanel.setLayout(lookFeelPanelLayout);
 
 		labelLanguage = new JLabel();
@@ -128,6 +141,15 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 			checkLogToFile = new JCheckBox();
 			lookFeelPanel.add(checkLogToFile, new CellConstraints("2, 9, 2, 1, default, default"));
 			checkLogToFile.setText(Lang.getString("TedLog.LogToFile"));
+		}
+		{
+			labelUpdate = new JLabel();
+			lookFeelPanel.add(labelUpdate, new CellConstraints("3, 13, 1, 1, default, default"));
+			labelUpdate.setForeground(Color.BLUE);
+			labelUpdate.setFont(new java.awt.Font("Dialog",1,12));
+			labelUpdate.addMouseListener(this);
+			labelUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			labelUpdate.setText("<html><u>"+ Lang.getString("TedMainMenuBar.Help.LanguageUpdate")+"</u></html>");
 		}
 
 		} catch (Exception e) {
@@ -231,6 +253,32 @@ public class LooknFeelPanel extends JPanel implements ActionListener
 			
 			this.checkStartMinimized.setEnabled(isChecked);
 		}
+		
+	}
+
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+		tMain.openTranslationLink();
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }

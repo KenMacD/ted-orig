@@ -873,6 +873,10 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			TedTranslateDialog trans = new TedTranslateDialog();
 			trans.setVisible(true);
 		}
+		else if(action.equals("language"))
+		{
+			this.openTranslationLink();
+		}
 	}
 	
 	public void showAboutDialog() 
@@ -1099,4 +1103,22 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}	
 		
 	}
+	
+	/**
+	 * Open website where the latest translations can be donwloaded
+	 * @param name name of the show
+	 */
+	public void openTranslationLink() 
+	{
+		try 
+		{
+			BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Latest_translations"); //$NON-NLS-1$
+		} 
+		catch (Exception ep) 
+		{
+			// error launching ted website
+			System.out.println("Error while opening language website"); //$NON-NLS-1$
+		}	
+		
+	}	
 }

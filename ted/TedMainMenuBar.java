@@ -1,5 +1,7 @@
 package ted;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,6 +47,10 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenu supportMenu;
 	private JMenuItem buyDVDItem;
 	private JMenuItem translateItem;
+	private JMenuItem languageItem;
+	
+	private JMenu subUpdateMenu;
+	private JMenu subLangMenu;
 	
 	private TedMainDialog tMain;
 	private JMenu jMenu6;
@@ -190,26 +196,36 @@ public class TedMainMenuBar extends JMenuBar
 			// Seperator
 			jSeparator1 = new JSeparator();
 			jMenu5.add(jSeparator1);
+			// update submenus
+			subUpdateMenu = new JMenu();
+			subLangMenu = new JMenu();
+			jMenu5.add(subUpdateMenu);
+			jMenu5.add(subLangMenu);
 			// Check for updated
 			versionItem = new JMenuItem();
-			jMenu5.add(versionItem);
+			subUpdateMenu.add(versionItem);
 			versionItem.addActionListener(tMain);
 			versionItem.setActionCommand("checkupdates"); //$NON-NLS-1$
 			// Check RSS updates
 			RSSItem = new JMenuItem();
-			jMenu5.add(RSSItem);
+			subUpdateMenu.add(RSSItem);
 			RSSItem.addActionListener(tMain);
 			RSSItem.setActionCommand("checkRSS"); //$NON-NLS-1$
 			// Synchronize show.xml with current shows
 			synchronizeMenuItem = new JMenuItem();
-			jMenu5.add(synchronizeMenuItem);
+			subUpdateMenu.add(synchronizeMenuItem);
 			synchronizeMenuItem.addActionListener(tMain);
 			synchronizeMenuItem.setActionCommand("synchronize"); //$NON-NLS-1$
 			// Translate ted
 			translateItem = new JMenuItem();
-			jMenu5.add(translateItem);
+			subLangMenu.add(translateItem);
 			translateItem.addActionListener(tMain);
 			translateItem.setActionCommand("translate");
+			// Get latest language version
+			languageItem = new JMenuItem();
+			subLangMenu.add(languageItem);
+			languageItem.addActionListener(tMain);
+			languageItem.setActionCommand("language");
 			// seperate
 			jSeparator1 = new JSeparator();
 			jMenu5.add(jSeparator1);
@@ -280,7 +296,11 @@ public class TedMainMenuBar extends JMenuBar
 		this.donateItem.setText(Lang.getString("TedMainMenuBar.Help.Donate")); //$NON-NLS-1$
 		aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
 	
+		subUpdateMenu.setText(Lang.getString("TedMainMenuBar.Help.SubSoftware"));
 		
+		subLangMenu.setText(Lang.getString("TedMainMenuBar.Help.SubTranslate"));
+		
+		languageItem.setText(Lang.getString("TedMainMenuBar.Help.LanguageUpdate"));
 	}
 	
 	/**
