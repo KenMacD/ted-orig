@@ -51,10 +51,11 @@ else if (strpos($url, "torrentspy.com") !== false)
 {
 	// make torrentspy download url
 	// is in the format of: http://www.torrentspy.com/torrent/485100/South_Park_914_Bloody_Marry
-	// has to be: http://ts.searching.com/download.asp?id=478555
+	// Deprecated -- has to be: http://ts.searching.com/download.asp?id=478555
+	// http://cache.torrentspy.com/download.asp?id=1745474
 	$torrentUrl = str_replace("http://www.torrentspy.com/torrent/", "", $torrentUrl);
 	$id = explode("/", $torrentUrl);
-	$torrentUrl = "http://www.torrentspy.com/download.asp?id=$id[0]";
+	$torrentUrl = "http://cache.torrentspy.com/download.asp?id=$id[0]";
 }
 
 else if (strpos($url, "torrentreactor.net") !== false || strpos($url, "Torrentreactor.Net") !== false)
