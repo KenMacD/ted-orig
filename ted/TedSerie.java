@@ -758,7 +758,7 @@ public class TedSerie implements Serializable
 	public void setBreakUntil(int day, int month, int year) 
 	{
 		Calendar c = new GregorianCalendar();
-		c.set(year, month, day+1);
+		c.set(year, month, day);
 		this.breakUntil = c.getTimeInMillis();
 	}
 	
@@ -776,7 +776,7 @@ public class TedSerie implements Serializable
 	public void setBreakFrom(int day, int month, int year) 
 	{
 		Calendar c = new GregorianCalendar();
-		c.set(year, month, day+1);
+		c.set(year, month, day);
 		this.breakFrom = c.getTimeInMillis();
 	}
 	

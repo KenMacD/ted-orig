@@ -152,4 +152,32 @@ public class DatePanel extends JPanel
 		return this.jFromBreakYear.getSelectedIndex() + yearOffset;
 	}
 
+	/**
+	 * @return Selected date in millis
+	 */
+	public long getDateInMillis() 
+	{
+		Calendar c = new GregorianCalendar();
+		int fday   = this.getDay();
+		int fmonth = this.getMonth();
+		int fyear  = this.getYear();
+		
+		c.set(fyear, fmonth, fday);
+		
+		return c.getTimeInMillis();
+	}
+
+	public void setDate(Calendar c) 
+	{
+		this.setDate(c.getTimeInMillis());
+		
+	}
+	
+	public void setEnabledContents(Boolean b)
+	{
+		this.jFromBreakDay.setEnabled(b);
+		this.jFromBreakMonth.setEnabled(b);
+		this.jFromBreakYear.setEnabled(b);
+	}
+
 }
