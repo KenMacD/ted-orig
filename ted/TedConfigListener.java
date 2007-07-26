@@ -58,7 +58,7 @@ public class TedConfigListener implements ActionListener
 		{
 			try 
 			{
-				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Config"); //$NON-NLS-1$
+				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Config_General"); //$NON-NLS-1$
 			} 
 			catch (Exception err)
 			{

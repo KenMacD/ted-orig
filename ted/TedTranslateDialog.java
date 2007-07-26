@@ -315,7 +315,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			// try to open the ted documentation website
 			try 
 			{
-				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Translate_ted"); //$NON-NLS-1$
+				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Translate_translator"); //$NON-NLS-1$
 			} 
 			catch (IOException ep) 
 			{
