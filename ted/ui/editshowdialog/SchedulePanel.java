@@ -1,29 +1,23 @@
 package ted.ui.editshowdialog;
-import com.jgoodies.forms.layout.CellConstraints;
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import com.jgoodies.forms.layout.FormLayout;
-
 import ted.Lang;
 import ted.TedLog;
 import ted.TedSerie;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 
 /**
@@ -62,11 +56,6 @@ public class SchedulePanel extends JPanel implements ActionListener
 	private JLabel jScheduleText;
 	private JCheckBox jCheckSchedule;
 	private int height = 300;
-	
-	private String[] months = {Lang.getString("TedEpisodeDialog.MonthJan"), Lang.getString("TedEpisodeDialog.MonthFeb"), Lang.getString("TedEpisodeDialog.MonthMar"), Lang.getString("TedEpisodeDialog.MonthApr"), Lang.getString("TedEpisodeDialog.MonthMay"), Lang.getString("TedEpisodeDialog.MonthJun"), Lang.getString("TedEpisodeDialog.MonthJul"), Lang.getString("TedEpisodeDialog.MonthAug"), Lang.getString("TedEpisodeDialog.MonthSep"), Lang.getString("TedEpisodeDialog.MonthOct"), Lang.getString("TedEpisodeDialog.MonthNov"), Lang.getString("TedEpisodeDialog.MonthDec")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
-	private String[] days  = initString(1, 31);
-	private String[] years;
-	private int yearDiff;
 	private boolean wasUseBreakSchedule;
 	private DatePanel fromBreakDatePanel;
 	private DatePanel untilBreakDatePanel;
@@ -219,7 +208,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 
 	public void setValues(TedSerie serie)
 	{
-		this.initYears(serie);
+		//this.initYears(serie);
 		
 		
 		this.jBreakEpisode.setText("" + serie.getBreakEpisode()); //$NON-NLS-1$
@@ -253,16 +242,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 			currentSerie.setUseBreakSchedule(jCheckBreakSchedule.isSelected());
 			currentSerie.setUseBreakScheduleEpisode(jCheckBoxBreakEpisode.isSelected());
 			currentSerie.setUseBreakScheduleFrom(jCheckBoxBreakFrom.isSelected());
-			
-			/*Calendar c = new GregorianCalendar();
-			int day2  = jBreakDay.getSelectedIndex();
-			int month = jBreakMonth.getSelectedIndex();
-			int year  = jBreakYear.getSelectedIndex()+c.get(Calendar.YEAR) - yearDiff;
-			
-			int fday   = fromBreakDatePanel.getDay();
-			int fmonth = fromBreakDatePanel.getMonth();
-			int fyear  = fromBreakDatePanel.getYear();*/
-			
+					
 			currentSerie.setBreakUntil(untilBreakDatePanel.getDateInMillis());
 			currentSerie.setBreakFrom(fromBreakDatePanel.getDateInMillis());
 			currentSerie.setBreakEpisode(breakep);
@@ -376,66 +356,10 @@ public class SchedulePanel extends JPanel implements ActionListener
 		jCheckBoxBreakEpisode.setEnabled(b);
 		jCheckBoxBreakFrom.setEnabled(b);
 		
-		/*jBreakYear.setEnabled(b);
-		jBreakMonth.setEnabled(b);
-		jBreakDay.setEnabled(b);
-		jFromBreakYear.setEnabled(b&&f);
-		jFromBreakMonth.setEnabled(b&&f);
-		jFromBreakDay.setEnabled(b&&f);*/
 		untilBreakDatePanel.setEnabledContents(b);
 		fromBreakDatePanel.setEnabledContents(b&&f);
 		jBreakEpisode.setEnabled(b&&e);
 		jBreakLabel2.setEnabled(b);
-	}
-	
-	/**
-	 * Initialize a array with strings
-	 * @param low first value of the array
-	 * @param high last value of the array
-	 * @return A array filled with entries between low and high
-	 */
-	private String[] initString(int low, int high) 
-	{
-		String [] strings = new String [high-low+1];
-		
-		for (int i = 0; i+low <= high; i++)
-		{
-			strings[i] = ""+(low+i); //$NON-NLS-1$
-		}
-		
-		return strings;
-	}
-	
-	private void initYears(TedSerie currentSerie)
-	{
-		//	set the years which has to be put in the drop down menu
-		Calendar c = new GregorianCalendar();
-		int year1 = c.get(Calendar.YEAR);
-		long x = currentSerie.getBreakUntil();
-		long y = currentSerie.getBreakFrom();
-		long z;
-		
-		if(x<y)
-			z = x;
-		else
-			z = y;
-		
-		// take the from year as most early year except when it's a new show
-		if(z!=0)
-			c.setTimeInMillis(z);
-		
-		int year2 = c.get(Calendar.YEAR);
-		years = initString(year2, year2+5);
-		
-		if(year2 < year1)
-			yearDiff = year1 - year2;
-		
-		ComboBoxModel jBreakYearModel = new DefaultComboBoxModel(years);
-		//jBreakYear.setModel(jBreakYearModel);
-		
-		ComboBoxModel jFromBreakYearModel = new DefaultComboBoxModel(years);
-		//jFromBreakYear.setModel(jFromBreakYearModel);
-		
 	}
 	
 	/**
@@ -457,33 +381,13 @@ public class SchedulePanel extends JPanel implements ActionListener
 			if(from!=0)
 				c2.setTimeInMillis(from);			
 		}
-		/*else if(!jCheckBreakSchedule.isSelected())
-		{
-			/* If break schedule not checked at all fill in for both date the 
-			 * date of today
-			 
-			
-			c  = c3;
-			c2 = c3;
-		}
-		else if(!jCheckBoxBreakFrom.isSelected())
-		{
-			/* If not break from is checked set from date to today 
-			c2 = c3;
-		}*/
 		
 
 		try
-		{
-			/*jBreakDay.setSelectedIndex(c.get(Calendar.DAY_OF_MONTH)-1);
-			jBreakMonth.setSelectedIndex(c.get(Calendar.MONTH));
-			jBreakYear.setSelectedIndex(c.get(Calendar.YEAR)-c3.get(Calendar.YEAR) + yearDiff);*/
-			
+		{		
 			untilBreakDatePanel.setDate(c);
 			fromBreakDatePanel.setDate(c2);
-			/*jFromBreakDay.setSelectedIndex(c2.get(Calendar.DAY_OF_MONTH)-1);
-			jFromBreakMonth.setSelectedIndex(c2.get(Calendar.MONTH));
-			jFromBreakYear.setSelectedIndex(c2.get(Calendar.YEAR)-c3.get(Calendar.YEAR) + yearDiff);*/
+
 		}
 		catch(Exception e)
 		{
