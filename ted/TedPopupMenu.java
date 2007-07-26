@@ -66,6 +66,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		// add the "add empty" item
 		String s = Lang.getString("TedEpisodeDialog.FeedsTable.UserDefined");
 		JMenuItem item = new JMenuItem(s);
+		((TedPopupItem)allItems.get(0)).setName(s);
 		item.addActionListener(this);
 		item.setActionCommand(s);
 		this.add(item);
@@ -89,6 +90,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		
 		// add help item to menu
 		item = new JMenuItem(s);
+		((TedPopupItem)allItems.get(allItems.size()-1)).setName(s);
 		item.addActionListener(this);
 		item.setActionCommand(item.getName());
 		this.add(item);
