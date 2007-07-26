@@ -49,12 +49,12 @@ public class WeekSchedulePanel extends JPanel implements ActionListener
 	private void initGUI()
 	{
 		FormLayout thisLayout = new FormLayout(
-			"max(p;5dlu), 10dlu, max(p;40dlu), 5dlu, 40dlu, 5dlu, max(p;5dlu), max(p;10px)",
+			"5dlu, 10dlu, 30dlu:grow, 5dlu, 30dlu:grow, 5dlu, 30dlu:grow, 10px",
 			"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;10px)");
 		this.setLayout(thisLayout);
 		{
 			jCheckSchedule = new JCheckBox();
-			this.add(jCheckSchedule, new CellConstraints("2, 2, 4, 1, default, default"));
+			this.add(jCheckSchedule, new CellConstraints("2, 2, 6, 1, default, default"));
 			jCheckSchedule.setActionCommand("schedule");
 			jCheckSchedule.setText(Lang
 				.getString("TedEpisodeDialog.CheckEpisodeSchedule"));

@@ -1,23 +1,7 @@
 package ted.ui.editshowdialog;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
-
-import ted.Lang;
-import ted.TedLog;
 import ted.TedSerie;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -58,7 +42,7 @@ public class SchedulePanel extends JPanel
 		try 
 		{
 			FormLayout thisLayout = new FormLayout(
-				"5dlu, 268dlu",
+				"5dlu, 255dlu, 5dlu",
 				"max(p;66dlu), 5dlu, 115dlu");
 			this.setLayout(thisLayout);
 			wPanel = new WeekSchedulePanel();
@@ -72,7 +56,7 @@ public class SchedulePanel extends JPanel
 				this.add(jSeparator1, new CellConstraints("2, 2, 1, 1, default, default"));
 			}
 			{
-				this.add(bPanel, new CellConstraints("2, 3, 1, 1, default, bottom"));
+				this.add(bPanel, new CellConstraints("2, 3, 1, 1, default, default"));
 			}
 		}
 		catch (Exception e)
