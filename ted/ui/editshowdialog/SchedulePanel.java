@@ -42,7 +42,7 @@ public class SchedulePanel extends JPanel
 		try 
 		{
 			FormLayout thisLayout = new FormLayout(
-				"5dlu, 255dlu, 5dlu",
+				"max(p;5dlu), 15dlu:grow, max(p;15dlu)",
 				"max(p;66dlu), 5dlu, 115dlu");
 			this.setLayout(thisLayout);
 			wPanel = new WeekSchedulePanel();

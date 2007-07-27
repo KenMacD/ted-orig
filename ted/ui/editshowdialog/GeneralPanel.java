@@ -74,7 +74,7 @@ public class GeneralPanel extends JPanel
 			//this.add(generalPanel);
 			this.setPreferredSize(new Dimension(width, height));
 			FormLayout lookFeelPanelLayout = new FormLayout(
-				"max(p;6dlu), 15dlu:grow, max(p;16dlu)",
+				"max(p;5dlu), 15dlu:grow, max(p;15dlu)",
 				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;0dlu), 5dlu, max(p;15dlu), 17dlu");
 			this.setLayout(lookFeelPanelLayout);
 

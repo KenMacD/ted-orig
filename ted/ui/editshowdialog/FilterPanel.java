@@ -64,7 +64,7 @@ public class FilterPanel extends JPanel
 		try 
 		{
 			FormLayout thisLayout = new FormLayout(
-				"max(p;5dlu), 90dlu:grow, 40dlu, 5dlu, max(p;5dlu):grow, max(p;10px)",
+				"max(p;5dlu), 90dlu:grow, 40dlu, 5dlu, max(p;5dlu):grow, max(p;15dlu)",
 				"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu):grow, max(p;10px)");
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new Dimension(width, height));
