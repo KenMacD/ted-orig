@@ -1,14 +1,11 @@
 package ted.ui.editshowdialog;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 
 import ted.Lang;
 import ted.TedSerie;

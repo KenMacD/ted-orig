@@ -1,26 +1,9 @@
 package ted.ui.editshowdialog;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.JViewport;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
-import org.w3c.dom.Element;
-
-import com.jgoodies.forms.layout.FormLayout;
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -28,17 +11,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Vector;
-import javax.swing.BorderFactory;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.JViewport;
+import javax.swing.table.TableColumn;
 
 import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedFeedsTableModel;
-import ted.TedIO;
 import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedSerieFeed;
-import ted.TedXMLParser;
 import ted.ui.TableRenderer;
 
 
@@ -66,7 +55,6 @@ public class FeedsPanel extends JPanel implements ActionListener
 	private JButton jOpenButton;
 	private JButton jButtonDelete;
 	private JToolBar feedsToolBar;
-	private JButton button_Save;
 	private TedFeedsTableModel feedsTableModel = new TedFeedsTableModel();
 	MouseListener popupListener = new PopupListener();
 	private TedPopupMenu findRSSPopupMenu;

@@ -1,11 +1,8 @@
 package ted.ui.editshowdialog;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import java.awt.Dimension;
 import java.awt.TextField;
-import javax.swing.JLabel;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -13,6 +10,9 @@ import javax.swing.JTextField;
 
 import ted.Lang;
 import ted.TedSerie;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 
 /**

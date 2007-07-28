@@ -14,7 +14,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-//import javax.swing.table.TableRowSorter;
 
 import ted.ui.editshowdialog.EditShowDialog;
 

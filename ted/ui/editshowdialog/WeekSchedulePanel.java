@@ -7,7 +7,6 @@ import java.util.Calendar;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 
 import ted.Lang;
 import ted.TedSerie;

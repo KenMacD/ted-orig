@@ -3,7 +3,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
-import javax.swing.SpinnerNumberModel;
 
 import ted.Lang;
 import ted.TedDailySerie;

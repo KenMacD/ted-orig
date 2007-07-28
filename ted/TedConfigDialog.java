@@ -85,7 +85,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		super(frame);
 		this.setModal(true);
 		this.setResizable(false);
-		main = frame;
+		this.main = frame;
 		//config = tc;
 		this.show_cancel_btn = showcancelbutton;
 		initGUI();
@@ -99,7 +99,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		try 
 		{
 
-			this.setSize(width, height);
+			this.setSize(this.width, this.height);
 
 
 		    //Get the screen size
@@ -114,7 +114,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		    this.setLocation(x, y);
 
 			// prevent the dialog from being closed other then the cancel/save buttons
-			if (!show_cancel_btn)
+			if (!this.show_cancel_btn)
 			{
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			}
@@ -138,26 +138,26 @@ public class TedConfigDialog extends javax.swing.JDialog
 		{
 			if (this.show_cancel_btn)
 			{
-				Annuleer_Button = new JButton();
-				this.getContentPane().add(Annuleer_Button);
-				Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
-				Annuleer_Button.setBounds(164, 380, 119, 28);
-				Annuleer_Button.addActionListener(TCListener);
-				Annuleer_Button.setActionCommand("Cancel");
+				this.Annuleer_Button = new JButton();
+				this.getContentPane().add(this.Annuleer_Button);
+				this.Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
+				this.Annuleer_Button.setBounds(164, 380, 119, 28);
+				this.Annuleer_Button.addActionListener(this.TCListener);
+				this.Annuleer_Button.setActionCommand("Cancel");
 			}
 		}
 		{
-			Save_Button = new JButton();
-			this.getContentPane().add(Save_Button);
-			Save_Button.setText(Lang.getString("TedConfigDialog.ButtonSave")); //$NON-NLS-1$
-			Save_Button.setBounds(291, 380, 91, 28);
-			Save_Button.addActionListener(TCListener);
-			Save_Button.setActionCommand("Save");
+			this.Save_Button = new JButton();
+			this.getContentPane().add(this.Save_Button);
+			this.Save_Button.setText(Lang.getString("TedConfigDialog.ButtonSave")); //$NON-NLS-1$
+			this.Save_Button.setBounds(291, 380, 91, 28);
+			this.Save_Button.addActionListener(this.TCListener);
+			this.Save_Button.setActionCommand("Save");
 		}
 
-		jConfigTabs = new JPanel(new CardLayout());
-		getContentPane().add(jConfigTabs);
-		jConfigTabs.setBounds(0, 75, 400, 300);
+		this.jConfigTabs = new JPanel(new CardLayout());
+		getContentPane().add(this.jConfigTabs);
+		this.jConfigTabs.setBounds(0, 75, 400, 300);
 		
 		TedConfigDialogToolBar toolBarPanel = new TedConfigDialogToolBar(this);
 		getContentPane().add(toolBarPanel);
@@ -167,29 +167,29 @@ public class TedConfigDialog extends javax.swing.JDialog
 		
 		toolBarPanel.setBackground(Color.WHITE);
 
-		jHelpButton = new JButton();
-		getContentPane().add(jHelpButton);
-		jHelpButton.setIcon(new ImageIcon(getClass()
+		this.jHelpButton = new JButton();
+		getContentPane().add(this.jHelpButton);
+		this.jHelpButton.setIcon(new ImageIcon(getClass()
 				.getClassLoader().getResource("icons/help.png")));
-		jHelpButton.setActionCommand("Help");
-		jHelpButton.setBounds(11, 380, 28, 28);
-		jHelpButton.addActionListener(TCListener);
+		this.jHelpButton.setActionCommand("Help");
+		this.jHelpButton.setBounds(11, 380, 28, 28);
+		this.jHelpButton.addActionListener(this.TCListener);
 		
-		generalPanel = new GeneralPanel();
-		jConfigTabs.add("general", generalPanel);
-		generalPanel.setValues();
+		this.generalPanel = new GeneralPanel();
+		this.jConfigTabs.add("general", this.generalPanel);
+		this.generalPanel.setValues();
 		
-		looknfeelPanel = new LooknFeelPanel(main);
-		jConfigTabs.add("looknfeel", looknfeelPanel);
-		looknfeelPanel.setValues();
+		this.looknfeelPanel = new LooknFeelPanel(this.main);
+		this.jConfigTabs.add("looknfeel", this.looknfeelPanel);
+		this.looknfeelPanel.setValues();
 		
-		advancedPanel = new AdvancedPanel();
-		jConfigTabs.add("advanced", advancedPanel);
-		advancedPanel.setValues();
+		this.advancedPanel = new AdvancedPanel();
+		this.jConfigTabs.add("advanced", this.advancedPanel);
+		this.advancedPanel.setValues();
 		
-		updatesPanel = new UpdatesPanel(main);
-		jConfigTabs.add("updates", updatesPanel);
-		updatesPanel.setValues();
+		this.updatesPanel = new UpdatesPanel(this.main);
+		this.jConfigTabs.add("updates", this.updatesPanel);
+		this.updatesPanel.setValues();
 	}
 
 	
@@ -205,7 +205,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		int currentTime = TedConfig.getTimeOutInSecs();
 		boolean resetTime = false;
 		
-		if (generalPanel.checkValues() && looknfeelPanel.checkValues() && advancedPanel.checkValues() && this.updatesPanel.checkValues())
+		if (this.generalPanel.checkValues() && this.looknfeelPanel.checkValues() && this.advancedPanel.checkValues() && this.updatesPanel.checkValues())
 		{		
 			this.generalPanel.saveValues();
 			this.looknfeelPanel.saveValues();
@@ -220,7 +220,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 				resetTime = true;
 			}
 			
-			main.saveConfig(resetTime);
+			this.main.saveConfig(resetTime);
 			this.setVisible(false);
 		}
 	}
@@ -261,8 +261,8 @@ public class TedConfigDialog extends javax.swing.JDialog
 
 	public void showPanel(String command)
 	{
-		CardLayout cl = (CardLayout)(jConfigTabs.getLayout());
-	    cl.show(jConfigTabs, command);
+		CardLayout cl = (CardLayout)(this.jConfigTabs.getLayout());
+	    cl.show(this.jConfigTabs, command);
 		
 	}
 

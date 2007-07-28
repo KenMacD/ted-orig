@@ -5,9 +5,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
+import org.jdesktop.jdic.init.JdicManager;
 import org.jdesktop.jdic.tray.SystemTray;
 import org.jdesktop.jdic.tray.TrayIcon;
-import org.jdesktop.jdic.init.JdicManager;
 
 public class TedTrayIcon
 {

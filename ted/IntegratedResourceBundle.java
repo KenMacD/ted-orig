@@ -22,10 +22,8 @@ package ted;
  */
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.ListResourceBundle;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 /**

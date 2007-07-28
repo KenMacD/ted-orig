@@ -1,7 +1,5 @@
 package ted;
 
-import java.awt.event.KeyEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -53,7 +51,6 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenu subLangMenu;
 	
 	private TedMainDialog tMain;
-	private JMenu jMenu6;
 	
 	/**
 	 * Main menubar for ted

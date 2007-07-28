@@ -9,7 +9,7 @@ public class TedFolderMonitor
 	private String monitored_folder;
 	private String destination_folder;
 	private ConcurrentLinkedQueue monitored_files;
-	private String monitored_file;
+	//private String monitored_file;
 	private TedFolderMonitorCounter counter;
 	
 	private TedFolderMonitor()

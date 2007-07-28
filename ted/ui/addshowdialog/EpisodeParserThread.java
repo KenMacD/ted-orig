@@ -6,7 +6,6 @@ import ted.TedParser;
 import ted.TedSerie;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
-import ted.datastructures.StandardStructure;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)

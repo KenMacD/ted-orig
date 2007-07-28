@@ -173,7 +173,12 @@ public class TedSystemInfo
 	 */
 	public static boolean isSupportedJavaVendor()
 	{
-		String vendor = TedSystemInfo.getJavaVendor();
+		// DISABLED
+		// could be more supported vendors than just sun.
+		// like microsoft, apple, etc.
+		// first investigate before blocking them all.
+		
+		/*String vendor = TedSystemInfo.getJavaVendor();
 		vendor.toLowerCase();
 		System.out.println(vendor);
 		
@@ -184,7 +189,8 @@ public class TedSystemInfo
 		else
 		{
 			return false;
-		}
+		}*/
+		return true;
 	}
 	
 	/**

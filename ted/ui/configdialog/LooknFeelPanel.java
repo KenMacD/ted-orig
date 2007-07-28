@@ -8,13 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Locale;
 
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
@@ -22,6 +18,9 @@ import ted.Lang;
 import ted.TedConfig;
 import ted.TedMainDialog;
 import ted.TedSystemInfo;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 
 /**

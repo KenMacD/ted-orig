@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

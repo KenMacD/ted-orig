@@ -1,6 +1,5 @@
 package ted.ui;
 
-import java.awt.Color;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;

@@ -1,14 +1,13 @@
 package ted.ui.editshowdialog;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 
 import ted.Lang;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo

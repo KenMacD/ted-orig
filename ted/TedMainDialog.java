@@ -14,22 +14,15 @@ import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import ted.ui.addshowdialog.*;
+import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.editshowdialog.EditShowDialog;
-
-import org.jdesktop.jdic.tray.SystemTray;
-import org.jdesktop.jdic.tray.TrayIcon;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo

@@ -1,10 +1,5 @@
 package ted.datastructures;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import ted.Lang;
 
 public class SeasonEpisode extends StandardStructure implements Comparable

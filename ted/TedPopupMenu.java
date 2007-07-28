@@ -8,23 +8,6 @@ import java.util.Vector;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-/**
- * TED: Torrent Episode Downloader (2005 - 2006)
- * 
- * This is the mainwindow of ted
- * It shows all the shows with their urls, status and more and includes menus
- * and buttons for the user to interact with ted.
- * 
- * @author Roel
- * @author Joost
- *
- * ted License:
- * This file is part of ted. ted and all of it's parts are licensed
- * under GNU General Public License (GPL) version 2.0
- * 
- * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
- *
- */
 
 import ted.ui.editshowdialog.EditShowDialog;
 

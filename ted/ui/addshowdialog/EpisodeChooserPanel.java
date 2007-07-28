@@ -1,14 +1,10 @@
 package ted.ui.addshowdialog;
-import com.jgoodies.forms.layout.CellConstraints;
-
 import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
-import com.jgoodies.forms.layout.FormLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -23,6 +19,9 @@ import ted.TedTableProgressbarRenderer;
 import ted.datastructures.StandardStructure;
 import ted.interfaces.EpisodeChooserListener;
 import ted.ui.TableRenderer;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 
 /**
