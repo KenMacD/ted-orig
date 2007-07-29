@@ -139,19 +139,19 @@ public class TedConfigDialog extends javax.swing.JDialog
 			if (this.show_cancel_btn)
 			{
 				this.Annuleer_Button = new JButton();
-				this.getContentPane().add(this.Annuleer_Button);
+				this.getContentPane().add(Annuleer_Button);
 				this.Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
-				this.Annuleer_Button.setBounds(164, 380, 119, 28);
-				this.Annuleer_Button.addActionListener(this.TCListener);
+				this.Annuleer_Button.setBounds(175, 378, 98, 28);
+				this.Annuleer_Button.addActionListener(TCListener);
 				this.Annuleer_Button.setActionCommand("Cancel");
 			}
 		}
 		{
 			this.Save_Button = new JButton();
-			this.getContentPane().add(this.Save_Button);
+			this.getContentPane().add(Save_Button);
 			this.Save_Button.setText(Lang.getString("TedConfigDialog.ButtonSave")); //$NON-NLS-1$
-			this.Save_Button.setBounds(291, 380, 91, 28);
-			this.Save_Button.addActionListener(this.TCListener);
+			this.Save_Button.setBounds(287, 378, 98, 28);
+			this.Save_Button.addActionListener(TCListener);
 			this.Save_Button.setActionCommand("Save");
 		}
 
