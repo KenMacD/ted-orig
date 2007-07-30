@@ -18,8 +18,8 @@
 <javaElement handleIdentifier="=ted trunk/&lt;net.sf.torrentsniffer.torrent"/>
 <file path="/ted trunk/icons/TedMainDialog.startsearching.png"/>
 <javaElement handleIdentifier="=ted trunk/&lt;net.sf.torrentsniffer.tracker"/>
-<file path="/ted trunk/icons/EditShowDialog-feeds.png"/>
 <file path="/ted trunk/icons/stop.png"/>
+<file path="/ted trunk/icons/EditShowDialog-feeds.png"/>
 <file path="/ted trunk/icons/icon-active-ted.gif"/>
 <file path="/ted trunk/icons/icon-ted2.png"/>
 <file path="/ted trunk/icons/TedMainDialog.editshow32.png"/>
@@ -36,8 +36,8 @@
 <file path="/ted trunk/icons/Edit.png"/>
 <file path="/ted trunk/icons/pause.png"/>
 <javaElement handleIdentifier="=ted trunk/&lt;net.sf.torrentsniffer.hash"/>
-<javaElement handleIdentifier="=ted trunk/&lt;ted.ui"/>
 <javaElement handleIdentifier="=ted trunk/&lt;ted"/>
+<javaElement handleIdentifier="=ted trunk/&lt;ted.ui"/>
 <file path="/ted trunk/icons/TedMainDialog.addshow32.png"/>
 <file path="/ted trunk/icons/down.png"/>
 <file path="/ted trunk/icons/EditShowDialog-general.png"/>
@@ -51,8 +51,8 @@
 <javaElement handleIdentifier="=ted trunk/&lt;ted.ui.editshowdialog"/>
 <file path="/ted trunk/icons/TedConfigDialog-looknfeel.png"/>
 <file path="/ted trunk/icons/EditShowDialog-schedule.png"/>
-<javaElement handleIdentifier="=ted trunk/&lt;ted.translations"/>
 <javaElement handleIdentifier="=ted trunk/&lt;ted.ui.configdialog"/>
+<javaElement handleIdentifier="=ted trunk/&lt;ted.translations"/>
 <file path="/ted trunk/icons/icon-ted.gif"/>
 </selectedElements>
 </jardesc>
