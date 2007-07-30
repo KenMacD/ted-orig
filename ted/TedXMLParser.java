@@ -452,4 +452,48 @@ public class TedXMLParser
 		
 		return nl.getLength();
 	}
+	
+	/**
+	 * Returns the Amazons URL locations in a Vector as defined
+	 * in the shows.xml file
+	 * @param nodelist
+	 * @return
+	 */
+	public Vector getAmazonURLs(Element nodelist)
+	{
+		Vector v = new Vector();
+		NodeList nl = nodelist.getElementsByTagName("weblocations");
+		
+		if(nl!=null && nl.getLength()>0)
+		{
+			Element el1 = (Element)nl.item(0);
+			NodeList nl1 = el1.getElementsByTagName("Amazon");
+			
+			for(int i=0; i<nl1.getLength(); i++)
+			{
+				Element e = (Element)nl1.item(i);
+				v.add(getTextValue(e, "firsthalf"));
+				v.add(getTextValue(e, "secondhalf"));
+				v.add(getTextValue(e, "complete"));
+			}
+		}
+		
+		return v;
+	}
+	
+	public String getShowInfoURL(Element nodelist)
+	{
+		NodeList nl = nodelist.getElementsByTagName("weblocations");
+		
+		if(nl!=null && nl.getLength()>0)
+		{
+			Element el1 = (Element)nl.item(0);
+			NodeList nl1 = el1.getElementsByTagName("showinfo");
+			
+			Element e = (Element)nl1.item(0);
+			return getTextValue(e, "location");
+		}
+		
+		return "";
+	}
 }

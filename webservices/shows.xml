@@ -73,6 +73,16 @@
 			<type>3</type>
 		</location>
 	</rsslocations>
+	<weblocations>
+		<Amazon>
+			<firsthalf>http://www.amazon.com/gp/search?ie=UTF8&amp;keywords=</firsthalf>
+			<secondhalf>&amp;tag=tedprog-20&amp;index=dvd&amp;linkCode=ur2&amp;camp=1789&amp;creative=9325&amp;sort=salesrank</secondhalf>
+			<complete>http://www.amazon.com/gp/redirect.html?ie=UTF8&amp;location=http%3A%2F%2Fwww.amazon.com%2Fb%3Fie%3DUTF8%26node%3D356468011%26pf%5Frd%5Fm%3DATVPDKIKX0DER%26pf%5Frd%5Fs%3Dbrowse%26pf%5Frd%5Fr%3D0J6C629W7ABBNCGRZR3J%26pf%5Frd%5Ft%3D101%26pf%5Frd%5Fp%3D292543201%26pf%5Frd%5Fi%3D173580&amp;tag=tedprog-20&amp;linkCode=ur2&amp;camp=1789&amp;creative=9325</complete>
+		</Amazon>
+		<showinfo>
+			<location>http://www.rulecam.net/ted/showinfo.php?tvcom=</location>
+		</showinfo>
+	</weblocations>
 	<shows>
 		<show>
 			<name>7th Heaven</name>

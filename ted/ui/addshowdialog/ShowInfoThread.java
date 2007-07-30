@@ -3,11 +3,17 @@ package ted.ui.addshowdialog;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Vector;
 
 import javax.swing.JEditorPane;
 
+import org.w3c.dom.Element;
+
 import ted.Lang;
+import ted.TedIO;
+import ted.TedLog;
 import ted.TedSerie;
+import ted.TedXMLParser;
 
 
 /**
@@ -40,9 +46,20 @@ public class ShowInfoThread extends Thread
 				URL url;
 				try
 				{
-					// open the showinfo url and display
-					url = new URL("http://www.rulecam.net/ted/showinfo.php?tvcom="+currentSerie.getTVcom());
-					showInfoPane.setPage(url);
+					TedXMLParser parser = new TedXMLParser();
+					Element nl = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE);
+					String location = parser.getShowInfoURL(nl);
+					
+					if(!location.equals(""))
+					{
+						// open the showinfo url and display
+						url = new URL(location+currentSerie.getTVcom());
+						showInfoPane.setPage(url);
+					}
+					else
+					{
+						TedLog.error("shows.xml file is corrupt");
+					}
 				} 
 				catch (MalformedURLException e)
 				{
