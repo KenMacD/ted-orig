@@ -48,6 +48,8 @@ import org.w3c.dom.Element;
 public class TedIO 
 {
 	private String XMLurl = "http://ted.sourceforge.net/shows.xml"; //$NON-NLS-1$
+	private String versionUrl = "http://ted.sourceforge.net/version.txt";
+	
 	private static String CONFIG_FILE = TedSystemInfo.getUserDirectory()+"config.ted"; //$NON-NLS-1$
 	private static String SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows.ted"; //$NON-NLS-1$
 	public static String XML_SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows.xml"; //$NON-NLS-1$
@@ -411,7 +413,7 @@ public class TedIO
 		try
 		{
 			TedLog.debug("Checking for new version of ted..."); //$NON-NLS-1$
-			URL url = new URL("http://www.ted.nu/version.txt"); //$NON-NLS-1$
+			URL url = new URL(versionUrl); //$NON-NLS-1$
 		    String line;
 		    StringTokenizer tokenizer;
 		    String token;
