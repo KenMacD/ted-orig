@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>20</version>
+	<version>23</version>
 	<rsslocations>
 		<location>
 			<name>User defined</name>
@@ -442,7 +442,8 @@
 		<show>
 			<name>Entourage</name>
 			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=187</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Entourage&amp;mode=rss</feed>
+			<feed>http://sharetv.org/rss/entourage</feed>
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -506,6 +507,16 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
+		</show>
+		<show>
+			<name>Flash Gordon</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Flash%20Gordon</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>700</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>71778</tv_com>
 		</show>
 		<show>
 			<name>Friday Night Lights</name>
@@ -618,6 +629,18 @@
 			<minimumsize>150</minimumsize>
 			<maximumsize>350</maximumsize>
 			<tv_com>64091</tv_com>
+		</show>
+		<show>
+			<name>I Hate My 30's</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=I%20Hate%20My%2030&apos;s&amp;mode=rss</feed>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=I%20Hate%20My%2030&apos;s</feed>
+				<feed>http://btjunkie.org/rss.xml?query=I%20Hate%20My%2030&apos;s</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>74603</tv_com>
 		</show>
 		<show>
 			<name>Inked</name>
@@ -740,6 +763,18 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24313</tv_com>
+		</show>
+		<show>
+			<name>Masters of Science Fiction</name>
+			<feeds>
+				<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=Masters%20of%20Science%20Fiction</feed>
+				<feed>http://btjunkie.org/rss.xml?query=Masters%20of%20Science%20Fiction</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Masters%20of%20Science%20Fiction&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>200</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>58459</tv_com>
 		</show>
 		<show>
 			<name>Medium</name>
@@ -1118,6 +1153,16 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>6686</tv_com>
+		</show>
+		<show>
+			<name>The Business</name>
+			<feeds>
+				<feed>http://btjunkie.org/rss.xml?query=The%20Business</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Business&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<tv_com>65206</tv_com>
 		</show>
 		<show>
 			<name>The Closer</name>
