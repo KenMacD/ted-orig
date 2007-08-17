@@ -408,7 +408,9 @@ public class TedParser
 	private void addDailyItem(Item item, TedSerie serie)
 	{
 		TedIO tIO = new TedIO();
+		String sTitle = item.getTitle().toString();
 		String torrentUrl = item.getLink().toString();
+		torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getTimeOutInSecs());
 		
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
