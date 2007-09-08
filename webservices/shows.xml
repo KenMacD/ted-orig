@@ -551,6 +551,17 @@
 			<tv_com>71778</tv_com>
 		</show>
 		<show>
+			<name>Flight of the Conchords</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Flight%20of%20the%20Conchords&amp;mode=rss</feed>
+			</feeds>
+			<keywords>flight of the conchords</keywords>
+			<minimumsize>150</minimumsize>
+			<maximumsize>250</maximumsize>
+			<releaseday>monday</releaseday>
+			<tv_com>68719</tv_com>
+		</show>
+		<show>
 			<name>Friday Night Lights</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Friday+Night+Lights&amp;show_name_exact=true&amp;mode=rss</feed>
@@ -867,6 +878,18 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24313</tv_com>
+		</show>
+		<show>
+			<name>Mad Men</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Mad%20Men&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/Mad%20Men/8</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<releaseday>friday</releaseday>
+			<tv_com>74140</tv_com>
 		</show>
 		<show>
 			<name>Masters of Science Fiction</name>
