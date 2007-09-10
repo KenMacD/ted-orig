@@ -211,6 +211,10 @@ public class TedParserKeywordChecker
 	 */
 	private boolean checkWord(String partje, String name) 
 	{
+		// make everything lowercase
+		partje = partje.toLowerCase();
+		name = name.toLowerCase();
+		
 		int match = name.indexOf(partje);
 		if (match != -1)
 		{

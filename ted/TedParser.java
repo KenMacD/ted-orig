@@ -129,6 +129,7 @@ public class TedParser
 		        double progressPerItem = progressPerFeed / items.length;
 		        int itemProgress = 0;
 		        int itemLength = items.length;
+		        
 		        for (int j = items.length - 1; j >= 0; j--)
 		        {
 		        	if (main.getStopParsing())
@@ -526,8 +527,10 @@ public class TedParser
 				
 				//	compare with best	
 				// if more seeders than best and more seeders than min seeders
-				if ((this.bestTorrentUrl == null || torrentState.getComplete() > this.bestTorrentState.getComplete()) 
-						&& torrentState.getComplete() > serie.getMinNumOfSeeders())
+				if (
+						( 	this.bestTorrentUrl == null || 
+							( torrentState.getComplete() > this.bestTorrentState.getComplete()) ) && 
+						torrentState.getComplete() >= serie.getMinNumOfSeeders())
 				{
 					// print seeders
 					TedLog.debug("Found new best torrent! (" + torrentState.getComplete()+ " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -650,7 +653,7 @@ public class TedParser
 		// get torrent state (containing seeders/leechers)
 		TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
 		
-		return(torrentState.getComplete() > serie.getMinNumOfSeeders());
+		return(torrentState.getComplete() >= serie.getMinNumOfSeeders());
 	}
 	
 	/**

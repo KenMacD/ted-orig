@@ -38,7 +38,7 @@ public class TedXMLWriter
 	    int returnVal = chooser.showSaveDialog(chooser);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) 
 	    {
-	    	location = chooser.getSelectedFile().getName();
+	    	location = chooser.getSelectedFile().getPath();
 		    
 	    	if(!location.endsWith(".xml"))
 	    		location += ".xml";
