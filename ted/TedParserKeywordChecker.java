@@ -210,11 +210,7 @@ public class TedParserKeywordChecker
 	 * @return If the word is in the string
 	 */
 	private boolean checkWord(String partje, String name) 
-	{
-		// make everything lowercase
-		partje = partje.toLowerCase();
-		name = name.toLowerCase();
-		
+	{	
 		int match = name.indexOf(partje);
 		if (match != -1)
 		{
@@ -237,6 +233,8 @@ public class TedParserKeywordChecker
 	 */
 	public boolean checkKeywords(String name, String keywords)
 	{		
+		name = name.toLowerCase();
+		keywords = keywords.toLowerCase();
 		return this.ExpressieChecker(keywords, name);
 	}
 	

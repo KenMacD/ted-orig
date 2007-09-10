@@ -145,7 +145,7 @@ public class TedParser
 		        	
 		        	if(serie.isDaily || this.continueParsing())
 		        	{
-		        		if(tPKeyChecker.checkKeywords(item.getTitle().toString().toLowerCase(), serie.getKeywords().toLowerCase()))
+		        		if(tPKeyChecker.checkKeywords(item.getTitle().toString(), serie.getKeywords()))
 		        		{
 	        				if(!serie.isDaily)
 	        				{
