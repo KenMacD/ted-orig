@@ -57,6 +57,7 @@ public class TedParser
 	private TorrentInfo bestTorrentInfo;
 	private URL bestTorrentUrl = null;
 	private Vector dailyItems;
+	private Channel[] feedsData = null;
 	
   	/****************************************************
 	 * CONSTRUCTORS
@@ -72,12 +73,36 @@ public class TedParser
 		
 		// reset globals
 		foundTorrent = false;
-		double progress = 0;
+		
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
+		this.feedsData = null;
 		this.dailyItems = new Vector();
+		
+		// load xml feeds into memory
+		this.loadFeeds(serie, main);
+		// parse the feeds for new episodes
+		this.parseFeeds(serie, main);		
+	}
+
+	
+
+	/**
+	 * Loads all the data from the feeds of the serie into a global array.
+	 * This to prevent the data from loaded everytime the episode number is increased
+	 * @param serie A tedserie
+	 * @param main A ted maindialog
+	 */
+	private void loadFeeds(TedSerie serie, TedMainDialog main) 
+	{		
+		if (feedsData != null)
+		{
+			// feeds already loaded;
+			// do not load them again
+			return;
+		}
 		
 		Rss rss;
 		// load xml
@@ -85,19 +110,107 @@ public class TedParser
 		RssParser parser;
 		Vector feeds = serie.getFeeds();
 		TedSerieFeed currentFeed;
-		serie.setProgress(0, tMainDialog);
-		// walk through all the feeds for this show
 		
+		feedsData = new Channel[feeds.size()];
+		for (int i = 0; i < feeds.size(); i++)
+		{
+			if (main.getStopParsing())
+			{
+				return;
+			}
+			//progress++;
+			currentFeed = (TedSerieFeed) feeds.get(i);
+			tPDateChecker.setLastParseDate(currentFeed.getDate());
+			try 
+			{
+				URLConnection urlc;
+				URL feedURL = new URL(currentFeed.getUrl());
+				
+				TedLog.debug("Loading feed from " + serie.getName() + " URL: " + feedURL); //$NON-NLS-1$ //$NON-NLS-2$
+				serie.setStatusString(Lang.getString("TedParser.StatusLoading") + " " + feedURL, tMainDialog);		 //$NON-NLS-1$
+				
+				urlc = feedURL.openConnection();
+				// timeout for connection
+				urlc.setConnectTimeout(5000);
+				
+				// create an RSS parser
+				parser = RssParserFactory.createDefault();
+				
+				rss = parser.parse(urlc.getInputStream());
+				Channel channel = rss.getChannel();
+				feedsData[i] = channel;
+			}
+			catch (RssParserException e) 
+			{
+				String message = Lang.getString("TedParser.ErrorCreatingParser1") + " " + serie.getName() + //$NON-NLS-1$
+				"\n" + Lang.getString("TedParser.ErrorCreatingParser2") + 
+				"\n" + Lang.getString("TedParser.ErrorCreatingParser3") + " " + currentFeed.getUrl(); //$NON-NLS-1$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
+				feedsData[i] = null;
+			}
+	        catch (MalformedURLException e) 
+	        {
+	        	String message = Lang.getString("TedParser.ErrorNotValidURL1") + " " +  serie.getName() + ". " + Lang.getString("TedParser.ErrorNotValidURL2") + //$NON-NLS-1$ //$NON-NLS-2$
+				"\n" + currentFeed.getUrl();; //$NON-NLS-1$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
+				feedsData[i] = null;
+			}
+	        catch (IOException e) 
+			{
+	        	String message = Lang.getString("TedParser.Error404Feed1") + " " + serie.getName() + 
+	        	"\n" + Lang.getString("TedParser.Error404Feed2") + " "+currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
+				feedsData[i] = null;
+			}
+	        catch (NullPointerException e)
+	        {
+	        	// no items in the feed
+	        	String message = "ted could not find any items in the feed of " + serie.getName() + "\nFeed: " + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
+				tMainDialog.displayError("ted Error!", message, ""); //$NON-NLS-1$ //$NON-NLS-2$
+				e.printStackTrace();
+				feedsData[i] = null;
+	        }
+	        catch (Exception e)
+	        {
+	        	TedLog.error(e, "Unkown exception while parsing RSS feed ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
+	        	feedsData[i] = null;
+	        }
+		}
+		return;
+	}
+	
+	/**
+	 * Parse the feeds of a serie for new episodes
+	 * @param serie Serie to be parsed
+	 * @param main Tedmaindialog
+	 */
+	private void parseFeeds(TedSerie serie, TedMainDialog main)
+	{
+		// reset globals
+		foundTorrent = false;
+		
+		this.bestTorrent = null;
+		this.bestTorrentInfo = null;
+		this.bestTorrentState = null;
+		this.bestTorrentUrl = null;
+		
+		Vector feeds = serie.getFeeds();
+		
+		serie.setProgress(0, tMainDialog);
+		
+		double progress = 0;
 		double progressPerFeed;
 		if(feeds.size()==0)
 			progressPerFeed = 0; //when a show has no feeds
 		else
 			progressPerFeed = 100 / feeds.size();
 		
-		Channel [] feedsData = this.loadFeeds(serie, main);
-		
 		for (int i = 0; i < feedsData.length; i++)
 		{
+			if (main.getStopParsing())
+			{
+				return;
+			}
 			Channel channel = feedsData[i];
 			if (channel != null)
 			{
@@ -106,7 +219,6 @@ public class TedParser
 	
 		        // walk through the different entries until we find a desired episode
 		        // we walk in the wrong direction to get older torrents first (older = more seeders)
-		       // toDo += items.length;
 		        double progressPerItem = progressPerFeed / items.length;
 		        int itemProgress = 0;
 		        int itemLength = items.length;
@@ -172,85 +284,6 @@ public class TedParser
 			// error while downloading best torrent
 			e.printStackTrace();
 		}
-	}
-
-	
-
-	private Channel[] loadFeeds(TedSerie serie, TedMainDialog main) 
-	{
-		Rss rss;
-		// load xml
-		// parse the rss feed of the serie
-		RssParser parser;
-		Vector feeds = serie.getFeeds();
-		TedSerieFeed currentFeed;
-		
-		Channel[] result = new Channel[feeds.size()];
-		for (int i = 0; i < feeds.size(); i++)
-		{
-			if (main.getStopParsing())
-			{
-				return result;
-			}
-			//progress++;
-			currentFeed = (TedSerieFeed) feeds.get(i);
-			tPDateChecker.setLastParseDate(currentFeed.getDate());
-			try 
-			{
-				URLConnection urlc;
-				URL feedURL = new URL(currentFeed.getUrl());
-				
-				TedLog.debug("Loading feed from " + serie.getName() + " URL: " + feedURL); //$NON-NLS-1$ //$NON-NLS-2$
-				serie.setStatusString(Lang.getString("TedParser.StatusLoading") + " " + feedURL, tMainDialog);		 //$NON-NLS-1$
-				
-				urlc = feedURL.openConnection();
-				// timeout for connection
-				urlc.setConnectTimeout(5000);
-				
-				// create an RSS parser
-				parser = RssParserFactory.createDefault();
-				
-				rss = parser.parse(urlc.getInputStream());
-				Channel channel = rss.getChannel();
-				result[i] = channel;
-			}
-			catch (RssParserException e) 
-			{
-				String message = Lang.getString("TedParser.ErrorCreatingParser1") + " " + serie.getName() + //$NON-NLS-1$
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser2") + 
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser3") + " " + currentFeed.getUrl(); //$NON-NLS-1$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				result[i] = null;
-			}
-	        catch (MalformedURLException e) 
-	        {
-	        	String message = Lang.getString("TedParser.ErrorNotValidURL1") + " " +  serie.getName() + ". " + Lang.getString("TedParser.ErrorNotValidURL2") + //$NON-NLS-1$ //$NON-NLS-2$
-				"\n" + currentFeed.getUrl();; //$NON-NLS-1$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				result[i] = null;
-			}
-	        catch (IOException e) 
-			{
-	        	String message = Lang.getString("TedParser.Error404Feed1") + " " + serie.getName() + 
-	        	"\n" + Lang.getString("TedParser.Error404Feed2") + " "+currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				result[i] = null;
-			}
-	        catch (NullPointerException e)
-	        {
-	        	// no items in the feed
-	        	String message = "ted could not find any items in the feed of " + serie.getName() + "\nFeed: " + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog.displayError("ted Error!", message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				e.printStackTrace();
-				result[i] = null;
-	        }
-	        catch (Exception e)
-	        {
-	        	TedLog.error(e, "Unkown exception while parsing RSS feed ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
-	        	result[i] = null;
-	        }
-		}
-		return result;
 	}
 
 
@@ -674,9 +707,16 @@ public class TedParser
 	private boolean hasEnoughSeeders(TorrentImpl torrent, TedSerie serie)
 	{
 		// get torrent state (containing seeders/leechers)
-		TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+		try
+		{
+			TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+			return(torrentState.getComplete() >= serie.getMinNumOfSeeders());
+		}
+		catch (Exception e)
+		{
+			return false;
+		}		
 		
-		return(torrentState.getComplete() >= serie.getMinNumOfSeeders());
 	}
 	
 	/**
@@ -865,7 +905,7 @@ public class TedParser
 		        	}
 		        	
 		        	// but we have to parse the serie until we have all the availble torrents
-		        	ParseSerie(serie, tMainDialog);
+		        	parseFeeds(serie, tMainDialog);
 	        }			
 		}
 		else
