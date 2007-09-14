@@ -58,6 +58,7 @@ public class TedParser
 	private URL bestTorrentUrl = null;
 	private Vector dailyItems;
 	private Channel[] feedsData = null;
+	private int totalNumberOfFeedItems = 0;
 	
   	/****************************************************
 	 * CONSTRUCTORS
@@ -79,6 +80,8 @@ public class TedParser
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
 		this.feedsData = null;
+		totalNumberOfFeedItems = 0;
+		
 		this.dailyItems = new Vector();
 		
 		// load xml feeds into memory
@@ -139,6 +142,8 @@ public class TedParser
 				rss = parser.parse(urlc.getInputStream());
 				Channel channel = rss.getChannel();
 				feedsData[i] = channel;
+				totalNumberOfFeedItems += channel.getItems().size();
+
 			}
 			catch (RssParserException e) 
 			{
@@ -198,12 +203,9 @@ public class TedParser
 		
 		serie.setProgress(0, tMainDialog);
 		
-		double progress = 0;
-		double progressPerFeed;
-		if(feeds.size()==0)
-			progressPerFeed = 0; //when a show has no feeds
-		else
-			progressPerFeed = 100 / feeds.size();
+		double progress = 0;	
+		int itemProgress = 0;
+		double progressPerItem = 100.0 / this.totalNumberOfFeedItems;
 		
 		for (int i = 0; i < feedsData.length; i++)
 		{
@@ -212,17 +214,13 @@ public class TedParser
 				return;
 			}
 			Channel channel = feedsData[i];
+			
 			if (channel != null)
 			{
-		        Object[] items = feedsData[i].getItems().toArray();
-		        
+		        Object[] items = feedsData[i].getItems().toArray();        
 	
 		        // walk through the different entries until we find a desired episode
-		        // we walk in the wrong direction to get older torrents first (older = more seeders)
-		        double progressPerItem = progressPerFeed / items.length;
-		        int itemProgress = 0;
-		        int itemLength = items.length;
-		        
+		        // we walk in the wrong direction to get older torrents first (older = more seeders)   	        		        
 		        for (int j = items.length - 1; j >= 0; j--)
 		        {
 		        	if (main.getStopParsing())
@@ -234,8 +232,7 @@ public class TedParser
 		        	
 		        	Item item = (Item)items[j];
 		        	serie.setProgress((int) Math.abs(progress), tMainDialog);
-		        	serie.setStatusString(Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + itemLength , tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
-		        	
+		        	serie.setStatusString(Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems , tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
 		        	if(serie.isDaily || this.continueParsing())
 		        	{
 		        		if(tPKeyChecker.checkKeywords(item.getTitle().toString(), serie.getKeywords()))
