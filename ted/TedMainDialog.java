@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 
 import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.editshowdialog.EditShowDialog;
+import ted.ui.messaging.MessengerCenter;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -101,6 +102,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	private TedMainMenuBar tMenuBar;
 	
 	private TedTrayIcon tedTray;
+	private MessengerCenter messengerCenter;
 	//
 
 
@@ -311,14 +313,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 
 		
 		tCounter = new TedCounter(this);
-		
-		TedFolderMonitor t = TedFolderMonitor.getInstance();
+
 		
 		// set size and position of ted
 		this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
 		this.setLocation(TedConfig.getX(), TedConfig.getY());
 		
-//		 reset all previous saved statusinformation of all shows
+		// reset all previous saved statusinformation of all shows
 		this.resetStatusOfAllShows();
 		
 		// set buttons according to selected row	
@@ -361,6 +362,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			TedIO tio = new TedIO();
 			tio.checkNewXMLFile(this, false, serieTable);
 		}
+		
+		this.messengerCenter = new MessengerCenter(this);
 		
 		// start the counter
 		tCounter.start();
@@ -564,29 +567,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	}
 	
 	/**
-	 * Display a balloon/alert to inform the user
+	 * Display an alert to inform the user
 	 * @param header Header of the message
 	 * @param message Message to the user
 	 */
-	public void displayBalloon(String header, String message)
+	public void displayMessage(String header, String message)
 	{
-		if (osHasTray && TedSystemInfo.osSupportsBalloon())
-		{
-			// display a message above the system tray
-			// TODO: als er meerdere achter elkaar worden aangeroepen zie je alleen de 1e
-			if (header.equals("")) //$NON-NLS-1$
-			{
-				header = Lang.getString("TedMainDialog.BalloonDefautHeader"); //$NON-NLS-1$
-			}
-			tedTray.displayMessage(header, message, 500);
-		}
-		else
-		{
-			// instead of showing a balloon, we show an alert
-			// TODO: this messagedialog stops ted until you close it again :(
-			JOptionPane.showMessageDialog(this, message, header,  JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}
+		this.messengerCenter.displayMessage(header, message);
 	}
 	
 	/**
@@ -597,10 +584,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void displayError(String header, String message, String details)
 	{
-		if (TedConfig.isShowErrors())
-		{
-			this.displayBalloon(header, message);
-		}
+		this.displayMessage(header, message);
+		
 		TedLog.error(message+"\n"+details); //$NON-NLS-1$
 	}
 	
@@ -612,10 +597,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void displayHurray(String header, String message, String details)
 	{
-		if (TedConfig.isShowHurray())
-		{
-			this.displayBalloon(header, message);
-		}
+		this.displayMessage(header, message);
 		TedLog.debug(message+"\n"+details); //$NON-NLS-1$
 	}
 		
@@ -1138,4 +1120,19 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}	
 		
 	}	
+	
+	/** @return Whether the current OS has an active tray icon
+	  */
+	public boolean osHasTray()
+	{
+		return this.osHasTray;
+	}
+	
+	/**
+	 * @return The current tray icon
+	 */
+	public TedTrayIcon getTrayIcon()
+	{
+			return this.tedTray;
+	} 
 }
