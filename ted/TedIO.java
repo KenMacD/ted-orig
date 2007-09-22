@@ -470,7 +470,7 @@ public class TedIO
 			int answer = -1;
 			
 			// ask user for confirmation if we have to
-			if (TedConfig.askAutoAdjustFeeds())
+			if (TedConfig.askAutoUpdateFeedList())
 			{
 				answer = JOptionPane.showOptionDialog(main,
 		                Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"), //$NON-NLS-1$ //$NON-NLS-2$
@@ -580,7 +580,11 @@ public class TedIO
 				s = Lang.getString("TedIO.ShowsSyncedWithNew"); //$NON-NLS-1$
 			}
 			TedLog.debug(s);
-			JOptionPane.showMessageDialog(null, s, null, 1);
+			
+			if(!AutoUpdate)
+			{
+				JOptionPane.showMessageDialog(null, s, null, 1);
+			}
 	    }
 	}
 	
