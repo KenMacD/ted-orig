@@ -83,7 +83,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	private TedLogDialog tLog;
 	
-	
+	private TedParseHandler tParseHandler;
 	
 	private TedMainToolBar TedToolBar;
 	private JPanel jStatusPanel;
@@ -300,9 +300,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		tLog = TedLogDialog.getInstance();
 		TedLog.debug(Lang.getString("TedMainDialog.LogTedStarted")); //$NON-NLS-1$
 		
-		
-		
-		//isParsing = false;
+		tParseHandler = new TedParseHandler(this);
 		
 		// add title and icon to window
 		this.setTitle(Lang.getString("TedMainDialog.WindowTitle")); //$NON-NLS-1$
@@ -497,50 +495,39 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void parseShows() 
 	{
-		// first check if ted is up to date
-		if(TedConfig.getTimesParsedSinceLastCheck()==5)
+		if(!isParsing)
 		{
-			isNewTed(false);
-			isNewPredefinedShowsXML(false);
-			TedConfig.setTimesParsedSinceLastCheck(0);
-		}
-		else
-		{
-			TedConfig.setTimesParsedSinceLastCheck(TedConfig.getTimesParsedSinceLastCheck()+1);
-		}
-		
-		// set parsing flag and trayicon
-		//isParsing = true;
-		//this.setIcon(tedActiveIcon);
-		this.setStatusToParsing();
-		
-		TedParser tp = new TedParser();
-		int rows = serieTable.getRowCount();
-		for (int i = 0; i < rows ; i++)
-		{
-			if (this.stopParsing)
+			// first check if ted is up to date
+			if(TedConfig.getTimesParsedSinceLastCheck()==5)
 			{
-				this.setStatusToIdle();
-				return;
+				isNewTed(false);
+				isNewPredefinedShowsXML(false);
+				TedConfig.setTimesParsedSinceLastCheck(0);
 			}
-			TedSerie serie = serieTable.getSerieAt(i);
-			
-			// if it is the day to start checking the serie again
-			serie.checkDate();
-			
-			// if the serie is not paused
-			if(serie.isCheck())
+			else
 			{
-				serie.setActivity(TedSerie.IS_PARSING);
-				tp.ParseSerie(serie, this);
+				TedConfig.setTimesParsedSinceLastCheck(TedConfig.getTimesParsedSinceLastCheck()+1);
 			}
-			serie.setActivity(TedSerie.IS_IDLE);
-			serieTable.tableUpdate();
+				
+			tParseHandler = new TedParseHandler(this);
+					
+			int rows = serieTable.getRowCount();
+			for (int i = 0; i < rows ; i++)
+			{
+				TedSerie serie = serieTable.getSerieAt(i);
+				
+				// if it is the day to start checking the serie again
+				serie.checkDate();
+				
+				// if the serie is not paused
+				if(serie.isCheck())
+				{
+					tParseHandler.addParseThread(serie);
+				}
+			}
+	
+			tParseHandler.start();
 		}
-
-		// set flags and icon back
-		//isParsing = false;
-		this.setStatusToIdle();
 	}
 	
 	
@@ -656,29 +643,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			}
 		}
 		else if (action.equals("parse selected")) //$NON-NLS-1$
-		{
-			Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
-			this.setCursor(hourglassCursor);
-			
+		{			
 			// parse only the selected show, regardles of the status it has
 			int pos = serieTable.getSelectedRow();
 			
 			if (pos >= 0)
 			{
 				TedSerie selectedserie = serieTable.getSerieAt(pos);
-				this.setStatusToParsing();
-				
-				
-				TedParser tp = new TedParser();
-				tp.ParseSerie(selectedserie, this);
-				
-				serieTable.tableUpdate();	
-				
-				this.setStatusToIdle();
+				TedParseHandler handler = new TedParseHandler(selectedserie, this);
+				handler.start();
 			}
-			
-			Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-			this.setCursor(normalCursor);
 			
 		}
 		else if (action.equals("setstatuscheck")) //$NON-NLS-1$
@@ -831,12 +805,12 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		else if(action.equals("Parse")) //$NON-NLS-1$
 		{
 			// parse all shows
-			//this.parseShows();
-			this.tCounter.setCount(0);
+			this.parseShows();
+			//this.tCounter.setCount(TedConfig.getRefreshTime());
 		}
 		else if(action.equals("stop parsing")) //$NON-NLS-1$
 		{
-			this.stopParsing = true;
+			tParseHandler.stopParsing();
 			this.TedToolBar.setParseButtonStatus(false);
 			this.TedToolBar.setParseButtonText(Lang.getString("TedMainDialog.ButtonCheckShowsStopping"));
 			// TODO: breakin in current loop
@@ -1017,13 +991,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	public void setStatusToParsing()
 	{
 		this.isParsing = true;
+		this.setStopParsing(false);
 		
 		// set icon
 		this.setIcon(tedActiveIcon);
 		
 		// disable delete buttons and menu items
 		updateButtonsAndMenu();
-
 		
 		this.tMenuBar.setParsing();		
 		this.ttPopupMenu.setParsing();
@@ -1040,7 +1014,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// set icon
 		this.setIcon(tedIdleIcon);
 		this.resetStatusOfAllShows();
-		this.stopParsing = false;
 		
 		// enable buttons and menu items
 		this.tMenuBar.setIdle();
@@ -1057,6 +1030,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		return this.stopParsing;
 	}
 	
+	public void setStopParsing(boolean b)
+	{
+		this.stopParsing = b;
+	}
+		
 	/**
 	 * Update the status bar with a new text
 	 * @param status
@@ -1133,6 +1111,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public TedTrayIcon getTrayIcon()
 	{
-			return this.tedTray;
+		return this.tedTray;
 	} 
+	
+	public TedTable getSerieTable()
+	{
+		return this.serieTable;
+	}
 }

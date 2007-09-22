@@ -43,7 +43,7 @@ import com.sun.cnpi.rss.parser.RssParserFactory;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedParser
+public class TedParser extends Thread
 {
 	/****************************************************
 	 * GLOBAL VARIABLES
@@ -59,6 +59,7 @@ public class TedParser
 	private Vector dailyItems;
 	private Channel[] feedsData = null;
 	private int totalNumberOfFeedItems = 0;
+	private TedSerie currentSerie;
 	
   	/****************************************************
 	 * CONSTRUCTORS
@@ -68,9 +69,10 @@ public class TedParser
 	 * @param serie Serie to parse
 	 * @param main TedMainDialog to report to
 	 */
-	public void ParseSerie(TedSerie serie, TedMainDialog main)
+	TedParser(TedSerie serie, TedMainDialog main)
 	{		
-		this.tMainDialog = main;
+		this.tMainDialog  = main;
+		this.currentSerie = serie;
 		
 		// reset globals
 		foundTorrent = false;
@@ -82,14 +84,21 @@ public class TedParser
 		this.feedsData = null;
 		totalNumberOfFeedItems = 0;
 		
-		this.dailyItems = new Vector();
-		
-		// load xml feeds into memory
-		this.loadFeeds(serie, main);
-		// parse the feeds for new episodes
-		this.parseFeeds(serie, main);		
+		this.dailyItems = new Vector();	
 	}
-
+	
+	public TedParser()
+	{
+		
+	}
+	
+	public void run()
+	{
+		// load xml feeds into memory
+		this.loadFeeds(currentSerie, tMainDialog);
+		// parse the feeds for new episodes
+		this.parseFeeds(currentSerie, tMainDialog);
+	}
 	
 
 	/**
