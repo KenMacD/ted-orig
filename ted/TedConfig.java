@@ -32,7 +32,7 @@ public class TedConfig //implements Serializable
 	public static final int DOWNLOADMOSTSEEDERS = 1;
 	private static int RefreshTime = 600;
 	private static String Directory = System.getProperty("user.dir");
-	private static boolean ShowErrors = true;
+	private static boolean ShowErrors = false;
 	private static boolean ShowHurray = true;
 	private static boolean OpenTorrent = true;
 	private static boolean StartMinimized = false;
