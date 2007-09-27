@@ -29,6 +29,7 @@ public class TedLog
 	private static final long serialVersionUID = -8661705723352441097L;
     private static final int DEBUG_MESSAGE = 0;
     private static final int ERROR_MESSAGE = 1;
+    private static final int SIMPLE_MESSAGE = 2;
     private static boolean writeToFile;
     private static boolean allowLogging = true;
 	
@@ -62,7 +63,7 @@ public class TedLog
 	        try 
 	        {
 	            TedLogDialog t = TedLogDialog.getInstance();
-	            t.addEntry(entry);
+	            t.addEntry(level, entry);
 	        } 
 	        catch (Exception e)
 	        {
@@ -98,6 +99,11 @@ public class TedLog
         addEntry(ERROR_MESSAGE, s + " Exception message=[" + e.getMessage() + "]");
     }
 
+    public static void simpleLog(String s)
+    {
+    	addEntry(SIMPLE_MESSAGE, s);
+    }
+    
 	public static void setWriteToFile(boolean b) 
 	{
 		writeToFile = b;	

@@ -56,7 +56,10 @@ public class TedLogDialog extends JDialog implements ActionListener
 	 * GLOBAL VARIABLES
 	 ****************************************************/
 	private static final long serialVersionUID = -8661705723352441097L;
-	private JTextArea log;
+	private JTextArea log_all;
+	private JTextArea log_simple;
+	private JScrollPane scroll_all;
+	private JScrollPane scroll_simple;
 	private JPanel panel;
 	private JTextField lines;
 	private JButton clear;
@@ -101,12 +104,19 @@ public class TedLogDialog extends JDialog implements ActionListener
 	private void initGUI() 
 	{
 		try {
-				log = new JTextArea();
-				log.setFont(normalFont);
-				JScrollPane scroll = new JScrollPane(log);
-				this.getContentPane().add(scroll, BorderLayout.CENTER);
-				//log.setText("");
-				log.setEditable(false);
+				log_all = new JTextArea();
+				log_all.setFont(normalFont);
+				scroll_all = new JScrollPane(log_all);
+				this.getContentPane().add(scroll_all, BorderLayout.CENTER);
+				log_all.setEditable(false);
+				scroll_all.setVisible(false);
+				
+				log_simple = new JTextArea();
+				log_simple.setFont(normalFont);
+				scroll_simple = new JScrollPane(log_simple);
+				this.getContentPane().add(scroll_simple, BorderLayout.CENTER);
+				log_simple.setEditable(false);
+				scroll_simple.setVisible(true);
 				
 				panel = new JPanel();
 				JLabel label1 = new JLabel(Lang.getString("TedLog.NumberOfLines"));
@@ -124,10 +134,10 @@ public class TedLogDialog extends JDialog implements ActionListener
 				panel.add(clear);
 				
 				//not used at the moment
-				file = new JButton("Open log file");
+				file = new JButton("Change");
 				file.addActionListener(this);
 				file.setActionCommand("file");
-				//panel.add(file);
+				panel.add(file);
 				
 								
 				this.getContentPane().add(panel, BorderLayout.SOUTH);
@@ -157,19 +167,19 @@ public class TedLogDialog extends JDialog implements ActionListener
      * to add a log message. You should use the TedLogger methods
      * @param s String to be added
      */
-    protected void addEntry(String s)
+    protected void addEntry(int level, String s)
     {       	
-    	if(log.getLineCount()>=maxLines)
+    	if(log_all.getLineCount()>=maxLines)
     	{
     		try 
     		{
     			int offset=0;
     			
     			if(maxLines!=0)
-    				offset = log.getLineEndOffset(maxLines-2);
+    				offset = log_all.getLineEndOffset(maxLines-2);
     			
-    			int end =  log.getLineEndOffset(maxLines-1);
-				log.getDocument().remove(offset, (end-offset));
+    			int end =  log_all.getLineEndOffset(maxLines-1);
+    			log_all.getDocument().remove(offset, (end-offset));
 			}
     		catch (BadLocationException e) 
 			{
@@ -177,14 +187,24 @@ public class TedLogDialog extends JDialog implements ActionListener
 			}
     	}
     	
-        log.insert(s, 0);
+    	// ERROR or DEBUG message
+    	if(level == 0 || level == 1)
+    	{
+    		log_all.insert(s, 0);
+    	}
+    	// SIMPLE message
+    	else if(level == 2)
+    	{
+    		log_simple.insert(s, 0);
+    	}
+    	
     	try
 		{
        		// write line to file
-    			if (TedLog.isWriteToFile())
-    			{
-    				logWriter.addLine(s);
-    			}
+    		if (TedLog.isWriteToFile())
+    		{
+    			logWriter.addLine(s);
+    		}
 		} 
        	catch (IOException e)
 		{
@@ -228,12 +248,12 @@ public class TedLogDialog extends JDialog implements ActionListener
 	{
 		if(arg0.getActionCommand().equals("clear"))
 		{
-			log.setText("");
+			log_all.setText("");
 		}
 		else if(arg0.getActionCommand().equals("file"))
 		{
-			TedIO io = new TedIO();
-			io.openFile(logWriter.getLocationLog());
+			scroll_simple.setVisible(!scroll_simple.isVisible());
+			scroll_all.setVisible(!scroll_all.isVisible());
 		}
 		else if(arg0.getActionCommand().equals("save"))
 		{
@@ -277,13 +297,13 @@ public class TedLogDialog extends JDialog implements ActionListener
 	{
 		if(getLines() > 1)
 		{
-			if(getLines()<log.getLineCount())
+			if(getLines()<log_all.getLineCount())
 			{
 				try 
 	    		{
-	    			int offset = log.getLineEndOffset(log.getLineCount()-(log.getLineCount()-getLines())-1);
-	    			int end =  log.getLineEndOffset(log.getLineCount()-1);
-					log.getDocument().remove(offset, (end-offset));
+	    			int offset = log_all.getLineEndOffset(log_all.getLineCount()-(log_all.getLineCount()-getLines())-1);
+	    			int end =  log_all.getLineEndOffset(log_all.getLineCount()-1);
+	    			log_all.getDocument().remove(offset, (end-offset));
 				}
 	    		catch (BadLocationException e) 
 				{
