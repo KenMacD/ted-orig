@@ -67,8 +67,8 @@ public class GeneralPanel extends JPanel implements ActionListener
 		generalPanel = new JPanel();
 		this.add(generalPanel);
 		FormLayout generalPanelLayout = new FormLayout(
-			"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)",
-			"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu)");
+				"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
+				"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu)");
 		generalPanel.setLayout(generalPanelLayout);
 		//generalPanel.setPreferredSize(new java.awt.Dimension(width, height));
 

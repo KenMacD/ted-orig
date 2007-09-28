@@ -265,6 +265,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		{
 			// close dialog
 			this.setVisible(false);
+			this.dispose();
 		}
 		else if (command.equals("Help"))
 		{
@@ -284,6 +285,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			TedSerie temp = new TedSerie();
 			EditShowDialog esd = new EditShowDialog(tedMain, temp, true);
 			this.setVisible(false);
+			this.dispose();
 			esd.setVisible(true);
 		}
 		
@@ -316,8 +318,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			
 			// close the dialog
 			this.setVisible(false);
-		}
-		
+			this.dispose();
+		}	
 	}
 
 	public void setSelectedSerie(TedSerie selectedSerie2)

@@ -53,6 +53,7 @@ public class TedConfigListener implements ActionListener
 		else if(action.equals("Cancel"))
 		{
 			TedCD.setVisible(false);
+			TedCD.dispose();
 		}
 		else if(action.equals("Help"))
 		{

@@ -45,7 +45,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private int width = 500;
 	private int height = 500;
 	private int tabsHeight = 350;
-	private int bottomButtonLocationY = height - 75;
+	private int bottomButtonLocationY = height - 60;
 
 	/**
 	 * 
@@ -128,8 +128,6 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		getContentPane().add(toolBarPanel);
 		toolBarPanel.setBounds(0, 0, width, 70);
 		
-		//jConfigTabs.setModel(toolBarPanel);
-		
 		toolBarPanel.setBackground(Color.WHITE);
 
 		jHelpButton = new JButton();
@@ -145,7 +143,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			getContentPane().add(jButton1);
 			jButton1.setActionCommand("cancel");
 			jButton1.setText(Lang.getString("TedGeneral.ButtonCancel"));
-			jButton1.setBounds(273, this.bottomButtonLocationY, 98, 28);
+			jButton1.setBounds(this.width - 220, this.bottomButtonLocationY, 98, 28);
 			jButton1.addActionListener(this);
 		}
 		{
@@ -160,11 +158,10 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			{
 				button_Save.setText(Lang.getString("TedGeneral.ButtonSave"));
 			}
-			button_Save.setBounds(382, this.bottomButtonLocationY, 98, 28);
+			button_Save.setBounds(this.width - 110, this.bottomButtonLocationY, 98, 28);
 			button_Save.addActionListener(this);
 			this.getRootPane().setDefaultButton(button_Save);
 		}
-		//jHelpButton.addActionListener(TCListener);
 		
 		generalPanel = new GeneralPanel(this);
 		jShowTabs.add("general", generalPanel);
@@ -219,6 +216,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			{
 				// close the dialog		
 				this.setVisible(false);
+				this.dispose();
 				
 				if (newSerie)
 				{
@@ -234,6 +232,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		{
 			// close the dialog
 			this.setVisible(false);
+			this.dispose();
 		}
 		else if (action.equals("Help"))
 		{
@@ -275,7 +274,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			if (this.currentSerie.isDaily())
 			{
 				TedSerie copy = new TedSerie();
-//				 copy items that are listed on the general panel
+				// copy items that are listed on the general panel
 				copy.setName(generalPanel.getShowName());
 				copy.setUsePresets(generalPanel.isUsePresets());
 				this.currentSerie = copy;
@@ -285,7 +284,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			else
 			{
 				TedDailySerie copy = new TedDailySerie();
-//				 copy items that are listed on the general panel
+				// copy items that are listed on the general panel
 				copy.setName(generalPanel.getShowName());
 				copy.setUsePresets(generalPanel.isUsePresets());
 				this.currentSerie = copy;

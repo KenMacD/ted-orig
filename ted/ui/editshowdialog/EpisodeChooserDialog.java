@@ -120,6 +120,7 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 		{
 			// close dialog
 			this.setVisible(false);
+			this.dispose();
 		}
 		
 	}
@@ -136,6 +137,7 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 			editShowDialog.setEpisode(selectedStructure);
 			
 			this.setVisible(false);
+			this.dispose();
 		}
 		else
 		{

@@ -70,8 +70,8 @@ public class TedConfigDialog extends javax.swing.JDialog
 	private UpdatesPanel updatesPanel;
 	private int width = 500;
 	private int height = 500;
-	private int tabsHeight = 400;
-	private int bottomButtonLocationY = height - 75;
+	private int tabsHeight = 350;
+	private int bottomButtonLocationY = height - 60;
 	
 	/****************************************************
 	 * CONSTRUCTOR
@@ -143,7 +143,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 				this.Annuleer_Button = new JButton();
 				this.getContentPane().add(Annuleer_Button);
 				this.Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
-				this.Annuleer_Button.setBounds(175, this.bottomButtonLocationY, 98, 28);
+				this.Annuleer_Button.setBounds(this.width - 220, this.bottomButtonLocationY, 98, 28);
 				this.Annuleer_Button.addActionListener(TCListener);
 				this.Annuleer_Button.setActionCommand("Cancel");
 			}
@@ -152,7 +152,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 			this.Save_Button = new JButton();
 			this.getContentPane().add(Save_Button);
 			this.Save_Button.setText(Lang.getString("TedConfigDialog.ButtonSave")); //$NON-NLS-1$
-			this.Save_Button.setBounds(287, this.bottomButtonLocationY, 98, 28);
+			Save_Button.setBounds(this.width - 110, this.bottomButtonLocationY, 98, 28);
 			this.Save_Button.addActionListener(TCListener);
 			this.Save_Button.setActionCommand("Save");
 		}
@@ -228,6 +228,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 			
 			this.main.saveConfig(resetTime);
 			this.setVisible(false);
+			this.dispose();
 		}
 	}
 
