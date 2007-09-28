@@ -54,8 +54,6 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 	private JSeparator jSeparator5;
 	private JCheckBox checkAlertErrors;
 	private JLabel labelLanguage;
-	private int width = 400;
-	private int height = 300;
 	private Locale[] locales = Lang.getAvailableLocales();
 	private TedMainDialog tMain;
 	
@@ -74,11 +72,11 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 	{
 		try 
 		{
-			this.setPreferredSize(new Dimension(width, height));
+			//this.setPreferredSize(new Dimension(width, height));
 
 		lookFeelPanel = new JPanel();
 		this.add(lookFeelPanel);
-		lookFeelPanel.setPreferredSize(new Dimension(width, height));
+		//lookFeelPanel.setPreferredSize(new Dimension(width, height));
 		FormLayout lookFeelPanelLayout = new FormLayout(
 			"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
 			"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu)");

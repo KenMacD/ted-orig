@@ -34,7 +34,6 @@ public class FilterPanel extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = -4433322536308265906L;
-	private int width = 400;
 	private JLabel label_minSize;
 	private JTextField text_maxSize;
 	private TextField keyword_text;
@@ -52,7 +51,6 @@ public class FilterPanel extends JPanel
 	private JLabel label_mb1;
 	private JTextField text_minSize;
 	private JLabel label_sizeFilters;
-	private int height = 300;
 	
 	public FilterPanel()
 	{
@@ -67,7 +65,6 @@ public class FilterPanel extends JPanel
 				"max(p;5dlu), 90dlu:grow, 40dlu, 5dlu, max(p;5dlu):grow, max(p;15dlu)",
 				"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu):grow, max(p;10px)");
 			this.setLayout(thisLayout);
-			this.setPreferredSize(new Dimension(width, height));
 			{
 				label_sizeFilters = new JLabel();
 				this.add(label_sizeFilters, new CellConstraints("2, 2, 4, 1, default, default"));

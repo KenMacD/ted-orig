@@ -46,8 +46,6 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private JRadioButton radioTorrentSettings2;
 	private JLabel labelTorrentSettings;
 	private JLabel labelTimeOutInSecs;
-	private int width = 400;
-	private int height = 300;
 	private ButtonGroup seederSettingGroup;
 	private JCheckBox checkNotDownloadCompressed = null;
 	private JTextField filterExtensions;
@@ -60,9 +58,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private void initGUI() {
 		try {
 
-			this.setPreferredSize(new Dimension(width, height));
 		advancedPanel = new JPanel();
-		advancedPanel.setPreferredSize(new Dimension(width, height));
+		//advancedPanel.setPreferredSize(new Dimension(width, height));
 		this.add(advancedPanel);
 		FormLayout advancedPanelLayout = new FormLayout(
 			"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)",

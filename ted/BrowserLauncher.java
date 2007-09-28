@@ -458,7 +458,7 @@ public class BrowserLauncher {
 				break;
 			case OTHER:
 			default:
-				browser = "netscape";
+				browser = "firefox";
 				break;
 		}
 		return browser;
@@ -548,19 +548,25 @@ public class BrowserLauncher {
 				}
 				break;
 			case OTHER:
-				// Assume that we're on Unix and that Netscape is installed
+				// Assume that we're on Unix and that Firefox or Netscape is installed
 				
-				// First, attempt to open the URL in a currently running session of Netscape
-				process = Runtime.getRuntime().exec(new String[] { (String) browser,
-													NETSCAPE_REMOTE_PARAMETER,
-													NETSCAPE_OPEN_PARAMETER_START +
-													url +
-													NETSCAPE_OPEN_PARAMETER_END });
+				// First, attempt to open the URL in a currently running session of firefox
+				process = Runtime.getRuntime().exec(new String[] { (String) browser, url });
 				try {
 					int exitCode = process.waitFor();
-					if (exitCode != 0) {	// if Netscape was not open
-						Runtime.getRuntime().exec(new String[] { (String) browser, url });
-					}
+					if (exitCode != 0) {	
+					// if firefox was not opened, try netscape
+						process = Runtime.getRuntime().exec(new String[] { (String) "netscape",
+								NETSCAPE_REMOTE_PARAMETER,
+								NETSCAPE_OPEN_PARAMETER_START +
+								url +
+								NETSCAPE_OPEN_PARAMETER_END });
+						exitCode = process.waitFor();
+						if (exitCode != 0) {	
+						// if firefox was not opened, try netscape
+							process = Runtime.getRuntime().exec(new String[] { (String) "netscape", url });
+						}		
+					}			
 				} catch (InterruptedException ie) {
 					throw new IOException("InterruptedException while launching browser: " + ie.getMessage());
 				}

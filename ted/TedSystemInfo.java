@@ -69,6 +69,10 @@ public class TedSystemInfo
 		{
 			userdir = userdir + seperator + mac + seperator + teddir + seperator;
 		}
+		else if (TedSystemInfo.osIsLinux())
+		{
+			userdir = userdir + seperator + "." + teddir + seperator;
+		}
 		else
 		{
 			// linux??

@@ -45,8 +45,6 @@ import ted.ui.TableRenderer;
 */
 public class FeedsPanel extends JPanel implements ActionListener
 {
-	private int width = 400;
-	private int height = 300;
 	private JButton jButtonMoveFeedUp;
 	private JScrollPane jScrollPane1;
 	private JTable feedsTable;
@@ -71,13 +69,10 @@ public class FeedsPanel extends JPanel implements ActionListener
 		{
 			BorderLayout thisLayout = new BorderLayout();
 			this.setLayout(thisLayout);
-			this.setPreferredSize(new Dimension(width, height));
 
 			feedsToolBar = new JToolBar();
 			this.add(feedsToolBar, BorderLayout.CENTER);
 			feedsToolBar.setFloatable(false);
-			//feedsToolBar.setBounds(14, 217, 441, 28);
-			//feedsToolBar.setPreferredSize(new java.awt.Dimension(231, 32));
 			feedsToolBar.setBorderPainted(false);
 			
 			jFindButton = new JButton();

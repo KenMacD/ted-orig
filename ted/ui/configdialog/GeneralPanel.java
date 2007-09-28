@@ -51,8 +51,6 @@ public class GeneralPanel extends JPanel implements ActionListener
 	private JTextField textRefresh;
 	private JLabel jLabel2;
 	private JLabel Refresh_Label;
-	private int width = 400;
-	private int height = 300;
 	private String directory_nieuw;
 	
 	public GeneralPanel()
@@ -64,7 +62,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 	{
 		try {
 
-			this.setPreferredSize(new java.awt.Dimension(width, height));
+			//this.setPreferredSize(new java.awt.Dimension(width, height));
 
 		generalPanel = new JPanel();
 		this.add(generalPanel);
@@ -72,7 +70,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 			"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)",
 			"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu)");
 		generalPanel.setLayout(generalPanelLayout);
-		generalPanel.setPreferredSize(new java.awt.Dimension(width, height));
+		//generalPanel.setPreferredSize(new java.awt.Dimension(width, height));
 
 		Refresh_Label = new JLabel();
 		generalPanel.add(Refresh_Label, new CellConstraints("2, 2, 5, 1, default, default"));

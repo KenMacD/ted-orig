@@ -52,8 +52,6 @@ public class UpdatesPanel extends JPanel implements ActionListener
 	private ButtonGroup updateShowsGroup;
 	private ButtonGroup syncShowsGroup;
 	private JCheckBox checkCheckUpdates;
-	private int width = 400;
-	private int height = 300;
 	private TedMainDialog main;
 	
 	public UpdatesPanel()
@@ -72,14 +70,14 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		try 
 		{
 
-			this.setPreferredSize(new Dimension(width, height));
+			//this.setPreferredSize(new Dimension(width, height));
 		updatePanel = new JPanel();
 		this.add(updatePanel);
-		updatePanel.setPreferredSize(new Dimension(width, height));
+		//updatePanel.setPreferredSize(new Dimension(width, height));
 		FormLayout updatePanelLayout = new FormLayout(
 			"max(p;6dlu), center:60dlu, center:60dlu:grow, center:60dlu, max(p;16dlu)",
 			"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;10dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-		updatePanel.setPreferredSize(new java.awt.Dimension(403, 336));
+		//updatePanel.setPreferredSize(new java.awt.Dimension(403, 336));
 		updatePanel.setLayout(updatePanelLayout);
 
 		checkCheckUpdates = new JCheckBox();

@@ -28,9 +28,7 @@ public class SchedulePanel extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = -8342065043462454211L;
-	private int width = 400;
 	private JSeparator jSeparator1;
-	private int height = 300;	
 	WeekSchedulePanel wPanel;
 	BreakSchedulePanel bPanel;
 	
@@ -49,7 +47,6 @@ public class SchedulePanel extends JPanel
 			this.setLayout(thisLayout);
 			wPanel = new WeekSchedulePanel();
 			bPanel = new BreakSchedulePanel(); 
-			this.setPreferredSize(new Dimension(width, height));
 			{
 				this.add(wPanel, new CellConstraints("2, 1, 1, 1, default, default"));
 			}

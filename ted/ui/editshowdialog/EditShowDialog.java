@@ -43,7 +43,9 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 {
 	
 	private int width = 500;
-	private int height = 450;
+	private int height = 500;
+	private int tabsHeight = 350;
+	private int bottomButtonLocationY = height - 75;
 
 	/**
 	 * 
@@ -79,7 +81,6 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		this.currentSerie = serie;
 		this.newSerie = newSerie;
 		this.initGUI();
-		//this.setValues(currentSerie);
 	}
 
 	private void initGUI()
@@ -121,7 +122,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		
 		jShowTabs = new JPanel(new CardLayout());
 		getContentPane().add(jShowTabs);
-		jShowTabs.setBounds(0, 75, width, 300);
+		jShowTabs.setBounds(0, 75, width, this.tabsHeight);
 		
 		EditShowToolBar toolBarPanel = new EditShowToolBar(this);
 		getContentPane().add(toolBarPanel);
@@ -136,7 +137,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		jHelpButton.setIcon(new ImageIcon(getClass()
 				.getClassLoader().getResource("icons/help.png")));
 		jHelpButton.setActionCommand("Help");
-		jHelpButton.setBounds(11, 380, 28, 28);
+		jHelpButton.setBounds(11, this.bottomButtonLocationY, 28, 28);
 		jHelpButton.addActionListener(this);
 		jHelpButton.setToolTipText(Lang.getString("TedGeneral.ButtonHelpToolTip"));
 		{
@@ -144,7 +145,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			getContentPane().add(jButton1);
 			jButton1.setActionCommand("cancel");
 			jButton1.setText(Lang.getString("TedGeneral.ButtonCancel"));
-			jButton1.setBounds(273, 380, 98, 28);
+			jButton1.setBounds(273, this.bottomButtonLocationY, 98, 28);
 			jButton1.addActionListener(this);
 		}
 		{
@@ -159,7 +160,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			{
 				button_Save.setText(Lang.getString("TedGeneral.ButtonSave"));
 			}
-			button_Save.setBounds(382, 380, 98, 28);
+			button_Save.setBounds(382, this.bottomButtonLocationY, 98, 28);
 			button_Save.addActionListener(this);
 			this.getRootPane().setDefaultButton(button_Save);
 		}
@@ -168,18 +169,22 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		generalPanel = new GeneralPanel(this);
 		jShowTabs.add("general", generalPanel);
 		generalPanel.setValues(this.currentSerie, newSerie);
+		generalPanel.setSize(this.width, this.tabsHeight);
 		
 		feedsPanel = new FeedsPanel(this.initPopupMenu());
 		jShowTabs.add("feeds", feedsPanel);
 		feedsPanel.setValues(this.currentSerie);
+		feedsPanel.setSize(this.width, this.tabsHeight);
 		
 		filterPanel = new FilterPanel();
 		jShowTabs.add("filter", filterPanel);
 		filterPanel.setValues(this.currentSerie);
+		filterPanel.setSize(this.width, this.tabsHeight);
 		
 		schedulePanel = new SchedulePanel();
 		jShowTabs.add("schedule", schedulePanel);
 		schedulePanel.setValues(this.currentSerie);
+		schedulePanel.setSize(this.width, this.tabsHeight);
 		
 	}
 	

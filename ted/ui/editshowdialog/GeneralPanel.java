@@ -42,13 +42,10 @@ public class GeneralPanel extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = 7836753687519373743L;
-	private int width = 400;
 	private JButton switchButton;
 	private JSeparator jSeparator1;
 	private JSeparator jSeparator4;
 	private JButton popupEpisodeDialogButton;
-	private int height = 300;
-	//private JPanel generalPanel;
 	private JLabel labelLookingFor;
 	private JTextField textName;
 	private JCheckBox checkUpdatePresets;
@@ -67,10 +64,6 @@ public class GeneralPanel extends JPanel
 	{
 		try 
 		{
-			this.setPreferredSize(new Dimension(width, height));
-
-			//this.add(generalPanel);
-			this.setPreferredSize(new Dimension(width, height));
 			FormLayout lookFeelPanelLayout = new FormLayout(
 				"max(p;5dlu), 15dlu:grow, max(p;15dlu)",
 				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;0dlu), 5dlu, max(p;15dlu), 17dlu");
