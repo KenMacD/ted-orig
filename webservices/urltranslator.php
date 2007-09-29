@@ -44,9 +44,10 @@ else if (strpos($url, "btjunkie.org") !== false)
 }
 else if (strpos($url, "sharetv.org") !== false)
 {
-	// url in the feed: http://sharetv.org/info/heroes.1x18
-	// has to be: http://sharetv.org/get/heroes.1x18
+	// url in the feed: http://sharetv.org/torrent/103163
+	// has to be: http://sharetv.org/get/103163
 	$torrentUrl = str_replace("info", "get", $torrentUrl);
+	$torrentUrl = str_replace("torrent", "get", $torrentUrl);
 }	
 else if (strpos($url, "torrentspy.com") !== false)
 {

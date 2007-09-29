@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>24</version>
+	<version>26</version>
 	<rsslocations>
 		<location>
 			<name>User defined</name>
@@ -92,7 +92,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>3866</tv_com>
 		</show>
@@ -108,12 +108,30 @@
 			<tv_com>58326</tv_com>
 		</show>
 		<show>
+			<name>The 4400</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss.xml?sub=168</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>23350</tv_com>
+		</show>
+		<show>
+			<name>The Adventures of Sarah Jane</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Sarah%20Jane%20Adventures&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/The%20Sarah%20Jane%20Adventures/8</feed>
+			</feeds>
+		</show>
+		<show>
 			<name>Age of Love</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Age%20of%20Love&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>15</seeders>
 			<daily>False</daily>
 			<tv_com>72221</tv_com>
@@ -130,13 +148,25 @@
 			<tv_com>68743</tv_com>
 		</show>
 		<show>
+			<name>The Amazing Race</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss.xml?sub=383</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=the+amazing+race&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>6686</tv_com>
+		</show>
+		<show>
 			<name>America's Got Talent</name>
 			<feeds>
 				<feed>http://www.mininova.org/rss/America&apos;s%20Got%20Talent/8</feed>
 				<feed>http://btjunkie.org/rss.xml?query=America&apos;s%20Got%20Talent</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<daily>False</daily>
 			<tv_com>58710</tv_com>
 		</show>
@@ -147,7 +177,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>14888</tv_com>
 		</show>
@@ -170,7 +200,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>11307</tv_com>
 		</show>
@@ -181,7 +211,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=American%20Inventor&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>20</seeders>
 			<daily>False</daily>
 			<tv_com>53003</tv_com>
@@ -194,7 +224,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>23557</tv_com>
 		</show>
@@ -206,7 +236,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>32037</tv_com>
 		</show>
@@ -229,9 +259,20 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>25834</tv_com>
+		</show>
+		<show>
+			<name>Bionic Woman</name>
+			<feeds>
+				<feed>http://sharetv.org/rss/bionic_woman</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Bionic%20Woman&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>71468</tv_com>
 		</show>
 		<show>
 			<name>Blakes 7</name>
@@ -263,7 +304,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>25525</tv_com>
 		</show>
@@ -274,9 +315,19 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>69107</tv_com>
+		</show>
+		<show>
+			<name>The Business</name>
+			<feeds>
+				<feed>http://btjunkie.org/rss.xml?query=The%20Business</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Business&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<tv_com>65206</tv_com>
 		</show>
 		<show>
 			<name>Californication</name>
@@ -285,7 +336,7 @@
 				<feed>http://www.mininova.org/rss/Californication/8</feed>
 			</feeds>
 			<minimumsize>200</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>68749</tv_com>
 		</show>
@@ -295,9 +346,21 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Chuck&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>68724</tv_com>
+		</show>
+		<show>
+			<name>The Closer</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Closer&amp;mode=rss</feed>
+				<feed>http://www.xtvi.com/rss.php?id=45</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<daily>False</daily>
+			<tv_com>28972</tv_com>
 		</show>
 		<show>
 			<name>Colbert Report</name>
@@ -314,7 +377,7 @@
 				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=cold%20case&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>16989</tv_com>
 		</show>
@@ -326,7 +389,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>33484</tv_com>
 		</show>
@@ -338,7 +401,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>19</tv_com>
 		</show>
@@ -365,16 +428,48 @@
 			<tv_com>24125</tv_com>
 		</show>
 		<show>
+			<name>Curb Your Enthusiasm</name>
+			<feeds>
+				<feed>http://sharetv.org/rss/curb_your_enthusiasm</feed>
+				<feed>http://www.mininova.org/rss/Curb%20Your%20Enthusiasm/8</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>3720</tv_com>
+		</show>
+		<show>
+			<name>The Daily Show</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
+			</feeds>
+			<daily>True</daily>
+			<seeders>50</seeders>
+			<tv_com>1293</tv_com>
+		</show>
+		<show>
 			<name>Damages</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Damages&amp;mode=rss</feed>
 				<feed>http://www.mininova.org/rss/Damages/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58333</tv_com>
-		</show>		
+		</show>	
+		<show>
+			<name>The Dead Zone</name>
+			<feeds>
+				<feed>http://www.xtvi.com/rss.php?id=83</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Dead%20Zone&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>7420</tv_com>
+		</show>	
 		<show>
 			<name>Desperate Housewives</name>
 			<feeds>
@@ -383,7 +478,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24641</tv_com>
 		</show>
@@ -393,7 +488,7 @@
 				<feed>http://btjunkie.org/rss.xml?query=Destination%20Truth</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<daily>False</daily>
 			<tv_com>67856</tv_com>
 		</show>
@@ -404,7 +499,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>62683</tv_com>
 		</show>
@@ -414,7 +509,7 @@
 				<feed>http://tvrss.net/search/index.php?distribution_group=combined&amp;show_name=Dirt&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>30</seeders>
 			<tv_com>60202</tv_com>
 		</show>
@@ -425,7 +520,7 @@
 				<feed>http://www.mininova.org/rss.xml?sub=167</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>34391</tv_com>
 		</show>
@@ -436,7 +531,7 @@
 				<feed>http://www.mininova.org/rss/Doctor%20Who%20Confidential/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>34421</tv_com>
 		</show>
@@ -446,7 +541,7 @@
 				<feed>http://www.tvrss.net/search/index.php?show_name=dresden+files&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>20</seeders>
 			<tv_com>50381</tv_com>
 		</show>
@@ -470,7 +565,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>111</tv_com>
 		</show>
@@ -481,7 +576,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58448</tv_com>
 		</show>
@@ -504,7 +599,7 @@
 				<feed>http://www.mininova.org/rss/Extreme%20Engeneering/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>15</seeders>
 			<tv_com>19831</tv_com>
 		</show>
@@ -526,7 +621,7 @@
 				<feed>http://www.mininova.org/rss/Feasting%20on%20Asphalt/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<tv_com>64251</tv_com>
 		</show>
 		<show>
@@ -536,7 +631,7 @@
 				<feed>http://www.mininova.org/rss/Fifth%20Gear/8</feed>
 			</feeds>
 			<minimumsize>400</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>71360</tv_com>
 		</show>
@@ -567,7 +662,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Friday+Night+Lights&amp;show_name_exact=true&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58137</tv_com>
 		</show>
@@ -589,7 +684,7 @@
 				<feed>http://btjunkie.org/rss.xml?query=Ghost%20Hunters</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<daily>False</daily>
 			<tv_com>7400</tv_com>
 		</show>
@@ -601,7 +696,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>33483</tv_com>
 		</show>
@@ -622,7 +717,7 @@
 				<feed>http://sharetv.org/rss/greek</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<daily>False</daily>
 			<tv_com>71239</tv_com>
 		</show>
@@ -634,7 +729,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24440</tv_com>
 		</show>
@@ -644,7 +739,7 @@
 				<feed>http://btjunkie.org/rss.xml?query=Heartland</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<daily>False</daily>
 			<tv_com>71537</tv_com>
 		</show>
@@ -655,7 +750,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Hell&apos;s%20Kitchen&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>5</seeders>
 			<daily>False</daily>
 			<tv_com>29085</tv_com>
@@ -664,11 +759,11 @@
 			<name>Heroes</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Heroes&amp;show_name_exact=true&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss.xml?sub=416</feed>
+				<feed>http://www.mininova.org/rss/Heroes/8</feed>
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>17552</tv_com>
 		</show>
@@ -680,7 +775,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22374</tv_com>
 		</show>
@@ -701,7 +796,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Hustle%20&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<tv_com>21390</tv_com>
 		</show>
 		<show>
@@ -733,9 +828,20 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>37096</tv_com>
+		</show>
+		<show>
+			<name>The IT Crowd</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=IT%20Crowd%20&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/IT%20Crowd%20/8</feed>
+			</feeds>
+			<minimumsize>150</minimumsize>
+			<maximumsize>250</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>68733</tv_com>
 		</show>
 		<show>
 			<name>It's Always Sunny in Philadelphia</name>
@@ -763,9 +869,41 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58068</tv_com>
+		</show>
+		<show>
+			<name>Kid Nation</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Kid%20Nation/8</feed>
+				<feed>http://sharetv.org/rss/kid_nation</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>600</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>72860</tv_com>
+		</show>
+		<show>
+			<name>The Kill Point</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Kill%20Point&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/The%20Kill%20Point/8</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+		</show>
+		<show>
+			<name>Kitchen Nightmares</name>
+			<feeds>
+				<feed>http://sharetv.org/rss/kitchen_nightmares</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=Kitchen%20Nightmares&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68715</tv_com>
 		</show>
 		<show>
 			<name>Kyle XY</name>
@@ -774,7 +912,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>35825</tv_com>
 		</show>
@@ -787,7 +925,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>17210</tv_com>
 		</show>
@@ -797,7 +935,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Last%20Comic%20Standing&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<daily>False</daily>
 			<tv_com>19647</tv_com>
@@ -809,7 +947,7 @@
 				<feed>http://btjunkie.org/rss.xml?query=Conan%20O%20Brien</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>30</seeders>
 			<daily>True</daily>
 			<tv_com>4748</tv_com>
@@ -821,7 +959,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>180</tv_com>
 		</show>
@@ -832,7 +970,7 @@
 				<feed>http://www.mininova.org/rss/Law%20and%20Order/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<keywords>ci</keywords>
 			<tv_com>1381</tv_com>
 		</show>
@@ -843,7 +981,7 @@
 				<feed>http://www.mininova.org/rss/Law%20and%20Order/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<keywords>suv</keywords>
 			<tv_com>334</tv_com>
 		</show>
@@ -854,7 +992,7 @@
 				<feed>http://www.mininova.org/rss/Life%20On%20Mars/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<tv_com>69238</tv_com>
 		</show>
 		<show>
@@ -863,7 +1001,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Little+Mosque+On+The+Prairie&amp;show_name_exact=true&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>100</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>67584</tv_com>
 		</show>
@@ -875,9 +1013,30 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24313</tv_com>
+		</show>
+		<show>
+			<name>The Loop</name>
+			<feeds>
+				<feed>http://btjunkie.org/rss.xml?query=The%20Loop</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Loop&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>200</maximumsize>
+			<daily>False</daily>
+			<tv_com>31306</tv_com>
+		</show>
+		<show>
+			<name>Lucy, The Daughter of the Devil </name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Lucy%20The%20Daughter%20of%20the%20Devil%20/8</feed>
+			</feeds>
+			<minimumsize>50</minimumsize>
+			<maximumsize>150</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>67549</tv_com>
 		</show>
 		<show>
 			<name>Mad Men</name>
@@ -886,7 +1045,7 @@
 				<feed>http://www.mininova.org/rss/Mad%20Men/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<releaseday>friday</releaseday>
 			<tv_com>74140</tv_com>
@@ -899,7 +1058,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Masters%20of%20Science%20Fiction&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>200</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58459</tv_com>
 		</show>
@@ -909,7 +1068,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Medium&amp;show_name_exact=true&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22414</tv_com>
 		</show>
@@ -919,7 +1078,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Men+In+Trees&amp;show_name_exact=true&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>400</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>30</seeders>
 			<tv_com>58460</tv_com>
 		</show>
@@ -940,9 +1099,20 @@
 				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=monk&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>15</seeders>
 			<tv_com>9130</tv_com>
+		</show>
+		<show>
+			<name>Moonlight</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Moonlight&amp;mode=rss</feed>
+				<feed>http://sharetv.org/rss/moonlight</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68684</tv_com>
 		</show>
 		<show>
 			<name>My Boys</name>
@@ -972,7 +1142,7 @@
 				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=mythbusters&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22839</tv_com>
 		</show>
@@ -984,7 +1154,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>16772</tv_com>
 		</show>
@@ -995,7 +1165,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>17095</tv_com>
 		</show>
@@ -1005,9 +1175,21 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Numb3rs&amp;show_name_exact=true&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>25043</tv_com>
+		</show>
+		<show>
+			<name>The Office USA</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Office%20US&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/The%20Office%20US/8</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>200</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>22343</tv_com>
 		</show>
 		<show>
 			<name>One Tree Hill</name>
@@ -1016,7 +1198,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>16942</tv_com>
 		</show>
@@ -1027,7 +1209,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>32707</tv_com>
 		</show>		
@@ -1037,20 +1219,42 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Penn+%26+Teller%3A+Bullshit%21&amp;show_name_exact=true&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>200</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>17579</tv_com>
 		</show>
 		<show>
+			<name>The Pickup Artist</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/The%20Pickup%20Artist/8</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>74631</tv_com>
+		</show>
+		<show>
 			<name>Prison Break</name>
 			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=229</feed>
+				<feed>http://www.mininova.org/rss/Prison%20Break/8</feed>
+				<feed>http://sharetv.org/rss/prison_break</feed>
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>31635</tv_com>
+		</show>
+		<show>
+			<name>Private Practice</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Private%20Practice/8</feed>
+				<feed>http://sharetv.org/rss/private_practice</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>72805</tv_com>
 		</show>
 		<show>
 			<name>Psych</name>
@@ -1060,7 +1264,7 @@
 				<feed>http://www.xtvi.com/rss.php?id=86</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>10</seeders>
 			<daily>False</daily>
 			<tv_com>59369</tv_com>
@@ -1072,7 +1276,7 @@
 				<feed>http://www.mininova.org/rss/Pushing%20Daisies/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>68663</tv_com>
 		</show>
@@ -1083,10 +1287,32 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Rescue%20Me&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<daily>False</daily>
 			<tv_com>24321</tv_com>
+		</show>
+		<show>
+			<name>Reaper</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Reaper/8</feed>
+				<feed>http://sharetv.org/rss/reaper</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68745</tv_com>
+		</show>
+		<show>
+			<name>The Riches</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Riches&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/The%20Riches/8</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>68406</tv_com>
 		</show>
 		<show>
 			<name>Robot Chicken</name>
@@ -1106,7 +1332,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>23351</tv_com>
 		</show>
@@ -1121,13 +1347,24 @@
 			<tv_com>365</tv_com>
 		</show>
 		<show>
+			<name>The Sarah Connor Chronicles</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Sarah%20Connor%20Chronicles&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/The%20Sarah%20Connor%20Chronicles/8</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68708</tv_com>
+		</show>
+		<show>
 			<name>Saving Grace</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Saving%20Grace&amp;mode=rss</feed>
 				<feed>http://www.mininova.org/rss/Saving%20Grace/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>72393</tv_com>
 		</show>
@@ -1149,9 +1386,42 @@
 				<feed>http://www.mininova.org/rss/Shark/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58080</tv_com>
+		</show>
+		<show>
+			<name>The Shield</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Shield&amp;mode=rss</feed>
+				<feed>http://www.mininova.org/rss/The%20Shield/8</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>8261</tv_com>
+		</show>
+		<show>
+			<name>The Simple Life</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Simple%20Life&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>22312</tv_com>
+		</show>
+		<show>
+			<name>The Simpsons</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss.xml?sub=125</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>200</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>146</tv_com>
 		</show>
 		<show>
 			<name>Six Feet Under</name>
@@ -1160,7 +1430,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>3223</tv_com>
 		</show>
@@ -1171,7 +1441,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>1718</tv_com>
 		</show>
@@ -1182,9 +1452,20 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>35810</tv_com>
+		</show>
+		<show>
+			<name>The Sopranos</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?distribution_group=combined&amp;show_name_exact=true&amp;mode=rss&amp;show_name=the%20sopranos</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>314</tv_com>
 		</show>
 		<show>
 			<name>South Park</name>
@@ -1214,7 +1495,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=Standoff&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>30</seeders>
 			<daily>False</daily>
 			<tv_com>58389</tv_com>
@@ -1226,7 +1507,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 		</show>
 		<show>
@@ -1236,7 +1517,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>11415</tv_com>
 		</show>
@@ -1247,7 +1528,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>185</tv_com>
 		</show>
@@ -1258,7 +1539,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58214</tv_com>
 		</show>
@@ -1269,258 +1550,20 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>30144</tv_com>
 		</show>
 		<show>
-			<name>The 4400</name>
+			<name>Tell Me You Love Me</name>
 			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=168</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>23350</tv_com>
-		</show>
-		<show>
-			<name>The Adventures of Sarah Jane</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Sarah%20Jane%20Adventures&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Sarah%20Jane%20Adventures/8</feed>
-			</feeds>
-		</show>
-		<show>
-			<name>The Amazing Race</name>
-			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=383</feed>
-				<feed>http://tvrss.net/search/index.php?show_name=the+amazing+race&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>6686</tv_com>
-		</show>
-		<show>
-			<name>The Business</name>
-			<feeds>
-				<feed>http://btjunkie.org/rss.xml?query=The%20Business</feed>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Business&amp;mode=rss</feed>
-			</feeds>
-			<minimumsize>100</minimumsize>
-			<maximumsize>300</maximumsize>
-			<tv_com>65206</tv_com>
-		</show>
-		<show>
-			<name>The Closer</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Closer&amp;mode=rss</feed>
-				<feed>http://www.xtvi.com/rss.php?id=45</feed>
+				<feed>http://sharetv.org/rss/tell_me_you_love_me</feed>
+				<feed>http://www.mininova.org/rss/Tell%20Me%20You%20Love%20Me/8</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
-			<seeders>10</seeders>
-			<daily>False</daily>
-			<tv_com>28972</tv_com>
-		</show>
-		<show>
-			<name>The Daily Show</name>
-			<feeds>
-				<feed>http://www.tvrss.net/search/index.php?show_name=daily+show&amp;rss&amp;mode=rss</feed>
-			</feeds>
-			<daily>True</daily>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>1293</tv_com>
-		</show>
-		<show>
-			<name>The Dead Zone</name>
-			<feeds>
-				<feed>http://www.xtvi.com/rss.php?id=83</feed>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Dead%20Zone&amp;mode=rss</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
-			<seeders>50</seeders>
-			<daily>False</daily>
-			<tv_com>7420</tv_com>
-		</show>
-		<show>
-			<name>The IT Crowd</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=IT%20Crowd%20&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/IT%20Crowd%20/8</feed>
-			</feeds>
-			<minimumsize>150</minimumsize>
-			<maximumsize>250</maximumsize>
-			<seeders>15</seeders>
-			<tv_com>68733</tv_com>
-		</show>
-		<show>
-			<name>The Kill Point</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Kill%20Point&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Kill%20Point/8</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-		</show>
-		<show>
-			<name>The Loop</name>
-			<feeds>
-				<feed>http://btjunkie.org/rss.xml?query=The%20Loop</feed>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Loop&amp;mode=rss</feed>
-			</feeds>
-			<minimumsize>100</minimumsize>
-			<maximumsize>200</maximumsize>
-			<daily>False</daily>
-			<tv_com>31306</tv_com>
-		</show>
-		<show>
-			<name>The OC</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The+OC&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>200</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>16960</tv_com>
-		</show>
-		<show>
-			<name>The Office USA</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Office%20US&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Office%20US/8</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>22343</tv_com>
-		</show>
-		<show>
-			<name>The Pickup Artist</name>
-			<feeds>
-				<feed>http://www.mininova.org/rss/The%20Pickup%20Artist/8</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>74631</tv_com>
-		</show>
-		<show>
-			<name>The Riches</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Riches&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Riches/8</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>25</seeders>
-			<tv_com>68406</tv_com>
-		</show>
-		<show>
-			<name>The Sarah Connor Chronicles</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Sarah%20Connor%20Chronicles&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Sarah%20Connor%20Chronicles/8</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>68708</tv_com>
-		</show>
-		<show>
-			<name>The Shield</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Shield&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Shield/8</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>8261</tv_com>
-		</show>
-		<show>
-			<name>The Simple Life</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Simple%20Life&amp;mode=rss</feed>
-			</feeds>
-			<minimumsize>100</minimumsize>
-			<maximumsize>300</maximumsize>
-			<seeders>50</seeders>
-			<daily>False</daily>
-			<tv_com>22312</tv_com>
-		</show>
-		<show>
-			<name>The Simpsons</name>
-			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=125</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>146</tv_com>
-		</show>
-		<show>
-			<name>The Sopranos</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?distribution_group=combined&amp;show_name_exact=true&amp;mode=rss&amp;show_name=the%20sopranos</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>314</tv_com>
-		</show>
-		<show>
-			<name>The Tonight Show with Jay Leno</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=Jay%20Leno&amp;mode=rss</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
-			<seeders>35</seeders>
-			<daily>True</daily>
-			<tv_com>10020</tv_com>
-		</show>
-		<show>
-			<name>The Unit</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=the+unit&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
-				<feed>http://www.mininova.org/rss.xml?sub=417</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>33480</tv_com>
-		</show>	
-		<show>
-			<name>The Universe</name>
-			<feeds>
-				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=the+universe&amp;mode=rss</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>73410</tv_com>
-		</show>	
-		<show>
-			<name>The Wire</name>
-			<feeds>
-				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=the+wire&amp;mode=rss</feed>
-			</feeds>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>8800</tv_com>
+			<tv_com>68721</tv_com>
 		</show>
 		<show>
 			<name>Threshold</name>
@@ -1540,12 +1583,23 @@
 			<tv_com>58392</tv_com>
 		</show>
 		<show>
+			<name>The Tonight Show with Jay Leno</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=Jay%20Leno&amp;mode=rss</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>35</seeders>
+			<daily>True</daily>
+			<tv_com>10020</tv_com>
+		</show>
+		<show>
 			<name>Top Chef</name>
 			<feeds>
 				<feed>http://btjunkie.org/rss.xml?query=Top%20Chef</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>15</seeders>
 			<daily>False</daily>
 			<tv_com>55264</tv_com>
@@ -1568,7 +1622,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>50470</tv_com>
 		</show>
@@ -1591,10 +1645,33 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>250</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58486</tv_com>
 		</show>
+		<show>
+			<name>The Unit</name>
+			<feeds>
+				<feed>http://tvrss.net/search/index.php?show_name=the+unit&amp;show_name_exact=true&amp;mode=rss&amp;rss</feed>
+				<feed>http://www.mininova.org/rss.xml?sub=417</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>200</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>33480</tv_com>
+		</show>	
+		<show>
+			<name>The Universe</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=the+universe&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>73410</tv_com>
+		</show>	
 		<show>
 			<name>Veronica Mars</name>
 			<feeds>
@@ -1602,7 +1679,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
-			<maximumsize>400</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24272</tv_com>
 		</show>
@@ -1612,7 +1689,7 @@
 				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=without%20a%20trace&amp;show_name_exact=true&amp;filename=&amp;date=&amp;quality=&amp;release_group=&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 		</show>
 		<show>
@@ -1625,6 +1702,17 @@
 			<maximumsize>200</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>28829</tv_com>
+		</show>
+		<show>
+			<name>The Wire</name>
+			<feeds>
+				<feed>http://www.tvrss.net/search/index.php?distribution_group=combined&amp;show_name=the+wire&amp;mode=rss</feed>
+			</feeds>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>8800</tv_com>
 		</show>
 		<show>
 			<name>WWE</name>
