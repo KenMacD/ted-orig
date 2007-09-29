@@ -5,7 +5,7 @@
 <title>ted show info</title>
 </head>
 
-<body>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF">
 
 <?
 	$tvcom = $_GET["tvcom"];
@@ -21,27 +21,44 @@
 		//echo($regel);
 		// find summary
 		if ($description == "")
-		{
+		{			
 			$tempdescription = strstr ($tvcom_content, "<div id=\"continue\"");
 			$endpos = strpos ($tempdescription, "</div>");
 			$tempdescription = substr ($tempdescription, 0, $endpos);
+			
 			if ($tempdescription != "")
 			{
 				$tempdescription = strstr ($tempdescription, "fullTextDisplay");
 				$pieces = preg_split ('(\', \')', $tempdescription);
-				$description = $pieces[2];
+				$description = $pieces[2];	
 			}
+			else
+			{
+				// get the short summary, needed if there is no "full" summary
+				$tempsummary = strstr ($tvcom_content, "<div id=\"summary_fold\" class=\"mt-10\">");
+				$tempsummary = str_replace ("<div id=\"summary_fold\" class=\"mt-10\">", "", $tempsummary);
+				$endpos = strpos ($tempsummary, "</div>");
+				$tempsummary = substr ($tempsummary, 0, $endpos);
+				$description = $tempsummary;
+			}
+			
+			$description = str_replace("\'", "'", $description);
+			$description = str_replace("<br /><br /><br /><br />", "<br><br>", $description);
 			
 			$tempstatus = strstr ($tvcom_content, "<div class=\"f-bold f-666 f-11\">");
 			$endpos = strpos ($tempstatus, "<div class=\"mt-10\">");
 			$tempstatus = substr ($tempstatus, 0, $endpos);
 			$tempstatus = str_replace("</span>", "<br>", $tempstatus);
-			$tempstatus = str_replace("<span class="f-333">", "", $tempstatus);
+			$tempstatus = str_replace("<span class=\"f-333\">", "<br>", $tempstatus);
+			$tempstatus = str_replace("&nbsp;", "", $tempstatus);
+			$tempstatus = str_replace("<div>", "", $tempstatus);
+			$tempstatus = str_replace("<div class=\"f-bold f-666 f-11\">", "", $tempstatus);
 			
-			$tempim = strstr($tvcom_content, "<a class=\"default-image more");
+			
+			$tempim = strstr($tvcom_content, "<a class=\"default-image");
 			$endpos = strpos ($tempim, "</a>");
 			$tempim = substr ($tempim, 0, $endpos+4);
-			//$tempim = str_replace("More Pictures", "", $tempim);
+			$tempim = str_replace("More Pictures", "", $tempim);
 			
 			// change \> with >
 			$description = str_replace("/>", ">", $description);
@@ -71,20 +88,24 @@
 	}
 
 ?>
-<table border="0" align="left">
+<table border="0" align="left" cellpadding="4">
 <tr valign="top">
-	<td align="left" valign="top" bgcolor="#CCCCCC">
-		<font color="#000000" size="2" face="Arial, Helvetica, sans-serif">
+	<td align="left" valign="top" bgcolor="#E9E9E9">
+		<font size="2" face="Arial, Helvetica, sans-serif">
 			<?echo($tempim);?><br>
-			<a href="<?echo($tvcom_url)?>">copyright TV.com</a><br>
-			<?echo($tempstatus)?>
-		</font>
+			<?echo($tempstatus)?><br>
+			<br>
+			<a href="<?echo($tvcom_url)?>">Detailed show summary</a><br><br>
+			<a href="<?echo($tvcom_url)?>">Copyright TV.com</a><br><br>
+			Used with permission from CNET Networks, Inc., All rights reserved.
+	  </font>
 	
 	
 	</td>
 	<td valign="top">
-		<font color="#000000" size="3" face="Arial, Helvetica, sans-serif">
+		<font size="3" face="Arial, Helvetica, sans-serif">
 			<?echo($description);?>
+			
 		</font>
 	</td>
 </tr>
