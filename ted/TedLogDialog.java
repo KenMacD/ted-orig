@@ -58,8 +58,8 @@ public class TedLogDialog extends JDialog implements ActionListener
 	private static final long serialVersionUID = -8661705723352441097L;
 	private JTextArea log_all;
 	private JTextArea log_simple;
-	private JScrollPane scroll_all;
-	private JScrollPane scroll_simple;
+	private JScrollPane scroll;
+	private boolean logAll;
 	private JPanel panel;
 	private JTextField lines;
 	private JButton clear;
@@ -106,17 +106,15 @@ public class TedLogDialog extends JDialog implements ActionListener
 		try {
 				log_all = new JTextArea();
 				log_all.setFont(normalFont);
-				scroll_all = new JScrollPane(log_all);
-				this.getContentPane().add(scroll_all, BorderLayout.CENTER);
 				log_all.setEditable(false);
-				scroll_all.setVisible(false);
+				logAll = false;
 				
 				log_simple = new JTextArea();
 				log_simple.setFont(normalFont);
-				scroll_simple = new JScrollPane(log_simple);
-				this.getContentPane().add(scroll_simple, BorderLayout.CENTER);
+				scroll = new JScrollPane(log_simple);
+				this.getContentPane().add(scroll, BorderLayout.CENTER);
 				log_simple.setEditable(false);
-				scroll_simple.setVisible(true);
+				scroll.setVisible(true);
 				
 				panel = new JPanel();
 				JLabel label1 = new JLabel(Lang.getString("TedLog.NumberOfLines"));
@@ -249,11 +247,28 @@ public class TedLogDialog extends JDialog implements ActionListener
 		if(arg0.getActionCommand().equals("clear"))
 		{
 			log_all.setText("");
+			log_simple.setText("");
 		}
 		else if(arg0.getActionCommand().equals("file"))
 		{
-			scroll_simple.setVisible(!scroll_simple.isVisible());
-			scroll_all.setVisible(!scroll_all.isVisible());
+			this.getContentPane().remove(scroll);
+			
+			if(logAll)
+			{
+				scroll = new JScrollPane(log_simple);
+				logAll = false;
+			}
+			else
+			{
+				scroll = new JScrollPane(log_all);
+				logAll = true;
+			}
+			
+			this.getContentPane().add(scroll, BorderLayout.CENTER);
+			this.getContentPane().repaint();
+			this.getContentPane().validate();
+			scroll.repaint();
+			scroll.validate();
 		}
 		else if(arg0.getActionCommand().equals("save"))
 		{
@@ -295,15 +310,21 @@ public class TedLogDialog extends JDialog implements ActionListener
 	
 	public void resetAction()
 	{
+		this.resetAction(log_all);
+		this.resetAction(log_simple);		
+	}
+	
+	public void resetAction(JTextArea log)
+	{
 		if(getLines() > 1)
 		{
-			if(getLines()<log_all.getLineCount())
+			if(getLines()<log.getLineCount())
 			{
 				try 
 	    		{
-	    			int offset = log_all.getLineEndOffset(log_all.getLineCount()-(log_all.getLineCount()-getLines())-1);
-	    			int end =  log_all.getLineEndOffset(log_all.getLineCount()-1);
-	    			log_all.getDocument().remove(offset, (end-offset));
+	    			int offset = log.getLineEndOffset(log.getLineCount()-(log.getLineCount()-getLines())-1);
+	    			int end =  log.getLineEndOffset(log.getLineCount()-1);
+	    			log.getDocument().remove(offset, (end-offset));
 				}
 	    		catch (BadLocationException e) 
 				{

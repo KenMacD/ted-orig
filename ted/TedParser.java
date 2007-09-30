@@ -394,7 +394,7 @@ public class TedParser extends Thread
 				}
 				catch (Exception e)
 				{
-					TedLog.error(e, "Error checking torrent"); //$NON-NLS-1$
+					TedLog.error(e, Lang.getString("TedLog.ErrorTorrent")); //$NON-NLS-1$
 				}
 			}
 		}
@@ -417,7 +417,7 @@ public class TedParser extends Thread
 				return;
 			}
 			
-			TedLog.debug("Loading torrent"); //$NON-NLS-1$
+			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
 			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
 			
 			// check size and amount of seeders to filter out fakes
@@ -569,7 +569,7 @@ public class TedParser extends Thread
 		// download torrent info
 		try
 		{
-			TedLog.debug("Loading torrent"); //$NON-NLS-1$
+			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
 			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
@@ -583,7 +583,8 @@ public class TedParser extends Thread
 			}
 			catch (FileSizeException e)
 			{
-				logRejected += itemNr +  ". " + "file size incorrect (" + e.size + ")\n";
+				logRejected += itemNr +  ". " + 
+					Lang.getString("TedLog.ErrorFileSize") + " (" + e.size + ")\n";
 				throw e;
 			}
 			
@@ -594,7 +595,8 @@ public class TedParser extends Thread
 				if(this.containsCompressedFiles(torrent))
 				{
 					// reject it
-					logRejected += itemNr +  ". " + "contains compressed files\n";
+					logRejected += itemNr +  ". " + 
+						Lang.getString("TedLog.ErrorCompressedFiles") + "\n";
 					return;
 				}
 			}
@@ -624,13 +626,16 @@ public class TedParser extends Thread
 				}
 				else
 				{
-					logRejected += itemNr + ". not enough seeders (" + torrentSeeders + ")\n";
+					logRejected += itemNr + ". " +
+						Lang.getString("TedLog.ErrorSeeders") + " (" + torrentSeeders + ")\n";
 					TedLog.debug("Torrent has not enough seeders (" + torrentSeeders+")"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				
 			}
 			catch (Exception e)
 			{
+				logRejected += itemNr + ". " +
+					Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
 				TedLog.error(e, "Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 			}			
 		}
@@ -639,16 +644,27 @@ public class TedParser extends Thread
 		{
 			// error reading torrentinfo or info from tracker
 			if(e.getMessage().startsWith("Unknown object"))
+			{
 				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), Lang.getString("TedParser.ErrorWhileChecking1") + torrentUrl + "." 
 						+ "\n" + Lang.getString("TedParser.ErrorBencoding"), "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
 			else
+			{
 				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), e.getMessage(), "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			
+			logRejected += itemNr + ". " +
+				Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
 		}
 		catch (TorrentException e)
 		{
 			// error reading torrentinfo or info from tracker
 			//tMainDialog.displayError("ted Error!", e.getMessage(), "Exception");
 			TedLog.error(e, e.getLocalizedMessage());
+			
+			logRejected += itemNr + ". " +
+				Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
+			
 			return;
 		
 		}
@@ -662,6 +678,10 @@ public class TedParser extends Thread
 			// happens when scraping tracker for torrent seeder information
             TedLog.error(e, e.getLocalizedMessage());
 			e.printStackTrace();
+			
+			logRejected += itemNr + ". " +
+				Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
+			
 			return;
 		}
 		catch (Exception e)
@@ -671,6 +691,9 @@ public class TedParser extends Thread
 			tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
             TedLog.error(e, e.getLocalizedMessage());
 			e.printStackTrace();
+			
+			logRejected += itemNr + ". " +
+				Lang.getString("TedParser.ErrorDownloadingContent1");
 		}			
 	}
 	
