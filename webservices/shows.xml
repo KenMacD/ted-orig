@@ -1182,7 +1182,7 @@
 		<show>
 			<name>The Office USA</name>
 			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Office%20US&amp;mode=rss</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=The%20Office&amp;rss&amp;mode=rss</feed>
 				<feed>http://www.mininova.org/rss/The%20Office%20US/8</feed>
 			</feeds>
 			<daily>False</daily>
