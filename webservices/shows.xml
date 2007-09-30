@@ -611,7 +611,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>450</maximumsize>
+			<maximumsize>550</maximumsize>
 			<seeders>50</seeders>
 		</show>
 		<show>
