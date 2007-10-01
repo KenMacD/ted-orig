@@ -103,7 +103,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58326</tv_com>
 		</show>
@@ -189,7 +189,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>100</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>21935</tv_com>
 		</show>
@@ -248,7 +248,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>4673</tv_com>
 		</show>
@@ -281,7 +281,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>3281</tv_com>
 		</show>
@@ -412,7 +412,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>8460</tv_com>
 		</show>
@@ -423,7 +423,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>24125</tv_com>
 		</show>
@@ -553,7 +553,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>27346</tv_com>
 		</show>
@@ -587,7 +587,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>33212</tv_com>
 		</show>
@@ -1024,7 +1024,7 @@
 				<feed>http://tvrss.net/search/index.php?show_name=The%20Loop&amp;mode=rss</feed>
 			</feeds>
 			<minimumsize>100</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<daily>False</daily>
 			<tv_com>31306</tv_com>
 		</show>
@@ -1132,7 +1132,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>31988</tv_com>
 		</show>
@@ -1187,7 +1187,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22343</tv_com>
 		</show>
@@ -1375,7 +1375,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>3613</tv_com>
 		</show>
@@ -1419,7 +1419,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>146</tv_com>
 		</show>
@@ -1470,11 +1470,12 @@
 		<show>
 			<name>South Park</name>
 			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=212</feed>
+				<feed>http://tvrss.net/search/index.php?show_name=South%20Park&amp;mode=rss</feed>
+				<feed>http://btjunkie.org/rss.xml?query=South%20Park</feed>
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>344</tv_com>
 		</show>
@@ -1634,7 +1635,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>17206</tv_com>
 		</show>
@@ -1657,7 +1658,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>33480</tv_com>
 		</show>	
@@ -1699,7 +1700,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>28829</tv_com>
 		</show>
@@ -1721,7 +1722,7 @@
 			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
-			<maximumsize>200</maximumsize>
+			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 		</show>
 	</shows>
