@@ -217,6 +217,28 @@
 			<tv_com>53003</tv_com>
 		</show>
 		<show>
+			<name>Avatar - The Last Airbender</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Avatar%20The%20Last%20Airbender/8</feed>
+				<feed>http://btjunkie.org/rss.xml?query=Avatar%20-%20The%20Last%20Airbender</feed>
+			</feeds>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>28841</tv_com>
+		</show>
+		<show>
+			<name>Back To You</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Back%20To%20You/8</feed>
+				<feed>http://sharetv.org/rss/back_to_you</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>69245</tv_com>
+		</show>
+		<show>
 			<name>Battlestar Galactica</name>
 			<feeds>
 				<feed>http://www.mininova.org/rss.xml?sub=163</feed>
@@ -307,6 +329,17 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>25525</tv_com>
+		</show>
+		<show>
+			<name>Brothers &amp; Sisters</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Brothers%20and%20Sisters/8</feed>
+				<feed>http://sharetv.org/rss/brothers_and_sisters</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>40</seeders>
+			<tv_com>58012</tv_com>
 		</show>
 		<show>
 			<name>Burn Notice</name>
@@ -1554,6 +1587,17 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>30144</tv_com>
+		</show>
+		<show>
+			<name>Survivor</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Survivor/8</feed>
+				<feed>http://sharetv.org/rss/survivor</feed>
+			</feeds>
+			<minimumsize>200</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>4742</tv_com>
 		</show>
 		<show>
 			<name>Tell Me You Love Me</name>
