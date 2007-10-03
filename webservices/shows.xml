@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>26</version>
+	<version>27</version>
 	<rsslocations>
 		<location>
 			<name>User defined</name>
@@ -905,6 +905,17 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>58068</tv_com>
+		</show>
+		<show>
+			<name>Journeyman</name>
+			<feeds>
+				<feed>http://www.mininova.org/rss/Journeyman/8</feed>
+				<feed>http://sharetv.org/rss/journeyman</feed>
+			</feeds>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>69207</tv_com>
 		</show>
 		<show>
 			<name>Kid Nation</name>
