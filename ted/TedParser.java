@@ -61,11 +61,10 @@ public class TedParser extends Thread
 	private int totalNumberOfFeedItems = 0;
 	private TedSerie currentSerie;
 	
-	private String logMessage = "";
-	private String logFound="";
-	private String logRejected="";
 	private int itemNr;
 	private int bestItemNr = 0;
+	
+	private String[][] parseLogInfo;
 	
   	/****************************************************
 	 * CONSTRUCTORS
@@ -214,10 +213,10 @@ public class TedParser extends Thread
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
 		
-		logMessage = "\nParse results for " + currentSerie.getName() + " Season " 
-				   + currentSerie.currentSeason + " Episode " + currentSerie.currentEpisode + "\n";
-		logFound="Found\n";
-		logRejected="Rejected\n";
+		parseLogInfo = new String[this.totalNumberOfFeedItems+1][2];
+		
+		parseLogInfo[0][0] = "\nParse results for " + currentSerie.getName() 
+			+ " " + currentSerie.getSearchForString();
 		
 		Vector feeds = serie.getFeeds();
 		
@@ -272,6 +271,7 @@ public class TedParser extends Thread
 	        					if(date!=null && ((((TedDailySerie)serie).getLatestDownloadDateInMillis()) <= 
 	        							date.getDate().getTimeInMillis()))
 	        					{
+	        						itemNr++;
 	        						this.addDailyItem(item, serie);	
 	        					}
 	        				}
@@ -493,6 +493,8 @@ public class TedParser extends Thread
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
 		
+		parseLogInfo[itemNr][0] = torrentUrl;
+		
 		// check seeders, size and keyword filters
 		checkIfBest(torrentUrl, serie);
 		
@@ -525,6 +527,16 @@ public class TedParser extends Thread
 				{
 					dailyItems.remove(i);
 					dailyItems.add(dd);
+					
+					for(int j=0; j<this.totalNumberOfFeedItems+1; j++)
+					{
+						if (parseLogInfo[j][0] == item.getUrl().toString())
+						{
+							parseLogInfo[j][1] = Lang.getString("TedLog.FoundBetterTorrent");
+						}
+					}
+					
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent"); 
 	
 					return;
 				}
@@ -534,6 +546,8 @@ public class TedParser extends Thread
 				}
 			}
 		}
+		
+		parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
 		
 		dailyItems.add(dd);		
 	}
@@ -575,7 +589,7 @@ public class TedParser extends Thread
 			torrentInfo = torrent.getInfo();
 			
 			itemNr++;
-			logFound += itemNr + ". " + torrentUrl + "\n"; 
+			parseLogInfo[itemNr][0] = torrentUrl.toString(); 
 						
 			try
 			{
@@ -583,8 +597,8 @@ public class TedParser extends Thread
 			}
 			catch (FileSizeException e)
 			{
-				logRejected += itemNr +  ". " + 
-					Lang.getString("TedLog.ErrorFileSize") + " (" + e.size + ")\n";
+				parseLogInfo[itemNr][1] = 
+					Lang.getString("TedLog.ErrorFileSize") + " (" + e.size + ")";
 				throw e;
 			}
 			
@@ -595,8 +609,8 @@ public class TedParser extends Thread
 				if(this.containsCompressedFiles(torrent))
 				{
 					// reject it
-					logRejected += itemNr +  ". " + 
-						Lang.getString("TedLog.ErrorCompressedFiles") + "\n";
+					parseLogInfo[itemNr][1] = 
+						Lang.getString("TedLog.ErrorCompressedFiles");
 					return;
 				}
 			}
@@ -621,21 +635,29 @@ public class TedParser extends Thread
 					this.bestTorrentUrl = url;
 					this.bestTorrentInfo = torrentInfo;
 					this.bestTorrentState = torrentState;
-					this.bestTorrent = torrent;		
+					this.bestTorrent = torrent;
+					
+					if(bestItemNr != 0)
+					{
+						parseLogInfo[bestItemNr][1] = Lang.getString("TedMainMenuBar.File")
+						 + " " + itemNr + " " + Lang.getString("TedLog.FoundBetterTorrent");
+					}
+					
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
 					this.bestItemNr = itemNr;
 				}
 				else
 				{
-					logRejected += itemNr + ". " +
-						Lang.getString("TedLog.ErrorSeeders") + " (" + torrentSeeders + ")\n";
+					parseLogInfo[itemNr][1] =
+						Lang.getString("TedLog.ErrorSeeders") + " (" + torrentSeeders + ")";
 					TedLog.debug("Torrent has not enough seeders (" + torrentSeeders+")"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				
 			}
 			catch (Exception e)
 			{
-				logRejected += itemNr + ". " +
-					Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
+				parseLogInfo[itemNr][1] =
+					Lang.getString("TedLog.ErrorTorrentInfo");
 				TedLog.error(e, "Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 			}			
 		}
@@ -653,8 +675,8 @@ public class TedParser extends Thread
 				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), e.getMessage(), "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			
-			logRejected += itemNr + ". " +
-				Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
+			parseLogInfo[itemNr][1] =
+				Lang.getString("TedLog.ErrorTorrentInfo");
 		}
 		catch (TorrentException e)
 		{
@@ -662,8 +684,8 @@ public class TedParser extends Thread
 			//tMainDialog.displayError("ted Error!", e.getMessage(), "Exception");
 			TedLog.error(e, e.getLocalizedMessage());
 			
-			logRejected += itemNr + ". " +
-				Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
+			parseLogInfo[itemNr][1] =
+				Lang.getString("TedLog.ErrorTorrentInfo");
 			
 			return;
 		
@@ -679,8 +701,8 @@ public class TedParser extends Thread
             TedLog.error(e, e.getLocalizedMessage());
 			e.printStackTrace();
 			
-			logRejected += itemNr + ". " +
-				Lang.getString("TedLog.ErrorTorrentInfo") + "\n";
+			parseLogInfo[itemNr][1] =
+				Lang.getString("TedLog.ErrorTorrentInfo");
 			
 			return;
 		}
@@ -692,7 +714,7 @@ public class TedParser extends Thread
             TedLog.error(e, e.getLocalizedMessage());
 			e.printStackTrace();
 			
-			logRejected += itemNr + ". " +
+			parseLogInfo[itemNr][1] =
 				Lang.getString("TedParser.ErrorDownloadingContent1");
 		}			
 	}
@@ -881,6 +903,8 @@ public class TedParser extends Thread
 				((TedDailySerie)serie).setLatestDownloadDate(oldDate);
 			}
 		}
+		
+		TedLog.simpleLog(generateLogMessage());
 		serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog);
 	}
 	
@@ -893,17 +917,6 @@ public class TedParser extends Thread
 	private void downloadBest(TedSerie serie) throws Exception
 	{
 		foundTorrent = false;
-		
-		logMessage += 
-			"---------------\n"
-			+
-			logFound
-			+
-			"---------------\n"
-			+
-			logRejected
-			+
-			"---------------\n";
 		
 		if (this.bestTorrentUrl != null)
 		{
@@ -936,14 +949,6 @@ public class TedParser extends Thread
 			
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			
-			if(this.bestTorrentUrl != null)
-			{
-				logMessage += "downloaded " + bestItemNr + ". " + this.bestTorrentUrl + "\n";
-			}
-			logMessage += "---------------\n";
-			
-			TedLog.simpleLog(logMessage);
-
 			// check if this episode is the break episode
 			if (serie.checkBreakEpisode(episode))
 			{
@@ -967,21 +972,21 @@ public class TedParser extends Thread
 	        // otherwise ted checks again the whole feed
 	        if(foundTorrent)
 	        {
-		        	// we found something so we can pause the serie again
-		        	if (serie.isUseEpisodeSchedule())
-		        	{
-		        		serie.setStatus(TedSerie.STATUS_PAUSE);
-		        	}
-		        	
-		        	// but we have to parse the serie until we have all the availble torrents
-		        	parseFeeds(serie, tMainDialog);
+	        	TedLog.simpleLog(generateLogMessage());
+	        	
+		        // we found something so we can pause the serie again
+		        if (serie.isUseEpisodeSchedule())
+		        {
+		        	serie.setStatus(TedSerie.STATUS_PAUSE);
+		        }
+		        
+		        // but we have to parse the serie until we have all the availble torrents
+		        parseFeeds(serie, tMainDialog);
 	        }			
 		}
 		else
 		{
-			logMessage += "None found\n";
-			logMessage += "---------------\n";
-			TedLog.simpleLog(logMessage);
+			TedLog.simpleLog(generateLogMessage());
 			serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
 		}
 		
@@ -1036,11 +1041,11 @@ public class TedParser extends Thread
 	        // otherwise ted checks again the whole feed
 	        if(foundTorrent)
 	        {
-		        	// we found something so we can pause the serie again
-		        	if (serie.isUseEpisodeSchedule())
-		        	{
-		        		serie.setStatus(TedSerie.STATUS_PAUSE);
-		        	}
+	        	// we found something so we can pause the serie again
+	        	if (serie.isUseEpisodeSchedule())
+		        {
+		        	serie.setStatus(TedSerie.STATUS_PAUSE);
+		        }
 		    }			
 		}
 		else
@@ -1126,6 +1131,48 @@ public class TedParser extends Thread
 		}
 	}
 
+	private String generateLogMessage()
+	{
+		String logMessage = parseLogInfo[0][0] + "\n---------------\n";
+		
+		logMessage += "Found\n";
+		for (int i = 1; i < parseLogInfo.length; i++)
+		{
+			if (parseLogInfo[i][0] != null)
+				logMessage += i + ". " + parseLogInfo[i][0] + "\n";
+		}
+		logMessage += "---------------\n";
+		
+		
+		logMessage += "Rejected\n";
+		for (int i = 1; i < parseLogInfo.length; i++)
+		{
+			if (parseLogInfo[i][0] != null && parseLogInfo[i][1] != Lang.getString("TedLog.BestTorrent"))
+				logMessage += i + ". " + parseLogInfo[i][1] + "\n";
+		}
+		logMessage += "---------------\n";
+		
+		
+		boolean foundBest = false;
+		logMessage += "Downloaded\n";
+		for (int i = 1; i < parseLogInfo.length; i++)
+		{
+			if(parseLogInfo[i][1] == Lang.getString("TedLog.BestTorrent"))
+			{
+				logMessage += i + ". " + parseLogInfo[i][0] + "\n";
+				foundBest = true;
+			}
+		}
+		
+		if(!foundBest)
+		{
+			logMessage += "None found\n";
+		}
+		logMessage += "---------------\n";
+		
+		return logMessage;
+	}
+	
 	/****************************************************
 	 * GETTERS & SETTERS
 	 ****************************************************/
