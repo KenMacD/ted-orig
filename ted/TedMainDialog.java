@@ -488,6 +488,10 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	public void addSerie(TedSerie newSerie) 
 	{
 		serieTable.addSerie(newSerie);
+		
+		// parse new show
+		TedParseHandler handler = new TedParseHandler(newSerie, this);
+		handler.start();
 	}
 		
 	/**

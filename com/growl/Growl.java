@@ -60,11 +60,6 @@ public class Growl {
 	// Actual instance data
 	private boolean      registered;    // We should only register once
 	private String       appName;       // "Application" Name
-	/*private NSData       appImageData;  // "application" Icon
-	private NSDictionary regDict;       // Registration Dictionary
-	private NSArray      allNotes;      // All notifications
-	private NSArray      defNotes;      // Default Notifications
-	private NSDistributedNotificationCenter theCenter;*/
 	
 	private String[] allNotes; // All notifications
 	private String[] defNotes; // Default Notifications
@@ -72,22 +67,7 @@ public class Growl {
 	//************  Constructors **************//
 
 	public Growl()
-	{
-		// register
-		/*String [] register = {
-				"tell application \"GrowlHelperApp\"",
-				"set the allNotificationsList to {\"Test Notification\" , \"Another Test Notification\"}",
-				
-				"set the enabledNotificationsList to {\"Test Notification\"}",
-	
-				"register as application \"Ted\" all notifications allNotificationsList default notifications enabledNotificationsList icon of application \"Script Editor\"",
-		   		
-		   		"notify with name \"Test Notification\" title \"Test Notification\" description \"This is a test AppleScript notification.\" application name \"Ted\" icon of application \"ted\"",
-		
-				"end tell"};
-		this.executeAppleScript(register);*/
-		
-		
+	{	
 	}
 	
 	
@@ -189,10 +169,8 @@ public class Growl {
 			e.printStackTrace();
 		}
 
-		//theCenter  = (NSDistributedNotificationCenter)NSDistributedNotificationCenter.defaultCenter();
-
 		if (registerNow) {
-			this.register();
+			this.registered = this.register();
 		}
 	}
 
@@ -216,42 +194,7 @@ public class Growl {
 
 		return true;
 	}
-
-	private void contactGrowlThroughAppleScript(String[] script) {
-		String [] fullScript = new String[script.length+2];
-		fullScript[0] = "tell application \"" + GROWL_APPLESCRIPT_ID + "\"";
-		
-		for (int i = 0; i < script.length; i++)
-		{
-			fullScript[i+1] = script[i];
-		}
-		
-		fullScript[fullScript.length-1] = "end tell";
-		
-		this.executeAppleScript(fullScript);		
-	}
-
-
-
-	private String arrayToGrowlString(String[] array) {
-		String result = "{";
-		
-		for (int i = 0; i < array.length; i++)	{
-			// wrap with quotes
-			result += "\""+array[i]+"\"";
-			
-			if (i != array.length-1)
-			{
-				result += " , ";
-			}
-		}
-		
-		result += "}";
-		return result;
-	}
-
-
-
+	
 	/**
 	 * The fun part is actually sending those notifications we worked so hard for
 	 * so here we let growl know about things we think the user would like, and growl
@@ -277,202 +220,39 @@ public class Growl {
 								String inDescription,
 								boolean inSticky,
 								int inPriority) throws Exception {
-		/*NSMutableDictionary noteDict = new NSMutableDictionary();
-
-		if (!allNotes.containsObject(inNotificationName)) {
-			throw new Exception("Undefined Notification attempted");
-		}
-
-		noteDict.setObjectForKey(inNotificationName, GROWL_NOTIFICATION_NAME);
-		noteDict.setObjectForKey(inTitle, GROWL_NOTIFICATION_TITLE);
-		noteDict.setObjectForKey(inDescription, GROWL_NOTIFICATION_DESCRIPTION);
-		noteDict.setObjectForKey(appName, GROWL_APP_NAME);
-		if (inIconData != null) {
-			noteDict.setObjectForKey(inIconData, GROWL_NOTIFICATION_ICON);
-		}
-
-		if (inSticky) {
-			noteDict.setObjectForKey(new Integer(1), GROWL_NOTIFICATION_STICKY);
-		}
-
-		if (inIdentifier != null) {
-			noteDict.setObjectForKey(inIdentifier, GROWL_NOTIFICATION_IDENTIFIER);
-		}
-
-		if (inExtraInfo != null) {
-			noteDict.addEntriesFromDictionary(inExtraInfo);
-		}
-
-		theCenter.postNotification(GROWL_NOTIFICATION,
-									(String)null,
-									noteDict,
-									true);*/
-		//"notify with name \"Test Notification\" title \"Test Notification\" description \"This is a test AppleScript notification.\" application name \"Ted\" icon of application \"ted\""
+		// check if notification name is known
+		
+		// construct applescript to notify growl
 		String script = "notify with ";
-		script += "name \"" + inNotificationName + "\" ";
-		script += "title \"" + inTitle + "\" ";
-		script += "description \"" + inDescription + "\" ";
-		script += "application name \"" + this.appName + "\" ";
-		script += "priority " + inPriority +" ";
+		script += "name \"" + inNotificationName + "\" "; 		// notification name
+		script += "title \"" + inTitle + "\" ";					// title
+		script += "description \"" + inDescription + "\" ";		// body
+		script += "application name \"" + this.appName + "\" ";	// application name
+		script += "priority " + inPriority +" ";				// priority
+		
 		if(inSticky)
 		{
-			script += "with sticky ";
+			script += "with sticky ";							// is message sticky?
 		}
 		
-		this.contactGrowlThroughAppleScript(script);
-		
-		
+		// execute script
+		this.contactGrowlThroughAppleScript(script);		
 	}
-
-	/**
-	  * Convenience method that defers to notifyGrowlOf(String inNotificationName, 
-	  * NSData inIconData, String inTitle, String inDescription, 
-	  * NSDictionary inExtraInfo, boolean inSticky, String inIdentifier).
-	  * This is primarily for compatibility with older code
-	  *
-	  * @param inNotificationName - The name of one of the notifications we told growl
-	  *                             about.
-	  * @param inIconData - The NSData for the icon for this notification, can be null
-	  * @param inTitle - The Title of our Notification as Growl will show it
-	  * @param inDescription - The Description of our Notification as Growl will 
-	  *                        display it
-	  * @param inExtraInfo - Growl is flexible and allows Display Plugins to do as
-	  *                      they please with their own special keys and values, you
-	  *                      may use them here. These may be ignored by either the
-	  *                      user's  preferences or the current Display Plugin. This
-	  *                      can be null.
-	  * @param inSticky - Whether the Growl notification should be sticky.
-	  *
-	  * @throws Exception When a notification is not known
-	  *
-	  */
-	/*public void notifyGrowlOf(String inNotificationName, NSData inIconData, 
-			       String inTitle, String inDescription, 
-			       NSDictionary inExtraInfo, boolean inSticky) throws Exception {
-		notifyGrowlOf(inNotificationName, inIconData, inTitle, inDescription,
-				inExtraInfo, inSticky, null);
-	}*/
-
-
-	/**
-	  * Convenience method that defers to notifyGrowlOf(String inNotificationName, 
-	  * NSData inIconData, String inTitle, String inDescription, 
-	  * NSDictionary inExtraInfo, boolean inSticky, String inIdentifier).
-	  * This is primarily for compatibility with older code
-	  *
-	  * @param inNotificationName - The name of one of the notifications we told growl
-	  *                             about.
-	  * @param inIconData - The NSData for the icon for this notification, can be null
-	  * @param inTitle - The Title of our Notification as Growl will show it
-	  * @param inDescription - The Description of our Notification as Growl will 
-	  *                        display it
-	  * @param inExtraInfo - Growl is flexible and allows Display Plugins to do as
-	  *                      they please with their own special keys and values, you
-	  *                      may use them here. These may be ignored by either the
-	  *                      user's  preferences or the current Display Plugin. This
-	  *                      can be null.
-	  *
-	  * @throws Exception When a notification is not known
-	  *
-	  */
-	/*public void notifyGrowlOf(String inNotificationName, NSData inIconData, 
-		                       String inTitle, String inDescription, 
-		                       NSDictionary inExtraInfo) throws Exception {
-
-		notifyGrowlOf(inNotificationName, inIconData, inTitle, inDescription,
-			           inExtraInfo, false, null);
-	}*/
-
-	/**
-	 * Convenienve method that defers to notifyGrowlOf(String inNotificationName, 
-	 * NSData inIconData, String inTitle, String inDescription, 
-	 * NSDictionary inExtraInfo, boolean inSticky, String inIdentifier) with
-	 * <code>null</code> passed for icon, extraInfo and identifier arguments
-	 *
-	 * @param inNotificationName - The name of one of the notifications we told growl
-	 *                             about.
-	 * @param inTitle - The Title of our Notification as Growl will show it
-	 * @param inDescription - The Description of our Notification as Growl will 
-	 *                        display it
-	 *
-	 * @throws Exception When a notification is not known
-	 */
-	/*public void notifyGrowlOf(String inNotificationName, String inTitle, 
-			       String inDescription) throws Exception {
-		notifyGrowlOf(inNotificationName, (NSData)null, 
-					   inTitle, inDescription, (NSDictionary)null, false, null);
-	}*/
-
-	/**
-	  * Convenience method that defers to notifyGrowlOf(String inNotificationName, 
-	  * NSData inIconData, String inTitle, String inDescription, 
-	  * NSDictionary inExtraInfo, boolean inSticky)
-	  * with <code>null</code> passed for icon and extraInfo arguments.
-	  *
-	  * @param inNotificationName - The name of one of the notifications we told growl
-	  *                             about.
-	  * @param inTitle - The Title of our Notification as Growl will show it
-	  * @param inDescription - The Description of our Notification as Growl will 
-	  *                        display it
-	  * @param inSticky - Whether our notification should be sticky
-	  *
-	  * @throws Exception When a notification is not known
-	  *
-	  */
-	/*public void notifyGrowlOf(String inNotificationName, String inTitle, 
-							   String inDescription, boolean inSticky) throws Exception {
-		notifyGrowlOf(inNotificationName, (NSData)null, 
-					   inTitle, inDescription, (NSDictionary)null, inSticky, null);
-	}*/
-
-	/**
-	 * Defers to notifyGrowlOf(String inNotificationName, NSData inIconData, 
-	 * String inTitle, String inDescription, NSDictionary inExtraInfo,
-	 * boolean inSticky, String inIdentifier) with <code>null</code> 
-	 * passed for icon and extraInfo arguments.
-	 *
-	 * @param inNotificationName - The name of one of the notifications we told growl
-	 *                             about.
-	 * @param inImage - The notification image.
-	 * @param inTitle - The Title of our Notification as Growl will show it
-	 * @param inDescription - The Description of our Notification as Growl will 
-	 *                        display it
-	 * @param inExtraInfo - Look above for info
-	 *
-	 * @throws Exception When a notification is not known
-	 *
-	 */
-	/*public void notifyGrowlOf(String inNotificationName, NSImage inImage, 
-			       String inTitle, String inDescription, 
-			       NSDictionary inExtraInfo) throws Exception {
-
-		notifyGrowlOf(inNotificationName, inImage.TIFFRepresentation(),
-					   inTitle, inDescription, inExtraInfo, false, null);
-	}*/
-
-	/**
-	 * Convenienve method that defers to notifyGrowlOf(String inNotificationName, 
-	 * NSData inIconData, String inTitle, String inDescription, 
-	 * NSDictionary inExtraInfo, boolean inSticky, String inIdentifier) with
-	 * <code>null</code> passed for extraInfo.
-	 *
-	 * @param inNotificationName - The name of one of the notifications we told growl
-	 *                             about.
-	 * @param inImagePath - Path to the image for this notification
-	 * @param inTitle - The Title of our Notification as Growl will show it
-	 * @param inDescription - The Description of our Notification as Growl will 
-	 *                        display it
-	 *
-	 * @throws Exception When a notification is not known
-	 */
-	/*public void notifyGrowlOf(String inNotificationName, String inImagePath,
-			       String inTitle, String inDescription) throws Exception {
-
-		notifyGrowlOf(inNotificationName,
-					  new NSImage(inImagePath, false).TIFFRepresentation(), 
-					  inTitle, inDescription, (NSDictionary)null, false, null);
-	}*/
 	
+	/**
+	 * Convenience method, defers to full notifyGrowlOf method, without sticky and priority
+	 * parameters
+	 * @param inNotificationName The name of the notification
+	 * @param inTitle The title of the notification
+	 * @param inDescription The notification description
+	 * @throws Exception When notification name is not known
+	 */
+	public void notifyGrowlOf(String inNotificationName,
+								String inTitle, 
+								String inDescription) throws Exception {
+
+		this.notifyGrowlOf(inNotificationName, inTitle, inDescription, false, 0);	
+	}
 	
 	/**
 	 * According to http://growl.info/documentation/applescript-support.php we can check whether growl is running
@@ -490,16 +270,95 @@ public class Growl {
 		String result = this.executeAppleScript(script);
 		
 		// check if the result was true
-		return result.contains("true");
-		
+		return result.contains("true");		
 	}
-	//************  Accessors **************//
-
+		
+	/**
+	 * Construct an applescript that is send to the growl application
+	 * @param script The applescript that has to be send to growl
+	 */
 	private void contactGrowlThroughAppleScript(String script) 
 	{
 		String [] fullScript = {"tell application \"" + GROWL_APPLESCRIPT_ID + "\"", script, "end tell"};
 		this.executeAppleScript(fullScript);		
 	}
+	
+	/**
+	 * Construct an applescript that is send to the growl application
+	 * @param script The applescript that has to be send to growl
+	 */
+	private void contactGrowlThroughAppleScript(String[] script) 
+	{
+		String [] fullScript = new String[script.length+2];
+		fullScript[0] = "tell application \"" + GROWL_APPLESCRIPT_ID + "\"";
+		
+		// convert string array to one long string
+		for (int i = 0; i < script.length; i++)
+		{
+			fullScript[i+1] = script[i];
+		}
+		
+		fullScript[fullScript.length-1] = "end tell";
+		
+		this.executeAppleScript(fullScript);		
+	}
+	
+	/**
+	 * Execute a applescript using the "osascript" commandline interface to it
+	 * @param script The script to be executed, every item in the array is a line of script
+	 * @return The eventual result of the script
+	 */
+	private String executeAppleScript(String[] script)
+	{
+		String cmd = "osascript ";
+		for (int i = 0; i < script.length; i++)
+		{
+			cmd += "-e \'" + script[i] + "\' ";
+		}
+		try {
+			// open a runtime process to execute applescript
+			Process Results = Runtime.getRuntime().exec(new String[] {"/bin/sh","-c",cmd});
+			// read the returned value
+			BufferedReader br=new  BufferedReader(new InputStreamReader(Results.getInputStream()));
+			String s=br.readLine();
+			br.close();
+			br=null;
+			Results=null;
+			return s;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Converts an array of strings to an applescript array
+	 * @param array Array with Java Strings
+	 * @return String with Applescript array
+	 */
+	private String arrayToGrowlString(String[] array) {
+		String result = "{";
+		
+		for (int i = 0; i < array.length; i++)	{
+			// wrap with quotes
+			result += "\""+array[i]+"\"";
+			
+			if (i != array.length-1)
+			{
+				result += " , ";
+			}
+		}
+		
+		result += "}";
+		return result;
+	}
+	
+	//************  Accessors **************//
+
+	
 
 
 
@@ -603,33 +462,5 @@ public class Growl {
 		defNotes = inDefNotes;
 	}
 	
-	/**
-	 * Execute a applescript using the "osascript" commandline interface to it
-	 * @param script The script to be executed, every item in the array is a line of script
-	 * @return The eventual result of the script
-	 */
-	private String executeAppleScript(String[] script)
-	{
-		String cmd = "osascript ";
-		for (int i = 0; i < script.length; i++)
-		{
-			cmd += "-e \'" + script[i] + "\' ";
-		}
-		try {
-			Process Results = Runtime.getRuntime().exec(new String[] {"/bin/sh","-c",cmd});
-			BufferedReader br=new  BufferedReader(new InputStreamReader(Results.getInputStream()));
-			String s=br.readLine();
-			br.close();
-			br=null;
-			Results=null;
-			return s;
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			//Results.waitFor(); //- Add this line if and only if you aren't collecting any data but need the command line stuff to have finished before continuing.
-			//If you don't need either then you can remove 'Process Results=' from the line above.
-		return null;
-	}
+	
 }

@@ -71,7 +71,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 	private int width = 500;
 	private int height = 500;
 	private int tabsHeight = 350;
-	private int bottomButtonLocationY = height - 60;
 	
 	/****************************************************
 	 * CONSTRUCTOR
@@ -134,6 +133,20 @@ public class TedConfigDialog extends javax.swing.JDialog
 	 */
 	private void loadConfig()
 	{
+		// posistion of ok and cancel button for mac and linux
+		int bottomButtonLocationY 	= this.height - 60;
+		int bottomButtonOkX 		= this.width - 110;
+		int bottomButtonCancelX 	= this.width - 220;
+		int bottomButtonHelpX		= 11;
+		
+		// compute x and y location of buttons on windows
+		if (TedSystemInfo.osIsWindows())
+		{
+			bottomButtonLocationY 	= this.height - 60;
+			bottomButtonOkX 		= this.width - 110;
+			bottomButtonCancelX 	= this.width - 220;		
+		}
+		
 		this.getContentPane().setLayout(null);
 		this.setTitle(Lang.getString("TedConfigDialog.WindowTitle")); //$NON-NLS-1$
 
@@ -143,7 +156,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 				this.Annuleer_Button = new JButton();
 				this.getContentPane().add(Annuleer_Button);
 				this.Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
-				this.Annuleer_Button.setBounds(this.width - 220, this.bottomButtonLocationY, 98, 28);
+				this.Annuleer_Button.setBounds(bottomButtonCancelX, bottomButtonLocationY, 98, 28);
 				this.Annuleer_Button.addActionListener(TCListener);
 				this.Annuleer_Button.setActionCommand("Cancel");
 			}
@@ -152,7 +165,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 			this.Save_Button = new JButton();
 			this.getContentPane().add(Save_Button);
 			this.Save_Button.setText(Lang.getString("TedConfigDialog.ButtonSave")); //$NON-NLS-1$
-			Save_Button.setBounds(this.width - 110, this.bottomButtonLocationY, 98, 28);
+			Save_Button.setBounds(bottomButtonOkX, bottomButtonLocationY, 98, 28);
 			this.Save_Button.addActionListener(TCListener);
 			this.Save_Button.setActionCommand("Save");
 		}
@@ -174,7 +187,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		this.jHelpButton.setIcon(new ImageIcon(getClass()
 				.getClassLoader().getResource("icons/help.png")));
 		this.jHelpButton.setActionCommand("Help");
-		this.jHelpButton.setBounds(11, this.bottomButtonLocationY, 28, 28);
+		this.jHelpButton.setBounds(bottomButtonHelpX, bottomButtonLocationY, 28, 28);
 		this.jHelpButton.addActionListener(this.TCListener);
 		
 		this.generalPanel = new GeneralPanel();

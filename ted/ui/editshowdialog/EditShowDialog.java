@@ -21,6 +21,7 @@ import ted.TedIO;
 import ted.TedMainDialog;
 import ted.TedPopupMenu;
 import ted.TedSerie;
+import ted.TedSystemInfo;
 import ted.TedXMLParser;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
@@ -45,7 +46,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private int width = 500;
 	private int height = 500;
 	private int tabsHeight = 350;
-	private int bottomButtonLocationY = height - 60;
+	//private int bottomButtonLocationY = height - 60;
 
 	/**
 	 * 
@@ -84,7 +85,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	}
 
 	private void initGUI()
-	{
+	{		
 		try 
 		{
 			this.setSize(width, height);
@@ -111,6 +112,20 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 
 	private void loadShow()
 	{
+		// posistion of ok and cancel button for mac and linux
+		int bottomButtonLocationY 	= this.height - 60;
+		int bottomButtonOkX 		= this.width - 110;
+		int bottomButtonCancelX 	= this.width - 220;
+		int bottomButtonHelpX		= 11;
+		
+		// compute x and y location of buttons on windows
+		if (TedSystemInfo.osIsWindows())
+		{
+			bottomButtonLocationY 	= this.height - 60;
+			bottomButtonOkX 		= this.width - 220;
+			bottomButtonCancelX 	= this.width - 110;		
+		}
+		
 		this.getContentPane().setLayout(null);
 		
 		String titlestring = Lang.getString("TedEpisodeDialog.WindowTitleNew"); //$NON-NLS-1$
@@ -135,7 +150,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		jHelpButton.setIcon(new ImageIcon(getClass()
 				.getClassLoader().getResource("icons/help.png")));
 		jHelpButton.setActionCommand("Help");
-		jHelpButton.setBounds(11, this.bottomButtonLocationY, 28, 28);
+		jHelpButton.setBounds(bottomButtonHelpX, bottomButtonLocationY, 28, 28);
 		jHelpButton.addActionListener(this);
 		jHelpButton.setToolTipText(Lang.getString("TedGeneral.ButtonHelpToolTip"));
 		{
@@ -143,7 +158,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			getContentPane().add(jButton1);
 			jButton1.setActionCommand("cancel");
 			jButton1.setText(Lang.getString("TedGeneral.ButtonCancel"));
-			jButton1.setBounds(this.width - 220, this.bottomButtonLocationY, 98, 28);
+			jButton1.setBounds(bottomButtonCancelX, bottomButtonLocationY, 98, 28);
 			jButton1.addActionListener(this);
 		}
 		{
@@ -158,7 +173,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			{
 				button_Save.setText(Lang.getString("TedGeneral.ButtonSave"));
 			}
-			button_Save.setBounds(this.width - 110, this.bottomButtonLocationY, 98, 28);
+			button_Save.setBounds(bottomButtonOkX, bottomButtonLocationY, 98, 28);
 			button_Save.addActionListener(this);
 			this.getRootPane().setDefaultButton(button_Save);
 		}
