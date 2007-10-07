@@ -82,7 +82,7 @@ public class TedParseHandler extends Thread
 	 */
 	public void stopParsing()
 	{
-		TedLog.simpleLog("Parsing of the shows interrupted by user");
+		TedLog.simpleLog("Parsing of the shows interrupted by user\n");
 		mainDialog.setStopParsing(true);
 		this.stopThread();
 	}

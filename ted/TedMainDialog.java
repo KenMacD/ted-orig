@@ -557,10 +557,18 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 * Display an alert to inform the user
 	 * @param header Header of the message
 	 * @param message Message to the user
+	 * @param normalMessage Is this a normal message or an error
 	 */
-	public void displayMessage(String header, String message)
+	public void displayMessage(String header, String message, boolean normalMessage)
 	{
-		this.messengerCenter.displayMessage(header, message);
+		if(normalMessage)
+		{
+			this.messengerCenter.displayMessage(header, message);
+		}
+		else
+		{
+			this.messengerCenter.displayError(header, message);
+		}
 	}
 	
 	/**
@@ -571,7 +579,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void displayError(String header, String message, String details)
 	{
-		this.displayMessage(header, message);
+		this.displayMessage(header, message, false);
 		
 		TedLog.error(message+"\n"+details); //$NON-NLS-1$
 	}
@@ -584,7 +592,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void displayHurray(String header, String message, String details)
 	{
-		this.displayMessage(header, message);
+		this.displayMessage(header, message, true);
 		TedLog.debug(message+"\n"+details); //$NON-NLS-1$
 	}
 		

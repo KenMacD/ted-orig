@@ -61,7 +61,7 @@ public class TedParser extends Thread
 	private int totalNumberOfFeedItems = 0;
 	private TedSerie currentSerie;
 	
-	private int itemNr;
+	private int itemNr = 0;
 	private int bestItemNr = 0;
 	
 	private String[][] parseLogInfo;
@@ -212,6 +212,8 @@ public class TedParser extends Thread
 		this.bestTorrentInfo = null;
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
+		this.itemNr = 0;
+		this.bestItemNr = 0;
 		
 		parseLogInfo = new String[this.totalNumberOfFeedItems+1][2];
 		
@@ -253,7 +255,6 @@ public class TedParser extends Thread
 		        	serie.setProgress((int) Math.abs(progress), tMainDialog);
 		        	serie.setStatusString(Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems , tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
 		        	
-		        	int itemNr = 0;
 		        	if(serie.isDaily || this.continueParsing())
 		        	{
 		        		if(tPKeyChecker.checkKeywords(item.getTitle().toString(), serie.getKeywords()))
@@ -271,7 +272,6 @@ public class TedParser extends Thread
 	        					if(date!=null && ((((TedDailySerie)serie).getLatestDownloadDateInMillis()) <= 
 	        							date.getDate().getTimeInMillis()))
 	        					{
-	        						itemNr++;
 	        						this.addDailyItem(item, serie);	
 	        					}
 	        				}
@@ -492,11 +492,12 @@ public class TedParser extends Thread
 		this.bestTorrentInfo = null;
 		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
-		
-		parseLogInfo[itemNr][0] = torrentUrl;
-		
+				
 		// check seeders, size and keyword filters
 		checkIfBest(torrentUrl, serie);
+		
+		// itemNr is updated in checkIfBest
+		parseLogInfo[itemNr][0] = torrentUrl;
 		
 		// if torrent satifies check if we havn't found a better torrent
 		// with the same date
@@ -515,33 +516,45 @@ public class TedParser extends Thread
 	 * @param dd the DailyDate which has to be compared to the other items in the
 	 * download array
 	 */
-	private void checkIfBestDaily(DailyDate dd) 
+	private void checkIfBestDaily(DailyDate newItem) 
 	{
+		// for all daily show episodes which are selected for download
 		for(int i=0; i<dailyItems.size(); i++)
 		{
-			DailyDate item = (DailyDate)dailyItems.get(i);
+			DailyDate existingItem = (DailyDate)dailyItems.get(i);
 			
-			if(item.getDate().getTimeInMillis()==dd.getDate().getTimeInMillis())
+			// see if there is already a selected daily with the same date as the new DD 
+			if(existingItem.getDate().getTimeInMillis() == newItem.getDate().getTimeInMillis())
 			{
-				if(item.getSeeders() < dd.getSeeders())
+				// if the new DD is has more seeders replace the old selected daily
+				if(existingItem.getSeeders() < newItem.getSeeders())
 				{
 					dailyItems.remove(i);
-					dailyItems.add(dd);
+					dailyItems.add(newItem);
 					
-					for(int j=0; j<this.totalNumberOfFeedItems+1; j++)
+					int placeInLog = findPlaceInLog(existingItem.getUrl().toString());
+					if(placeInLog != 0)
 					{
-						if (parseLogInfo[j][0] == item.getUrl().toString())
-						{
-							parseLogInfo[j][1] = Lang.getString("TedLog.FoundBetterTorrent");
-						}
+						parseLogInfo[placeInLog][1] = Lang.getString("TedMainMenuBar.File")
+							+ " " + itemNr + " " + Lang.getString("TedLog.FoundBetterTorrent"); 
+		
 					}
 					
-					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent"); 
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
 	
 					return;
 				}
 				else
 				{
+					// as for every date there is only one selected daily you can stop
+					for(int j=0; j<this.totalNumberOfFeedItems+1; j++)
+					{
+						// existing one is better so log this
+						int placeInLog = findPlaceInLog(existingItem.getUrl().toString());
+						
+						parseLogInfo[itemNr][1] = Lang.getString("TedMainMenuBar.File")
+							 + " " + placeInLog + " " + Lang.getString("TedLog.FoundBetterTorrent");
+					}
 					return;
 				}
 			}
@@ -549,7 +562,7 @@ public class TedParser extends Thread
 		
 		parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
 		
-		dailyItems.add(dd);		
+		dailyItems.add(newItem);		
 	}
 
 
@@ -637,14 +650,19 @@ public class TedParser extends Thread
 					this.bestTorrentState = torrentState;
 					this.bestTorrent = torrent;
 					
-					if(bestItemNr != 0)
+					if(!serie.isDaily)
 					{
-						parseLogInfo[bestItemNr][1] = Lang.getString("TedMainMenuBar.File")
-						 + " " + itemNr + " " + Lang.getString("TedLog.FoundBetterTorrent");
+						if(bestItemNr != 0)
+						{
+							// the message for the old best torrent is changed...
+							parseLogInfo[bestItemNr][1] = Lang.getString("TedMainMenuBar.File")
+							 + " " + itemNr + " " + Lang.getString("TedLog.FoundBetterTorrent");
+						}
+						
+						// and the new best torrent gets his own message...
+						parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
+						this.bestItemNr = itemNr;
 					}
-					
-					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
-					this.bestItemNr = itemNr;
 				}
 				else
 				{
@@ -874,33 +892,43 @@ public class TedParser extends Thread
 		DailyDate dd;
 		long oldDate = ((TedDailySerie)serie).getLatestDownloadDateInMillis();
 		long newDate = 0;
-		for(int i=0; i<maxDownloads; i++)
+		for(int i=0; i<dailyItems.size(); i++)
 		{
 			// get the current daily date
 			dd = (DailyDate)dailyItems.get(i);
+
 			// get url
 			this.bestTorrentUrl = dd.getUrl(); 	
-			
-			try 
-			{
-				downloadBest((TedDailySerie)serie, dd);
-			} 
-			catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		
+			// if we want to download this daily
+			if(i<maxDownloads)
+			{				
+				try 
+				{
+					downloadBest((TedDailySerie)serie, dd);
+				} 
+				catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				// add one day, to search for next episode
+				dd.setDay(dd.getDay()+1);
+				newDate = dd.getDate().getTimeInMillis();
+				
+				// when the new date is larger than the lastdownload date
+				if(newDate>oldDate)
+				{
+					// update olddate
+					oldDate=newDate;
+					((TedDailySerie)serie).setLatestDownloadDate(oldDate);
+				}
 			}
-			
-			// add one day, to search for next episode
-			dd.setDay(dd.getDay()+1);
-			newDate = dd.getDate().getTimeInMillis();
-			
-			// when the new date is larger than the lastdownload date
-			if(newDate>oldDate)
+			else
 			{
-				// update olddate
-				oldDate=newDate;
-				((TedDailySerie)serie).setLatestDownloadDate(oldDate);
+				parseLogInfo[findPlaceInLog(this.bestTorrentUrl.toString())][1] = 
+					Lang.getString("TedLog.TooOld") + " " + maxDownloads;
 			}
 		}
 		
@@ -1171,6 +1199,19 @@ public class TedParser extends Thread
 		logMessage += "---------------\n";
 		
 		return logMessage;
+	}
+	
+	private int findPlaceInLog(String url)
+	{
+		for(int j=0; j<this.totalNumberOfFeedItems+1; j++)
+		{
+			if (parseLogInfo[j][0].equals(url))
+			{
+				return j;
+			}
+		}
+		
+		return 0;
 	}
 	
 	/****************************************************
