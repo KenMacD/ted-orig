@@ -142,9 +142,9 @@ public class TedConfigDialog extends javax.swing.JDialog
 		// compute x and y location of buttons on windows
 		if (TedSystemInfo.osIsWindows())
 		{
-			bottomButtonLocationY 	= this.height - 60;
-			bottomButtonOkX 		= this.width - 110;
-			bottomButtonCancelX 	= this.width - 220;		
+			bottomButtonLocationY 	= this.height - 75;
+			bottomButtonOkX 		= this.width - 120;
+			bottomButtonCancelX 	= this.width - 225;		
 		}
 		
 		this.getContentPane().setLayout(null);
