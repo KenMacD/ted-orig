@@ -173,40 +173,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		Lang.setLanguage(TedConfig.getLocale());
 			
-		// only if the os is supported by the trayicon program
-		// currently supports windows, linux and solaris		
-		this.osHasTray = this.osHasTray && TedConfig.isAddSysTray();
 		
-		if (osHasTray)
-		{
-			try
-			{
-				tedTray = new TedTrayIcon(this, tedIdleIcon);
-			}
-			catch (Exception e)
-			{
-				TedLog.error(e, "Error while adding tray icon. Disabling tray in config");
-				this.osHasTray = false;
-				TedConfig.setAddSysTray(false);
-				TedConfig.setStartMinimized(false);
-			}
-		}
-		if (TedConfig.isStartMinimized())
-		{
-			if (this.osHasTray)
-			{
-				this.setVisible(false);
-			}
-			else
-			{
-				this.setVisible(true);
-				this.toBack();
-			}
-		}
-		else
-		{
-			this.setVisible(true);
-		}
 		
 		try 
 		{
@@ -314,6 +281,41 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// set size and position of ted
 		this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
 		this.setLocation(TedConfig.getX(), TedConfig.getY());
+		
+		// only if the os is supported by the trayicon program
+		// currently supports windows, linux and solaris		
+		this.osHasTray = this.osHasTray && TedConfig.isAddSysTray();
+		
+		if (osHasTray)
+		{
+			try
+			{
+				tedTray = new TedTrayIcon(this, tedIdleIcon);
+			}
+			catch (Exception e)
+			{
+				TedLog.error(e, "Error while adding tray icon. Disabling tray in config");
+				this.osHasTray = false;
+				TedConfig.setAddSysTray(false);
+				TedConfig.setStartMinimized(false);
+			}
+		}
+		if (TedConfig.isStartMinimized())
+		{
+			if (this.osHasTray)
+			{
+				this.setVisible(false);
+			}
+			else
+			{
+				this.setVisible(true);
+				this.toBack();
+			}
+		}
+		else
+		{
+			this.setVisible(true);
+		}
 		
 		tCounter = new TedCounter(this);
 	
