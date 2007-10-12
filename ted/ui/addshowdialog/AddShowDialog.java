@@ -282,9 +282,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		{
 			// create an edit show dialog with an empty show and hide add show dialog		
 			TedSerie temp = new TedSerie();
+			this.close();
 			new EditShowDialog(tedMain, temp, true);
-			this.setVisible(false);
-			this.dispose();
 		}
 		
 	}
