@@ -1,3 +1,57 @@
+v0.91
+New features:
+New log that clarifies the parse results per show
+All shows are checked for new episodes at the same time
+Growl support (better message support for Mac)
+On Linux Firefox is added as browser to open weblinks
+UI modifications to make the winodows of ted look nicer on all platforms
+Show error messages is disabled on default
+Feeds are now loaded only one time when parsing
+Counter is updated every minute instead of every second (saves CPU)
+
+Bug fixes:
+Fixed some memory issues
+On Linux the default folder where ted stores its data is now ".Torrent Episode Downloader" in the users home folder 
+Daily show torrent urls are translated
+Export to XML saves to correct location
+Seeder filter now checks for 'more or equal' instead of 'more'
+Update show list settings are correctly used
+
+Translations:
+Catalan (new)
+French (update)
+Italian (update)
+Norwegian (update)
+
+v0.90
+New Features:
+* Shows can easier be added
+* UI make over for the edit show, configuration and main window
+* Daily shows are supported
+* Feeds can easier be added to a show in the edit show dialog
+* Do not parse at start option
+* Checks to see if a new version is available every 5 parsing round
+* Dialog that shows which episodes are available for a show
+* Do not log to file option
+* Improved new season available check
+* Check if entered download location exists
+* Option to filter out compressed files (password protected) 
+* Built in translator
+* Configuration is saved in system folders
+
+Fixed Bugs:
+* Configuration and edit show dialog can no longer be resized
+* Timeout setting correctly displayed in configuration dialog
+* Log is saved to file for MacOS
+* Unknown object '>'report is now proper defined
+* Added brackets check to keyword filter 
+* Fixed log memory leak
+* Removed download all option
+
+Translations:
+* Complete: English, Dutch, Greek, French, German, Italian
+* Partial: Danish, Spanish, Norwegian, Polish, Swedish
+
 v0.80
 added:
 * parsing can be stopped
