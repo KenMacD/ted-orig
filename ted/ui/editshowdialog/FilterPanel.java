@@ -1,5 +1,4 @@
 package ted.ui.editshowdialog;
-import java.awt.Dimension;
 import java.awt.TextField;
 
 import javax.swing.JLabel;

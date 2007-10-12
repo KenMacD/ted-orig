@@ -344,7 +344,6 @@ public class TedParser extends Thread
 		int season = 0;
 		int episode = 0;
 		String sTitle = item.getTitle().toString();
-		String sTitle_lower = sTitle.toLowerCase();
 		
 		// if the user doesnt want to download all or if we want to find the latest s + e
 		// check the episode and season (a watcher is set to download all)

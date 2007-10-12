@@ -51,7 +51,6 @@ public class TedTableModel extends AbstractTableModel
 	{
 		// returns the values that have to be displayed in the columns of the table
 		TedSerie sRow = (TedSerie)tableData.get(row);
-		Integer temp;
 		
 		switch (col)
 		{

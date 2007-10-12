@@ -13,6 +13,11 @@ package net.sf.torrentsniffer.tracker;
 public class ScrapeNotSupportedException extends RuntimeException {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2990686629538163770L;
+
+	/**
      * @param arg0
      */
     public ScrapeNotSupportedException(String message) {

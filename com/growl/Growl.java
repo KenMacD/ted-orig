@@ -334,11 +334,11 @@ public class Growl {
 	 *
 	 */
 	public void setDefaultNotifications(String [] inDefNotes) throws Exception {
-		int stop = inDefNotes.length;
+		/*int stop = inDefNotes.length;
 		int i = 0;
 
 		// TODO: check whether the allowed notifications are in the default notifications
-		/*for(i = 0; i < stop; i++) {
+		for(i = 0; i < stop; i++) {
 			if (! allNotes.containsObject(inDefNotes[i])) {
 				throw new Exception("Array Element not in Allowed Notifications");
 			}

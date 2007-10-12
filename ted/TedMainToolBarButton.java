@@ -21,6 +21,10 @@ import javax.swing.JButton;
 public class TedMainToolBarButton extends JButton
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6830765930141737249L;
 	private String LangTextString;
 	private String LangToolTipString;
 	

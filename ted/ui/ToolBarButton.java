@@ -10,6 +10,11 @@ import ted.Lang;
 
 public class ToolBarButton extends JToggleButton
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6220006853963215634L;
+
 	public ToolBarButton(String name, ActionListener parent, String parentname)
 	{
 		//JToggleButton button = new JToggleButton();

@@ -29,8 +29,7 @@ public class TedMain {
 				saveLocal=true;			
 		}
 		
-		// make a new ted
-		TedMainDialog inst = new TedMainDialog(userWantsTray, saveLocal);
+		new TedMainDialog(userWantsTray, saveLocal);
 
 	}
 

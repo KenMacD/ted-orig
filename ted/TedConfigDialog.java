@@ -7,9 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
@@ -237,35 +235,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 			this.setVisible(false);
 			this.dispose();
 		}
-	}
-
-	/**
-	 * Return int value from textfield. If no int, display error
-	 * @param field
-	 * @return
-	 */
-	private int getIntValue(JTextField field, String fieldName)
-	{
-		int value = -1;
-		try
-		{
-			value = Integer.parseInt(field.getText());
-		}
-		catch (Exception e)
-		{
-			JOptionPane.showMessageDialog(this, field.getText() + " " + Lang.getString("TedConfigDialog.DialogNotANumber1") 
-											+ " " + fieldName + ". " + Lang.getString("TedConfigDialog.DialogNotANumber2"));
-			return -1;
-		}
-		
-		if (value < 0)
-		{
-			JOptionPane.showMessageDialog(this, field.getText() + " " + Lang.getString("TedConfigDialog.DialogNotANumber1") 
-					+ " " + fieldName + ". " + Lang.getString("TedConfigDialog.DialogNotANumber2"));
-			return -1;
-		}
-		
-		return value;
 	}
 
 	public void showPanel(String command)

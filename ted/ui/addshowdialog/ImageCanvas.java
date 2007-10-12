@@ -8,7 +8,11 @@ import java.awt.Toolkit;
 import java.awt.image.ImageProducer;
 
 public class ImageCanvas extends Canvas {
-  Image image;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7793640817922536876L;
+Image image;
 
   public ImageCanvas(String name) {
     MediaTracker media = new MediaTracker(this);

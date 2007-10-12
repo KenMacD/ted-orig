@@ -61,74 +61,66 @@ public class GeneralPanel extends JPanel implements ActionListener
 	private void initGUI() 
 	{
 		try {
-
-			//this.setPreferredSize(new java.awt.Dimension(width, height));
-
-		generalPanel = new JPanel();
-		this.add(generalPanel);
-		FormLayout generalPanelLayout = new FormLayout(
-				"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
-				"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu)");
-		generalPanel.setLayout(generalPanelLayout);
-		//generalPanel.setPreferredSize(new java.awt.Dimension(width, height));
-
-		Refresh_Label = new JLabel();
-		generalPanel.add(Refresh_Label, new CellConstraints("2, 2, 5, 1, default, default"));
-		Refresh_Label.setText(Lang.getString("TedConfigDialog.LabelRefreshTime"));
-		Refresh_Label.setBounds(14, 10, 182, 28);
-
-		jLabel2 = new JLabel();
-		generalPanel.add(jLabel2, new CellConstraints("4, 3, 2, 1, default, default"));
-		jLabel2.setText(Lang.getString("TedConfigDialog.RefreshTimeMinutes"));
-		jLabel2.setBounds(276, 9, 60, 30);
-
-		textRefresh = new JTextField();
-		generalPanel.add(textRefresh, new CellConstraints("2, 3, 1, 1, default, default"));
-		textRefresh.setBounds(193, 9, 73, 28);
-
-		jLabel3 = new JLabel();
-		generalPanel.add(jLabel3, new CellConstraints("2, 6, 5, 1, default, default"));
-		jLabel3.setText(Lang.getString("TedConfigDialog.LabelTorrentFound"));
-		jLabel3.setBounds(14, 47, 370, 30);
-
-		saveLavel = new JLabel();
-		generalPanel.add(saveLavel, new CellConstraints("2, 7, 5, 1, default, default"));
-		saveLavel.setText(Lang.getString("TedConfigDialog.LabelSaveDirectory"));
-		saveLavel.setBounds(14, 70, 273, 28);
-
-		directory_Field = new JTextField();
-		generalPanel.add(directory_Field, new CellConstraints("2, 8, 3, 1, default, default"));
-		//directory_Field.setText(directory);
-		directory_Field.setEditable(false);
-		directory_Field.setBackground(new java.awt.Color(240, 240, 240));
-		directory_Field.setBounds(21, 98, 315, 28);
-
-		SaveDir_Button = new JButton();
-		generalPanel.add(SaveDir_Button, new CellConstraints("6, 8, 1, 1, default, default"));
-		SaveDir_Button.setActionCommand("open dir");
-		SaveDir_Button.setIcon(new ImageIcon(getClass().getClassLoader()
-			.getResource("icons/dir.png")));
-		SaveDir_Button.setBounds(343, 98, 35, 28);
-		SaveDir_Button.addActionListener(this);
-
-		openTorrentBox = new JCheckBox();
-		generalPanel.add(openTorrentBox, new CellConstraints("2, 9, 5, 1, default, default"));
-		openTorrentBox.setText(Lang
-			.getString("TedConfigDialog.CheckOpenTorrentInClient"));
-		openTorrentBox.setBounds(56, 98, 371, 28);
-
-		jSeparator3 = new JSeparator();
-		generalPanel.add(jSeparator3, new CellConstraints("2, 5, 5, 1, default, default"));
-		jSeparator3.setBounds(18, 159, 350, 7);
-
-		checkParseAtStart = new JCheckBox();
-		generalPanel.add(checkParseAtStart, new CellConstraints("2, 4, 5, 1, default, default"));
-		checkParseAtStart.setText(Lang
-			.getString("TedConfigDialog.ParseAtStart"));
-		checkParseAtStart.setBounds(21, 175, 357, 21);
-
-		//SaveDir_Button.addActionListener(TCListener);
-
+			generalPanel = new JPanel();
+			this.add(generalPanel);
+			FormLayout generalPanelLayout = new FormLayout(
+					"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
+					"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu)");
+			generalPanel.setLayout(generalPanelLayout);
+	
+			Refresh_Label = new JLabel();
+			generalPanel.add(Refresh_Label, new CellConstraints("2, 2, 5, 1, default, default"));
+			Refresh_Label.setText(Lang.getString("TedConfigDialog.LabelRefreshTime"));
+			Refresh_Label.setBounds(14, 10, 182, 28);
+	
+			jLabel2 = new JLabel();
+			generalPanel.add(jLabel2, new CellConstraints("4, 3, 2, 1, default, default"));
+			jLabel2.setText(Lang.getString("TedConfigDialog.RefreshTimeMinutes"));
+			jLabel2.setBounds(276, 9, 60, 30);
+	
+			textRefresh = new JTextField();
+			generalPanel.add(textRefresh, new CellConstraints("2, 3, 1, 1, default, default"));
+			textRefresh.setBounds(193, 9, 73, 28);
+	
+			jLabel3 = new JLabel();
+			generalPanel.add(jLabel3, new CellConstraints("2, 6, 5, 1, default, default"));
+			jLabel3.setText(Lang.getString("TedConfigDialog.LabelTorrentFound"));
+			jLabel3.setBounds(14, 47, 370, 30);
+	
+			saveLavel = new JLabel();
+			generalPanel.add(saveLavel, new CellConstraints("2, 7, 5, 1, default, default"));
+			saveLavel.setText(Lang.getString("TedConfigDialog.LabelSaveDirectory"));
+			saveLavel.setBounds(14, 70, 273, 28);
+	
+			directory_Field = new JTextField();
+			generalPanel.add(directory_Field, new CellConstraints("2, 8, 3, 1, default, default"));
+			directory_Field.setEditable(false);
+			directory_Field.setBackground(new java.awt.Color(240, 240, 240));
+			directory_Field.setBounds(21, 98, 315, 28);
+	
+			SaveDir_Button = new JButton();
+			generalPanel.add(SaveDir_Button, new CellConstraints("6, 8, 1, 1, default, default"));
+			SaveDir_Button.setActionCommand("open dir");
+			SaveDir_Button.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("icons/dir.png")));
+			SaveDir_Button.setBounds(343, 98, 35, 28);
+			SaveDir_Button.addActionListener(this);
+	
+			openTorrentBox = new JCheckBox();
+			generalPanel.add(openTorrentBox, new CellConstraints("2, 9, 5, 1, default, default"));
+			openTorrentBox.setText(Lang
+				.getString("TedConfigDialog.CheckOpenTorrentInClient"));
+			openTorrentBox.setBounds(56, 98, 371, 28);
+	
+			jSeparator3 = new JSeparator();
+			generalPanel.add(jSeparator3, new CellConstraints("2, 5, 5, 1, default, default"));
+			jSeparator3.setBounds(18, 159, 350, 7);
+	
+			checkParseAtStart = new JCheckBox();
+			generalPanel.add(checkParseAtStart, new CellConstraints("2, 4, 5, 1, default, default"));
+			checkParseAtStart.setText(Lang
+				.getString("TedConfigDialog.ParseAtStart"));
+			checkParseAtStart.setBounds(21, 175, 357, 21);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

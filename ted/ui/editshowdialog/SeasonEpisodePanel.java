@@ -23,6 +23,10 @@ import com.jgoodies.forms.layout.FormLayout;
 */
 public class SeasonEpisodePanel extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 162104329797582752L;
 	private JSpinner seasonSpinner;
 	private JSpinner episodeSpinner;
 	private JLabel labelEpisode;

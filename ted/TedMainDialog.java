@@ -166,9 +166,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.setSize(550, 400);
 			this.setLocation(20, 20);
 			
-			// show configuration screen without cancel button		
-			TedConfigDialog tcd = new TedConfigDialog(this, false);
-			tcd = null;
+			new TedConfigDialog(this, false);
 		}
 		
 		Lang.setLanguage(TedConfig.getLocale());
@@ -237,8 +235,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// register for mac os quit, preferences and about dialog items in menu
 		if (TedSystemInfo.osIsMac())
 		{
-			// add mac specific action listeners to the mac menu bar
-			TedMainMacListener tmml = new TedMainMacListener(this);				
+			new TedMainMacListener(this);				
 		}
 		
 		

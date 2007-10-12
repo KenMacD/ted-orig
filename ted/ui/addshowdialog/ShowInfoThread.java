@@ -3,7 +3,6 @@ package ted.ui.addshowdialog;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Vector;
 
 import javax.swing.JEditorPane;
 

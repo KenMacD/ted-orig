@@ -1,6 +1,4 @@
 package ted.ui.editshowdialog;
-import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 

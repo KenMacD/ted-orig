@@ -33,6 +33,10 @@ import com.jgoodies.forms.layout.FormLayout;
 */
 public class BreakSchedulePanel extends JPanel implements ActionListener 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7141843947943884130L;
 	private JLabel jBreakLabel2;
 	private JCheckBox jCheckBoxBreakFrom;
 	private JTextField jBreakEpisode;
@@ -97,24 +101,6 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 			jBreakLabel2.setText(Lang
 				.getString("TedEpisodeDialog.LabelBreakHold"));
 		}
-	}
-	
-	/**
-	 * Initialize a array with strings
-	 * @param low first value of the array
-	 * @param high last value of the array
-	 * @return A array filled with entries between low and high
-	 */
-	private String[] initString(int low, int high) 
-	{
-		String [] strings = new String [high-low+1];
-		
-		for (int i = 0; i+low <= high; i++)
-		{
-			strings[i] = ""+(low+i); //$NON-NLS-1$
-		}
-		
-		return strings;
 	}
 	
 	public void setValues(TedSerie serie)

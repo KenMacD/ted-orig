@@ -37,6 +37,10 @@ import javax.swing.table.AbstractTableModel;
 */
 public class TedTranslateDialog extends JFrame implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7178318494685933166L;
 	private JScrollPane scrollPane;
 	private JButton buttonSave;
 	private JButton buttonOpen;
@@ -370,7 +374,11 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	
 	class MyTableModel extends AbstractTableModel 
 	{
-	    private String[] columnNames;
+	    /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3815927013633221088L;
+		private String[] columnNames;
 	    private Object[][] data;
 
 	    public int getColumnCount() 

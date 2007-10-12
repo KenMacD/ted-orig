@@ -1,7 +1,6 @@
 package ted.ui.editshowdialog;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -45,6 +44,10 @@ import ted.ui.TableRenderer;
 */
 public class FeedsPanel extends JPanel implements ActionListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7247946873547065663L;
 	private JButton jButtonMoveFeedUp;
 	private JScrollPane jScrollPane1;
 	private JTable feedsTable;

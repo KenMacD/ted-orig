@@ -12,6 +12,11 @@ package net.sf.torrentsniffer.bencoding;
 public class BencodingException extends RuntimeException {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4089626122537278176L;
+
+	/**
      * 
      * @param message
      * @param exception

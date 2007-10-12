@@ -23,9 +23,9 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	private static final long serialVersionUID = 1L;
 	
 	private Vector allItems = new Vector();
-	private Vector search   = new Vector();
-	private Vector category = new Vector();
-	private Vector general  = new Vector();
+	private Vector<TedPopupItem> search   = new Vector<TedPopupItem>();
+	private Vector<TedPopupItem> category = new Vector<TedPopupItem>();
+	private Vector<TedPopupItem> general  = new Vector<TedPopupItem>();
 	private TedPopupItem help;
 	private TedPopupItem empty;
 

@@ -836,11 +836,5 @@ public class TedIO
 	    return br;
 		
 	}
-	
-	private boolean isValidDirectory(String directory)
-	{
-		File dir = new File(directory);
-		return dir.isDirectory();
-	}
 
 }
