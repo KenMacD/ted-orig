@@ -52,7 +52,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 	 * GLOBAL VARIABLES
 	 ****************************************************/
 	private static final long serialVersionUID = 1L;
-	//TedConfig config;
 	private JButton jHelpButton;
 	private JPanel jConfigTabs;
 	private JButton Save_Button;
@@ -87,7 +86,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 		this.setModal(true);
 		this.setResizable(false);
 		this.main = frame;
-		//config = tc;
 		this.show_cancel_btn = showcancelbutton;
 		initGUI();
 	}
@@ -178,8 +176,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 		getContentPane().add(toolBarPanel);
 		toolBarPanel.setBounds(0, 0, this.width, 70);
 		
-		//jConfigTabs.setModel(toolBarPanel);
-		
 		toolBarPanel.setBackground(Color.WHITE);
 
 		this.jHelpButton = new JButton();
@@ -193,22 +189,20 @@ public class TedConfigDialog extends javax.swing.JDialog
 		this.generalPanel = new GeneralPanel();
 		this.jConfigTabs.add("general", this.generalPanel);
 		this.generalPanel.setValues();
-		//this.generalPanel.setSize(this.width, this.tabsHeight);
 		
 		this.looknfeelPanel = new LooknFeelPanel(this.main);
 		this.jConfigTabs.add("looknfeel", this.looknfeelPanel);
 		this.looknfeelPanel.setValues();
-		//this.looknfeelPanel.setSize(this.width, this.tabsHeight);
 		
 		this.advancedPanel = new AdvancedPanel();
 		this.jConfigTabs.add("advanced", this.advancedPanel);
 		this.advancedPanel.setValues();
-		//this.advancedPanel.setSize(this.width, this.tabsHeight);
 		
 		this.updatesPanel = new UpdatesPanel(this.main);
 		this.jConfigTabs.add("updates", this.updatesPanel);
 		this.updatesPanel.setValues();
-		//this.updatesPanel.setSize(this.width, this.tabsHeight);
+		
+		this.setVisible(true);
 	}
 
 	

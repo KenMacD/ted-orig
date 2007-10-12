@@ -86,6 +86,7 @@ public class TedAboutDialog extends javax.swing.JDialog
 		MediaTracker mediaTracker = new MediaTracker(this);
 		mediaTracker.addImage(logo, 0);
 		this.repaint();
+		this.setVisible(true);
 	}
 	
 	/****************************************************

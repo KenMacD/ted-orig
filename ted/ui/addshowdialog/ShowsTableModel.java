@@ -143,6 +143,10 @@ public class ShowsTableModel extends AbstractTableModel
 		
 	}
 
+	public void removeSeries() {
+		tableData.clear();	
+	}
+
 	
 	
 

@@ -92,7 +92,7 @@ public class TedTable extends JTable
 	 */
 	private void setColumnWidths()
 	{
-//		 set all preferred sizes of the columns
+		// set all preferred sizes of the columns
 		TableColumn	column;				
 		for (int i = 0; i < serieTableModel.getColumnCount(); i++) 
 		{
@@ -105,7 +105,6 @@ public class TedTable extends JTable
 		    if (i == 2) // season/episode column
 		    {
 		    	column.setPreferredWidth(300);
-		    	//column.setMinWidth(150);
 		    }
 		    else if (i == 3) // progress column
 		    {
@@ -136,21 +135,18 @@ public class TedTable extends JTable
 		// the user clicked on a serie in the table
 		int viewRow = this.getSelectedRow();
 		int row = viewRow;
-		//int row = this.convertRowIndexToModel(viewRow);
-		TedSerie selectedserie = serieTableModel.getSerieAt(row);	
 		
 		// else show the EpisodeDialog of the selected show
 		if (evt.getClickCount() == 2)
-		{			
-			EditShowDialog henk = new EditShowDialog(tedMain, selectedserie, false);
-			henk.setVisible(true);			
+		{	
+			TedSerie selectedserie = serieTableModel.getSerieAt(row);
+			new EditShowDialog(tedMain, selectedserie, false);		
 		}
 		// or did the user click right?
 		else if (SwingUtilities.isRightMouseButton(evt))
 		{
 			// show context menu
 			int selectedrow = this.rowAtPoint(evt.getPoint());
-			selectedserie = serieTableModel.getSerieAt(selectedrow); 
 			ListSelectionModel selectionModel = this.getSelectionModel();
 			selectionModel.setSelectionInterval(selectedrow, selectedrow);
 			ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());

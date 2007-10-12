@@ -75,6 +75,9 @@ public class TedParseHandler extends Thread
 	public void stopThread()
 	{
 		parseThread = null;
+		
+		// call garbage collector to cleanup dirt
+		Runtime.getRuntime().gc(); 
 	}
 	
 	/*

@@ -144,7 +144,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 			this.setSize(700, 500);
 			
-//			Get the screen size
+			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		    Dimension screenSize = toolkit.getScreenSize();
 
@@ -154,6 +154,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 		    //Set the new frame location
 		    this.setLocation(x, y);
+		    this.setVisible(true);
 		} 
 		catch (Exception e) 
 		{
@@ -263,9 +264,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		}
 		else if (command.equals("Cancel"))
 		{
-			// close dialog
-			this.setVisible(false);
-			this.dispose();
+			this.close();		
 		}
 		else if (command.equals("Help"))
 		{
@@ -316,10 +315,18 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			// add the serie
 			tedMain.addSerie(selectedSerie);
 			
-			// close the dialog
-			this.setVisible(false);
-			this.dispose();
+			this.close();
 		}	
+	}
+
+	private void close() 
+	{
+		this.showsTableModel.removeSeries();
+		// close the dialog
+		this.setVisible(false);
+		this.dispose();
+		// call garbage collector to cleanup dirt
+		Runtime.getRuntime().gc(); 	
 	}
 
 	public void setSelectedSerie(TedSerie selectedSerie2)
@@ -453,8 +460,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	public void episodeSelectionChanged() 
 	{
-		// called when episode selection is changed.
-		
+		// called when episode selection is changed.		
 		// check if episode and show selected
 		if (selectedSerie != null && this.episodeChooserPanel.getSelectedStructure() != null)
 		{

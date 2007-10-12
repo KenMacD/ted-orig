@@ -52,7 +52,7 @@ public class GrowlMessenger implements MessengerInterface {
 	{
 		try 
 		{
-			growl.notifyGrowlOf(type, title, body, false, 0);
+			growl.notifyGrowlOf(type, title, body);
 		} 
 		catch (Exception e) 
 		{

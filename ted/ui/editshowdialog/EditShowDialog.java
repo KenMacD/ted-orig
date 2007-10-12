@@ -198,6 +198,8 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		schedulePanel.setValues(this.currentSerie);
 		schedulePanel.setSize(this.width, this.tabsHeight);
 		
+		this.setVisible(true);
+		
 	}
 	
 	private TedPopupMenu initPopupMenu()

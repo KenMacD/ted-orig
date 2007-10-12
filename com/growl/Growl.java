@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 /**
  * A class that encapsulates the "work" of talking to growl
  *
- * @author Karl Adam
+ * @author Roel van der Kraan
  */
 public class Growl {
 
@@ -69,91 +69,13 @@ public class Growl {
 	public Growl()
 	{	
 	}
-	
-	
-	
-	/**
-	 * Convenience method to contruct a growl instance, defers to Growl(String 
-	 * inAppName, NSData inImageData, NSArray inAllNotes, NSArray inDefNotes, 
-	 * boolean registerNow) with empty arrays for your notifications.
-	 *
-	 *
-	 * @param inAppName - The Name of your "application"
-	 * @param inImage - The NSImage Icon for your Application
-	 *
-	 */
-	/*public Growl(String inAppName, NSImage inImage) {
-	
-		this(inAppName,
-			  inImage.TIFFRepresentation(),
-			  new NSArray(),
-			  new NSArray(),
-			  false);
-	}*/
 
 	/**
-	 * Convenience method to contruct a growl instance, defers to Growl(String 
-	 * inAppName, NSData inImageData, NSArray inAllNotes, NSArray inDefNotes, 
-	 * boolean registerNow) with empty arrays for your notifications.
+	 * Create a growl instance
 	 *
 	 * @param inAppName - The Name of your "Application"
-	 * @param inImageData - The NSData for your NSImage
-	 */
-	/*public Growl(String inAppName, NSData inImageData) {
-
-		this(inAppName,
-			 inImageData,
-			 new NSArray(),
-			 new NSArray(),
-			 false);
-	}*/
-
-	/**
-	 * Convenience method to contruct a growl instance, defers to Growl(String 
-	 * inAppName, NSData inImageData, NSArray inAllNotes, NSArray inDefNotes, 
-	 * boolean registerNow) with empty arrays for your notifications.
-	 * 
-	 * @param inAppName - The Name of your "Application"
-	 * @param inImagePath - The path to your icon
-	 *
-	 */
-	/*public Growl(String inAppName, String inImagePath) {
-	
-		this(inAppName, 
-			 new NSImage(inImagePath, false).TIFFRepresentation(), 
-			 new NSArray(), 
-			 new NSArray(), 
-			 false);
-	}*/
-
-	/**
-	 * Convenience method to contruct a growl instance, defers to Growl(String 
-	 * inAppName, NSData inImageData, NSArray inAllNotes, NSArray inDefNotes, 
-	 * boolean registerNow) with the arrays passed here and empty Data for the icon.
-	 *
-	 * @param inAppName - The Name of your "Application"
-	 * @param inAllNotes - A String Array with the name of all your notifications
-	 * @param inDefNotes - A String Array with the na,es of the Notifications on 
-	 *                     by default
-	 */
-	/*public Growl(String inAppName, String [] inAllNotes, String [] inDefNotes) {
-
-		this(inAppName, 
-			 new NSData(), 
-			 new NSArray(inAllNotes), 
-			 new NSArray(inDefNotes), 
-			 false);
-	}*/
-
-	/**
-	 * Convenience method to contruct a growl instance, defers to Growl(String 
-	 * inAppName, NSData inImageData, NSArray inAllNotes, NSArray inDefNotes, 
-	 * boolean registerNow) with empty arrays for your notifications.
-	 *
-	 * @param inAppName - The Name of your "Application"
-	 * @param inImageData - The Data of your "Application"'s icon
-	 * @param inAllNotes - The NSArray of Strings of all your Notifications
-	 * @param inDefNotes - The NSArray of Strings of your default Notifications
+	 * @param inAllNotes - The Array of Strings of all your Notifications
+	 * @param inDefNotes - The Array of Strings of your default Notifications
 	 * @param registerNow - Since we have all the necessary info we can go ahead 
 	 *                      and register
 	 */
@@ -170,7 +92,7 @@ public class Growl {
 		}
 
 		if (registerNow) {
-			this.registered = this.register();
+			this.register();
 		}
 	}
 
@@ -190,6 +112,8 @@ public class Growl {
 			String [] script = {notificationsMessage, defNotificationsMessage, registerMessage};
 			
 			this.contactGrowlThroughAppleScript(script);
+			
+			registered = true;
 		}
 
 		return true;
@@ -202,16 +126,11 @@ public class Growl {
 	 *
 	 * @param inNotificationName - The name of one of the notifications we told growl
 	 *                             about.
-	 * @param inIconData - The NSData for the icon for this notification, can be null
 	 * @param inTitle - The Title of our Notification as Growl will show it
 	 * @param inDescription - The Description of our Notification as Growl will 
 	 *                        display it
-	 * @param inExtraInfo - Growl is flexible and allows Display Plugins to do as they 
-	 *                      please with thier own special keys and values, you may use 
-	 *                      them here. These may be ignored by either the user's 
-	 *                      preferences or the current Display Plugin. This can be null
 	 * @param inSticky - Whether the Growl notification should be sticky
-	 * @param inIdentifier - Notification identifier for coalescing. This can be null.
+	 * @param inPriority The priority of the notification
 	 *
 	 * @throws Exception When a notification is not known
 	 */
@@ -220,7 +139,7 @@ public class Growl {
 								String inDescription,
 								boolean inSticky,
 								int inPriority) throws Exception {
-		// check if notification name is known
+		// TODO: check if notification name is known
 		
 		// construct applescript to notify growl
 		String script = "notify with ";
@@ -357,11 +276,6 @@ public class Growl {
 	}
 	
 	//************  Accessors **************//
-
-	
-
-
-
 	/**
 	 * Accessor for The currently set "Application" Name
 	 *
@@ -404,41 +318,11 @@ public class Growl {
 	 * Set the list of allowed Notifications
 	 *
 	 * @param inAllNotes - The array of allowed Notifications
-	 */
-	/*public void setAllowedNotifications(NSArray inAllNotes) {
-		allNotes = inAllNotes;
-	}*/
-
-	/**
-	 * Set the list of allowed Notifications
-	 *
-	 * @param inAllNotes - The array of allowed Notifications
 	 *
 	 */
 	public void setAllowedNotifications(String[] inAllNotes) {
 		allNotes = inAllNotes;
 	}
-
-	/**
-	 * Set the list of Default Notfiications
-	 *
-	 * @param inDefNotes - The default Notifications
-	 *
-	 * @throws Exception when an element of the array is not in the 
-	 *                   allowedNotifications
-	 */
-	/*public void setDefaultNotifications(NSArray inDefNotes) throws Exception {
-		int stop = inDefNotes.count();
-		int i = 0;
-
-		for(i = 0; i < stop; i++) {
-			if (!allNotes.containsObject(inDefNotes.objectAtIndex(i))) {
-				throw new Exception("Array Element not in Allowed Notifications");
-			}
-		} 
-
-		defNotes = inDefNotes;
-	}*/
 
 	/**
 	 * Set the list of Default Notfications
@@ -453,6 +337,7 @@ public class Growl {
 		int stop = inDefNotes.length;
 		int i = 0;
 
+		// TODO: check whether the allowed notifications are in the default notifications
 		/*for(i = 0; i < stop; i++) {
 			if (! allNotes.containsObject(inDefNotes[i])) {
 				throw new Exception("Array Element not in Allowed Notifications");

@@ -1,5 +1,4 @@
 package ted;
-import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -22,7 +21,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.editshowdialog.EditShowDialog;
@@ -66,7 +64,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 
 	private static final double tedVersion = 0.90;
 	
-//	 menu images
+	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
 	private ImageIcon tedIdleIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 	private ImageIcon tedActiveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
@@ -75,9 +73,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	private JScrollPane jScrollPane1;
 	
 	private TedTable serieTable;
-	
-	// for the series:
-	//private TedConfig tConfig;
 	
 	private TedCounter tCounter;
 	
@@ -91,7 +86,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	private JPanel jPanel1;
 
-	//private boolean isParsing;
 	private boolean osHasTray = TedSystemInfo.osSupportsTray();
 	private boolean stopParsing = false;
 	private boolean isParsing = false;
@@ -136,8 +130,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	}
 	
 	
-	
-	
 	/****************************************************
 	 * LOCAL METHODS
 	 ****************************************************/
@@ -154,7 +146,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			SwingUtilities.updateComponentTreeUI( this );
 		}
 		
-//		 load config file
+		// load config file
 		TedIO tcio = new TedIO();
 		
 		try 
@@ -173,18 +165,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			// set initial size of maindialog
 			this.setSize(550, 400);
 			this.setLocation(20, 20);
-			// show configuration screen without cancel button
 			
+			// show configuration screen without cancel button		
 			TedConfigDialog tcd = new TedConfigDialog(this, false);
-			tcd.setVisible(true);
+			tcd = null;
 		}
 		
 		Lang.setLanguage(TedConfig.getLocale());
-		
-		
+			
 		// only if the os is supported by the trayicon program
-		// currently supports windows, linux and solaris
-		
+		// currently supports windows, linux and solaris		
 		this.osHasTray = this.osHasTray && TedConfig.isAddSysTray();
 		
 		if (osHasTray)
@@ -200,6 +190,22 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 				TedConfig.setAddSysTray(false);
 				TedConfig.setStartMinimized(false);
 			}
+		}
+		if (TedConfig.isStartMinimized())
+		{
+			if (this.osHasTray)
+			{
+				this.setVisible(false);
+			}
+			else
+			{
+				this.setVisible(true);
+				this.toBack();
+			}
+		}
+		else
+		{
+			this.setVisible(true);
 		}
 		
 		try 
@@ -233,9 +239,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			
 			// add table to scrollpanel
 			serieTable = new TedTable(this, ttPopupMenu);
-			jScrollPane1.setViewportView(serieTable);
-			
-			
+			jScrollPane1.setViewportView(serieTable);		
 			
 			// status bar
 			jStatusPanel = new JPanel();
@@ -295,8 +299,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			}
 		);
 		
-		
-		
 		tLog = TedLogDialog.getInstance();
 		TedLog.debug(Lang.getString("TedMainDialog.LogTedStarted")); //$NON-NLS-1$
 		
@@ -308,37 +310,19 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		// load the config files
 		serieTable.setSeries(tcio.GetShows());
-
-		
-		tCounter = new TedCounter(this);
-
 		
 		// set size and position of ted
 		this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
 		this.setLocation(TedConfig.getX(), TedConfig.getY());
 		
+		tCounter = new TedCounter(this);
+	
 		// reset all previous saved statusinformation of all shows
 		this.resetStatusOfAllShows();
 		
 		// set buttons according to selected row	
 		this.updateButtonsAndMenu();
 		
-		if (TedConfig.isStartMinimized())
-		{
-			if (this.osHasTray)
-			{
-				this.setVisible(false);
-			}
-			else
-			{
-				this.setVisible(true);
-				this.toBack();
-			}
-		}
-		else
-		{
-			this.setVisible(true);
-		}
 		if (TedConfig.isCheckVersion())
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewTed"));
@@ -399,9 +383,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 	}
 	
-	
-	
-	
 	/**
 	 * Updates the buttons and menu of ted according to if something is selected
 	 * in the serie table
@@ -430,14 +411,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			statusDelete = false;
 		}
 		
-		//this.te
-		
 		this.TedToolBar.setEditButtonStatus(statusEdit);
 		this.TedToolBar.setDeleteButtonStatus(statusDelete);
 	}
-
-
-
 
 	private void rootWindowClosing(WindowEvent evt) 
 	{		
@@ -462,9 +438,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	{
 		
 	}
-	
-	
-	
+		
 	/**
 	 * Set the current trayicon of ted
 	 * @param icon Icon to be set
@@ -534,7 +508,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 	}
 	
-	
 	/**
 	 * Update the countertext in the mainwindow
 	 * @param count Number of minutes left to next parserrround
@@ -558,24 +531,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	}
 	
 	/**
-	 * Display an alert to inform the user
-	 * @param header Header of the message
-	 * @param message Message to the user
-	 * @param normalMessage Is this a normal message or an error
-	 */
-	public void displayMessage(String header, String message, boolean normalMessage)
-	{
-		if(normalMessage)
-		{
-			this.messengerCenter.displayMessage(header, message);
-		}
-		else
-		{
-			this.messengerCenter.displayError(header, message);
-		}
-	}
-	
-	/**
 	 * Alert the user of an error that happened while running ted
 	 * @param header Header of the errormessage
 	 * @param message Body of the errormessage
@@ -583,7 +538,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void displayError(String header, String message, String details)
 	{
-		this.displayMessage(header, message, false);
+		this.messengerCenter.displayError(header, message);
 		
 		TedLog.error(message+"\n"+details); //$NON-NLS-1$
 	}
@@ -596,7 +551,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void displayHurray(String header, String message, String details)
 	{
-		this.displayMessage(header, message, true);
+		this.messengerCenter.displayMessage(header, message);
 		TedLog.debug(message+"\n"+details); //$NON-NLS-1$
 	}
 		
@@ -607,9 +562,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if(action.equals("Preferences...")) //$NON-NLS-1$
 		{
-			// show ted config
-			TedConfigDialog tcd = new TedConfigDialog(this, true);
-			tcd.setVisible(true);
+			new TedConfigDialog(this, true);
 		}
 		else if(action.equals("Log")) //$NON-NLS-1$
 		{
@@ -625,19 +578,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("New")) //$NON-NLS-1$
 		{
-			// create a new serie and show it in the episode dialog
-			/*TedSerie newSerie = new TedSerie(1, 1, "", "", 0, 0, "", 0); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			TedEpisodeDialog henk = new TedEpisodeDialog(this, newSerie, true);
-			henk.setVisible(true);*/
-			AddShowDialog henk = new AddShowDialog(this);
-			henk.setVisible(true);
-		}
-		else if(action.equals("Watcher")) //$NON-NLS-1$
-		{
-			// create a new watcher and show it
-			TedWatcher watcher = new TedWatcher("", "", 0, 0, ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			TedWatcherDialog dialog = new TedWatcherDialog(this, watcher, true);
-			dialog.setVisible(true);
+			new AddShowDialog(this);
 		}
 		else if(action.equals("Exit")) //$NON-NLS-1$
 		{
@@ -650,8 +591,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			if (pos >= 0)
 			{
 				TedSerie selectedserie = serieTable.getSerieAt(pos);
-				EditShowDialog henk = new EditShowDialog(this, selectedserie, false);
-				henk.setVisible(true);
+				new EditShowDialog(this, selectedserie, false);
 			}
 		}
 		else if (action.equals("parse selected")) //$NON-NLS-1$
@@ -834,7 +774,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		else if(action.equals("Export")) //$NON-NLS-1$
 		{
 			Vector series = serieTable.getSeries();
-			TedXMLWriter writer = new TedXMLWriter(series);
+			new TedXMLWriter(series);
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
 		{
@@ -855,16 +795,12 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	public void showAboutDialog() 
 	{
-		// show about window
-		TedAboutDialog tAbout = new TedAboutDialog(tedVersion);
-		tAbout.setVisible(true);	
+		new TedAboutDialog(tedVersion);	
 	}
 	
 	public void showPreferencesDialog()
 	{
-		// show ted config
-		TedConfigDialog tcd = new TedConfigDialog(this, true);
-		tcd.setVisible(true);	
+		new TedConfigDialog(this, true);
 	}
 	
 	public void quit()
@@ -979,22 +915,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	/****************************************************
 	 * GETTERS & SETTERS
 	 ****************************************************/
-	/**
-	 * DEPRECATED
-	 * @return Current TedConfig
-	 */
-	
-	/*
-	public TedConfig getConfig()
-	{
-		return tConfig;
-	}
-	*/
-	
-	/*public TedTableModel getSerieTableModel()
-	{
-		return serieTableModel;
-	}*/
 	
 	/**
 	 * Set the GUI elements to parsing, disable delete button and menuitem
