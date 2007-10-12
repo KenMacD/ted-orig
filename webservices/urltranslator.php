@@ -31,6 +31,8 @@ if(		strpos($url, "bt-chat.com") !== false ||
 		strpos($url, "mrtwig.net") !== false ||
 		strpos($url, "torrentlocomotive.com") !== false ||
 		strpos($url, "sdnett.org") !== false ||
+		strpos($url, "torrentbytes.net") !== false ||
+		strpos($url, "torrentleech.org") !== false ||
 		strpos($url, "digitaldistractions.org") !== false )
 {
 	// do nothing, url already in right format
