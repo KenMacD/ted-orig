@@ -13,22 +13,9 @@ public class GrowlMessenger implements MessengerInterface {
 	public GrowlMessenger()
 	{
 		// register with growl
-		growl = new Growl();
 		String [] notifications = {GROWL_GENERAL_IDENTIFIER, GROWL_HURRAY_IDENTIFIER, GROWL_ERROR_IDENTIFIER};
-		growl.setAllowedNotifications(notifications);
 		
-		try 
-		{
-			growl.setDefaultNotifications(notifications);
-		} 
-		catch (Exception e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		growl.setApplicationName("ted");
-		growl.register();		
+		growl = new Growl("ted", notifications, notifications, true);	
 	}
 		
 	public void displayMessage(String title, String body) 

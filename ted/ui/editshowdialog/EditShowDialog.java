@@ -122,8 +122,8 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		if (TedSystemInfo.osIsWindows())
 		{
 			bottomButtonLocationY 	= this.height - 75;
-			bottomButtonOkX 		= this.width - 120;
-			bottomButtonCancelX 	= this.width - 225;		
+			bottomButtonOkX 		= this.width - 225;
+			bottomButtonCancelX 	= this.width - 120;		
 		}
 		
 		this.getContentPane().setLayout(null);
