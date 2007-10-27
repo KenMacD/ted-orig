@@ -51,9 +51,9 @@ public class TedTableModel extends AbstractTableModel
 	public Object getValueAt(int row, int col) 
 	{
 		// returns the values that have to be displayed in the columns of the table
-		TedSerie sRow = (TedSerie)tableData.get(row);
+		return tableData.get(row);
 		
-		switch (col)
+		/*switch (col)
 		{
 			case 1:
 				return sRow.getName();
@@ -80,8 +80,9 @@ public class TedTableModel extends AbstractTableModel
 				{
 					return showStopped;
 				}
-		}
-		return null;
+		}*/
+		//return sRow;
+		//return null;
 		
 	}
 	
@@ -171,11 +172,7 @@ public class TedTableModel extends AbstractTableModel
 		// looks like this is considered a dirty hack but who cares :D
 		if (columnIndex == 0)
 		{
-			return ImageIcon.class;
-		}
-		else if (columnIndex == 3)
-		{
-			return JProgressBar.class;
+			return TedSerie.class;
 		}
 		else
 		{

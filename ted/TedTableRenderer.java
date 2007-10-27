@@ -6,6 +6,7 @@ package ted;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -35,26 +36,40 @@ public class TedTableRenderer extends DefaultTableCellRenderer
 
 	public Component getTableCellRendererComponent(JTable table, java.lang.Object value, boolean isSelected, boolean hasFocus, int row, int column) 
 	 {
-	   if( !isSelected ) 
-	   {
-		   TedTableModel ttmodel = (TedTableModel) table.getModel();
-		   TedSerie serie = ttmodel.getSerieAt(row);
-		   // get odd/even rows a different color
-	      Color c = table.getBackground();
-	      if (serie.getActivity() == TedSerie.IS_PARSING)
-	      {
-	    	  // mark an active show with a lightgreen background
-	    	  setBackground(new Color( 208, 250, 228));
-	      }
-	      
-	      else if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
-	         setBackground(new Color( c.getRed()-20,
+	   TedTableModel ttmodel = (TedTableModel) table.getModel();
+	   TedSerie serie = ttmodel.getSerieAt(row);
+	   
+	   // let the default renderer prepare the component for us
+       Component comp = super.getTableCellRendererComponent(table, value, 
+                                           isSelected, hasFocus, row, column);
+       
+       int width = comp.getWidth();
+       int height = comp.getWidth();
+       
+       comp.setBackground(colorForRow(row, isSelected));
+       
+       JLabel name = new JLabel(serie.getName());
+       //comp.(name);
+	   return comp;
+	 }
+	
+	/**
+     * Returns the appropriate background color for the given row.
+     */
+    protected Color colorForRow(int row, boolean isSelected) {
+    	Color c = getBackground();
+    	if (isSelected)
+    	{
+    		return(new Color( 61, 128, 223));
+    	}
+    	if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
+    	{     return(new Color( c.getRed()-20,
 	                                  c.getGreen()-10,
 	                                  c.getBlue()));
-	      else
-	         setBackground(c);
-	   }
-	   
-	   return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-	 }
+    	}
+    	else 
+    	{
+    		return c;
+    	}
+    }
 }

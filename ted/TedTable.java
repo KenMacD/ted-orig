@@ -44,12 +44,7 @@ public class TedTable extends JTable
 	private TedTableModel serieTableModel;
 	private TedMainDialog tedMain;
 	private TedTablePopupMenu ttPopupMenu;
-	private ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
-	private ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
-	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
-	private ImageIcon showActive = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
-	private ImageIcon activityIm = new ImageIcon(getClass().getClassLoader().getResource("icons/activity.gif"));
-
+	
 	/**
 	 * Create a table that can hold the series of ted
 	 * @param main current tedmaindialog
@@ -67,7 +62,6 @@ public class TedTable extends JTable
 		//TableRowSorter sorter = new TableRowSorter(this.getModel());
 		//this.setRowSorter(sorter);
 		
-		//this.setAutoCreateColumnsFromModel(true);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		this.setEditingRow(0);
 		
@@ -77,12 +71,9 @@ public class TedTable extends JTable
 		this.setRowHeight(50);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		/*TedTableRenderer mtr = new TedTableRenderer();
-		TedTableProgressbarRenderer ttpr = new TedTableProgressbarRenderer(0, 100);
+		TedTableRowRenderer ttrr = new TedTableRowRenderer();
+		this.setDefaultRenderer(TedSerie.class, ttrr);
 		
-		this.setDefaultRenderer(JProgressBar.class, ttpr);
-		this.setDefaultRenderer(Object.class, mtr);
-		this.setDefaultRenderer(Integer.class, mtr);*/
 		this.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
 				serieTableKeyReleased(evt);
@@ -93,50 +84,9 @@ public class TedTable extends JTable
 				serieTableMouseClicked(evt);
 			}
 		});
+					
+	}
 		
-		//this.setColumnWidths();
-				
-	}
-	
-	/**
-	 * Set columns in the table to default widths
-	 */
-	private void setColumnWidths()
-	{
-		// set all preferred sizes of the columns
-		TableColumn	column;				
-		for (int i = 0; i < serieTableModel.getColumnCount(); i++) 
-		{
-		    column = this.getColumnModel().getColumn(i);
-		    if (i == 0) // icon column
-		    {
-		    	column.setMaxWidth(20);
-				column.setMinWidth(20);
-		    }
-		    if (i == 2) // season/episode column
-		    {
-		    	column.setPreferredWidth(300);
-		    }
-		    else if (i == 3) // progress column
-		    {
-		    	column.setPreferredWidth(20);
-		    	column.setMinWidth(75);
-		    	column.setMaxWidth(75);
-		    }
-		    else if (i == 1) // name column
-		    {
-		    	column.setPreferredWidth(200);
-		    	
-		    }
-		    else
-		    {
-		    	column.setPreferredWidth(300);
-		    }
-		}
-	}
-
-
-	
 	/**
 	 * Handles clicks on the table in the mainwindow ted
 	 * @param evt MouseEvent
@@ -295,14 +245,6 @@ public class TedTable extends JTable
 	public void updateText()
 	{
 		serieTableModel.updateText();
-		/*this.tableHeader.updateUI();
-		TableColumnModel tcm = this.getTableHeader().getColumnModel();
-		
-		for (int i = 0; i < serieTableModel.getColumnCount(); i++)
-		{
-			tcm.getColumn(i).setHeaderValue(serieTableModel.getColumnName(i));
-		}*/
-		
 	}
 	
 	 /**
@@ -330,7 +272,7 @@ public class TedTable extends JTable
      * its painting.
      */
     public void paint(Graphics g) {
-        //super.paint(g);
+        super.paint(g);
         paintRows(g);
     }
 
@@ -344,42 +286,7 @@ public class TedTable extends JTable
         final int rowCount = getRowCount();
         final Rectangle clip = g.getClipBounds();
         final int height = clip.y + clip.height;
-        TedSerie currentRow;
-        for (int i = 0; i < rowCount; i++)
-        {
-        	currentRow = this.getSerieAt(i);
-        	// background
-        	g.setColor(colorForRow(i));
-            g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
-            // icon
-            g.drawImage(
-            		this.getIconForShow(currentRow).getImage(), 
-            		clip.x+10, 
-            		i * rowHeight + 20, 
-            		16, 
-            		16, 
-            		editorComp);
-            // name
-            g.setColor(this.getFontColor(Color.BLACK, i));
-            g.setFont(new java.awt.Font("Dialog",0,15));
-            g.drawString(currentRow.getName(), clip.x+40, i * rowHeight + 18);
-            // search for
-            g.setFont(new java.awt.Font("Dialog",0,10));
-            g.setColor(this.getFontColor(Color.DARK_GRAY, i));
-            g.drawString(currentRow.getSearchForString(), clip.x+40, i * rowHeight + 32);
-            // progress
-            g.setColor(this.getFontColor(Color.GRAY, i));
-            g.drawString(currentRow.getStatusString(), clip.x+40, i * rowHeight + 45);
-            
-            // activity icon / button
-            /*g.drawImage(
-            		this.activityIm.getImage(), 
-            		clip.width-20, 
-            		i * rowHeight + 20, 
-            		16, 
-            		16, 
-            		editorComp);*/
-        }
+
         if (rowCount * rowHeight < height) {
             for (int i = rowCount; i <= height/rowHeight; ++i) {
                 g.setColor(colorForRow(i));
@@ -400,15 +307,6 @@ public class TedTable extends JTable
         }
     }
     
-    private Color getFontColor(Color color, int row) 
-    {
-    	if (row == this.getSelectedRow()) {
-    		return Color.WHITE;
-    	} else {
-    		return color;
-    	}
-	}
-
 	/**
      * Changes the behavior of a table in a JScrollPane to be more like
      * the behavior of JList, which expands to fill the available space.
@@ -423,23 +321,5 @@ public class TedTable extends JTable
         return false;
     }
     
-    public ImageIcon getIconForShow(TedSerie show)
-    {
-    	if (show.getActivity() == TedSerie.IS_PARSING)
-		{
-			return showActive;
-		}
-		if (show.getStatus() == TedSerie.STATUS_PAUSE)
-		{
-			return showPaused;
-		}
-		else if (show.getStatus() == TedSerie.STATUS_CHECK)
-		{
-			return showPlay;
-		}
-		else// if (show.getStatus() == TedSerie.STATUS_HOLD)
-		{
-			return showStopped;
-		}
-    }
+    
 }
