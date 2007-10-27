@@ -30,6 +30,8 @@ public class TedConfig //implements Serializable
 	public static final int ALWAYS = 2;
 	public static final int DOWNLOADMINIMUMSEEDERS = 0;
 	public static final int DOWNLOADMOSTSEEDERS = 1;
+	
+	// create some default settings
 	private static int RefreshTime = 600;
 	private static String Directory = System.getProperty("user.dir");
 	private static boolean ShowErrors = false;
@@ -65,37 +67,6 @@ public class TedConfig //implements Serializable
 	 */
 	public TedConfig()
 	{
-		/*// set default config values
-		RefreshTime = 600;
-		Directory = "";
-		ShowErrors = true;
-		ShowHurray = true;
-		width = 550;
-		height = 400;
-		downloadNewSeason = true;
-		x = 0;
-		y = 0;
-		RSSVersion = 0;
-		TimeOutInSecs = 10;
-		autoUpdateFeedList = ASK;
-		autoAdjustFeeds = ASK;
-		SeederSetting = 0;
-		tedLocale = Locale.getDefault();
-		addSysTray = TedSystemInfo.osSupportsTray();
-		
-		if (TedSystemInfo.osIsWindows() || TedSystemInfo.osIsMac())
-		{
-			OpenTorrent = true;
-		}
-		else
-		{
-			OpenTorrent = false;
-		}
-		StartMinimized = false;
-		CheckVersion = true;
-		parseAtStart = true;
-		getCompressed = true;
-		filterExtensions = "zip, rar, r01";*/
 	}
 		
 	/****************************************************
@@ -317,39 +288,66 @@ public class TedConfig //implements Serializable
 		RSSVersion = version;
 	}
 
+	/**
+	 * @return If the feeds should be auto-adjusted
+	 */
 	public static boolean isAutoAdjustFeeds() 
 	{
 		return (autoAdjustFeeds == ALWAYS);
 	}
+	/**
+	 * @return If the user wants to be asked before autoadjustement of the feeds
+	 */
 	public static boolean askAutoAdjustFeeds() 
 	{
 		return (autoAdjustFeeds == ASK);
 	}
 
+	/**
+	 * Set the auto-adjustment of feeds
+	 * @param adjust
+	 */
 	public static void setAutoAdjustFeeds(int adjust) 
 	{
 		autoAdjustFeeds = adjust;
 	}
 
+	/**
+	 * @return If the feed list should be auto-updated
+	 */
 	public static boolean isAutoUpdateFeedList() 
 	{
 		return (autoUpdateFeedList == ALWAYS);
 	}
+	
+	/**
+	 * @return If the user wants to be asked before the feedslist is updated
+	 */
 	public static boolean askAutoUpdateFeedList() 
 	{
 		return (autoUpdateFeedList == ASK);
 	}
 
+	/**
+	 * Set the auto-update of the feedlist
+	 * @param update
+	 */
 	public static void setAutoUpdateFeedList(int update) 
 	{
 		autoUpdateFeedList = update;
 	}
 	
+	/**
+	 * @return Auto-update of the feedlist
+	 */
 	public static int getAutoUpdateFeedList()
 	{
 		return autoUpdateFeedList;
 	}
 	
+	/**
+	 * @return If the feeds should be auto-adjusted
+	 */
 	public static int getAutoAdjustFeeds()
 	{
 		return autoAdjustFeeds;
@@ -449,59 +447,100 @@ public class TedConfig //implements Serializable
 		return addSysTray;
 	}
 	
+	/**
+	 * Set the add systray setting
+	 * @param b
+	 */
 	public static void setAddSysTray(boolean b)
 	{
 		addSysTray = b;
 	}
 
+	/**
+	 * @return The download torrents with compressed files setting
+	 */
 	public static boolean getDoNotDownloadCompressed() 
 	{
 		return getCompressed;
 	}
 	
+	/**
+	 * Set the download torrents with compressed files settings
+	 * @param b
+	 */
 	public static void setDoNotDownloadCompressed(boolean b)
 	{
 		getCompressed = b;
 	}
 
+	/**
+	 * Set the extensions used in the filtering of torrents with compressed files
+	 * @param text
+	 */
 	public static void setFilterExtensions(String text) 
 	{
 		filterExtensions = text;
 	}
 	
+	/**
+	 * Get the extensions set by the user to filter torrents with compressed files
+	 * @return
+	 */
 	public static String getFilterExtensions()
 	{
 		return filterExtensions;
 	}
 	
 
+	/**
+	 * Get the number of times that ted has searched for new episodes after the last update check
+	 * @return
+	 */
 	public static int getTimesParsedSinceLastCheck() 
 	{
 		return timesParsedSinceLastCheck;
 	}
 
+	/**
+	 * Set the number of times that ted searched for new shows after the last update check
+	 * @param timesParsed
+	 */
 	public static void setTimesParsedSinceLastCheck(int timesParsed) 
 	{
 		timesParsedSinceLastCheck = timesParsed;
 	}
 
+	/**
+	 * Set the log setting
+	 * @param allowLog
+	 */
 	public static void setAllowLogging(boolean allowLog) 
 	{
 		allowLogging = allowLog;
 		TedLog.setAllowLogging(allowLog);
 	}
 
+	/**
+	 * Set the log to file setting
+	 * @param logToFile2
+	 */
 	public static void setLogToFile(boolean logToFile2) 
 	{
 		logToFile = logToFile2;
 		TedLog.setWriteToFile(logToFile2);
 	}
 
+	/**
+	 * @return If ted should keep a log
+	 */
 	public static boolean isAllowLogging() 
 	{
 		return allowLogging;
 	}
 	
+	/**
+	 * @return If ted should write the log to a file
+	 */
 	public static boolean isLogToFile() 
 	{
 		return logToFile;

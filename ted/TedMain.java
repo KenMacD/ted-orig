@@ -8,16 +8,22 @@ public class TedMain {
 	public static void main(String[] args) 
 	{
 		// set menu to use on mac
-		try
+		if (TedSystemInfo.osIsMac())
 		{
-			System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "ted" );
-			System.setProperty( "com.apple.macos.useScreenMenuBar", "true" );
-		    System.setProperty( "apple.laf.useScreenMenuBar", "true" ); // for older versions of Java		
-		} 
-		catch ( SecurityException e ) 
-		{
-		    /* probably not running on mac, do nothing */
-		} 
+			try
+			{
+				System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "ted" );
+				System.setProperty( "com.apple.macos.useScreenMenuBar", "true" );
+			    System.setProperty( "apple.laf.useScreenMenuBar", "true" ); // for older versions of Java
+			    System.setProperty( "com.apple.mrj.application.growbox.intrudes ", "true");
+			    System.setProperty( "com.apple.mrj.application.live-resize", "false");
+			    
+			} 
+			catch ( SecurityException e ) 
+			{
+			    /* probably not running on mac, do nothing */
+			} 
+		}
 		boolean userWantsTray = true;
 		boolean saveLocal = false;
 		

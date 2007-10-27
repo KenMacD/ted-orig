@@ -59,22 +59,6 @@ public class TedFeedsTableModel extends AbstractTableModel
 					return Lang.getString("TedEpisodeDialog.FeedsTable.UserDefined");
 				else
 					return Lang.getString("TedEpisodeDialog.FeedsTable.PreDefined");
-				
-				/*if (sRow.getDate() == 0)
-				{
-					return "Never";
-				}
-				else
-				{
-					Date d = new Date(sRow.getDate());
-					DateFormat formatter = 
-					    DateFormat.getDateTimeInstance(DateFormat.SHORT,
-					                                   DateFormat.SHORT,
-					                                   Locale.getDefault());
-					return formatter.format(d);
-					
-					
-				}*/
 			}
 		}
 		return null;

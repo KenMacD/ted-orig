@@ -142,6 +142,9 @@ public class TedDailySerie extends TedSerie
 		this.maxDownloads = maxDownloads;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ted.TedSerie#getSearchForString()
+	 */
 	public String getSearchForString() 
 	{
 		DailyDate dd = new DailyDate();

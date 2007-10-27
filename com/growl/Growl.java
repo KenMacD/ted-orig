@@ -108,7 +108,7 @@ public class Growl {
 		
 			String notificationsMessage = "set the allNotificationsList to " + arrayToGrowlString (this.allNotes);
 			String defNotificationsMessage = "set the enabledNotificationsList to " + arrayToGrowlString (this.defNotes);
-			String registerMessage = "register as application \""+ this.appName + "\" all notifications allNotificationsList default notifications enabledNotificationsList icon of application \"ted.app\"";
+			String registerMessage = "register as application \""+ this.appName + "\" all notifications allNotificationsList default notifications enabledNotificationsList icon of application \"ted\"";
 			String [] script = {notificationsMessage, defNotificationsMessage, registerMessage};
 			
 			this.contactGrowlThroughAppleScript(script);

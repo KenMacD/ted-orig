@@ -1,7 +1,5 @@
 package ted;
 
-// parts of this code are copyright Azureus
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URI;
@@ -20,25 +18,43 @@ import java.util.Vector;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * TED: Torrent Episode Downloader (2005 - 2007)
+ * 
+ * This is the language class that provides localization for strings used in ted.
+ * parts of this code are copyright by Azureus
+ * 
+ * License:
+ * This file is part of ted. ted and all of it's parts are licensed
+ * under GNU General Public License (GPL) version 2.0
+ * 
+ * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
+ * 
+ * @author Roel
+ */
 public class Lang
 {
-	private static final String BUNDLE_NAME = "ted.translations.tedLang"; //$NON-NLS-1$
-
+	/****************************************************
+	 * GLOBAL VARIABLES
+	 ****************************************************/
+	private static final String BUNDLE_NAME = "ted.translations.tedLang"; //$NON-NLS-1
 	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(
 			BUNDLE_NAME, new Locale("en", "US"));
-
 	public static final Locale LOCALE_ENGLISH = new Locale("en", "US");
-
 	public static final Locale LOCALE_DEFAULT = new Locale("", ""); // == english
-
 	private static Locale LOCALE_CURRENT = LOCALE_DEFAULT;
-
 	private static int bundle_fail_count = 0;
 
+	/****************************************************
+	 * CONSTRUCTORS
+	 ****************************************************/
 	private Lang()
 	{
 	}
 
+	/****************************************************
+	 * PUBLIC METHODS
+	 ****************************************************/
 	/**
 	 * Get string from localization file
 	 * @param key String to find
@@ -46,7 +62,6 @@ public class Lang
 	 */
 	public static String getString(String key)
 	{
-		// TODO Auto-generated method stub
 		try
 		{
 			return RESOURCE_BUNDLE.getString(key);
@@ -59,7 +74,7 @@ public class Lang
 
 	/**
 	 * Set language of ted to specified locale
-	 * @param locale
+	 * @param newLocale
 	 */
 	public static void setLanguage(Locale newLocale)
 	{
@@ -158,59 +173,13 @@ public class Lang
 			Locale.setDefault(newLocale);
 			LOCALE_CURRENT = newLocale;
 			setResourceBundle(new IntegratedResourceBundle(newResourceBundle));
-			//return true;
-		} //else
-		//return false;
-	}
-
-	//return false;
-	//}
-
-	private static void setResourceBundle(ResourceBundle bundle)
-	{
-		RESOURCE_BUNDLE = bundle;
-	}
-
-	static ResourceBundle getResourceBundle(String name, Locale loc, ClassLoader cl)
-	{
-		try
-		{
-			return (ResourceBundle.getBundle(name, loc, cl));
-
-		} 
-		catch (Throwable e)
-		{
-
-			bundle_fail_count++;
-
-			if (bundle_fail_count == 1)
-			{
-				e.printStackTrace();
-				TedLog.error("Failed to load resource bundle. One possible cause is "
-								+ "that you have installed ted into a directory "
-								+ "with a '!' in it. If so, please remove the '!'.");
-			}
-
-			return (new ResourceBundle()
-			{
-				public Locale getLocale()
-				{
-					return (LOCALE_DEFAULT);
-				}
-
-				protected Object handleGetObject(String key)
-				{
-					return (null);
-				}
-
-				public Enumeration getKeys()
-				{
-					return (new Vector().elements());
-				}
-			});
 		}
 	}
-
+	
+	/**
+	 * Get a list of available locales on the system
+	 * @return
+	 */
 	public static Locale[] getAvailableLocales()
 	{
 		String bundleFolder = BUNDLE_NAME.replace('.', '/');
@@ -364,6 +333,11 @@ public class Lang
 		return foundLocales;
 	}
 
+	/**
+	 * Load a jarfile from an URL
+	 * @param url_str
+	 * @return
+	 */
 	public static File getJarFileFromURL(String url_str)
 	{
 		if (url_str.startsWith("jar:file:"))
@@ -410,14 +384,78 @@ public class Lang
 		return (null);
 	}
 	
+	/**
+	 * Get a list with strings for yes no
+	 * @return
+	 */
 	public static Object[] getYesNoLocale()
 	{
 		Object[] options = { Lang.getString("TedGeneral.Yes"), Lang.getString("TedGeneral.No")};
 		return options;
 	}
+	/**
+	 * Get a list with strings for yes no cancel
+	 * @return
+	 */
 	public static Object[] getYesNoCancelLocale()
 	{
 		Object[] options = { Lang.getString("TedGeneral.Yes"), Lang.getString("TedGeneral.No"), Lang.getString("TedEpisodeDialog.ButtonCancel")};
 		return options;
+	}
+
+	
+	/****************************************************
+	 * PRIVATE METHODS
+	 ****************************************************/
+	private static void setResourceBundle(ResourceBundle bundle)
+	{
+		RESOURCE_BUNDLE = bundle;
+	}
+
+	/**
+	 * Load a resourcebundle
+	 * @param name
+	 * @param loc
+	 * @param cl
+	 * @return
+	 */
+	static ResourceBundle getResourceBundle(String name, Locale loc, ClassLoader cl)
+	{
+		try
+		{
+			return (ResourceBundle.getBundle(name, loc, cl));
+
+		} 
+		catch (Throwable e)
+		{
+
+			bundle_fail_count++;
+
+			if (bundle_fail_count == 1)
+			{
+				e.printStackTrace();
+				TedLog.error("Failed to load resource bundle. One possible cause is "
+								+ "that you have installed ted into a directory "
+								+ "with a '!' in it. If so, please remove the '!'.");
+			}
+
+			return (new ResourceBundle()
+			{
+				public Locale getLocale()
+				{
+					return (LOCALE_DEFAULT);
+				}
+
+				protected Object handleGetObject(String key)
+				{
+					return (null);
+				}
+
+				public Enumeration getKeys()
+				{
+					return (new Vector().elements());
+				}
+			});
+		}
 	}
 }

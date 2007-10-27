@@ -288,6 +288,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			try
 			{
 				tedTray = new TedTrayIcon(this, tedIdleIcon);
+				
 			}
 			catch (Exception e)
 			{
@@ -764,7 +765,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			tParseHandler.stopParsing();
 			this.TedToolBar.setParseButtonStatus(false);
 			this.TedToolBar.setParseButtonText(Lang.getString("TedMainDialog.ButtonCheckShowsStopping"));
-			// TODO: breakin in current loop
 		}
 		else if(action.equals("About ted")) //$NON-NLS-1$
 		{

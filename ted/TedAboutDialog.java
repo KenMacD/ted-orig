@@ -14,32 +14,19 @@ import javax.swing.JPanel;
 
 
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-/**
  * TED: Torrent Episode Downloader (2005 - 2007)
  * 
  * This is the about dialog of ted, it shows some trivial information
- * 
- * @author Roel
- * @author Joost
  * 
  * ted License:
  * This file is part of ted. ted and all of it's parts are licensed
  * under GNU General Public License (GPL) version 2.0
  * 
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
- *
- */
+ * 
+ * @author Roel
+ * @author Joost
+  */
 
 public class TedAboutDialog extends javax.swing.JDialog
 {

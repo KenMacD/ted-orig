@@ -99,10 +99,12 @@ public class TedParser extends Thread
 	
 	public void run()
 	{
+		this.currentSerie.setActivity(TedSerie.IS_PARSING);
 		// load xml feeds into memory
 		this.loadFeeds(currentSerie, tMainDialog);
 		// parse the feeds for new episodes
 		this.parseFeeds(currentSerie, tMainDialog);
+		this.currentSerie.setActivity(TedSerie.IS_IDLE);
 	}
 	
 

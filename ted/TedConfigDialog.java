@@ -237,6 +237,10 @@ public class TedConfigDialog extends javax.swing.JDialog
 		}
 	}
 
+	/**
+	 * Show a panel. Used as callback method for the toolbar buttons
+	 * @param command The name of the panel that should be showed
+	 */
 	public void showPanel(String command)
 	{
 		CardLayout cl = (CardLayout)(this.jConfigTabs.getLayout());

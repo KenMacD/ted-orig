@@ -53,7 +53,6 @@ public class TedCounter extends Thread
 			{
 				// check if a minute passed
 				main.updateCounter((int)Math.floor(count/60));
-				//count --;
 			}
 			try
 			{

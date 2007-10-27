@@ -43,7 +43,7 @@ public class EpisodeChooserPanel extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = 8763021531797512857L;
-	private JTable episodesTable;
+	private EpisodesTable episodesTable;
 	private JScrollPane episodesScrollPane;
 	private EpisodesTableModel episodesTableModel = new EpisodesTableModel();
 
@@ -103,7 +103,7 @@ public class EpisodeChooserPanel extends JPanel
 	{
 		if (episodesTable == null) {
 			
-			episodesTable = new JTable();
+			episodesTable = new EpisodesTable();
 			episodesTable.setModel(episodesTableModel);
 			
 			episodesTable.setAutoCreateColumnsFromModel(true);

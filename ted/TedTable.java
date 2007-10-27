@@ -1,15 +1,20 @@
 package ted;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -39,6 +44,11 @@ public class TedTable extends JTable
 	private TedTableModel serieTableModel;
 	private TedMainDialog tedMain;
 	private TedTablePopupMenu ttPopupMenu;
+	private ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
+	private ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
+	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
+	private ImageIcon showActive = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
+	private ImageIcon activityIm = new ImageIcon(getClass().getClassLoader().getResource("icons/activity.gif"));
 
 	/**
 	 * Create a table that can hold the series of ted
@@ -57,21 +67,22 @@ public class TedTable extends JTable
 		//TableRowSorter sorter = new TableRowSorter(this.getModel());
 		//this.setRowSorter(sorter);
 		
-		this.setAutoCreateColumnsFromModel(true);
+		//this.setAutoCreateColumnsFromModel(true);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		this.setEditingRow(0);
 		
 		//	disable horizontal lines in table
-		this.setShowHorizontalLines(false);
-		this.setRowHeight(this.getRowHeight()+5);
+		setShowHorizontalLines(false);
+        setShowVerticalLines(false);
+		this.setRowHeight(50);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		TedTableRenderer mtr = new TedTableRenderer();
+		/*TedTableRenderer mtr = new TedTableRenderer();
 		TedTableProgressbarRenderer ttpr = new TedTableProgressbarRenderer(0, 100);
 		
 		this.setDefaultRenderer(JProgressBar.class, ttpr);
 		this.setDefaultRenderer(Object.class, mtr);
-		this.setDefaultRenderer(Integer.class, mtr);
+		this.setDefaultRenderer(Integer.class, mtr);*/
 		this.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
 				serieTableKeyReleased(evt);
@@ -83,7 +94,7 @@ public class TedTable extends JTable
 			}
 		});
 		
-		this.setColumnWidths();
+		//this.setColumnWidths();
 				
 	}
 	
@@ -133,25 +144,27 @@ public class TedTable extends JTable
 	private void serieTableMouseClicked(MouseEvent evt) 
 	{
 		// the user clicked on a serie in the table
-		int viewRow = this.getSelectedRow();
-		int row = viewRow;
+		int row = this.getSelectedRow();
 		
-		// else show the EpisodeDialog of the selected show
-		if (evt.getClickCount() == 2)
-		{	
-			TedSerie selectedserie = serieTableModel.getSerieAt(row);
-			new EditShowDialog(tedMain, selectedserie, false);		
-		}
-		// or did the user click right?
-		else if (SwingUtilities.isRightMouseButton(evt))
+		if (row >= 0)
 		{
-			// show context menu
-			int selectedrow = this.rowAtPoint(evt.getPoint());
-			ListSelectionModel selectionModel = this.getSelectionModel();
-			selectionModel.setSelectionInterval(selectedrow, selectedrow);
-			ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+			// else show the EpisodeDialog of the selected show
+			if (evt.getClickCount() == 2)
+			{	
+				TedSerie selectedserie = serieTableModel.getSerieAt(row);
+				new EditShowDialog(tedMain, selectedserie, false);		
+			}
+			// or did the user click right?
+			else if (SwingUtilities.isRightMouseButton(evt))
+			{
+				// show context menu
+				int selectedrow = this.rowAtPoint(evt.getPoint());
+				ListSelectionModel selectionModel = this.getSelectionModel();
+				selectionModel.setSelectionInterval(selectedrow, selectedrow);
+				ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+			}
 		}
-		
+			
 		// if the user selected something, update status of buttons
 		tedMain.updateButtonsAndMenu();
 	}
@@ -282,13 +295,151 @@ public class TedTable extends JTable
 	public void updateText()
 	{
 		serieTableModel.updateText();
-		this.tableHeader.updateUI();
+		/*this.tableHeader.updateUI();
 		TableColumnModel tcm = this.getTableHeader().getColumnModel();
 		
 		for (int i = 0; i < serieTableModel.getColumnCount(); i++)
 		{
 			tcm.getColumn(i).setHeaderValue(serieTableModel.getColumnName(i));
-		}
+		}*/
 		
 	}
+	
+	 /**
+     * Returns the appropriate background color for the given row.
+     */
+    protected Color colorForRow(int row) {
+    	Color c = getBackground();
+    	if (this.getSelectedRow() == row)
+    	{
+    		return(new Color( 61, 128, 223));
+    	}
+    	if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
+    	{     return(new Color( c.getRed()-20,
+	                                  c.getGreen()-10,
+	                                  c.getBlue()));
+    	}
+    	else 
+    	{
+    		return c;
+    	}
+    }
+	
+	/**
+     * Paints empty rows too, after letting the UI delegate do
+     * its painting.
+     */
+    public void paint(Graphics g) {
+        //super.paint(g);
+        paintRows(g);
+    }
+
+    /**
+     * Paints the backgrounds of the implied empty rows when the
+     * table model is insufficient to fill all the visible area
+     * available to us. We don't involve cell renderers, because
+     * we have no data.
+     */
+    protected void paintRows(Graphics g) {
+        final int rowCount = getRowCount();
+        final Rectangle clip = g.getClipBounds();
+        final int height = clip.y + clip.height;
+        TedSerie currentRow;
+        for (int i = 0; i < rowCount; i++)
+        {
+        	currentRow = this.getSerieAt(i);
+        	// background
+        	g.setColor(colorForRow(i));
+            g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
+            // icon
+            g.drawImage(
+            		this.getIconForShow(currentRow).getImage(), 
+            		clip.x+10, 
+            		i * rowHeight + 20, 
+            		16, 
+            		16, 
+            		editorComp);
+            // name
+            g.setColor(this.getFontColor(Color.BLACK, i));
+            g.setFont(new java.awt.Font("Dialog",0,15));
+            g.drawString(currentRow.getName(), clip.x+40, i * rowHeight + 18);
+            // search for
+            g.setFont(new java.awt.Font("Dialog",0,10));
+            g.setColor(this.getFontColor(Color.DARK_GRAY, i));
+            g.drawString(currentRow.getSearchForString(), clip.x+40, i * rowHeight + 32);
+            // progress
+            g.setColor(this.getFontColor(Color.GRAY, i));
+            g.drawString(currentRow.getStatusString(), clip.x+40, i * rowHeight + 45);
+            
+            // activity icon / button
+            /*g.drawImage(
+            		this.activityIm.getImage(), 
+            		clip.width-20, 
+            		i * rowHeight + 20, 
+            		16, 
+            		16, 
+            		editorComp);*/
+        }
+        if (rowCount * rowHeight < height) {
+            for (int i = rowCount; i <= height/rowHeight; ++i) {
+                g.setColor(colorForRow(i));
+                g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
+            }
+        }
+        
+        if (rowCount == 0)
+        {
+        	// display message that user has to add shows
+        	// yellow box
+        	g.setColor( new Color( 255,	255, 225));
+            g.fillRect(clip.x, 0, clip.width, 20);
+            // text
+            g.setColor(Color.BLACK);
+            g.setFont(new java.awt.Font("Dialog",0,10));
+            g.drawString("Please add a show to ted", clip.x+40, 14);
+        }
+    }
+    
+    private Color getFontColor(Color color, int row) 
+    {
+    	if (row == this.getSelectedRow()) {
+    		return Color.WHITE;
+    	} else {
+    		return color;
+    	}
+	}
+
+	/**
+     * Changes the behavior of a table in a JScrollPane to be more like
+     * the behavior of JList, which expands to fill the available space.
+     * JTable normally restricts its size to just what's needed by its
+     * model.
+     */
+    public boolean getScrollableTracksViewportHeight() {
+        if (getParent() instanceof JViewport) {
+            JViewport parent = (JViewport) getParent();
+            return (parent.getHeight() > getPreferredSize().height);
+        }
+        return false;
+    }
+    
+    public ImageIcon getIconForShow(TedSerie show)
+    {
+    	if (show.getActivity() == TedSerie.IS_PARSING)
+		{
+			return showActive;
+		}
+		if (show.getStatus() == TedSerie.STATUS_PAUSE)
+		{
+			return showPaused;
+		}
+		else if (show.getStatus() == TedSerie.STATUS_CHECK)
+		{
+			return showPlay;
+		}
+		else// if (show.getStatus() == TedSerie.STATUS_HOLD)
+		{
+			return showStopped;
+		}
+    }
 }

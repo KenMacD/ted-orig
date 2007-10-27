@@ -6,6 +6,12 @@ import javax.swing.JToolBar;
  * TED: Torrent Episode Downloader (2005 - 2007)
  * 
  * This is the toolbar holding the buttons for the mainwindow of ted
+ * It contains 4 buttons
+ * 	Add show
+ * 	Edit show
+ * 	Delete show
+ * 	Parse
+ * and provides functionality to enable/disable the buttons.
  * 
  * @author Roel
  * @author Joost
@@ -31,19 +37,30 @@ public class TedMainToolBar extends JToolBar
 	private String stopCheckingIcon = "icons/TedMainDialog.stopsearching.png"; //$NON-NLS-1$
 	private String startCheckingIcon = "icons/TedMainDialog.startsearching.png"; //$NON-NLS-1$
 	
+	/**
+	 * DO NOT USE THIS CONSTRUCTOR!
+	 * Only used for Jigloo UI editor
+	 */
 	public TedMainToolBar()
 	{
 		this.initButtons(null);
 	}
 	
+	/**
+	 * Create a new ted toolbar showing the buttons for the main dialog
+	 * @param tMain TedMainDialog providing the actions for the toolbarbuttons
+	 */
 	public TedMainToolBar(TedMainDialog tMain)
 	{
 		// not floatable
-		this.setFloatable(false);
-		
+		this.setFloatable(false);		
 		this.initButtons(tMain);	
 	}
 	
+	/**
+	 * Init the buttons for the toolbar
+	 * @param tMain TedMainDialog providing the actions for the toolbarbuttons
+	 */
 	private void initButtons(TedMainDialog tMain)
 	{
 		btn_AddShow = new TedMainToolBarButton("icons/TedMainDialog.addshow32.png", 
@@ -72,23 +89,40 @@ public class TedMainToolBar extends JToolBar
 		this.add(btn_Parse);
 	}
 
+	/**
+	 * Set the status of the edit button
+	 * @param statusEdit
+	 */
 	public void setEditButtonStatus(boolean statusEdit)
 	{
 		btn_Edit.setEnabled(statusEdit);
 		
 	}
 
+	/**
+	 * Set the status of the delete button
+	 * @param statusDelete
+	 */
 	public void setDeleteButtonStatus(boolean statusDelete)
 	{
 		btn_Delete.setEnabled(statusDelete);
 		
 	}
 	
+	/**
+	 * Set the status of the parse button
+	 * @param b
+	 */
 	public void setParseButtonStatus(boolean b)
 	{
 		btn_Parse.setEnabled(b);		
 	}
 
+	/**
+	 * Set the status of the whole toolbar to "parsing"
+	 * Meaning the text and icon of the parse button will be updated and
+	 * the delete button is disabled
+	 */
 	public void setParsing()
 	{
 		this.btn_Parse.setText(Lang.getString("TedMainDialog.ButtonStopChecking")); //$NON-NLS-1$
@@ -98,6 +132,11 @@ public class TedMainToolBar extends JToolBar
 		this.setDeleteButtonStatus(false);
 	}
 
+	/**
+	 * Set the status of the whole toolbar to "idle"
+	 * Meaning the text and icon of the parse button will be updated and
+	 * the delete button is enabled
+	 */
 	public void setIdle()
 	{
 		this.setDeleteButtonStatus(true);	
@@ -109,6 +148,9 @@ public class TedMainToolBar extends JToolBar
 		
 	}
 
+	/**
+	 * Method to refresh the texts on the buttons
+	 */
 	public void updateText()
 	{
 		btn_Parse.updateText();
@@ -118,6 +160,10 @@ public class TedMainToolBar extends JToolBar
 		
 	}
 
+	/**
+	 * Set the text on the parsebutton
+	 * @param string
+	 */
 	public void setParseButtonText(String string)
 	{
 		btn_Parse.setText(string);
