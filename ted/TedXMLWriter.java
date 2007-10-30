@@ -184,7 +184,7 @@ public class TedXMLWriter
 		if(k<10)
 			dateString += "-0" + k;
 		else
-			dateString += "00";
+			dateString += "-" + k;
 		
 		k = c.get(Calendar.YEAR);
 		

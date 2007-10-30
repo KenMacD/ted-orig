@@ -399,7 +399,7 @@ public class Lang
 	 */
 	public static Object[] getYesNoCancelLocale()
 	{
-		Object[] options = { Lang.getString("TedGeneral.Yes"), Lang.getString("TedGeneral.No"), Lang.getString("TedEpisodeDialog.ButtonCancel")};
+		Object[] options = { Lang.getString("TedGeneral.Yes"), Lang.getString("TedGeneral.No"), Lang.getString("TedGeneral.ButtonCancel")};
 		return options;
 	}
 
