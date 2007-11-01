@@ -23,15 +23,13 @@
 	 * @param url URL as listed in the RSS feed
 	*/
 
-$url = $_GET["url"];
-$torrentUrl	= $url;
+$torrentUrl = $_GET["url"];
 
 if(		strpos($url, "bt-chat.com") !== false ||
 		strpos($url, "thepiratebay.org") !== false || 
 		strpos($url, "mrtwig.net") !== false ||
 		strpos($url, "torrentlocomotive.com") !== false ||
 		strpos($url, "sdnett.org") !== false ||
-		strpos($url, "torrentbytes.net") !== false ||
 		strpos($url, "torrentleech.org") !== false ||
 		strpos($url, "digitaldistractions.org") !== false )
 {
@@ -97,6 +95,7 @@ else if(strpos($url, "isohunt.com") !== false)
 	// url in rss = http://isohunt.com/torrent_details/14578531/lost (where lost is the query used to make rss feed)
 	// has to be: http://isohunt.com/download/14578531/lost
 	$torrentUrl = str_replace("torrent_details", "download", $torrentUrl);
+	$torrentUrl = str_replace(" ", "+", $torrentUrl);
 	
 	// or url in rss = http://isohunt.com/release/14578531/lost (where lost is the query used to make rss feed)
 	// points to release page, not useful
@@ -137,6 +136,15 @@ else if (strpos($url, "torrentportal.com") !== false)
 	// url in rss: http://www.torrentportal.com/details/955139/Law.and.Order.S17E16.HDTV.XviD-NoTV.torrent
 	// has to be: http://www.torrentportal.com/download/955139/Law.and.Order.S17E16.HDTV.XviD-NoTV.torrent
 	$torrentUrl = str_replace("details", "download", $torrentUrl);
+}
+else if (strpos($url, "torrentbytes.net") !== false)
+{
+	// url in rss: http://www.torrentbytes.net/download.php?id=3753&name=Prison.Break.S03E04.HDTV.XViD-Caph.torrent
+	// has to be: http://www.torrentbytes.net/download.php?id=3753&name=Prison.Break.S03E04.HDTV.XViD-Caph.torrent
+	// get name parameter from url
+	$name = $_GET["name"];
+	// paste name behind url
+	$torrentUrl = "$torrentUrl&name=$name";
 }
 else
 {
