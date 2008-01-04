@@ -51,39 +51,7 @@ public class TedTableModel extends AbstractTableModel
 	public Object getValueAt(int row, int col) 
 	{
 		// returns the values that have to be displayed in the columns of the table
-		return tableData.get(row);
-		
-		/*switch (col)
-		{
-			case 1:
-				return sRow.getName();
-			case 2:
-				return sRow.getSearchForString();
-			case 4:
-				return sRow.getStatusString();
-			case 3:
-				return sRow.getProgress()+""; //$NON-NLS-1$
-			case 0:
-				if (sRow.getActivity() == TedSerie.IS_PARSING)
-				{
-					return showActive;
-				}
-				if (sRow.getStatus() == TedSerie.STATUS_PAUSE)
-				{
-					return showPaused;
-				}
-				else if (sRow.getStatus() == TedSerie.STATUS_CHECK)
-				{
-					return showPlay;
-				}
-				else if (sRow.getStatus() == TedSerie.STATUS_HOLD)
-				{
-					return showStopped;
-				}
-		}*/
-		//return sRow;
-		//return null;
-		
+		return tableData.get(row);	
 	}
 	
 	/**
@@ -189,8 +157,4 @@ public class TedTableModel extends AbstractTableModel
 	            Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		
 	}
-
-	
-	
-
 }

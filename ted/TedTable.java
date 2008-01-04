@@ -64,11 +64,14 @@ public class TedTable extends JTable
 		
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		this.setEditingRow(0);
+		this.setDragEnabled(true);
 		
 		//	disable horizontal lines in table
-		setShowHorizontalLines(false);
+		setShowHorizontalLines(true);
+		this.setGridColor(Color.LIGHT_GRAY);
         setShowVerticalLines(false);
-		this.setRowHeight(50);
+        
+		this.setRowHeight(55);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		TedTableRowRenderer ttrr = new TedTableRowRenderer();
@@ -291,6 +294,8 @@ public class TedTable extends JTable
             for (int i = rowCount; i <= height/rowHeight; ++i) {
                 g.setColor(colorForRow(i));
                 g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
+                g.setColor(Color.lightGray);
+                g.drawLine(clip.x, i * rowHeight + rowHeight-1, clip.width, i * rowHeight + rowHeight -1);
             }
         }
         

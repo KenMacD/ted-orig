@@ -37,7 +37,7 @@ public class TableRenderer extends DefaultTableCellRenderer
 	 {
 	   if( !isSelected ) 
 	   {
-		   		   // get odd/even rows a different color
+		  // get odd/even rows a different color
 	      Color c = table.getBackground();
 	     if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
 	         setBackground(new Color( c.getRed()-20,
