@@ -408,7 +408,7 @@ public class TedIO
 	 * @param d Running version of ted
 	 * @return Current version of ted
 	 */
-	public double checkNewTed(double d, int timeOut) 
+	public double checkNewTed(double d) 
 	{
 		try
 		{
@@ -418,7 +418,7 @@ public class TedIO
 		    StringTokenizer tokenizer;
 		    String token;
 
-		    BufferedReader data = this.makeBufferedReader(url, timeOut);
+		    BufferedReader data = this.makeBufferedReader(url, TedConfig.getTimeOutInSecs());
 		      	
 		    while ((line = data.readLine()) != null) 
 			{
@@ -438,31 +438,52 @@ public class TedIO
 		}
 		return d;
 	}
+	
+	/**
+	 * @return The current XML version as published on ted's website
+	 */
+	private int getXMLVersion()
+	{
+		try
+		{
+			TedLog.debug("Checking for new version of show definitions XML"); //$NON-NLS-1$
+			URL url = new URL(versionUrl); //$NON-NLS-1$
+		    String line;
+		    StringTokenizer tokenizer;
+		    String token;
+
+		    BufferedReader data = this.makeBufferedReader(url, TedConfig.getTimeOutInSecs());
+		      	
+		    while ((line = data.readLine()) != null) 
+			{
+		    	tokenizer = new StringTokenizer(line, "="); //$NON-NLS-1$
+		    	token = tokenizer.nextToken();
+		    	if (token.equals("show_xml_version")) //$NON-NLS-1$
+				{
+		    		return Integer.parseInt(tokenizer.nextToken());
+				}
+			}
+		    
+		    data.close();
+		}
+		catch (Exception e)
+		{
+			TedLog.error(e, "Error checking the version of show xml"); //$NON-NLS-1$
+		}
+		return -1;
+	}
 
 	/**
-	 * Check whether there is a new version of RSSURLS.txt
+	 * Check whether there is a new version of shows.xml
 	 * Downloads it and updates shows
 	 * @param main
-	 * @param showresult 
+	 * @param showresult Whether the user wants to see the result of the check
 	 */
 	public void checkNewXMLFile(TedMainDialog main, boolean showresult, TedTable mainTable)
-	{	
+	{		
 		// check the website if there is a new version available
 		int version = TedConfig.getRSSVersion();
-		int onlineversion = 0;
-		
-		TedLog.debug("Checking for new version of show definitions XML"); //$NON-NLS-1$
-		
-		TedXMLParser parser = new TedXMLParser();
-		Element el = parser.readXMLFromURL(this.XMLurl);
-		if (el != null)
-		{
-			onlineversion = parser.getVersion(el);
-		}
-		else
-		{
-			onlineversion = -1;
-		}
+		int onlineversion = this.getXMLVersion();
 		
 		// if there is a new version
 		if(onlineversion > version)
@@ -561,14 +582,22 @@ public class TedIO
 			TedXMLParser parser = new TedXMLParser();
 			Element el = parser.readXMLFromURL(location);
 			
+			
 			for(int i=0; i<rows; i++)
 			{		
 				TedSerie serie = mainTable.getSerieAt(i);
-			
+						
 				if(serie!=null)
 				{
 					TedSerie XMLserie = parser.getSerie(el, serie.getName());
 					serie.AutoFillInPresets(XMLserie);
+					
+					// add auto-generated search based feeds to the show
+					// do this after AutoFillInPresets, 'cause that will reset the feeds
+					// of the serie
+					Vector<TedPopupItem> items = new Vector<TedPopupItem>();
+					items = parser.getAutoFeedLocations(el);
+					serie.generateFeedLocations(items);
 				}
 			}
 			if(!AutoUpdate)
@@ -689,14 +718,11 @@ public class TedIO
 		{
 			// remove strange tokens from name string so torrent can be opened by client
     		TedLog.debug("Downloading best torrent. URL: " + url + " Name: " + name); //$NON-NLS-1$ //$NON-NLS-2$
-			String temp = name;
-    		StringTokenizer str = new StringTokenizer(temp, " ()"); //$NON-NLS-1$
-    		name = "" + str.nextToken(); //$NON-NLS-1$
-    		while(str.hasMoreTokens())
-    		{
-    			name += "." + str.nextToken(); //$NON-NLS-1$
-    		}
-	            
+    		// remove weird characters and spaces that can cause problems while
+			// opening the torrent
+			name = name.replaceAll("[/:*?|\"\\\\]", "");
+			name = name.replaceAll(" ()", ".");
+         
             //create output torrent file
             String loc = TedConfig.getDirectory() + File.separator  + name + ".torrent"; //$NON-NLS-1$
 			File outputFile = new File(loc); 

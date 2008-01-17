@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
 	<version>28</version>
-	<rsslocations>
-		<location>
-			<name>User defined</name>
-			<type>4</type>
-		</location>		
+	<rsslocations>		
 		<location>
 			<name>Torrentspy</name>
 			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=#NAME#</feed>
@@ -22,13 +18,19 @@
 			<name>tvRSS</name>
 			<feed>http://tvrss.net/search/index.php?show_name=#NAME#&amp;mode=rss</feed>
 			<website>http://tvrss.net/</website>
+			<type>5</type>
+		</location>
+		<location>
+			<name>isoHunt</name>
+			<feed>http://www.isohunt.com/js/rss/#NAME#?iht=3</feed>
+			<website>http://www.isohunt.com/</website>
 			<type>0</type>
 		</location>
 		<location>
 			<name>Mininova</name>
 			<feed>http://www.mininova.org/rss/#NAME#/8</feed>
 			<website>http://www.mininova.org</website>
-			<type>0</type>
+			<type>5</type>
 		</location>		
 		<location>
 			<name>XTVi</name>
@@ -357,9 +359,7 @@
 		</show>
 		<show>
 			<name>Brothers &amp; Sisters</name>
-			<feeds>
-				<feed>http://www.mininova.org/rss/Brothers%20and%20Sisters/8</feed>
-			</feeds>
+			<searchname>Brothers and Sisters</searchname>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>40</seeders>
@@ -715,14 +715,11 @@
 		</show>
 		<show>
 			<name>Family Guy</name>
-			<feeds>
-				<feed>http://www.mininova.org/rss.xml?sub=188</feed>
-				<feed>http://tvrss.net/search/index.php?distribution_group=combined&amp;show_name_exact=true&amp;mode=rss&amp;show_name=family%20guy</feed>
-			</feeds>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
 			<maximumsize>550</maximumsize>
 			<seeders>50</seeders>
+			<tv_com>348</tv_com>
 		</show>
 		<show>
 			<name>Feasting on Asphalt</name>
@@ -1045,6 +1042,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>35825</tv_com>
+		</show>
+		<show>
+			<name>The L Word</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>18662</tv_com>
 		</show>
 		<show>
 			<name>Las Vegas</name>
@@ -1477,17 +1482,6 @@
 			<tv_com>365</tv_com>
 		</show>
 		<show>
-			<name>The Sarah Connor Chronicles</name>
-			<feeds>
-				<feed>http://tvrss.net/search/index.php?show_name=The%20Sarah%20Connor%20Chronicles&amp;mode=rss</feed>
-				<feed>http://www.mininova.org/rss/The%20Sarah%20Connor%20Chronicles/8</feed>
-			</feeds>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>68708</tv_com>
-		</show>
-		<show>
 			<name>Saving Grace</name>
 			<feeds>
 				<feed>http://tvrss.net/search/index.php?show_name=Saving%20Grace&amp;mode=rss</feed>
@@ -1679,6 +1673,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>68721</tv_com>
+		</show>
+		<show>
+			<name>Terminator: The Sarah Connor Chronicles</name>
+			<searchname>Terminator The Sarah Connor Chronicles</searchname>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68708</tv_com>
 		</show>
 		<show>
 			<name>The Tonight Show with Jay Leno</name>

@@ -257,6 +257,10 @@ public class TedXMLParser
 						serie.setEpisodeSchedule(useSchedule, output);
 					}
 					
+					// check to see if the from break option has to be used
+					String searchName = getTextValue(show, "searchname");
+					serie.setSearchName(searchName);
+					
 					return serie;
 				}
 			}
@@ -404,9 +408,9 @@ public class TedXMLParser
 		return version;
 	}
 	
-	public Vector getPopupItems(Element nodelist)
+	public Vector<TedPopupItem> getPopupItems(Element nodelist)
 	{
-		Vector v = new Vector();
+		Vector<TedPopupItem> v = new Vector<TedPopupItem>();
 		TedPopupItem pi;
 		NodeList nl = nodelist.getElementsByTagName("rsslocations");
 		
@@ -425,6 +429,37 @@ public class TedXMLParser
 				
 				pi = new TedPopupItem(elName, location, website, type);
 				v.add(pi);
+			}
+		}
+		
+		return v;
+	}
+	
+	public Vector<TedPopupItem> getAutoFeedLocations(Element nodelist)
+	{
+		Vector<TedPopupItem> v = new Vector<TedPopupItem>();
+		TedPopupItem pi;
+		NodeList nl = nodelist.getElementsByTagName("rsslocations");
+		
+		if(nl!=null && nl.getLength()>0)
+		{
+			Element el1 = (Element)nl.item(0);
+			NodeList nl1 = el1.getElementsByTagName("location");
+			
+			for(int i=0; i<nl1.getLength(); i++)
+			{
+				Element e = (Element)nl1.item(i);
+				int type = getIntValue(e, "type");
+				if (type == TedPopupItem.IS_SEARCH_AND_AUTO)
+				{
+					String elName = getTextValue(e, "name");
+					String location = getTextValue(e, "feed");
+					String website = getTextValue(e, "website");
+					
+					
+					pi = new TedPopupItem(elName, location, website, type);
+					v.add(pi);
+				}
 			}
 		}
 		

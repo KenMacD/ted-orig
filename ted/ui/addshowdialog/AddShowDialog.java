@@ -32,6 +32,7 @@ import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedLog;
 import ted.TedMainDialog;
+import ted.TedPopupItem;
 import ted.TedSerie;
 import ted.TedXMLParser;
 import ted.datastructures.DailyDate;
@@ -217,6 +218,11 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			// create a new infoPane to (correctly) show the information
 			showInfoPane = null;
 			showInfoScrollPane.setViewportView(this.getShowInfoPane());
+			
+			// add auto-generated search based feeds to the show
+			Vector<TedPopupItem> items = new Vector<TedPopupItem>();
+			items = parser.getAutoFeedLocations(series);
+			selectedSerie.generateFeedLocations(items);
 			
 			// retrieve the show info and the episodes from the web
 			ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);

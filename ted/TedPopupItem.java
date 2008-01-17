@@ -1,5 +1,7 @@
 package ted;
 
+import javax.swing.JMenuItem;
+
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -25,7 +27,7 @@ package ted;
  * which action has to be done after selecting an item from the TedPopupMenu.
  *
  */
-public class TedPopupItem 
+public class TedPopupItem extends JMenuItem
 {	
 	private String name;
 	private String url;
@@ -37,6 +39,7 @@ public class TedPopupItem
 	public final static int IS_GENERAL_FEED = 2;
 	public final static int IS_HELP = 3;
 	public final static int IS_EMPTY = 4;
+	public final static int IS_SEARCH_AND_AUTO = 5;
 	
 	/**
 	 * @param name The displayed name of the menu item
@@ -45,10 +48,13 @@ public class TedPopupItem
 	 */
 	public TedPopupItem(String name, String feed, String website, int type)
 	{
-		this.name = name;
+		this.setName(name);
 		this.url = feed;
 		this.website = website;
 		this.type = type;
+	}
+
+	public TedPopupItem() {
 	}
 
 	public String getName() {
@@ -57,6 +63,8 @@ public class TedPopupItem
 
 	public void setName(String name) {
 		this.name = name;
+		this.setText(name);
+		this.setActionCommand(name);
 	}
 
 	public int getType() {

@@ -48,6 +48,13 @@ public class TedSerieFeed implements Serializable
 	 * GETTERS & SETTERS
 	 ****************************************************/
 
+	public TedSerieFeed(String url2, boolean b) 
+	{
+		this.setDate(0);
+		this.setUrl(url2);
+		this.setSelfMade(b);
+	}
+
 	/**
 	 * @return Returns the checkdate.
 	 */

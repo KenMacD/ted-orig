@@ -265,7 +265,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			}
 		);
 		
-		// Save the window settings on resize.
+		// Save the window settings after resize.
 		this.addComponentListener(new ComponentAdapter()
 			{
 				public void componentResized(ComponentEvent evt)
@@ -290,6 +290,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// set size and position of ted
 		this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
 		this.setLocation(TedConfig.getX(), TedConfig.getY());
+		this.setMinimumSize(new java.awt.Dimension(400, 300));
 		
 		// only if the os is supported by the trayicon program
 		// currently supports windows, linux and solaris		
@@ -330,16 +331,12 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		tCounter = new TedCounter(this);
 	
 		// reset all previous saved statusinformation of all shows
-		this.resetStatusOfAllShows();
+		this.resetStatusOfAllShows(true);
 		
 		// set buttons according to selected row	
 		this.updateButtonsAndMenu();
 		
-		if (TedConfig.isCheckVersion())
-		{
-			this.setStatusString(Lang.getString("TedMain.CheckingNewTed"));
-			this.isNewTed(false);
-		}
+		this.messengerCenter = new MessengerCenter(this);
 		
 		// if the shows.xml file does not exist download it
 		File f = new File(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
@@ -357,10 +354,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			tio.checkNewXMLFile(this, false, serieTable);
 		}
 		
-		this.messengerCenter = new MessengerCenter(this);
-		
 		// start the counter
 		tCounter.start();
+		
+		if (TedConfig.isCheckVersion())
+		{
+			//this.setStatusString(Lang.getString("TedMain.CheckingNewTed"));
+			this.isNewTed(false);
+		}
 		
 		uiInitialized = true;
 	}
@@ -383,7 +384,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			
 			if (!this.isParsing)
 			{
-				this.resetStatusOfAllShows();
+				this.resetStatusOfAllShows(true);
 			}
 			
 			if (tedTray != null)
@@ -867,7 +868,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	{
 		// check the website if there is a new version availble
 		TedIO tio = new TedIO();
-		double currentVersion = tio.checkNewTed(TedMainDialog.tedVersion, TedConfig.getTimeOutInSecs());
+		double currentVersion = tio.checkNewTed(TedMainDialog.tedVersion);
 		
 		if (currentVersion > TedMainDialog.tedVersion)
 		{
@@ -911,13 +912,21 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	/**
 	 *  Reset all statusmessages for all series in the window to the default
 	 */
-	private void resetStatusOfAllShows()
+	private void resetStatusOfAllShows(Boolean resetCheck)
 	{
 		int rows = serieTable.getRowCount();
 		for (int i = 0; i < rows ; i++)
 		{
 			TedSerie serie = serieTable.getSerieAt(i);
-			serie.resetStatus();
+			// only reset the statusstring if the status of the show is not check
+			if (serie.getStatus() == TedSerie.STATUS_CHECK)
+			{
+				serie.resetStatus(resetCheck);
+			}
+			else
+			{
+				serie.resetStatus(true);
+			}
 		}
 		this.repaint();		
 	}
@@ -956,7 +965,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		// set icon
 		this.setIcon(tedIdleIcon);
-		this.resetStatusOfAllShows();
+		this.resetStatusOfAllShows(false);
 		
 		// enable buttons and menu items
 		this.tMenuBar.setIdle();

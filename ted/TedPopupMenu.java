@@ -22,12 +22,11 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	private Vector allItems = new Vector();
+	private Vector<TedPopupItem> allItems = new Vector<TedPopupItem>();
 	private Vector<TedPopupItem> search   = new Vector<TedPopupItem>();
 	private Vector<TedPopupItem> category = new Vector<TedPopupItem>();
 	private Vector<TedPopupItem> general  = new Vector<TedPopupItem>();
 	private TedPopupItem help;
-	private TedPopupItem empty;
 
 	private EditShowDialog dialog;
 
@@ -36,117 +35,118 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	 * @param v The vector containing the JPopupItems
 	 * @param dialog2 The Episode Dialog that initialized this menu
 	 */
-	public TedPopupMenu(EditShowDialog dialog2, Vector v)
+	public TedPopupMenu(EditShowDialog dialog2, Vector<TedPopupItem> v)
 	{
 		dialog = dialog2;
 		
 		// make a copy determine which action has to be done later on
 		this.allItems = v;
+			
+		// add the "add empty" item
+		TedPopupItem pi = new TedPopupItem();
+		pi.setName(Lang.getString("TedEpisodeDialog.FeedsTable.UserDefined"));
+		pi.setActionCommand("empty");
+		pi.setType(TedPopupItem.IS_EMPTY);
+		this.addItem(pi);
+		this.addSeparator();
 		
 		// divide the vector in groups
 		this.divideMenu(allItems);
-		
-		// add the "add empty" item
-		String s = Lang.getString("TedEpisodeDialog.FeedsTable.UserDefined");
-		JMenuItem item = new JMenuItem(s);
-		((TedPopupItem)allItems.get(0)).setName(s);
-		item.addActionListener(this);
-		item.setActionCommand(s);
-		this.add(item);
-		this.addSeparator();
 		
 		// add the groups to the menu (divided by a seperator)
 		this.setMenu(search);
 		this.setMenu(category);
 		this.setMenu(general);
 		
-		try
-		{
-			// retrieve help item text
-			s = Lang.getString("TedEpisodeDialog.Help");
-		}
-		catch(Exception e)
-		{
-			// no help item was available in the vector
-			s = Lang.getString("TedEpisodeDialog.NoHelp");
-		}
-		
-		// add help item to menu
-		item = new JMenuItem(s);
-		((TedPopupItem)allItems.get(allItems.size()-1)).setName(s);
-		item.addActionListener(this);
-		item.setActionCommand(item.getName());
-		this.add(item);
+		// add help item		
+		this.addItem(help);
 	}
-	
+
+
 	/**
 	 * Divides the given vector in groups based on the type of the 
 	 * JPopupItem 
 	 */
-	private void divideMenu(Vector v)
+	private void divideMenu(Vector<TedPopupItem> v)
 	{
 		TedPopupItem item;
+		int type;
 		for(int i=0; i<v.size(); i++)
 		{
 			item = (TedPopupItem)v.get(i);
+			type = item.getType();
 			
-			if(item.getType()==TedPopupItem.IS_SEARCH_BASED)
+			if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
 				search.add(item);
-			else if(item.getType()==TedPopupItem.IS_CATEGORY_BASED)
+			else if(type==TedPopupItem.IS_CATEGORY_BASED)
 				category.add(item);
-			else if(item.getType()==TedPopupItem.IS_GENERAL_FEED)
+			else if(type==TedPopupItem.IS_GENERAL_FEED)
 				general.add(item);
-			else if(item.getType()==TedPopupItem.IS_HELP)
+			else if(type==TedPopupItem.IS_HELP)
+			{
 				help = item;
-			else if(item.getType()==TedPopupItem.IS_EMPTY)
-				empty = item;
+				item.setName(Lang.getString("TedEpisodeDialog.Help"));
+			}
 		}
 	}
 	
 	/**
 	 * Add the items from the vector to the menu
 	 */
-	private void setMenu(Vector v)
+	private void setMenu(Vector<TedPopupItem> v)
 	{
 		if(v.size()!=0)
 		{
-			JMenuItem item;
 			for(int i=0; i<v.size(); i++)
 			{
 				TedPopupItem pi = (TedPopupItem)v.get(i);
-				item = new JMenuItem(pi.getName());
-				item.addActionListener(this);
-				item.setActionCommand(pi.getName());
-				this.add(item);
+				this.addItem(pi);
 			}
 			this.addSeparator();
 		}
+	}
+	
+	
+	private void addItem(TedPopupItem item) 
+	{
+		item.addActionListener(this);
+		this.add(item);
+		
 	}
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		TedPopupItem item;
+		int type;
 		String action = arg0.getActionCommand();
 		
 		for(int i=0; i<allItems.size(); i++)
 		{
 			item = (TedPopupItem)allItems.get(i);
+			type = item.getType();
 			
 			if(item.getName().equals(action))
 			{
-				if(item.getType()==TedPopupItem.IS_SEARCH_BASED)
+				if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
 					this.openOptionDialog(item.getUrl(), item.getWebsite(), item.getType());
-				else if(item.getType()==TedPopupItem.IS_CATEGORY_BASED)
+				else if(type==TedPopupItem.IS_CATEGORY_BASED)
+				{
+					// open website and add empty feed placeholder
 					this.openUrl(item.getUrl());
-				else if(item.getType()==TedPopupItem.IS_GENERAL_FEED)
-					this.openOptionDialog(item.getUrl(), item.getWebsite(), item.getType());
-				else if(item.getType()==TedPopupItem.IS_HELP)
-					this.openUrl(item.getUrl());
-				else if(item.getType()==TedPopupItem.IS_EMPTY)
 					dialog.addFeed();
+				}
+				else if(type==TedPopupItem.IS_GENERAL_FEED)
+					this.openOptionDialog(item.getUrl(), item.getWebsite(), item.getType());
+				else if(type==TedPopupItem.IS_HELP)
+					this.openUrl(item.getUrl());
 				
 				return;
 			}
+		}
+		
+		if (action.equals("empty"))
+		{
+			dialog.addFeed();
 		}
 	}
 	
@@ -167,7 +167,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		String question;
 		
 		// decide which question has to be shown
-		if(type==TedPopupItem.IS_SEARCH_BASED)
+		if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
 			question = Lang.getString("TedEpisodeDialog.DialogFindSearch");
 		else
 			question = Lang.getString("TedEpisodeDialog.DialogFindGeneral");
@@ -185,7 +185,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 			 if(!name.equals(""))
 			 {
 				 // do action based on type
-				 if(type==TedPopupItem.IS_SEARCH_BASED)
+				 if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
 					 url = url.replace("#NAME#", name); // add name to rss query
 				 else if(type==TedPopupItem.IS_GENERAL_FEED)
 					 dialog.addKeywords(name); // use general feeds combined with keywords

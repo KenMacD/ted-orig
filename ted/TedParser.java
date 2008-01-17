@@ -61,6 +61,9 @@ public class TedParser extends Thread
 	private int totalNumberOfFeedItems = 0;
 	private TedSerie currentSerie;
 	
+	private int checkedTorrents = 0;
+	private int foundTorrents = 0;
+	
 	private int itemNr = 0;
 	private int bestItemNr = 0;
 	
@@ -229,6 +232,7 @@ public class TedParser extends Thread
 		double progress = 0;	
 		int itemProgress = 0;
 		double progressPerItem = 100.0 / this.totalNumberOfFeedItems;
+		this.checkedTorrents = 0;
 		
 		for (int i = 0; i < feedsData.length; i++)
 		{
@@ -288,9 +292,7 @@ public class TedParser extends Thread
 			}
 		}
 		try
-		{
-			serie.setProgress(100, tMainDialog);
-			
+		{	
 			if(!serie.isDaily)
 			{
 				this.downloadBest(serie);
@@ -299,6 +301,8 @@ public class TedParser extends Thread
 			{
 				this.downloadBestDaily(serie);
 			}
+			
+			serie.setProgress(100, tMainDialog);
 		}
 		catch (Exception e)
 		{
@@ -378,6 +382,8 @@ public class TedParser extends Thread
 			TedLog.debug("check: " + sTitle); //$NON-NLS-1$
 			serie.setStatusString(Lang.getString("TedSerie.Checking") + " " + sTitle, tMainDialog); //$NON-NLS-1$
 			tMainDialog.repaint();
+			
+			this.checkedTorrents++;
 			
 			if (torrentUrl == null)
 			{
@@ -968,6 +974,8 @@ public class TedParser extends Thread
 				throw e;
 			}
 			
+			this.foundTorrents++;
+			
 			// announce to user and update serie
 			// everything went okay, notify user and save the changes
 			String message;			
@@ -1016,7 +1024,8 @@ public class TedParser extends Thread
 		else
 		{
 			TedLog.simpleLog(generateLogMessage());
-			serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
+			//serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
+			serie.setStatusString(generateOverviewMessage(), tMainDialog);
 		}
 		
 		this.bestTorrentUrl = null;
@@ -1079,7 +1088,8 @@ public class TedParser extends Thread
 		}
 		else
 		{
-			serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
+			//serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
+			serie.setStatusString(generateOverviewMessage(), tMainDialog);
 		}
 		
 		this.bestTorrentUrl = null;
@@ -1158,6 +1168,32 @@ public class TedParser extends Thread
 			for(int i=0; i<newFeeds.size(); i++)
 				table.addSerie((TedSerieFeed)newFeeds.get(i));
 		}
+	}
+	
+	private String generateOverviewMessage()
+	{
+		//TODO: translate and make sure daily shows also count checked torrents and found torrents
+		String message = "";	
+		
+		if (this.foundTorrents == 1)
+		{
+			message += "Downloaded torrent for the previous episode.";
+		}
+		else if (this.foundTorrents > 1)
+		{
+			message = "Downloaded torrents for " + this.foundTorrents + " previous episodes.";
+		}
+		else if (this.checkedTorrents > 0)
+		{
+			message += "Found " + this.checkedTorrents + " torrents but downloaded none. Check the log for more info.";
+		}
+		else 
+		{
+			message = "Found no torrents.";
+		}
+		
+		
+		return message;
 	}
 
 	private String generateLogMessage()

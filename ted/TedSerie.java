@@ -58,13 +58,14 @@ public class TedSerie implements Serializable
 	private long breakUntil = 0;
 	private long breakFrom = 0;
 	private int breakEpisode;
-	private Vector feeds = new Vector();
+	private Vector<TedSerieFeed> feeds = new Vector<TedSerieFeed>();
 	private int minNumOfSeeders;
 	private String statusString;
 	private int progress = 0;
 	private boolean usePresets;
 	private String tvCom;
 	protected boolean isDaily = false;
+	private String searchName;
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -79,7 +80,7 @@ public class TedSerie implements Serializable
 	 * @param max Maximum size of torrent contents
 	 * @param key Keywords to check torrent titles
 	 */
-	public TedSerie(int ce, int cs, String name, String url, int min, int max, String key, int minNumSeeders)
+	public TedSerie(int ce, int cs, String name, String url, int min, int max, String key, int minNumSeeders, String sName)
 	{
 		this.currentEpisode = ce;
 		this.currentSeason = cs;
@@ -105,6 +106,7 @@ public class TedSerie implements Serializable
 		this.minNumOfSeeders = minNumSeeders;
 		this.statusString = Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		this.usePresets = true;
+		this.searchName = sName;
 	}
 	
 	/**
@@ -136,6 +138,7 @@ public class TedSerie implements Serializable
 		this.minNumOfSeeders = 0;
 		this.statusString = Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		this.usePresets = true;
+		this.searchName = "";
 	}
 	
 	
@@ -608,7 +611,12 @@ public class TedSerie implements Serializable
 	 */
 	public boolean setStatus(int status) 
 	{
-		if (status == TedSerie.STATUS_CHECK || status == TedSerie.STATUS_HOLD || status == TedSerie.STATUS_PAUSE)
+		if ( ( 	status == TedSerie.STATUS_CHECK || 
+				status == TedSerie.STATUS_HOLD || 
+				status == TedSerie.STATUS_PAUSE 
+				)
+				&& status != this.status
+			)
 		{
 			// disable break schedule if show is put on a different status as hold
 			if(this.status == TedSerie.STATUS_HOLD && status != TedSerie.STATUS_HOLD)
@@ -619,7 +627,7 @@ public class TedSerie implements Serializable
 			
 			// set status
 			this.status = status;				
-			this.resetStatus();
+			this.resetStatus(true);
 			
 			return true;
 		}
@@ -671,7 +679,7 @@ public class TedSerie implements Serializable
 		}
 		this.useEpisodeSchedule = useSchedule;
 		this.days = newdays;
-		this.resetStatus();
+		this.resetStatus(true);
 	}
 
 	/**
@@ -730,7 +738,7 @@ public class TedSerie implements Serializable
 	public void setUseBreakSchedule(boolean useBreakSchedule) 
 	{
 		this.useBreakSchedule = useBreakSchedule;
-		this.resetStatus();
+		this.resetStatus(true);
 	}
 
 	/**
@@ -903,11 +911,14 @@ public class TedSerie implements Serializable
 	/**
 	 * Reset progress, activity and statusstring to default values
 	 */
-	public void resetStatus()
+	public void resetStatus(Boolean reset)
 	{
 		this.progress = 0;
 		this.activity = TedSerie.IS_IDLE;
-		this.statusString = this.makeDefaultStatusString();	
+		if (reset)
+		{
+			this.statusString = this.makeDefaultStatusString();	
+		}
 	}
 
 	/**
@@ -959,6 +970,43 @@ public class TedSerie implements Serializable
 		{
 			return Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		}
+	}
+	
+	/**
+	 * Generate feed locations from a vector of search based feeds
+	 * @param items
+	 */
+	public void generateFeedLocations(Vector<TedPopupItem> items) 
+	{
+		for(int i=0; i<items.size(); i++)
+		{
+			TedPopupItem item = items.get(i);
+			this.autoGenerateAndAddFeedURL(item.getUrl());
+		}
+		
+	}
+
+	/**
+	 * Generate a feed url from a search based feed
+	 * @param url2 url of a search based feed
+	 */
+	public void autoGenerateAndAddFeedURL(String url2) 
+	{
+		if (url2.contains("#NAME#"))
+		{
+			url2 = url2.replace("#NAME#", this.getSearchName());
+			this.addPredefinedFeed(url2);
+		}
+	}
+
+	/**
+	 * Add a predefined feed to this TedSerie
+	 * @param url2 the Url of the feed
+	 */
+	private void addPredefinedFeed(String url2) 
+	{
+		TedSerieFeed newFeed = new TedSerieFeed(url2, false);
+		this.feeds.add(newFeed);	
 	}
 
 	public boolean isUseBreakScheduleEpisode() {
@@ -1014,4 +1062,22 @@ public class TedSerie implements Serializable
 		se.setEpisode(this.currentEpisode);
 		return se.toString();
 	}
+	
+	public String getSearchName()
+	{
+		if (searchName !="")
+		{
+			return this.searchName;
+		}
+		else
+		{
+			return this.getName();
+		}
+	}
+	
+	public void setSearchName(String sName)
+	{
+		this.searchName = sName;
+	}
+		
 }

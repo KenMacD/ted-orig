@@ -327,7 +327,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			this.schedulePanel.saveValues(show);
 				
 			show.checkDate();
-			show.resetStatus();
+			show.resetStatus(true);
 			return true;
 		}
 		else
