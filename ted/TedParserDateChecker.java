@@ -66,42 +66,7 @@ public class TedParserDateChecker
 		}
 		return c.getTimeInMillis();
 	}
-	
-	/**
-	 * Gets the int from a month string
-	 * @param s String like jan, feb
-	 * @return Int like 0, 1
-	 */
-	private int getMonth(String s)
-	{      
-        if(s.equals("jan"))
-        	return 0;
-		if(s.equals("feb"))
-        	return 1;
-		if(s.equals("mar"))
-        	return 2;
-		if(s.equals("apr"))
-        	return 3;
-		if(s.equals("may"))
-        	return 4;
-		if(s.equals("jun"))
-        	return 5;
-		if(s.equals("jul"))
-        	return 6;
-		if(s.equals("aug"))
-        	return 7;
-		if(s.equals("sep"))
-        	return 8;
-		if(s.equals("oct"))
-        	return 9;
-		if(s.equals("nov"))
-        	return 10;
-		if(s.equals("dec"))
-        	return 11;
 		
-		//will hopefully never happen
-		return -1; 
-	}
 	
 	/****************************************************
 	 * PUBLIC METHODS
@@ -130,6 +95,42 @@ public class TedParserDateChecker
 	{
 		long date = getItemDate(item);		
 		return date;
+	}
+	
+	/**
+	 * Gets the int from a month string
+	 * @param s String like jan, feb
+	 * @return Int like 0, 1
+	 */
+	public int getMonth(String s)
+	{      
+        if(s.equals("jan"))
+        	return 0;
+		if(s.equals("feb"))
+        	return 1;
+		if(s.equals("mar"))
+        	return 2;
+		if(s.equals("apr"))
+        	return 3;
+		if(s.equals("may"))
+        	return 4;
+		if(s.equals("jun"))
+        	return 5;
+		if(s.equals("jul"))
+        	return 6;
+		if(s.equals("aug"))
+        	return 7;
+		if(s.equals("sep"))
+        	return 8;
+		if(s.equals("oct"))
+        	return 9;
+		if(s.equals("nov"))
+        	return 10;
+		if(s.equals("dec"))
+        	return 11;
+		
+		//will hopefully never happen
+		return -1; 
 	}
 	
 	

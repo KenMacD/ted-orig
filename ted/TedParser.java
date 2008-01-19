@@ -425,7 +425,7 @@ public class TedParser extends Thread
 			}
 			
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
+			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs(), 0);
 			
 			// check size and amount of seeders to filter out fakes
 			boolean correctSize = true;
@@ -604,7 +604,7 @@ public class TedParser extends Thread
 		try
 		{
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
+			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs(), 0);
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
 			
@@ -639,7 +639,7 @@ public class TedParser extends Thread
 			try
 			{
 				// get torrent state (containing seeders/leechers
-				torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+				torrentState = torrent.getState(TedConfig.getTimeOutInSecs(), 0);
 				
 				int torrentSeeders = torrentState.getComplete();
 				
@@ -806,7 +806,7 @@ public class TedParser extends Thread
 		// get torrent state (containing seeders/leechers)
 		try
 		{
-			TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+			TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs(), 0);
 			return(torrentState.getComplete() >= serie.getMinNumOfSeeders());
 		}
 		catch (Exception e)
@@ -1475,6 +1475,40 @@ public class TedParser extends Thread
 					}
 				}
 			}
+		}
+		else
+		{
+			// Start looking for another pattern.
+			// Jan 1st 2008
+			sMatch = "((\\w)+)\\p{Blank}((\\d)+)((\\w)+)\\p{Blank}((\\d)+)";
+			pDate = Pattern.compile(sMatch);
+			mDate = pDate.matcher(title);
+			
+			if(mDate.find())
+			{
+				String match = mDate.group();
+				String split[] = match.split("\\p{Blank}");
+				
+				int month = this.tPDateChecker.getMonth(split[0]);
+				
+				// We've found the month
+				if(month != -1)
+				{
+					// remove 'st', 'nd', 'th' from name
+					int day  = Integer.parseInt(split[1].substring(0, (split[1].length()-2)));
+					// get year
+					int year = Integer.parseInt(split[2]);
+					
+					// small check if we've a correct year
+					if (year > 999)
+					{
+						dd.setYear(year);
+						dd.setMonth(month);
+						dd.setDay(day);
+					}
+				}
+			}
+			
 		}
 		
 		if(dd.getYear()!=0)
