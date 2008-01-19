@@ -425,7 +425,7 @@ public class TedParser extends Thread
 			}
 			
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs(), 0);
+			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
 			
 			// check size and amount of seeders to filter out fakes
 			boolean correctSize = true;
@@ -604,7 +604,7 @@ public class TedParser extends Thread
 		try
 		{
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs(), 0);
+			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
 			
@@ -639,7 +639,7 @@ public class TedParser extends Thread
 			try
 			{
 				// get torrent state (containing seeders/leechers
-				torrentState = torrent.getState(TedConfig.getTimeOutInSecs(), 0);
+				torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
 				
 				int torrentSeeders = torrentState.getComplete();
 				
@@ -806,7 +806,7 @@ public class TedParser extends Thread
 		// get torrent state (containing seeders/leechers)
 		try
 		{
-			TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs(), 0);
+			TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
 			return(torrentState.getComplete() >= serie.getMinNumOfSeeders());
 		}
 		catch (Exception e)
