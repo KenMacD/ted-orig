@@ -196,7 +196,7 @@ public class FilterPanel extends JPanel
 		}
 		catch (NumberFormatException e)
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMinimumSize")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMinimumSize")); //$NON-NLS-1$
 			return false;
 		}
 		try
@@ -205,7 +205,7 @@ public class FilterPanel extends JPanel
 		}
 		catch (NumberFormatException e)
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMaximumSize")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMaximumSize")); //$NON-NLS-1$
 			return false;
 		}
 		try
@@ -214,17 +214,17 @@ public class FilterPanel extends JPanel
 		}
 		catch (NumberFormatException e)
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMinimumSeeders")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMinimumSeeders")); //$NON-NLS-1$
 			return false;
 		}
 		if(min>max)
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogMinLargerThanMax")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMinLargerThanMax")); //$NON-NLS-1$
 			return false;
 		}
 		if(!checkBrackets(keyword_text.getText()))
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogBrackets")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogBrackets")); //$NON-NLS-1$
 			return false;
 		}	
 		return true;

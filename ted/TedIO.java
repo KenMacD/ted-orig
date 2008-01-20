@@ -493,7 +493,7 @@ public class TedIO
 			// ask user for confirmation if we have to
 			if (TedConfig.askAutoUpdateFeedList())
 			{
-				answer = JOptionPane.showOptionDialog(main,
+				answer = JOptionPane.showOptionDialog(null,
 		                Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"), //$NON-NLS-1$ //$NON-NLS-2$
 		                Lang.getString("TedIO.DialogNewPredefinedShowsHeader"), //$NON-NLS-1$
 		                JOptionPane.YES_NO_OPTION,
@@ -513,7 +513,7 @@ public class TedIO
 				{
 					if(TedConfig.askAutoAdjustFeeds())
 					{
-						answer = JOptionPane.showConfirmDialog(main,
+						answer = JOptionPane.showConfirmDialog(null,
 				                Lang.getString("TedIO.DialogUpdateShows1")+ "\n" +//$NON-NLS-1$
 				                Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
 				                Lang.getString("TedIO.DialogUpdateShows3"), //$NON-NLS-1$
@@ -531,7 +531,7 @@ public class TedIO
 		}
 		else if(showresult)
 		{
-			JOptionPane.showMessageDialog(main,
+			JOptionPane.showMessageDialog(null,
 	                Lang.getString("TedIO.DialogMostRecentShows1")+ " " + version + Lang.getString("TedIO.DialogMostRecentShows2"), //$NON-NLS-1$ //$NON-NLS-2$
 	                Lang.getString("TedIO.DialogMostRecentShowsHeader"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
 		}

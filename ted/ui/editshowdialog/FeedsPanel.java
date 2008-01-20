@@ -332,7 +332,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	{	
 		if (feedsTableModel.getRowCount() == 0)
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
 			return false;
 		}
 		return true;

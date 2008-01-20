@@ -80,7 +80,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 	 */
 	public TedConfigDialog(TedMainDialog frame, boolean showcancelbutton) 
 	{
-		super(frame);
 		this.setModal(true);
 		this.setResizable(false);
 		this.main = frame;

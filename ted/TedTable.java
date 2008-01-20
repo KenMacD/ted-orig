@@ -228,7 +228,7 @@ public class TedTable extends JTable
 		if (this.getSelectedRow() >= 0)
 		{
 			// ask the user if he really wants to delete the show
-			int answer = JOptionPane.showOptionDialog(this,
+			int answer = JOptionPane.showOptionDialog(null,
 	                Lang.getString("TedMainDialog.DialogConfirmDeleteBegin") + " " + serieTableModel.getSerieAt(this.getSelectedRow()).getName() + Lang.getString("TedMainDialog.DialogConfirmDeleteEnd"), //$NON-NLS-1$ //$NON-NLS-2$
 	                "ted", //$NON-NLS-1$
 	                JOptionPane.YES_NO_OPTION,

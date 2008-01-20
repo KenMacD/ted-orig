@@ -183,7 +183,7 @@ public class GeneralPanel extends JPanel
 		// check show name
 		if (textName.getText().equals("")) //$NON-NLS-1$
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogShowName")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogShowName")); //$NON-NLS-1$
 			return false;
 		}
 		return true;

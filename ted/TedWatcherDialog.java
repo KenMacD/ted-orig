@@ -85,7 +85,7 @@ public class TedWatcherDialog extends javax.swing.JFrame implements ActionListen
 			}
 			catch (NumberFormatException e)
 			{
-				JOptionPane.showMessageDialog(this, "Please enter a number for the maximum size");
+				JOptionPane.showMessageDialog(null, "Please enter a number for the maximum size");
 				return;
 			}
 			try
@@ -94,22 +94,22 @@ public class TedWatcherDialog extends javax.swing.JFrame implements ActionListen
 			}
 			catch (NumberFormatException e)
 			{
-				JOptionPane.showMessageDialog(this, "Please enter a number for the minimum size");
+				JOptionPane.showMessageDialog(null, "Please enter a number for the minimum size");
 				return;
 			}
 			if (text_name.getText().equals(""))
 			{
-				JOptionPane.showMessageDialog(this, "Please enter a name");
+				JOptionPane.showMessageDialog(null, "Please enter a name");
 				return;
 			}
 			if (text_feed.getText().equals(""))
 			{
-				JOptionPane.showMessageDialog(this, "Please enter a rss feed");
+				JOptionPane.showMessageDialog(null, "Please enter a rss feed");
 				return;
 			}
 			if (text_key.getText().equals(""))
 			{
-				JOptionPane.showMessageDialog(this, "Please enter keywords");
+				JOptionPane.showMessageDialog(null, "Please enter keywords");
 				return;
 			}
 			currentWatcher.setName(text_key.getText() + ": " + text_name.getText());

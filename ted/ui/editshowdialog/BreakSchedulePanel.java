@@ -230,7 +230,7 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 			}
 			catch (NumberFormatException e)
 			{
-				JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogNumericBreakEpisode") + //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogNumericBreakEpisode") + //$NON-NLS-1$
 						Lang.getString("TedEpisodeDialog.DialogNumericBreakEpisode2")); //$NON-NLS-1$
 				return false;
 			}
@@ -253,13 +253,13 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 		{
 			if((year<fyear) || (year==fyear && month<fmonth) || (year==fyear && month==fmonth && day2<fday))
 			{
-				JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogFromDateLargerThanBreak")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFromDateLargerThanBreak")); //$NON-NLS-1$
 				return false;
 			}
 			
 			if(year==fyear && month==fmonth && day2==fday)
 			{
-				JOptionPane.showMessageDialog(this, Lang.getString("TedEpisodeDialog.DialogFromIsBreak")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFromIsBreak")); //$NON-NLS-1$
 				return false;
 			}
 		}

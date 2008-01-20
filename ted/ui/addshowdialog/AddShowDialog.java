@@ -84,13 +84,11 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	
 	public AddShowDialog()
 	{
-		super();
 		this.initGUI();
 	}
 	
 	public AddShowDialog(TedMainDialog main)
 	{
-		super(main);
 		this.setModal(true);
 		this.tedMain = main;
 		this.initGUI();

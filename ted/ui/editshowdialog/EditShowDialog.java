@@ -75,7 +75,6 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	 */
 	public EditShowDialog(TedMainDialog frame, TedSerie serie, boolean newSerie) 
 	{
-		super(frame);
 		this.setModal(true);
 		this.setResizable(false);
 		this.tedDialog = frame;

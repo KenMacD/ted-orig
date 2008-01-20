@@ -41,7 +41,6 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 
 	public EpisodeChooserDialog(EditShowDialog frame)
 	{	
-		super(frame);
 		this.setModal(true);
 		this.setResizable(false);
 		this.initGUI();

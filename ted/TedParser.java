@@ -448,7 +448,7 @@ public class TedParser extends Thread
 					int answer = JOptionPane.NO_OPTION;
 					
 					// ask user if he wants to download new season
-					answer = JOptionPane.showOptionDialog(tMainDialog, Lang.getString("TedParser.DialogNewSeason1")+ " " + season+ " " + Lang.getString("TedParser.DialogNewSeason2") + " " +  serie.getName()+"." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					answer = JOptionPane.showOptionDialog(null, Lang.getString("TedParser.DialogNewSeason1")+ " " + season+ " " + Lang.getString("TedParser.DialogNewSeason2") + " " +  serie.getName()+"." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 								+ "\n" + Lang.getString("TedParser.DialiogNewSeason3")+ " " + season+"?" //$NON-NLS-1$ //$NON-NLS-2$
 								+ "\n" + Lang.getString("TedParser.DialogNewSeason4")+ " " + (season-1)
 								+ "\n" + Lang.getString("TedParser.DialogNewSeason5"), //$NON-NLS-1$ //$NON-NLS-2$

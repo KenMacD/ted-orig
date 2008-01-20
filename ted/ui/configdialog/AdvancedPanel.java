@@ -147,7 +147,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		}
 		catch (NumberFormatException e)
 		{
-			JOptionPane.showMessageDialog(this, textTimeOutSecs.getText() + " " + Lang.getString("TedConfigDialog.DialogNoValidTimeOutTime")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, textTimeOutSecs.getText() + " " + Lang.getString("TedConfigDialog.DialogNoValidTimeOutTime")); //$NON-NLS-1$
 			return false;
 		}
 		

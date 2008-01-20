@@ -111,7 +111,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public TedMainDialog(boolean userWantsTray, boolean saveInLocalDir) 
 	{
-		super();
+		//super();
 		this.osHasTray = this.osHasTray && userWantsTray;
 		
 		// set if user wants to save / read files from local dir instead of users dir
@@ -125,7 +125,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		else
 		{
 			// show dialog that asks user to download latest javaversion
-			JOptionPane.showMessageDialog(this, Lang.getString("TedMainDialog.DialogJavaVersion1") + " (" + TedSystemInfo.getJavaVersion() + ") "+ Lang.getString("TedMainDialog.DialogJavaVersion2") + " \n" + //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedMainDialog.DialogJavaVersion1") + " (" + TedSystemInfo.getJavaVersion() + ") "+ Lang.getString("TedMainDialog.DialogJavaVersion2") + " \n" + //$NON-NLS-1$
 					Lang.getString("TedMainDialog.DialogJavaVersion3") + " " + TedSystemInfo.MINIMUM_JAVA + ".\n" +
 					Lang.getString("TedMainDialog.DialogJavaVersion4"));
 		}
@@ -160,12 +160,12 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			// if no config: generate one and show config dialog
 			Lang.setLanguage(TedConfig.getLocale());
 			// config file is not found, ask user to input preferences
-			JOptionPane.showMessageDialog(this, Lang.getString("TedMainDialog.DialogStartup1") + "\n" + //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, Lang.getString("TedMainDialog.DialogStartup1") + "\n" + //$NON-NLS-1$
 					Lang.getString("TedMainDialog.DialogStartup2") + "\n" +  //$NON-NLS-1$
 					Lang.getString("TedMainDialog.DialogStartup3")); //$NON-NLS-1$
 			
 			// set initial size of maindialog
-			this.setSize(550, 400);
+			this.setSize(400, 500);
 			this.setLocation(20, 20);
 			
 			new TedConfigDialog(this, false);
@@ -872,7 +872,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if (currentVersion > TedMainDialog.tedVersion)
 		{
-			int answer = JOptionPane.showOptionDialog(this,
+			int answer = JOptionPane.showOptionDialog(null,
 	                Lang.getString("TedMainDialog.DialogNewVersion1Begin")+ " (" + currentVersion + ") "+ Lang.getString("TedMainDialog.DialogNewVersion1End") + //$NON-NLS-1$ //$NON-NLS-2$
 	                "\n" + Lang.getString("TedMainDialog.DialogNewVersion2")+ " " +  TedMainDialog.tedVersion + "\n" +  //$NON-NLS-1$
 									Lang.getString("TedMainDialog.DialogNewVersion3"), //$NON-NLS-1$
@@ -896,7 +896,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if (show)
 		{
-			JOptionPane.showMessageDialog(this, Lang.getString("TedMainDialog.DialogLatestVersionBegin")
+			JOptionPane.showMessageDialog(null, Lang.getString("TedMainDialog.DialogLatestVersionBegin")
 					 + " ("+ TedMainDialog.tedVersion + ") " + 
 					 Lang.getString("TedMainDialog.DialogLatestVersionEnd")); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
