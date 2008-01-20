@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.w3c.dom.Element;
@@ -19,6 +20,7 @@ import ted.Lang;
 import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedMainDialog;
+import ted.TedPopupItem;
 import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedSystemInfo;
@@ -318,22 +320,49 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	 */
 	private boolean saveShow(TedSerie show) 
 	{
-		if (this.generalPanel.checkValues() && this.feedsPanel.checkValues() && this.filterPanel.checkValues() && this.schedulePanel.checkValues())
+		// first check for showname
+		if (this.generalPanel.checkValues())
 		{
 			this.generalPanel.saveValues(show);
-			this.feedsPanel.saveValues(show);
-			this.filterPanel.saveValues(show);
-			this.schedulePanel.saveValues(show);
+			
+			if (!this.feedsPanel.checkValues())
+			{
+				//JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
+				int answer = JOptionPane.showOptionDialog(null,
+		                "This show does not have feeds yet. Do you want to auto-generate feeds for this show?",
+		                "Generate feeds?", //$NON-NLS-1$
+		                JOptionPane.YES_NO_OPTION,
+		                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
 				
-			show.checkDate();
-			show.resetStatus(true);
-			return true;
+				if (answer == JOptionPane.YES_OPTION)
+				{
+					// auto generate feed locations					
+					show.generateFeedLocations();
+					
+					this.feedsPanel.setValues(show);
+					this.feedsPanel.saveValues(show);
+				}
+			}
+		
+			if (this.feedsPanel.checkValues() && this.filterPanel.checkValues() && this.schedulePanel.checkValues())
+			{
+				this.feedsPanel.saveValues(show);
+				this.filterPanel.saveValues(show);
+				this.schedulePanel.saveValues(show);
+					
+				show.checkDate();
+				show.resetStatus(true);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
 			return false;
-		}
-		
+		}		
 	}
 
 	/**

@@ -24,6 +24,7 @@ import javax.swing.table.TableColumn;
 import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedFeedsTableModel;
+import ted.TedMainDialog;
 import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedSerieFeed;
@@ -331,8 +332,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	public boolean checkValues() 
 	{	
 		if (feedsTableModel.getRowCount() == 0)
-		{
-			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
+		{			
 			return false;
 		}
 		return true;

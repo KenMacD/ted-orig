@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import org.w3c.dom.Element;
+
 import ted.datastructures.SeasonEpisode;
 
 /**
@@ -1078,6 +1080,22 @@ public class TedSerie implements Serializable
 	public void setSearchName(String sName)
 	{
 		this.searchName = sName;
+	}
+
+	/**
+	 * This method reads shows.xml and generates feed urls from
+	 * the automatic feeds located in the xml file.
+	 */
+	public void generateFeedLocations() 
+	{
+		// read shows.xml
+		// get the details of the show
+		TedXMLParser parser = new TedXMLParser();
+		Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+		// add auto-generated search based feeds to the show
+		Vector<TedPopupItem> items = new Vector<TedPopupItem>();
+		items = parser.getAutoFeedLocations(series);
+		this.generateFeedLocations(items);
 	}
 		
 }

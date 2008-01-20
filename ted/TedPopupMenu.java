@@ -48,6 +48,11 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		pi.setActionCommand("empty");
 		pi.setType(TedPopupItem.IS_EMPTY);
 		this.addItem(pi);
+		pi = new TedPopupItem();
+		pi.setName(Lang.getString("TedEpisodeDialog.FeedsTable.Automatic"));
+		pi.setActionCommand("auto");
+		pi.setType(TedPopupItem.IS_EMPTY);
+		this.addItem(pi);
 		this.addSeparator();
 		
 		// divide the vector in groups
@@ -147,6 +152,11 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		if (action.equals("empty"))
 		{
 			dialog.addFeed();
+		}
+		else if (action.equals("auto"))
+		{
+			// automatically generate feeds
+			// TODO
 		}
 	}
 	
