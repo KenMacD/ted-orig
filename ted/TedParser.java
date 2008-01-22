@@ -677,12 +677,17 @@ public class TedParser extends Thread
 						Lang.getString("TedLog.ErrorSeeders") + " (" + torrentSeeders + ")";
 					TedLog.debug("Torrent has not enough seeders (" + torrentSeeders+")"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				
 			}
 			catch (Exception e)
 			{
 				parseLogInfo[itemNr][1] =
 					Lang.getString("TedLog.ErrorTorrentInfo");
+				
+				if (e.getMessage().contains("bencoding"))
+				{
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BencodingError");
+				}
+				
 				TedLog.error(e, "Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 			}			
 		}
@@ -701,7 +706,7 @@ public class TedParser extends Thread
 			}
 			
 			parseLogInfo[itemNr][1] =
-				Lang.getString("TedLog.ErrorTorrentInfo");
+				Lang.getString("TedLog.BencodingError");
 		}
 		catch (TorrentException e)
 		{
@@ -724,7 +729,6 @@ public class TedParser extends Thread
 		{
 			// happens when scraping tracker for torrent seeder information
             TedLog.error(e, e.getLocalizedMessage());
-			e.printStackTrace();
 			
 			parseLogInfo[itemNr][1] =
 				Lang.getString("TedLog.ErrorTorrentInfo");

@@ -254,7 +254,7 @@ public class BencodingImpl implements Bencoding {
        // log.debug("Integer value " + value);
 
         Integer integer = new Integer(value);
-
+        
         return integer;
     }
 

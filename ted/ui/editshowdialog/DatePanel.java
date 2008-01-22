@@ -40,7 +40,6 @@ public class DatePanel extends JPanel
 	
 	public DatePanel()
 	{
-		
 		this.initGUI();
 	}
 
@@ -115,8 +114,8 @@ public class DatePanel extends JPanel
 		
 		// update years in datepanel according to date to display
 		int year2 = c2.get(Calendar.YEAR);
-		yearOffset = year2;
-		years = initString(year2, year2+5);
+		yearOffset = year2 - 1;
+		years = initString(year2-1, year2+1);
 		ComboBoxModel jFromBreakYearModel = new DefaultComboBoxModel(
 				years);
 		jFromBreakYear.setModel(jFromBreakYearModel);
