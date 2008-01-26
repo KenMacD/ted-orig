@@ -3,12 +3,6 @@
 	<version>28</version>
 	<rsslocations>		
 		<location>
-			<name>Torrentspy</name>
-			<feed>http://www.torrentspy.com/rss.asp?mode=search&amp;query=#NAME#</feed>
-			<website>http://www.torrentspy.com/</website>
-			<type>0</type>
-		</location>
-		<location>
 			<name>btjunkie</name>
 			<feed>http://btjunkie.org/rss.xml?query=#NAME#</feed>
 			<website>http://btjunkie.org</website>
@@ -34,9 +28,9 @@
 		</location>		
 		<location>
 			<name>XTVi</name>
-			<feed>http://www.xtvi.com/all_tv_shows/</feed>
+			<feed>http://www.xtvi.com/rss.php?query=#NAME#</feed>
 			<website>http://www.xtvi.com/</website>
-			<type>1</type>
+			<type>0</type>
 		</location>	
 		<location>
 			<name>Torrentreactor</name>
