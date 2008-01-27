@@ -9,6 +9,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
@@ -28,7 +30,7 @@ import javax.swing.JPanel;
  * @author Joost
   */
 
-public class TedAboutDialog extends javax.swing.JDialog
+public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 {
 	/****************************************************
 	 * GLOBAL VARIABLES
@@ -37,6 +39,8 @@ public class TedAboutDialog extends javax.swing.JDialog
 	private JPanel aboutPanel;
 	private Image logo;
 	private double version;
+	private int posSecretCode = 0;
+	private TedTable serieTable;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -45,9 +49,10 @@ public class TedAboutDialog extends javax.swing.JDialog
 	 * Show the about dialog
 	 * @param version Current version of ted
 	 */
-	public TedAboutDialog(double version)
+	public TedAboutDialog(double version, TedTable serieTable)
 	{
 		this.version = version;
+		this.serieTable = serieTable;
 		this.initGUI();
 	}
 
@@ -72,6 +77,8 @@ public class TedAboutDialog extends javax.swing.JDialog
 		logo = toolkit.getImage(getClass().getClassLoader().getResource("icons/logo.jpg"));
 		MediaTracker mediaTracker = new MediaTracker(this);
 		mediaTracker.addImage(logo, 0);
+				
+		this.addKeyListener(this);
 		this.repaint();
 		this.setVisible(true);
 	}
@@ -96,5 +103,33 @@ public class TedAboutDialog extends javax.swing.JDialog
 		g.drawString(s1, 10, 250);
 		g.drawString(s2, 10, 265);
 		g.drawString(s3, 10, 280);
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		String secretCode = "Henk";
+		
+		if (arg0.getKeyChar() == secretCode.charAt(posSecretCode))
+		{
+			posSecretCode++;
+		}
+		
+		if (posSecretCode == secretCode.length())
+		{
+			posSecretCode = 0;
+			
+			TedColorPicker colorPicker = new TedColorPicker(serieTable);
+			colorPicker.setVisible(true);
+		}
+		
 	}
 }

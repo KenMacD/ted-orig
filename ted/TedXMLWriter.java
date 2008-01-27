@@ -81,14 +81,15 @@ public class TedXMLWriter
 						fw.append("\t\t<name>" + serie.getName() + "</name>"+newline);
 			
 						/* write the feeds */
-						feeds = serie.getFeeds();
+						/* From v0.92 we don't store the feeds anymore in the shows list */
+						/* feeds = serie.getFeeds();
 						fw.append("\t\t<feeds>"+newline);	
 						for(int j=0; j<feeds.size(); j++)
 						{
 							feed = (TedSerieFeed)feeds.get(j);
 							fw.append("\t\t\t<feed>" + escapeXML(feed.getUrl()) + "</feed>"+newline);
 						}
-						fw.append("\t\t</feeds>"+newline);
+						fw.append("\t\t</feeds>"+newline); */
 						
 						/* write the rest of the show information */
 						//fw.append("\t\t<daily>False</daily>"+newline);

@@ -42,6 +42,7 @@ public class TedTable extends JTable
 
 	private static final long serialVersionUID = 3101958907833506800L;
 	private TedTableModel serieTableModel;
+	private TedTableRowRenderer ttrr;
 	private TedMainDialog tedMain;
 	private TedTablePopupMenu ttPopupMenu;
 	
@@ -74,7 +75,7 @@ public class TedTable extends JTable
 		this.setRowHeight(55);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		TedTableRowRenderer ttrr = new TedTableRowRenderer();
+		ttrr = new TedTableRowRenderer();
 		this.setDefaultRenderer(TedSerie.class, ttrr);
 		
 		this.addKeyListener(new KeyAdapter() {
@@ -250,26 +251,6 @@ public class TedTable extends JTable
 		serieTableModel.updateText();
 	}
 	
-	 /**
-     * Returns the appropriate background color for the given row.
-     */
-    protected Color colorForRow(int row) {
-    	Color c = getBackground();
-    	if (this.getSelectedRow() == row)
-    	{
-    		return(new Color( 61, 128, 223));
-    	}
-    	if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
-    	{     return(new Color( c.getRed()-20,
-	                                  c.getGreen()-10,
-	                                  c.getBlue()));
-    	}
-    	else 
-    	{
-    		return c;
-    	}
-    }
-	
 	/**
      * Paints empty rows too, after letting the UI delegate do
      * its painting.
@@ -292,9 +273,9 @@ public class TedTable extends JTable
 
         if (rowCount * rowHeight < height) {
             for (int i = rowCount; i <= height/rowHeight; ++i) {
-                g.setColor(colorForRow(i));
+                g.setColor(ttrr.colorForRow(i, (i == this.getSelectedRow())));
                 g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
-                g.setColor(Color.lightGray);
+                g.setColor(Color.LIGHT_GRAY);
                 g.drawLine(clip.x, i * rowHeight + rowHeight-1, clip.width, i * rowHeight + rowHeight -1);
             }
         }
@@ -326,5 +307,9 @@ public class TedTable extends JTable
         return false;
     }
     
-    
+    public void setRowColor(Color newColor)
+    {
+    	ttrr.setRowColor(newColor);
+    	tableUpdate();
+    }
 }

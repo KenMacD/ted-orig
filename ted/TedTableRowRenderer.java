@@ -21,6 +21,9 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 	private final ImageIcon showActive = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
 	private final ImageIcon activityIm = new ImageIcon(getClass().getClassLoader().getResource("icons/activity.gif"));
 
+	private Color rowColor = Color.LIGHT_GRAY;
+	private boolean rowColorAdjusted = false;
+
 	/**
 	 * 
 	 */
@@ -79,19 +82,27 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
     */
 	protected Color colorForRow(int row, boolean isSelected) {
 		Color c = Color.WHITE;
-	   	if (isSelected)
-	   	{
-	   		return(new Color( 61, 128, 223));
-	   	}
-	   	if( (row%2)==0)
-	   	{     return(new Color( c.getRed()-20,
-		                                  c.getGreen()-10,
-		                                  c.getBlue()));
-	   	}
-	   	else 
-	   	{
-	   		return c;
-	   	}
+    	if (isSelected)
+    	{
+    		return(new Color( 61, 128, 223));
+    	}
+    	if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
+    	{   
+    		if (rowColorAdjusted)
+    		{
+    			return rowColor;
+    		}
+    		else
+    		{
+    			return(new Color( c.getRed()-20,
+	                                  c.getGreen()-10,
+	                                  c.getBlue()));
+    		}
+    	}
+    	else 
+    	{
+    		return c;
+    	}
    }
 	
 /**
@@ -132,5 +143,10 @@ private ImageIcon getIconForShow(TedSerie show)
 		}
    }
 	
+public void setRowColor(Color newColor)
+{
+	rowColorAdjusted = true;
+	rowColor = newColor;
+}
 
 }
