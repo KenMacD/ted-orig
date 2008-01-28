@@ -218,7 +218,6 @@ public class TedTable extends JTable
 	public void fireTableDataChanged()
 	{
 		serieTableModel.fireTableDataChanged();
-		
 	}
 	
 	/**
@@ -305,11 +304,5 @@ public class TedTable extends JTable
             return (parent.getHeight() > getPreferredSize().height);
         }
         return false;
-    }
-    
-    public void setRowColor(Color newColor)
-    {
-    	ttrr.setRowColor(newColor);
-    	tableUpdate();
     }
 }

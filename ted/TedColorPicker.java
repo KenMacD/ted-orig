@@ -18,12 +18,10 @@ package ted;
  */
 public class TedColorPicker extends javax.swing.JFrame {
 
-	private TedTable serieTable;
     /** Color Picker constructor.
      * It initializes all GUI components.
      */
-    public TedColorPicker(TedTable serieTable) {
-    	this.serieTable = serieTable;
+    public TedColorPicker() {
         initComponents();
         pack();
     }
@@ -136,7 +134,7 @@ public class TedColorPicker extends javax.swing.JFrame {
     
     private void setTableColor()
     {
-    	serieTable.setRowColor(colorPreview1.getColor());
+    	TedConfig.setOddRowColor(colorPreview1.getColor());
     }
 
 

@@ -1,5 +1,6 @@
 package ted;
 
+import java.awt.Color;
 import java.util.Locale;
 
 
@@ -57,6 +58,10 @@ public class TedConfig //implements Serializable
 	private static int timesParsedSinceLastCheck = 0; 
 	private static boolean allowLogging = true;
 	private static boolean logToFile = true;
+	
+	private static Color evenRowColor     = Color.WHITE;
+	private static Color oddRowColor      = new Color(235,245,255);
+	private static Color selectedRowColor = new Color(61, 128, 223);  
 
 
 	/****************************************************
@@ -544,5 +549,34 @@ public class TedConfig //implements Serializable
 	public static boolean isLogToFile() 
 	{
 		return logToFile;
+	}
+
+	public static Color getEvenRowColor() {
+		return evenRowColor;
+	}
+
+	public static void setEvenRowColor(Color evenRowColor) 
+	{
+		TedConfig.evenRowColor = evenRowColor;
+	}
+
+	public static Color getOddRowColor() 
+	{
+		return oddRowColor;
+	}
+
+	public static void setOddRowColor(Color oddRowColor) 
+	{
+		TedConfig.oddRowColor = oddRowColor;
+	}
+
+	public static Color getSelectedRowColor()
+	{
+		return selectedRowColor;
+	}
+
+	public static void setSelectedRowColor(Color selectedRowColor)
+	{
+		TedConfig.selectedRowColor = selectedRowColor;
 	}
 }

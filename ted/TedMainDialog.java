@@ -807,7 +807,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	public void showAboutDialog() 
 	{
-		new TedAboutDialog(tedVersion, serieTable);	
+		new TedAboutDialog(tedVersion);	
 	}
 	
 	public void showPreferencesDialog()

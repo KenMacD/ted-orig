@@ -40,7 +40,6 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 	private Image logo;
 	private double version;
 	private int posSecretCode = 0;
-	private TedTable serieTable;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -49,10 +48,9 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 	 * Show the about dialog
 	 * @param version Current version of ted
 	 */
-	public TedAboutDialog(double version, TedTable serieTable)
+	public TedAboutDialog(double version)
 	{
 		this.version = version;
-		this.serieTable = serieTable;
 		this.initGUI();
 	}
 
@@ -127,7 +125,7 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 		{
 			posSecretCode = 0;
 			
-			TedColorPicker colorPicker = new TedColorPicker(serieTable);
+			TedColorPicker colorPicker = new TedColorPicker();
 			colorPicker.setVisible(true);
 		}
 		
