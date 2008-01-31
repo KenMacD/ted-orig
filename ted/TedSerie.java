@@ -984,8 +984,12 @@ public class TedSerie implements Serializable
 		{
 			TedPopupItem item = items.get(i);
 			this.autoGenerateAndAddFeedURL(item.getUrl());
-		}
-		
+		}	
+	}
+	
+	public void removeAllFeeds()
+	{
+		feeds.clear();
 	}
 
 	/**

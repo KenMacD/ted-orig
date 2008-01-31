@@ -262,6 +262,14 @@ public class FeedsPanel extends JPanel implements ActionListener
 			feedsTable.setRowSelectionInterval(selectedRow+1, selectedRow+1);
 		}
 	}
+	
+	public void removeAllFeeds()
+	{
+		for (int row = feedsTableModel.getRowCount()-1; row>=0; row--)
+		{
+			feedsTableModel.removeSerieAt(row);
+		}
+	}
 
 	/**
 	 * Stop the editing of cells in the table

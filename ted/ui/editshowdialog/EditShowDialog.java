@@ -323,14 +323,30 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		// first check for showname
 		if (this.generalPanel.checkValues())
 		{
-			this.generalPanel.saveValues(show);
+			int action = this.generalPanel.saveValues(show);
+			
+			// Generate new feeds.
+			if (action == 0)
+			{
+				feedsPanel.removeAllFeeds();
+				show.removeAllFeeds();
+				show.generateFeedLocations();
+				feedsPanel.setValues(show);
+				feedsPanel.saveValues(show);
+			}
+			// 1 means do nothing
+			// Cancel the save operation, indicated by user.
+			else if (action == 2)
+			{
+				return false;
+			}			
 			
 			if (!this.feedsPanel.checkValues())
 			{
 				//JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
-				int answer = JOptionPane.showOptionDialog(null,
-		                "This show does not have feeds yet. Do you want to auto-generate feeds for this show?",
-		                "Generate feeds?", //$NON-NLS-1$
+				int answer = JOptionPane.showOptionDialog(null, 
+						Lang.getString("TedEpisodeDialog.NoFeedsQuestion") + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"),
+						Lang.getString("TedEpisodeDialog.NoFeedsHeader"),
 		                JOptionPane.YES_NO_OPTION,
 		                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
 				

@@ -192,19 +192,47 @@ public class GeneralPanel extends JPanel
 	/**
 	 * Save filled in values into the show
 	 * @param currentSerie
+	 * @return 0: regenerate feeds
+	 * 		   1: do nothing
+	 *         2: cancel
 	 */
-	public void saveValues(TedSerie currentSerie) 
+	public int saveValues(TedSerie currentSerie) 
 	{
+		int result = 1;
 		if (this.checkValues())
 		{
-			currentSerie.setName(textName.getText());
+			String serieName = currentSerie.getName();
+			String textNameS  = textName.getText();
+						
+			// Check if the name of this show has changed, if so ask if the user wants to
+			// regenerate the feeds. 
+			if (!serieName.equals(textNameS))
+			{
+				result = JOptionPane.showConfirmDialog(null, Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") 
+														 + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"));
+				
+				// Regenerate feeds.
+				// "" is a hack for choose episode dialog.
+				if (result == 0 || serieName.equals(""))
+				{
+					currentSerie.setName(textNameS);
+					currentSerie.setSearchName(textNameS);
+					currentSerie.generateFeedLocations();
+				}
+				// result == 1 means do nothing.
+				// Cancel operation.
+				else if (result == 2)
+				{
+					return 2;
+				}
+			}
+			currentSerie.setName(textNameS);
 			currentSerie.setUsePresets(checkUpdatePresets.isSelected());
 			
 			if (currentSerie.isDaily())
 			{
 				// set date and max downloads
 				this.dailyPanel.saveValues((TedDailySerie)currentSerie);
-				
 			}
 			else
 			{
@@ -213,6 +241,7 @@ public class GeneralPanel extends JPanel
 				currentSerie.setCurrentSeason(this.seasonEpisodePanel.getSeason());
 			}
 		}
+		return result;
 	}
 
 	/**
