@@ -139,13 +139,13 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				public void valueChanged(ListSelectionEvent arg0) {
 					showsTableSelectionChanged();
 					
-				}});		
-
-			this.setSize(700, 500);
+				}});				
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		    Dimension screenSize = toolkit.getScreenSize();
+		    
+		    this.setSize((int)(screenSize.width*0.75), (int)(screenSize.height*0.75));
 
 		    //Calculate the frame location
 		    int x = (screenSize.width - this.getWidth()) / 2;

@@ -1,5 +1,6 @@
 package ted;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -42,6 +43,7 @@ public class TedMainToolBarButton extends JButton
 		this.addActionListener(tMain);
 		
 		this.setBounds(16, 16, 16, 16);
+		this.setBorder(BorderFactory.createEmptyBorder());
 		// set looks
 		this.setFont(new java.awt.Font("Dialog", //$NON-NLS-1$
 			0, 10));

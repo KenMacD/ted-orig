@@ -60,16 +60,14 @@ public class TedTableRenderer extends DefaultTableCellRenderer
     	Color c = getBackground();
     	if (isSelected)
     	{
-    		return(new Color( 61, 128, 223));
+    		return TedConfig.getSelectedRowColor();
     	}
-    	if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
-    	{     return(new Color( c.getRed()-20,
-	                                  c.getGreen()-10,
-	                                  c.getBlue()));
+    	if( (row%2)==0)
+    	{     return TedConfig.getEvenRowColor();
     	}
     	else 
     	{
-    		return c;
+    		return TedConfig.getOddRowColor();
     	}
     }
 }

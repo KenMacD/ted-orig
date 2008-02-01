@@ -436,6 +436,85 @@ public class TedSerie implements Serializable
 		}
 	}
 	
+	/**
+	 * This method reads shows.xml and generates feed urls from
+	 * the automatic feeds located in the xml file.
+	 */
+	public void generateFeedLocations() 
+	{
+		// read shows.xml
+		// get the details of the show
+		TedXMLParser parser = new TedXMLParser();
+		Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+		
+		// add auto-generated search based feeds to the show
+		Vector<TedPopupItem> items = new Vector<TedPopupItem>();
+		items = parser.getAutoFeedLocations(series);
+		
+		this.generateFeedLocations(items);
+	}
+	
+	/**
+	 * Generate feed locations from a vector of search based feeds
+	 * @param items
+	 */
+	public void generateFeedLocations(Vector<TedPopupItem> items) 
+	{		
+		this.removeAllPredefinedFeeds();
+		
+		for(int i=0; i<items.size(); i++)
+		{
+			TedPopupItem item = items.get(i);
+			this.autoGenerateAndAddFeedURL(item.getUrl());
+		}	
+	}
+	
+	/**
+	 * Removes all predefined feeds from this show
+	 */
+	public void removeAllPredefinedFeeds()
+	{
+		// backup the user defined feeds
+		Vector<TedSerieFeed> userFeeds = new Vector<TedSerieFeed>();
+		userFeeds.addAll(this.getSelfmadeFeeds());
+		
+		// clear all feeds
+		this.removeAllFeeds();
+		
+		this.setFeeds(userFeeds);
+	}
+	
+	/**
+	 * Removes all feeds from this show
+	 */
+	public void removeAllFeeds()
+	{
+		feeds.clear();
+	}
+
+	/**
+	 * Generate a feed url from a search based feed
+	 * @param url2 url of a search based feed
+	 */
+	public void autoGenerateAndAddFeedURL(String url2) 
+	{
+		if (url2.contains("#NAME#"))
+		{
+			url2 = url2.replace("#NAME#", this.getSearchName());
+			this.addPredefinedFeed(url2);
+		}
+	}
+
+	/**
+	 * Add a predefined feed to this TedSerie
+	 * @param url2 the Url of the feed
+	 */
+	private void addPredefinedFeed(String url2) 
+	{
+		TedSerieFeed newFeed = new TedSerieFeed(url2, false);
+		this.feeds.add(newFeed);	
+	}
+	
 	/****************************************************
 	 * GETTERS & SETTERS
 	 ****************************************************/
@@ -817,21 +896,19 @@ public class TedSerie implements Serializable
 	 * @param serieFeeds
 	 */
 	public void setFeeds(Vector serieFeeds)
-	{
-		
-		
+	{	
 		this.feeds = serieFeeds;
 	}
 	
-	public Vector getSelfmadeFeeds()
+	public Vector<TedSerieFeed> getSelfmadeFeeds()
 	{
-		Vector tempFeeds = this.getFeeds(); 
-		Vector selfmadeFeeds = new Vector();
+		Vector<TedSerieFeed> tempFeeds = this.getFeeds(); 
+		Vector<TedSerieFeed> selfmadeFeeds = new Vector<TedSerieFeed>();
 		TedSerieFeed temp;
 		
 		for (int i = 0; i < tempFeeds.size(); i++)
 		{
-			temp = (TedSerieFeed) this.feeds.get(i);
+			temp = this.feeds.get(i);
 
 			if (temp.getSelfmade())
 			{
@@ -974,46 +1051,7 @@ public class TedSerie implements Serializable
 		}
 	}
 	
-	/**
-	 * Generate feed locations from a vector of search based feeds
-	 * @param items
-	 */
-	public void generateFeedLocations(Vector<TedPopupItem> items) 
-	{
-		for(int i=0; i<items.size(); i++)
-		{
-			TedPopupItem item = items.get(i);
-			this.autoGenerateAndAddFeedURL(item.getUrl());
-		}	
-	}
 	
-	public void removeAllFeeds()
-	{
-		feeds.clear();
-	}
-
-	/**
-	 * Generate a feed url from a search based feed
-	 * @param url2 url of a search based feed
-	 */
-	public void autoGenerateAndAddFeedURL(String url2) 
-	{
-		if (url2.contains("#NAME#"))
-		{
-			url2 = url2.replace("#NAME#", this.getSearchName());
-			this.addPredefinedFeed(url2);
-		}
-	}
-
-	/**
-	 * Add a predefined feed to this TedSerie
-	 * @param url2 the Url of the feed
-	 */
-	private void addPredefinedFeed(String url2) 
-	{
-		TedSerieFeed newFeed = new TedSerieFeed(url2, false);
-		this.feeds.add(newFeed);	
-	}
 
 	public boolean isUseBreakScheduleEpisode() {
 		return useBreakScheduleEpisode;
@@ -1077,29 +1115,19 @@ public class TedSerie implements Serializable
 		}
 		else
 		{
-			return this.getName();
+			// remove weird chars from name
+			String result = this.getName();
+			result = result.replaceAll("[/:&*?|\"\\\\]", " ");
+			// replacing one of these chars by a space could lead to multiple spaces
+			// so we replace 2 or more spaces with a single space
+			result = result.replaceAll(" {2,}", " ");
+			return result;
 		}
 	}
 	
 	public void setSearchName(String sName)
 	{
 		this.searchName = sName;
-	}
-
-	/**
-	 * This method reads shows.xml and generates feed urls from
-	 * the automatic feeds located in the xml file.
-	 */
-	public void generateFeedLocations() 
-	{
-		// read shows.xml
-		// get the details of the show
-		TedXMLParser parser = new TedXMLParser();
-		Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
-		// add auto-generated search based feeds to the show
-		Vector<TedPopupItem> items = new Vector<TedPopupItem>();
-		items = parser.getAutoFeedLocations(series);
-		this.generateFeedLocations(items);
 	}
 		
 }

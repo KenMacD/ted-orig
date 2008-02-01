@@ -720,7 +720,7 @@ public class TedIO
     		TedLog.debug("Downloading best torrent. URL: " + url + " Name: " + name); //$NON-NLS-1$ //$NON-NLS-2$
     		// remove weird characters and spaces that can cause problems while
 			// opening the torrent
-			name = name.replaceAll("[/:*?|\"\\\\]", "");
+			name = name.replaceAll("[/:&*?|\"\\\\]", "");
 			name = name.replaceAll(" ()", ".");
          
             //create output torrent file

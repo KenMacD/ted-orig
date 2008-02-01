@@ -9,6 +9,8 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import ted.TedConfig;
+
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -38,13 +40,14 @@ public class TableRenderer extends DefaultTableCellRenderer
 	   if( !isSelected ) 
 	   {
 		  // get odd/even rows a different color
-	      Color c = table.getBackground();
-	     if( (row%2)==0 && c.getRed()>10 && c.getGreen()>10 && c.getBlue()>10 )
-	         setBackground(new Color( c.getRed()-20,
-	                                  c.getGreen()-10,
-	                                  c.getBlue()));
+	     if( (row%2)==0)
+	         setBackground(TedConfig.getEvenRowColor());
 	      else
-	         setBackground(c);
+	         setBackground(TedConfig.getOddRowColor());
+	   }
+	   else
+	   {
+		   setBackground(TedConfig.getSelectedRowColor());
 	   }
 	   
 	   return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

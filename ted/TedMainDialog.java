@@ -449,7 +449,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	private void rootWindowDeiconified(WindowEvent evt)
 	{
-		
 	}
 		
 	/**
@@ -757,6 +756,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			this.setVisible(true);
 			this.toFront();
+			this.requestFocus();
+			this.requestFocusInWindow();
 			if(!tLog.getIsClosed())
 			{
 				tLog.setVisible(true);

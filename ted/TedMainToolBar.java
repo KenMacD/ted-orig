@@ -53,8 +53,9 @@ public class TedMainToolBar extends JToolBar
 	public TedMainToolBar(TedMainDialog tMain)
 	{
 		// not floatable
-		this.setFloatable(false);		
-		this.initButtons(tMain);	
+		this.setFloatable(false);	
+		this.setRollover(true);
+		this.initButtons(tMain);
 	}
 	
 	/**

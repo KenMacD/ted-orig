@@ -382,9 +382,7 @@ public class TedParser extends Thread
 			TedLog.debug("check: " + sTitle); //$NON-NLS-1$
 			serie.setStatusString(Lang.getString("TedSerie.Checking") + " " + sTitle, tMainDialog); //$NON-NLS-1$
 			tMainDialog.repaint();
-			
-			this.checkedTorrents++;
-			
+				
 			if (torrentUrl == null)
 			{
 				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), 
@@ -587,6 +585,8 @@ public class TedParser extends Thread
 		TorrentImpl torrent;
 		TorrentState torrentState;
 		TorrentInfo torrentInfo;
+		
+		this.checkedTorrents++;
 		
 		try
 		{
@@ -944,7 +944,7 @@ public class TedParser extends Thread
 		}
 		
 		TedLog.simpleLog(generateLogMessage());
-		serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog);
+		serie.setStatusString(this.generateOverviewMessage(), tMainDialog);
 	}
 	
 	/**
@@ -1028,7 +1028,6 @@ public class TedParser extends Thread
 		else
 		{
 			TedLog.simpleLog(generateLogMessage());
-			//serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
 			serie.setStatusString(generateOverviewMessage(), tMainDialog);
 		}
 		
@@ -1063,6 +1062,8 @@ public class TedParser extends Thread
 				throw e;
 			}
 			
+			this.foundTorrents++;
+			
 			// announce to user and update serie
 			// everything went okay, notify user and save the changes
 			String message;
@@ -1092,7 +1093,6 @@ public class TedParser extends Thread
 		}
 		else
 		{
-			//serie.setStatusString(Lang.getString("TedSerie.Done"), tMainDialog); //$NON-NLS-1$
 			serie.setStatusString(generateOverviewMessage(), tMainDialog);
 		}
 		
@@ -1181,21 +1181,33 @@ public class TedParser extends Thread
 		
 		if (this.foundTorrents == 1)
 		{
-			message += "Downloaded torrent for the previous episode.";
+			message = Lang.getString("TedParser.StatusFoundTorrentForPrevious");
 		}
 		else if (this.foundTorrents > 1)
 		{
-			message = "Downloaded torrents for " + this.foundTorrents + " previous episodes.";
+			message = 
+				Lang.getString("TedParser.StatusFoundTorrentsForMultipleEpisodes1") + 
+				" " + this.foundTorrents + " " + 
+				Lang.getString("TedParser.StatusFoundTorrentsForMultipleEpisodes2") ;
 		}
-		else if (this.checkedTorrents > 0)
+		else if (this.checkedTorrents == 1)
 		{
-			message += "Found " + this.checkedTorrents + " torrents but downloaded none. Check the log for more info.";
+			message = 
+				Lang.getString("TedParser.StatusFound1ButDidNotDownload1") + 
+				" " + this.checkedTorrents + " " +
+				Lang.getString("TedParser.StatusFound1ButDidNotDownload2");
+		}
+		else if (this.checkedTorrents > 1)
+		{
+			message = 
+				Lang.getString("TedParser.StatusFoundButDidNotDownload1") + 
+				" " + this.checkedTorrents + " " +
+				Lang.getString("TedParser.StatusFoundButDidNotDownload2");
 		}
 		else 
 		{
-			message = "Found no torrents.";
+			message = Lang.getString("TedParser.StatusFoundNoTorrents");
 		}
-		
 		
 		return message;
 	}

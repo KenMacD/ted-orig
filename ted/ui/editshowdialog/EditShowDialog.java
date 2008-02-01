@@ -277,9 +277,10 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				temp = new TedSerie();
 			}
 			
-			if (this.saveShow(temp))
-			{
+			temp.setName(currentSerie.getName());
 			
+			if (this.saveShow(temp))
+			{		
 				// popup a select episode dialog
 				EpisodeChooserDialog ecd = new EpisodeChooserDialog(this);
 				ecd.loadEpisodes(temp);
@@ -320,27 +321,34 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	 */
 	private boolean saveShow(TedSerie show) 
 	{
+		String currentName = show.getName();
+		
 		// first check for showname
 		if (this.generalPanel.checkValues())
 		{
-			int action = this.generalPanel.saveValues(show);
+			this.generalPanel.saveValues(show);
 			
-			// Generate new feeds.
-			if (action == 0)
+			if (!currentName.equals(show.getName()) && !currentName.equals(""))
 			{
-				feedsPanel.removeAllFeeds();
-				show.removeAllFeeds();
-				show.generateFeedLocations();
-				feedsPanel.setValues(show);
-				feedsPanel.saveValues(show);
+				int action = JOptionPane.showConfirmDialog(null, Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") 
+						 + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"));
+				
+				// 0 means generate feeds, is done below
+				// 1 means do nothing
+				// 2 = Cancel the save operation, indicated by user.
+				if (action == 2)
+				{
+					return false;
+				}
+				else if (action == 0)
+				{
+					show.setSearchName("");
+					show.generateFeedLocations();
+					feedsPanel.setValues(show);
+					this.feedsPanel.saveValues(show);
+				}
 			}
-			// 1 means do nothing
-			// Cancel the save operation, indicated by user.
-			else if (action == 2)
-			{
-				return false;
-			}			
-			
+		
 			if (!this.feedsPanel.checkValues())
 			{
 				//JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
@@ -352,23 +360,33 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				
 				if (answer == JOptionPane.YES_OPTION)
 				{
-					// auto generate feed locations					
+					// auto generate feed locations	
+					show.removeAllFeeds();
 					show.generateFeedLocations();
 					
 					this.feedsPanel.setValues(show);
 					this.feedsPanel.saveValues(show);
 				}
 			}
-		
-			if (this.feedsPanel.checkValues() && this.filterPanel.checkValues() && this.schedulePanel.checkValues())
+			
+			if (this.feedsPanel.checkValues())
 			{
-				this.feedsPanel.saveValues(show);
-				this.filterPanel.saveValues(show);
-				this.schedulePanel.saveValues(show);
-					
-				show.checkDate();
-				show.resetStatus(true);
-				return true;
+				this.feedsPanel.saveValues(show);		
+				if (this.filterPanel.checkValues() && this.schedulePanel.checkValues())
+				{		
+					this.filterPanel.saveValues(show);
+					this.schedulePanel.saveValues(show);
+						
+					show.checkDate();
+					show.resetStatus(true);
+					// backup name
+					//this.currentSerie.setName(show.getName());
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			else
 			{
@@ -378,7 +396,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		else
 		{
 			return false;
-		}		
+		}
 	}
 
 	/**

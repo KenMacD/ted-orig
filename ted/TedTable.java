@@ -69,7 +69,7 @@ public class TedTable extends JTable
 		
 		//	disable horizontal lines in table
 		setShowHorizontalLines(true);
-		this.setGridColor(Color.LIGHT_GRAY);
+		this.setGridColor(TedConfig.getGridColor());
         setShowVerticalLines(false);
         
 		this.setRowHeight(55);
@@ -274,7 +274,7 @@ public class TedTable extends JTable
             for (int i = rowCount; i <= height/rowHeight; ++i) {
                 g.setColor(ttrr.colorForRow(i, (i == this.getSelectedRow())));
                 g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
-                g.setColor(Color.LIGHT_GRAY);
+                g.setColor(TedConfig.getGridColor());
                 g.drawLine(clip.x, i * rowHeight + rowHeight-1, clip.width, i * rowHeight + rowHeight -1);
             }
         }

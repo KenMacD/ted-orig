@@ -206,26 +206,24 @@ public class GeneralPanel extends JPanel
 						
 			// Check if the name of this show has changed, if so ask if the user wants to
 			// regenerate the feeds. 
-			if (!serieName.equals(textNameS))
+			/*if (!serieName.equals(textNameS) && !serieName.equals(""))
 			{
 				result = JOptionPane.showConfirmDialog(null, Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") 
 														 + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"));
 				
-				// Regenerate feeds.
-				// "" is a hack for choose episode dialog.
-				if (result == 0 || serieName.equals(""))
-				{
-					currentSerie.setName(textNameS);
-					currentSerie.setSearchName(textNameS);
-					currentSerie.generateFeedLocations();
-				}
 				// result == 1 means do nothing.
 				// Cancel operation.
-				else if (result == 2)
+				if (result == 2)
 				{
 					return 2;
 				}
-			}
+				if (result == 0)
+				{
+					// if user redefined showname, update searchName
+					currentSerie.setSearchName("");
+				}
+			}*/
+			
 			currentSerie.setName(textNameS);
 			currentSerie.setUsePresets(checkUpdatePresets.isSelected());
 			
