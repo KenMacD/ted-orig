@@ -65,6 +65,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private FeedsPanel feedsPanel;
 	private FilterPanel filterPanel;
 	private SchedulePanel schedulePanel;
+	private String currentSerieName;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -82,6 +83,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		this.tedDialog = frame;
 		this.currentSerie = serie;
 		this.newSerie = newSerie;
+		this.currentSerieName = serie.getName();
 		this.initGUI();
 	}
 
@@ -321,7 +323,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	 */
 	private boolean saveShow(TedSerie show) 
 	{
-		String currentName = show.getName();
+		String currentName = this.currentSerieName;
 		
 		// first check for showname
 		if (this.generalPanel.checkValues())
@@ -380,7 +382,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 					show.checkDate();
 					show.resetStatus(true);
 					// backup name
-					//this.currentSerie.setName(show.getName());
+					this.currentSerieName = show.getName();
 					return true;
 				}
 				else
