@@ -146,6 +146,13 @@ else if (strpos($url, "torrentbytes.net") !== false)
 	// paste name behind url
 	$torrentUrl = "$torrentUrl&name=$name";
 }
+else if (strpos($url, "fenopy.com") !== false)
+{
+	// url in rss: http://fenopy.com/torrent/Lost_S04E01_HDTV_XViD_Caph__eztv_/MTA3MjQ4Mw==/index.html
+	// has to be: http://fenopy.com/torrent/Lost_S04E01_HDTV_XViD_Caph__eztv_/MTA3MjQ4Mw==/download.torrent
+	// get name parameter from url
+	$torrentUrl = str_replace("index.html", "download.torrent", $torrentUrl);
+}
 else
 {
 	$torrentUrl = "null";
