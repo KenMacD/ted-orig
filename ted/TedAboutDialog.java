@@ -114,7 +114,7 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		String secretCode = "Henk";
+		String secretCode = "colors";
 		
 		if (arg0.getKeyChar() == secretCode.charAt(posSecretCode))
 		{
@@ -127,6 +127,7 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 			
 			TedColorPicker colorPicker = new TedColorPicker();
 			colorPicker.setVisible(true);
+			this.setVisible(false);
 		}
 		
 	}

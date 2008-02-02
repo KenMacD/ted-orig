@@ -129,7 +129,7 @@ public class TedColorPicker extends javax.swing.JFrame {
      * @param evt WindowEvent instance passed from windowClosing event.
      */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
-        System.exit(0);
+       	this.setVisible(false);
     }//GEN-LAST:event_exitForm
     
     private void setTableColor()
