@@ -45,7 +45,7 @@ public class TedMainToolBarButton extends JButton
 		this.addActionListener(tMain);
 		
 		this.setBounds(16, 16, 16, 16);
-		this.setBorder(BorderFactory.createEmptyBorder(1, 3, 1, 3));
+		this.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 		// set looks
 		this.setFont(new java.awt.Font("Dialog", //$NON-NLS-1$
 			0, 10));
