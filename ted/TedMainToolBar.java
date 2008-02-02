@@ -87,13 +87,9 @@ public class TedMainToolBar extends JToolBar
 				"Parse", tMain);
 		
 		this.add(btn_AddShow);		
-		this.addSeparator(new Dimension (7, 0));
 		this.add(btn_Delete);
-		this.addSeparator(new Dimension (7, 0));
 		this.add(btn_Edit);
-		this.addSeparator(new Dimension (7, 0));
 		this.add(btn_Parse);
-		this.addSeparator(new Dimension (7, 0));
 	}
 
 	/**
