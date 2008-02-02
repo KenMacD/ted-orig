@@ -288,7 +288,7 @@ public class TedTable extends JTable
             // text
             g.setColor(Color.BLACK);
             g.setFont(new java.awt.Font("Dialog",0,10));
-            g.drawString("Please add a show to ted", clip.x+40, 14);
+            g.drawString(Lang.getString("TedMainDialog.PleaseAddShows"), clip.x+40, 14);
         }
     }
     

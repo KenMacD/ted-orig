@@ -1,4 +1,4 @@
-package ted;
+package ted.ui.editshowdialog;
 
 import javax.swing.JMenuItem;
 
@@ -27,7 +27,7 @@ import javax.swing.JMenuItem;
  * which action has to be done after selecting an item from the TedPopupMenu.
  *
  */
-public class TedPopupItem extends JMenuItem
+public class FeedPopupItem extends JMenuItem
 {	
 	private String name;
 	private String url;
@@ -46,7 +46,7 @@ public class TedPopupItem extends JMenuItem
 	 * @param feed The location of the feed
 	 * @param type identifier for the menu item
 	 */
-	public TedPopupItem(String name, String feed, String website, int type)
+	public FeedPopupItem(String name, String feed, String website, int type)
 	{
 		this.setName(name);
 		this.url = feed;
@@ -54,7 +54,7 @@ public class TedPopupItem extends JMenuItem
 		this.type = type;
 	}
 
-	public TedPopupItem() {
+	public FeedPopupItem() {
 	}
 
 	public String getName() {

@@ -20,8 +20,6 @@ import ted.Lang;
 import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedMainDialog;
-import ted.TedPopupItem;
-import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedSystemInfo;
 import ted.TedXMLParser;
@@ -205,7 +203,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		
 	}
 	
-	private TedPopupMenu initPopupMenu()
+	private FeedPopupMenu initPopupMenu()
 	{	
 		Vector items = new Vector();
 		
@@ -213,7 +211,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		Element e = p.readXMLFromFile(TedIO.XML_SHOWS_FILE);
 		items = p.getPopupItems(e);
 		
-		return new ted.TedPopupMenu(this, items);
+		return new ted.ui.editshowdialog.FeedPopupMenu(this, items);
 	}
 
 	/**
@@ -400,6 +398,34 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			return false;
 		}
 	}
+	
+	/**
+	 * Automatically gerenerate feeds from the show name
+	 */
+	public void generateFeeds()
+	{
+		if (this.generalPanel.checkValues())
+		{
+			// create a temp show with filled in values
+			TedSerie temp;
+			if (this.currentSerie.isDaily())
+			{
+				temp = new TedDailySerie();
+			}
+			else
+			{
+				temp = new TedSerie();
+			}
+			
+			temp.setName(this.getShowName());
+			// auto generate feed locations	
+			temp.removeAllFeeds();
+			temp.generateFeedLocations();
+			
+			this.feedsPanel.setValues(temp);
+			this.feedsPanel.saveValues(temp);	
+		}
+	}
 
 	/**
 	 * @return The name of the show
@@ -454,5 +480,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		}
 		
 	}
+	
+
 
 }

@@ -30,6 +30,8 @@ import javax.swing.JOptionPane;
 
 import org.w3c.dom.Element;
 
+import ted.ui.editshowdialog.FeedPopupItem;
+
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
  * 
@@ -47,7 +49,7 @@ import org.w3c.dom.Element;
  */
 public class TedIO 
 {
-	private String XMLurl = "http://ted.sourceforge.net/shows.xml"; //$NON-NLS-1$
+	private String XMLurl = "http://ted.sourceforge.net/shows_clean.xml"; //$NON-NLS-1$
 	private String versionUrl = "http://ted.sourceforge.net/version.txt";
 	
 	private static String CONFIG_FILE = TedSystemInfo.getUserDirectory()+"config.ted"; //$NON-NLS-1$
@@ -595,7 +597,7 @@ public class TedIO
 					// add auto-generated search based feeds to the show
 					// do this after AutoFillInPresets, 'cause that will reset the feeds
 					// of the serie
-					Vector<TedPopupItem> items = new Vector<TedPopupItem>();
+					Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
 					items = parser.getAutoFeedLocations(el);
 					serie.generateFeedLocations(items);
 				}

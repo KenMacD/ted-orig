@@ -1,5 +1,6 @@
 package ted;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,6 +71,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
 	private ImageIcon tedIdleIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 	private ImageIcon tedActiveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
+	private final Font SMALL_FONT = new Font("Dialog",0,10);
 	
 	private JLabel label_count;
 	private JScrollPane jScrollPane1;
@@ -191,10 +193,12 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			jPanel1 = new JPanel();
 			this.getContentPane().add(jPanel1);
 			jPanel1.setMaximumSize(new java.awt.Dimension(32767, 20));
+			
 
 			// add toolbar to panel
 			TedToolBar = new TedMainToolBar(this);
 			jPanel1.add(TedToolBar);
+			//jPanel1.setAlignmentX(JPanel.RIGHT_ALIGNMENT);
 			
 			// add scrollpane to panel
 			jScrollPane1 = new JScrollPane();
@@ -214,6 +218,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			jStatusPanelLayout.setColumns(3);
 			jStatusPanelLayout.setHgap(5);
 			jStatusPanelLayout.setVgap(5);
+			jStatusPanel.setFont(this.SMALL_FONT);
 			jStatusPanel.setLayout(jStatusPanelLayout);
 			getContentPane().add(jStatusPanel);
 			jStatusPanel.setPreferredSize(new java.awt.Dimension(455, 18));
@@ -223,7 +228,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			jStatusPanel.add(label_count);
 			FlowLayout label_countLayout = new FlowLayout();
 			label_count.setLayout(label_countLayout);
-			label_count.setBounds(0, 0, 189, 14);
+			label_count.setFont(this.SMALL_FONT);
+			label_count.setBounds(10, 0, 189, 14);
 			label_count.setPreferredSize(new java.awt.Dimension(424, 17));		
 			
 		} 
@@ -756,8 +762,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			this.setVisible(true);
 			this.toFront();
-			this.requestFocus();
-			this.requestFocusInWindow();
 			if(!tLog.getIsClosed())
 			{
 				tLog.setVisible(true);
@@ -779,6 +783,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			tParseHandler.stopParsing();
 			this.TedToolBar.setParseButtonStatus(false);
 			this.TedToolBar.setParseButtonText(Lang.getString("TedMainDialog.ButtonCheckShowsStopping"));
+			this.resetStatusOfAllShows(true);
 		}
 		else if(action.equals("About ted")) //$NON-NLS-1$
 		{
@@ -912,6 +917,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	/**
 	 *  Reset all statusmessages for all series in the window to the default
+	 * @param resetCheck Reset status messages of shows with status CHECK?
 	 */
 	private void resetStatusOfAllShows(Boolean resetCheck)
 	{

@@ -1,5 +1,7 @@
 package ted;
 
+import java.awt.Insets;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

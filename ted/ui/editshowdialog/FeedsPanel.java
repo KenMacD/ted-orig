@@ -25,7 +25,6 @@ import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedFeedsTableModel;
 import ted.TedMainDialog;
-import ted.TedPopupMenu;
 import ted.TedSerie;
 import ted.TedSerieFeed;
 import ted.ui.TableRenderer;
@@ -59,9 +58,9 @@ public class FeedsPanel extends JPanel implements ActionListener
 	private JToolBar feedsToolBar;
 	private TedFeedsTableModel feedsTableModel = new TedFeedsTableModel();
 	MouseListener popupListener = new PopupListener();
-	private TedPopupMenu findRSSPopupMenu;
+	private FeedPopupMenu findRSSPopupMenu;
 
-	public FeedsPanel(TedPopupMenu tpm)
+	public FeedsPanel(FeedPopupMenu tpm)
 	{
 		this.findRSSPopupMenu = tpm;
 		this.initUI();

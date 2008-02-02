@@ -1,5 +1,8 @@
 package ted;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JToolBar;
 
 /**
@@ -54,7 +57,6 @@ public class TedMainToolBar extends JToolBar
 	{
 		// not floatable
 		this.setFloatable(false);	
-		this.setRollover(true);
 		this.initButtons(tMain);
 	}
 	
@@ -69,25 +71,29 @@ public class TedMainToolBar extends JToolBar
 				"TedMainDialog.ButtonToolTipAddShow",
 				"New", tMain);
 		
-		this.add(btn_AddShow);
-		
 		btn_Delete = new TedMainToolBarButton("icons/TedMainDialog.deleteshow32.png",
 				"TedMainDialog.ButtonDeleteShow",
 				"TedMainDialog.ButtonToolTipDeleteShow",
 				"Delete", tMain);
-		this.add(btn_Delete);
 		
 		btn_Edit = new TedMainToolBarButton("icons/TedMainDialog.editshow32.png",
 				"TedMainDialog.ButtonEditShow",
 				"TedMainDialog.ButtonToolTipEditShow",
-				"Edit", tMain);
-		this.add(btn_Edit);
+				"Edit", tMain);	
 		
 		btn_Parse = new TedMainToolBarButton(this.startCheckingIcon,
 				"TedMainDialog.ButtonCheckShows",
 				"TedMainDialog.ButtonToolTipCheckShows",
 				"Parse", tMain);
+		
+		this.add(btn_AddShow);		
+		this.addSeparator(new Dimension (7, 0));
+		this.add(btn_Delete);
+		this.addSeparator(new Dimension (7, 0));
+		this.add(btn_Edit);
+		this.addSeparator(new Dimension (7, 0));
 		this.add(btn_Parse);
+		this.addSeparator(new Dimension (7, 0));
 	}
 
 	/**

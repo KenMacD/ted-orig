@@ -8,6 +8,7 @@ import java.util.Vector;
 import org.w3c.dom.Element;
 
 import ted.datastructures.SeasonEpisode;
+import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -448,7 +449,7 @@ public class TedSerie implements Serializable
 		Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 		
 		// add auto-generated search based feeds to the show
-		Vector<TedPopupItem> items = new Vector<TedPopupItem>();
+		Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
 		items = parser.getAutoFeedLocations(series);
 		
 		this.generateFeedLocations(items);
@@ -458,13 +459,13 @@ public class TedSerie implements Serializable
 	 * Generate feed locations from a vector of search based feeds
 	 * @param items
 	 */
-	public void generateFeedLocations(Vector<TedPopupItem> items) 
+	public void generateFeedLocations(Vector<FeedPopupItem> items) 
 	{		
 		this.removeAllPredefinedFeeds();
 		
 		for(int i=0; i<items.size(); i++)
 		{
-			TedPopupItem item = items.get(i);
+			FeedPopupItem item = items.get(i);
 			this.autoGenerateAndAddFeedURL(item.getUrl());
 		}	
 	}
@@ -1109,7 +1110,7 @@ public class TedSerie implements Serializable
 	
 	public String getSearchName()
 	{
-		if (searchName !="")
+		if (!searchName.equals(""))
 		{
 			return this.searchName;
 		}

@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import ted.datastructures.SimpleTedSerie;
+import ted.ui.editshowdialog.FeedPopupItem;
 
 public class TedXMLParser 
 {
@@ -408,10 +409,10 @@ public class TedXMLParser
 		return version;
 	}
 	
-	public Vector<TedPopupItem> getPopupItems(Element nodelist)
+	public Vector<FeedPopupItem> getPopupItems(Element nodelist)
 	{
-		Vector<TedPopupItem> v = new Vector<TedPopupItem>();
-		TedPopupItem pi;
+		Vector<FeedPopupItem> v = new Vector<FeedPopupItem>();
+		FeedPopupItem pi;
 		NodeList nl = nodelist.getElementsByTagName("rsslocations");
 		
 		if(nl!=null && nl.getLength()>0)
@@ -427,7 +428,7 @@ public class TedXMLParser
 				String website = getTextValue(e, "website");
 				int type = getIntValue(e, "type");
 				
-				pi = new TedPopupItem(elName, location, website, type);
+				pi = new FeedPopupItem(elName, location, website, type);
 				v.add(pi);
 			}
 		}
@@ -435,10 +436,10 @@ public class TedXMLParser
 		return v;
 	}
 	
-	public Vector<TedPopupItem> getAutoFeedLocations(Element nodelist)
+	public Vector<FeedPopupItem> getAutoFeedLocations(Element nodelist)
 	{
-		Vector<TedPopupItem> v = new Vector<TedPopupItem>();
-		TedPopupItem pi;
+		Vector<FeedPopupItem> v = new Vector<FeedPopupItem>();
+		FeedPopupItem pi;
 		NodeList nl = nodelist.getElementsByTagName("rsslocations");
 		
 		if(nl!=null && nl.getLength()>0)
@@ -450,14 +451,14 @@ public class TedXMLParser
 			{
 				Element e = (Element)nl1.item(i);
 				int type = getIntValue(e, "type");
-				if (type == TedPopupItem.IS_SEARCH_AND_AUTO)
+				if (type == FeedPopupItem.IS_SEARCH_AND_AUTO)
 				{
 					String elName = getTextValue(e, "name");
 					String location = getTextValue(e, "feed");
 					String website = getTextValue(e, "website");
 					
 					
-					pi = new TedPopupItem(elName, location, website, type);
+					pi = new FeedPopupItem(elName, location, website, type);
 					v.add(pi);
 				}
 			}

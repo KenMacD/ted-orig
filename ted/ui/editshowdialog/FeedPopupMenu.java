@@ -1,4 +1,4 @@
-package ted;
+package ted.ui.editshowdialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +9,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
-import ted.ui.editshowdialog.EditShowDialog;
+import ted.BrowserLauncher;
+import ted.Lang;
 
 /**
  * @author Joost
@@ -18,15 +19,15 @@ import ted.ui.editshowdialog.EditShowDialog;
  * done is determined by the type the menu item has.
  *
  */
-public class TedPopupMenu extends JPopupMenu implements ActionListener
+public class FeedPopupMenu extends JPopupMenu implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	private Vector<TedPopupItem> allItems = new Vector<TedPopupItem>();
-	private Vector<TedPopupItem> search   = new Vector<TedPopupItem>();
-	private Vector<TedPopupItem> category = new Vector<TedPopupItem>();
-	private Vector<TedPopupItem> general  = new Vector<TedPopupItem>();
-	private TedPopupItem help;
+	private Vector<FeedPopupItem> allItems = new Vector<FeedPopupItem>();
+	private Vector<FeedPopupItem> search   = new Vector<FeedPopupItem>();
+	private Vector<FeedPopupItem> category = new Vector<FeedPopupItem>();
+	private Vector<FeedPopupItem> general  = new Vector<FeedPopupItem>();
+	private FeedPopupItem help;
 
 	private EditShowDialog dialog;
 
@@ -35,7 +36,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	 * @param v The vector containing the JPopupItems
 	 * @param dialog2 The Episode Dialog that initialized this menu
 	 */
-	public TedPopupMenu(EditShowDialog dialog2, Vector<TedPopupItem> v)
+	public FeedPopupMenu(EditShowDialog dialog2, Vector<FeedPopupItem> v)
 	{
 		dialog = dialog2;
 		
@@ -43,15 +44,15 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		this.allItems = v;
 			
 		// add the "add empty" item
-		TedPopupItem pi = new TedPopupItem();
+		FeedPopupItem pi = new FeedPopupItem();
 		pi.setName(Lang.getString("TedEpisodeDialog.FeedsTable.UserDefined"));
 		pi.setActionCommand("empty");
-		pi.setType(TedPopupItem.IS_EMPTY);
+		pi.setType(FeedPopupItem.IS_EMPTY);
 		this.addItem(pi);
-		pi = new TedPopupItem();
+		pi = new FeedPopupItem();
 		pi.setName(Lang.getString("TedEpisodeDialog.FeedsTable.Automatic"));
 		pi.setActionCommand("auto");
-		pi.setType(TedPopupItem.IS_EMPTY);
+		pi.setType(FeedPopupItem.IS_EMPTY);
 		this.addItem(pi);
 		this.addSeparator();
 		
@@ -72,22 +73,22 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	 * Divides the given vector in groups based on the type of the 
 	 * JPopupItem 
 	 */
-	private void divideMenu(Vector<TedPopupItem> v)
+	private void divideMenu(Vector<FeedPopupItem> v)
 	{
-		TedPopupItem item;
+		FeedPopupItem item;
 		int type;
 		for(int i=0; i<v.size(); i++)
 		{
-			item = (TedPopupItem)v.get(i);
+			item = (FeedPopupItem)v.get(i);
 			type = item.getType();
 			
-			if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
+			if(type==FeedPopupItem.IS_SEARCH_BASED || type == FeedPopupItem.IS_SEARCH_AND_AUTO)
 				search.add(item);
-			else if(type==TedPopupItem.IS_CATEGORY_BASED)
+			else if(type==FeedPopupItem.IS_CATEGORY_BASED)
 				category.add(item);
-			else if(type==TedPopupItem.IS_GENERAL_FEED)
+			else if(type==FeedPopupItem.IS_GENERAL_FEED)
 				general.add(item);
-			else if(type==TedPopupItem.IS_HELP)
+			else if(type==FeedPopupItem.IS_HELP)
 			{
 				help = item;
 				item.setName(Lang.getString("TedEpisodeDialog.Help"));
@@ -98,13 +99,13 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	/**
 	 * Add the items from the vector to the menu
 	 */
-	private void setMenu(Vector<TedPopupItem> v)
+	private void setMenu(Vector<FeedPopupItem> v)
 	{
 		if(v.size()!=0)
 		{
 			for(int i=0; i<v.size(); i++)
 			{
-				TedPopupItem pi = (TedPopupItem)v.get(i);
+				FeedPopupItem pi = (FeedPopupItem)v.get(i);
 				this.addItem(pi);
 			}
 			this.addSeparator();
@@ -112,7 +113,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 	}
 	
 	
-	private void addItem(TedPopupItem item) 
+	private void addItem(FeedPopupItem item) 
 	{
 		item.addActionListener(this);
 		this.add(item);
@@ -121,28 +122,28 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		TedPopupItem item;
+		FeedPopupItem item;
 		int type;
 		String action = arg0.getActionCommand();
 		
 		for(int i=0; i<allItems.size(); i++)
 		{
-			item = (TedPopupItem)allItems.get(i);
+			item = (FeedPopupItem)allItems.get(i);
 			type = item.getType();
 			
 			if(item.getName().equals(action))
 			{
-				if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
+				if(type==FeedPopupItem.IS_SEARCH_BASED || type == FeedPopupItem.IS_SEARCH_AND_AUTO)
 					this.openOptionDialog(item.getUrl(), item.getWebsite(), item.getType());
-				else if(type==TedPopupItem.IS_CATEGORY_BASED)
+				else if(type==FeedPopupItem.IS_CATEGORY_BASED)
 				{
 					// open website and add empty feed placeholder
 					this.openUrl(item.getUrl());
 					dialog.addFeed();
 				}
-				else if(type==TedPopupItem.IS_GENERAL_FEED)
+				else if(type==FeedPopupItem.IS_GENERAL_FEED)
 					this.openOptionDialog(item.getUrl(), item.getWebsite(), item.getType());
-				else if(type==TedPopupItem.IS_HELP)
+				else if(type==FeedPopupItem.IS_HELP)
 					this.openUrl(item.getUrl());
 				
 				return;
@@ -155,8 +156,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		}
 		else if (action.equals("auto"))
 		{
-			// automatically generate feeds
-			// TODO
+			dialog.generateFeeds();
 		}
 	}
 	
@@ -177,7 +177,7 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 		String question;
 		
 		// decide which question has to be shown
-		if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
+		if(type==FeedPopupItem.IS_SEARCH_BASED || type == FeedPopupItem.IS_SEARCH_AND_AUTO)
 			question = Lang.getString("TedEpisodeDialog.DialogFindSearch");
 		else
 			question = Lang.getString("TedEpisodeDialog.DialogFindGeneral");
@@ -195,9 +195,9 @@ public class TedPopupMenu extends JPopupMenu implements ActionListener
 			 if(!name.equals(""))
 			 {
 				 // do action based on type
-				 if(type==TedPopupItem.IS_SEARCH_BASED || type == TedPopupItem.IS_SEARCH_AND_AUTO)
+				 if(type==FeedPopupItem.IS_SEARCH_BASED || type == FeedPopupItem.IS_SEARCH_AND_AUTO)
 					 url = url.replace("#NAME#", name); // add name to rss query
-				 else if(type==TedPopupItem.IS_GENERAL_FEED)
+				 else if(type==FeedPopupItem.IS_GENERAL_FEED)
 					 dialog.addKeywords(name); // use general feeds combined with keywords
 					 
 				 dialog.addFeed(url);
