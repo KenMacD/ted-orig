@@ -65,7 +65,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 ****************************************************/
 	private static final long serialVersionUID = 3722636937353936684L;
 
-	private static final double tedVersion = 0.91;
+	private static final double tedVersion = 0.92;
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
@@ -351,6 +351,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
 			TedIO tio = new TedIO();
 			tio.downloadXML(this, TedConfig.getTimeOutInSecs(), -1);
+			tio.UpdateShow(this, true, this.serieTable);
 		}
 		// check to see if there is a new shows.xml file available
 		else if (TedConfig.isAutoUpdateFeedList() || TedConfig.askAutoUpdateFeedList())
@@ -596,7 +597,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("New")) //$NON-NLS-1$
 		{
-			new AddShowDialog(this);
+			AddShowDialog asd = new AddShowDialog(this);
 		}
 		else if(action.equals("Exit")) //$NON-NLS-1$
 		{

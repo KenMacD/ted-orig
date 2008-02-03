@@ -54,7 +54,7 @@ public class TedIO
 	
 	private static String CONFIG_FILE = TedSystemInfo.getUserDirectory()+"config.ted"; //$NON-NLS-1$
 	private static String SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows.ted"; //$NON-NLS-1$
-	public static String XML_SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows.xml"; //$NON-NLS-1$
+	public static String XML_SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows_clean.xml"; //$NON-NLS-1$
 	
 	/****************************************************
 	 * CONSTRUCTORS

@@ -231,16 +231,18 @@ public class TedMainMenuBar extends JMenuBar
 			webItem.setActionCommand("opensite"); //$NON-NLS-1$
 			webItem.addActionListener(tMain);
 			jMenu5.add(webItem);
-			
-			// sperate
-			jSeparator1 = new JSeparator();
-			jMenu5.add(jSeparator1);
-			// about ted
-			aboutItem = new JMenuItem();
-			jMenu5.add(aboutItem);
-			aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
-			aboutItem.setActionCommand("About ted"); //$NON-NLS-1$
-			aboutItem.addActionListener(tMain);
+			if (!TedSystemInfo.osIsMac())
+			{
+				// sperate
+				jSeparator1 = new JSeparator();
+				jMenu5.add(jSeparator1);
+				// about ted
+				aboutItem = new JMenuItem();
+				jMenu5.add(aboutItem);
+				aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
+				aboutItem.setActionCommand("About ted"); //$NON-NLS-1$
+				aboutItem.addActionListener(tMain);
+			}
 		}
 		this.updateText();
 	}
@@ -254,6 +256,7 @@ public class TedMainMenuBar extends JMenuBar
 		{
 			exitMenuItem.setText(Lang.getString("TedMainMenuBar.File.Exit")); //$NON-NLS-1$
 			cutMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Preferences")); //$NON-NLS-1$
+			aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
 		}
 		
 		// edit menu
@@ -291,7 +294,7 @@ public class TedMainMenuBar extends JMenuBar
 		webItem.setText(Lang.getString("TedMainMenuBar.Help.TedOnline")); //$NON-NLS-1$
 	
 		this.donateItem.setText(Lang.getString("TedMainMenuBar.Help.Donate")); //$NON-NLS-1$
-		aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
+		
 	
 		subUpdateMenu.setText(Lang.getString("TedMainMenuBar.Help.SubSoftware"));
 		
