@@ -741,7 +741,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			}
 			else
 			{
-				TedLog.error("shows.xml file is corrupt");
+				TedLog.error("shows_clean.xml file is corrupt");
 			}
 		}
 		else if (action.equals("buyDVDselectedshow"))
@@ -1036,7 +1036,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else
 		{
-			TedLog.error("shows.xml file is corrupt");
+			TedLog.error("shows_clean.xml file is corrupt");
 		}
 		
 	}

@@ -3,6 +3,7 @@ package ted;
 /****************************************************
  * IMPORTS
  ****************************************************/
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -57,7 +58,15 @@ public class TedLog
 		{
 			Calendar c = new GregorianCalendar();
 			Date d = new Date(c.getTimeInMillis());
-	        String entry = d.toString() + ": " + s + System.getProperty("line.separator");
+			DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+			DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
+			String formattedDate = df.format(d);
+			String formattedTime = tf.format(d);
+	        String entry = 
+	        	formattedDate + " @ " + 
+	        	formattedTime + ": " + 
+	        	s + 
+	        	System.getProperty("line.separator");
 	        
 	        //just in case something goes wrong, at least we get a msg
 	        try 

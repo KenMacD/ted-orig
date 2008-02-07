@@ -74,7 +74,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 			this.setLayout(thisLayout);
 
 			feedsToolBar = new JToolBar();
-			this.add(feedsToolBar, BorderLayout.CENTER);
+			this.add(feedsToolBar, BorderLayout.SOUTH);
 			feedsToolBar.setFloatable(false);
 			feedsToolBar.setBorderPainted(false);
 			
@@ -91,12 +91,14 @@ public class FeedsPanel extends JPanel implements ActionListener
 				.getResource("icons/Cancel.png")));
 			jButtonDelete.setBounds(96, 248, 105, 21);
 
+			feedsToolBar.addSeparator();
 			jOpenButton = new JButton();
 			feedsToolBar.add(jOpenButton);
 			jOpenButton.setActionCommand("openfeed");
 			jOpenButton.setBounds(205, 248, 70, 21);
+			jOpenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/EditShowDialog-feeds-open.png")));
 
-			
+			feedsToolBar.addSeparator();
 
 			jButtonMoveFeedDown = new JButton();
 			feedsToolBar.add(jButtonMoveFeedDown);
@@ -123,8 +125,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 
 			jScrollPane1 = new JScrollPane();
 			this.add(jScrollPane1, BorderLayout.NORTH);
-			jScrollPane1.setPreferredSize(new java.awt.Dimension(453, 243));
-			jScrollPane1.setBounds(14, 133, 441, 84);
+			jScrollPane1.setPreferredSize(new java.awt.Dimension(453, 300));
 
 			feedsTable = new JTable();
 			jScrollPane1.setViewportView(feedsTable);
@@ -146,8 +147,8 @@ public class FeedsPanel extends JPanel implements ActionListener
 			column.setMaxWidth(100);
 			column.setMinWidth(100);
 
-			jButtonDelete.setText(Lang
-				.getString("TedEpisodeDialog.ButtonDeleteFeed"));
+			/*jButtonDelete.setText(Lang
+				.getString("TedEpisodeDialog.ButtonDeleteFeed"));*/
 			jButtonDelete.setToolTipText(Lang
 				.getString("TedEpisodeDialog.ButtonToolTipDeleteFeed"));
 
@@ -155,7 +156,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 			jOpenButton.setToolTipText(Lang
 				.getString("TedEpisodeDialog.ButtonToolTipOpen"));
 
-			jFindButton.setText(Lang.getString("TedEpisodeDialog.ButtonAddFeed"));
+			/*IjFindButton.setText(Lang.getString("TedEpisodeDialog.ButtonAddFeed"));*/
 			jFindButton.setToolTipText(Lang
 				.getString("TedEpisodeDialog.ButtonToolTipAddFeed"));
 
