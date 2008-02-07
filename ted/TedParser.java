@@ -222,8 +222,8 @@ public class TedParser extends Thread
 		
 		parseLogInfo = new String[this.totalNumberOfFeedItems+1][2];
 		
-		parseLogInfo[0][0] = "\nParse results for " + currentSerie.getName() 
-			+ " " + currentSerie.getSearchForString();
+		parseLogInfo[0][0] = "\n"+ Lang.getString("TedLog.ParseResults") +" " + currentSerie.getName() 
+			+ " - " + currentSerie.getSearchForString();
 		
 		Vector feeds = serie.getFeeds();
 		
@@ -1176,7 +1176,6 @@ public class TedParser extends Thread
 	
 	private String generateOverviewMessage()
 	{
-		//TODO: translate and make sure daily shows also count checked torrents and found torrents
 		String message = "";	
 		
 		if (this.foundTorrents == 1)
@@ -1216,40 +1215,48 @@ public class TedParser extends Thread
 	{
 		String logMessage = parseLogInfo[0][0] + "\n---------------\n";
 		
-		logMessage += "Found\n";
-		for (int i = 1; i < parseLogInfo.length; i++)
+		if (checkedTorrents > 0)
 		{
-			if (parseLogInfo[i][0] != null)
-				logMessage += i + ". " + parseLogInfo[i][0] + "\n";
-		}
-		logMessage += "---------------\n";
-		
-		
-		logMessage += "Rejected\n";
-		for (int i = 1; i < parseLogInfo.length; i++)
-		{
-			if (parseLogInfo[i][0] != null && parseLogInfo[i][1] != Lang.getString("TedLog.BestTorrent"))
-				logMessage += i + ". " + parseLogInfo[i][1] + "\n";
-		}
-		logMessage += "---------------\n";
-		
-		
-		boolean foundBest = false;
-		logMessage += "Downloaded\n";
-		for (int i = 1; i < parseLogInfo.length; i++)
-		{
-			if(parseLogInfo[i][1] == Lang.getString("TedLog.BestTorrent"))
+			logMessage += Lang.getString("TedLog.Found")+"\n";
+			for (int i = 1; i < parseLogInfo.length; i++)
 			{
-				logMessage += i + ". " + parseLogInfo[i][0] + "\n";
-				foundBest = true;
+				if (parseLogInfo[i][0] != null)
+					logMessage += i + ". " + parseLogInfo[i][0] + "\n";
+			}
+			logMessage += "---------------\n";
+			
+			
+			logMessage += Lang.getString("TedLog.Rejected")+"\n";
+			for (int i = 1; i < parseLogInfo.length; i++)
+			{
+				if (parseLogInfo[i][0] != null && parseLogInfo[i][1] != Lang.getString("TedLog.BestTorrent"))
+					logMessage += i + ". " + parseLogInfo[i][1] + "\n";
+			}
+			logMessage += "---------------\n";
+			
+			boolean foundBest = false;
+			logMessage += Lang.getString("TedLog.Downloaded")+"\n";
+			for (int i = 1; i < parseLogInfo.length; i++)
+			{
+				if(parseLogInfo[i][1] == Lang.getString("TedLog.BestTorrent"))
+				{
+					logMessage += i + ". " + parseLogInfo[i][0] + "\n";
+					foundBest = true;
+				}
+			}
+			
+			if(!foundBest)
+			{
+				logMessage += Lang.getString("TedLog.NoneDownloaded")+"\n";
 			}
 		}
-		
-		if(!foundBest)
+		else
 		{
-			logMessage += "None found\n";
+			logMessage += Lang.getString("TedLog.Found")+"\n";
+			logMessage += Lang.getString("TedLog.NoneFound")+"\n";
 		}
-		logMessage += "---------------\n";
+		
+		logMessage += "\n------------------------------------\n";		
 		
 		return logMessage;
 	}
