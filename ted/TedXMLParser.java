@@ -53,11 +53,11 @@ public class TedXMLParser
 		} 
 		catch (SAXException e1) 
 		{
-			TedLog.error(e1, "XML parsing error, shows.xml couldn't be found");
+			TedLog.error(e1, "XML parsing error, shows_clean.xml couldn't be found");
 		} 
 		catch (IOException e1) 
 		{
-			TedLog.error(e1, "XML parsing error, shows.xml couldn't be read");
+			TedLog.error(e1, "XML parsing error, shows_clean.xml couldn't be read");
 		} 
 		catch (ParserConfigurationException e1) 
 		{
