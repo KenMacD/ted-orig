@@ -124,7 +124,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 			jButtonDelete.addActionListener(this);
 
 			jScrollPane1 = new JScrollPane();
-			this.add(jScrollPane1, BorderLayout.NORTH);
+			this.add(jScrollPane1, BorderLayout.CENTER);
 			jScrollPane1.setPreferredSize(new java.awt.Dimension(453, 300));
 
 			feedsTable = new JTable();

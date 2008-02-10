@@ -167,7 +167,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 					Lang.getString("TedMainDialog.DialogStartup3")); //$NON-NLS-1$
 			
 			// set initial size of maindialog
-			this.setSize(400, 500);
+			this.setSize(350, 500);
 			this.setLocation(20, 20);
 			
 			new TedConfigDialog(this, false);
