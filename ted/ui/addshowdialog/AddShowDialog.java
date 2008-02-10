@@ -552,18 +552,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		}
 	}
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		searchShows(jSearchField.getText());
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {		
-	}
+	public void keyPressed (KeyEvent arg0) { }
+	public void keyReleased(KeyEvent arg0) { searchShows(jSearchField.getText()); }
+	public void keyTyped   (KeyEvent arg0) { }
 }
