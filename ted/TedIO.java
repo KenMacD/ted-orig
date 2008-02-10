@@ -573,7 +573,7 @@ public class TedIO
 		}
 		else
 		{
-			location = XMLurl;
+			location = TedIO.XML_SHOWS_FILE;
 			returnVal = JFileChooser.APPROVE_OPTION;
 		}
 		
