@@ -177,6 +177,14 @@
 			<tv_com>53003</tv_com>
 		</show>
 		<show>
+			<name>Ashes to Ashes</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>74779</tv_com>
+		</show>
+		<show>
 			<name>Avatar - The Last Airbender</name>
 			<minimumsize>100</minimumsize>
 			<maximumsize>300</maximumsize>
@@ -265,6 +273,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>25525</tv_com>
+		</show>
+		<show>
+			<name>Breaking Bad</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>74713</tv_com>
 		</show>
 		<show>
 			<name>Brothers &amp; Sisters</name>
@@ -968,6 +984,14 @@
 			<tv_com>68663</tv_com>
 		</show>
 		<show>
+			<name>Reno 911</name>
+			<minimumsize>100</minimumsize>
+			<maximumsize>300</maximumsize>
+			<seeders>50</seeders>
+			<daily>False</daily>
+			<tv_com>17718</tv_com>
+		</show>
+		<show>
 			<name>Rescue Me</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1077,6 +1101,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>1718</tv_com>
+		</show>
+		<show>
+			<name>Smash Lab</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>75002</tv_com>
 		</show>
 		<show>
 			<name>So You Think You Can Dance</name>
