@@ -296,7 +296,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// set size and position of ted
 		this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
 		this.setLocation(TedConfig.getX(), TedConfig.getY());
-		this.setMinimumSize(new java.awt.Dimension(400, 300));
+		this.setMinimumSize(new java.awt.Dimension(320, 320));
 		
 		// only if the os is supported by the trayicon program
 		// currently supports windows, linux and solaris		

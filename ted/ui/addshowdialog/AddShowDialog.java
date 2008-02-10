@@ -1,12 +1,17 @@
 package ted.ui.addshowdialog;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -17,6 +22,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.HyperlinkEvent;
@@ -58,7 +64,8 @@ import com.jgoodies.forms.layout.FormLayout;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class AddShowDialog extends JDialog implements ActionListener, MouseListener, EpisodeChooserListener
+public class AddShowDialog extends JDialog implements ActionListener, MouseListener, 
+													  EpisodeChooserListener, KeyListener
 {
 	/**
 	 * 
@@ -72,6 +79,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private TedSerie selectedSerie;
 	private TedMainDialog tedMain;
 	private JTextPane showInfoPane;
+	private JTextField jSearchField;
 	private JLabel showNameLabel;
 	private JLabel selectShowLabel;
 	private JLabel selectEpisodeLabel;
@@ -79,6 +87,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JScrollPane showInfoScrollPane;
 	private JLabel buyDVDLabel;
 	private JButton buttonAddEmptyShow;
+	private Vector<SimpleTedSerie> allShows;
 
 	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel(this);
 	
@@ -95,31 +104,30 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	}
 
 	private void initGUI() {
-		try {
-			
-
-		    
+		try 
+		{
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
-				"max(p;5dlu), max(m;28px), 10dlu:grow, 9dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)",
-				"max(p;5dlu), max(p;15dlu), 5dlu, 10dlu:grow, max(p;5dlu), max(p;15dlu), 5dlu, 28dlu, 10dlu:grow, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
+					"max(p;5dlu), 68dlu, 10dlu:grow, max(p;15dlu), 9dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
+					"max(p;5dlu), max(p;15dlu), 5dlu, max(p;15dlu), 10dlu:grow, max(p;5dlu), max(p;15dlu), 5dlu, 28dlu, 10dlu:grow, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
 			showsTableModel = new ShowsTableModel();
 			showsTable = new JTable();
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));
 			getShowsScrollPane().setViewportView(showsTable);
-			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 6, fill, fill"));
-			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 8, 4, 2, fill, fill"));
-			getContentPane().add(getOkButton(), new CellConstraints("8, 13, 1, 1, default, default"));
-			getContentPane().add(getCancelButton(), new CellConstraints("6, 13, 1, 1, default, default"));
-			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("5, 4, 4, 1, fill, fill"));
-			getContentPane().add(getJHelpButton(), new CellConstraints("2, 13, 1, 1, left, default"));
+			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 5, 2, 6, fill, fill"));
+			getContentPane().add(episodeChooserPanel, new CellConstraints("6, 9, 4, 2, fill, fill"));
+			getContentPane().add(getOkButton(), new CellConstraints("9, 14, 1, 1, default, default"));
+			getContentPane().add(getCancelButton(), new CellConstraints("7, 14, 1, 1, default, default"));
+			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("6, 5, 4, 1, fill, fill"));
+			getContentPane().add(getJHelpButton(), new CellConstraints("2, 14, 1, 1, left, default"));
 			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, bottom"));
-			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 4, 1, left, bottom"));
-			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, bottom"));
-			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 11, 2, 1, default, default"));
-			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 11, 4, 1, left, default"));
+			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("6, 7, 4, 1, left, bottom"));
+			getContentPane().add(getShowNameLabel(), new CellConstraints("6, 2, 4, 1, left, bottom"));
+			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 12, 2, 1, default, default"));
+			getContentPane().add(getBuyDVDLabel(), new CellConstraints("6, 12, 4, 1, left, default"));
+			getContentPane().add(getJSearchField(), new CellConstraints("2, 4, 1, 1, default, default"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());
 			
@@ -139,7 +147,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				public void valueChanged(ListSelectionEvent arg0) {
 					showsTableSelectionChanged();
 					
-				}});				
+				}});		
+			
+			jSearchField.addKeyListener(this);
+			jSearchField.addMouseListener(this);
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -167,13 +178,16 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	 */
 	private Vector readShowNames()
 	{
-		Vector names = new Vector();		
+		Vector<SimpleTedSerie> names = new Vector<SimpleTedSerie>();		
 		
 		TedXMLParser parser = new TedXMLParser();
 		Element shows = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
 		
 		if(shows!=null)
+		{
 			names = parser.getNames(shows);
+			allShows = names;
+		}
 		else
 			TedLog.error(Lang.getString("TedEpisodeDialog.LogXmlNotFound")); //$NON-NLS-1$
 		
@@ -289,7 +303,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.close();
 			new EditShowDialog(tedMain, temp, true);
 		}
-		
+		else if (command.equals("search"))
+		{
+			this.searchShows(jSearchField.getText());
+		}
 	}
 
 	/**
@@ -435,8 +452,16 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	public void mouseClicked(MouseEvent arg0) 
 	{
-		// clicked on label to buy dvd
-		this.tedMain.openBuyLink(this.selectedSerie.getName());
+		String source = arg0.getSource().toString();
+		if (source.contains("javax.swing.JTextField"))
+		{
+			jSearchField.setText("");
+		}
+		else
+		{
+			// clicked on label to buy dvd
+			this.tedMain.openBuyLink(this.selectedSerie.getName());
+		}
 		
 	}
 
@@ -484,5 +509,61 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		// add show
 		this.addShow();
 	}
+	
+	private JTextField getJSearchField() {
+		if(jSearchField == null) {
+			jSearchField = new JTextField();
+			jSearchField.setText("<SEARCH>");
+		}
+		return jSearchField;
+	}
 
+	private void searchShows(String searchString)
+	{
+		// Only search if we've entered a search term
+		if (!searchString.equals("<SEARCH>"))
+		{
+			Vector<SimpleTedSerie> tempShows = new Vector<SimpleTedSerie>();
+			
+			// If we've entered a search term filter the list, otherwise
+			// display all shows
+			if (!searchString.equals(""))
+			{
+				// Do the filtering
+				for (int show = 0; show < allShows.size(); ++show)
+				{
+					SimpleTedSerie serie = allShows.get(show);
+					
+					if (serie.getName().toLowerCase().contains(searchString.toLowerCase()))
+					{
+						tempShows.add(serie);
+					}
+				}
+				// Update the table
+				showsTableModel.setSeries(tempShows);	
+			}
+			else
+			{
+				showsTableModel.setSeries(allShows);
+			}
+			
+			// Let the table know that there's new information
+			showsTableModel.fireTableDataChanged();
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		searchShows(jSearchField.getText());
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {		
+	}
 }
