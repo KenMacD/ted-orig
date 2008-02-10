@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<project type="0">
+  <Product Id="1D319C1D-C857-4AD1-9F37-7F9A33726683" Name="Torrent Episode Downloader" Version="0.91" Manufacturer="ted" UpgradeCode="26B707F3-0163-45B6-9024-F1340FE6A555">
+    <Package Id="1D319C1D-C857-4AD1-9F37-7F9A33726683" Comments="mail to: support@ted.nu" Keywords="Ted Torrent Episode Downloader">
+      <property name="productURL">http://www.ted.nu/</property>
+      <property name="supportURL">http://www.ted.nu/wiki/</property>
+      <property name="contactPerson">Roel van der Kraan</property>
+      <property name="updateURL">http://www.ted.nu/download.php</property>
+    </Package>
+    <Settings Id="Settings">
+      <property name="createUninstall">false</property>
+      <property name="uninstallShortcutName">Uninstall [ProductName]</property>
+    </Settings>
+    <UI Id="UI">
+      <property name="customTopImage">false</property>
+      <property name="pathTopImage">D:\Program Files\Eclipse\eclipse\workspace\ted sourceforge\runnable ted\installer banner.bmp</property>
+      <property name="customLeftImage">false</property>
+      <property name="pathLeftImage">D:\Program Files\Eclipse\eclipse\workspace\ted sourceforge\runnable ted\installer window.bmp</property>
+    </UI>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder" Name=".">
+        <Directory Id="APPDIR" Name="[ProductName]">
+          <Component Id="CHANGELOG.txt" Guid="5B95CD71-491A-48B3-98B5-C4074C974F00">
+            <Launcher Id="ted.exe" Name="ted.exe" EmbeddedJar="false" JarPath="" ClassName="ted.TedMain" ClassPath="ted.jar; jdic.jar; rssutils.jar" IconPath="D:\Program Files\Eclipse\eclipse\workspace\ted sourceforge\icon-ted2.png">
+              <property name="parameters" />
+              <property name="vmparameters" />
+              <Shortcut Id="ted.exe" Name="ted" Directory="APPMENUDIR" />
+            </Launcher>
+            <File Id="forms1.1.0.jar" Name="forms-~1.jar" LongName="forms-1.1.0.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\forms-1.1.0.jar" />
+            <File Id="jdic.jar" Name="jdic.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\jdic.jar" />
+            <File Id="rssutils.jar" Name="rssutils.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\rssutils.jar" />
+            <File Id="ted.jar" Name="ted.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted releases\tedv091\091\ted.jar" />
+            <File Id="CHANGELOG.txt" Name="CHANGE~1.txt" LongName="CHANGELOG.txt" src="D:\Program Files\Eclipse\eclipse\workspace\ted releases\tedv091\091\CHANGELOG.txt" />
+            <File Id="README.txt" Name="README.txt" src="D:\Program Files\Eclipse\eclipse\workspace\ted releases\tedv091\091\README.txt" />
+          </Component>
+          <Directory Id="windows" Name="windows">
+            <Component Id="jdic_stub.jar" Guid="280DF0DE-5FD2-47C3-B93A-F34795A02977">
+              <File Id="jdic_stub.jar" Name="jdic_s~1.jar" LongName="jdic_stub.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\jdic_stub.jar" />
+            </Component>
+            <Directory Id="x86" Name="x86">
+              <Component Id="IeEmbed.exe" Guid="3EBF6C4F-A28F-46DE-9CCE-70D496F4A44C">
+                <File Id="IeEmbed.exe" Name="IeEmbed.exe" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\IeEmbed.exe" />
+                <File Id="jdic.dll" Name="jdic.dll" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\jdic.dll" />
+                <File Id="MozEmbed.exe" Name="MozEmbed.exe" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\MozEmbed.exe" />
+                <File Id="tray.dll" Name="tray.dll" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\tray.dll" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="WindowsFolder" Name=".">
+        <Directory Id="SystemFolder" Name="." />
+      </Directory>
+      <Directory Id="ProgramMenuFolder" Name=".">
+        <Directory Id="APPMENUDIR" Name="[ProductName]">
+          <Component Id="Help.url" Guid="C3D6DA53-EBC5-4BA5-B52F-5D717C0045D2">
+            <File Id="Help.url" Name="Help~1.url" LongName="Help.url" src="D:\Program Files\Eclipse\eclipse\workspace\torrent episode downloader\tedRunnable\0.60\Help.url" />
+            <File Id="SupportForum.url" Name="Suppor~2.url" LongName="Support Forum.url" src="D:\Program Files\Eclipse\eclipse\workspace\torrent episode downloader\tedRunnable\0.60\Support Forum.url" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="MainFeature" Title="Ted Main Program" Description="All the things you need to run ted" Level="3" Display="expand">
+      <ComponentRef Id="Help.url" />
+      <ComponentRef Id="CHANGELOG.txt" />
+      <ComponentRef Id="jdic_stub.jar" />
+      <ComponentRef Id="IeEmbed.exe" />
+    </Feature>
+  </Product>
+  <Build name="Build Info">
+    <property name="outputFolder">.</property>
+    <property name="outputFilename">setup.msi</property>
+    <property name="executableFilename">tedv090.exe</property>
+    <property name="selfextracted">true</property>
+    <property name="includeMSIRuntime">false</property>
+    <property name="includeJRE">false</property>
+    <property name="JREMergeModule">jre150_04.msm</property>
+  </Build>
+</project>
+
