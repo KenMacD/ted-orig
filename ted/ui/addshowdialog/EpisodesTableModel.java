@@ -3,9 +3,6 @@ package ted.ui.addshowdialog;
 /****************************************************
  * IMPORTS
  ****************************************************/
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.Vector;
 
 import javax.swing.JProgressBar;

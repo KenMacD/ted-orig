@@ -108,26 +108,26 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		{
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
-					"max(p;5dlu), 68dlu, 10dlu:grow, max(p;15dlu), 9dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
-					"max(p;5dlu), max(p;15dlu), 5dlu, max(p;15dlu), 10dlu:grow, max(p;5dlu), max(p;15dlu), 5dlu, 28dlu, 10dlu:grow, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
+					"max(p;5dlu), 68dlu:grow, max(p;68dlu), max(p;15dlu), 9dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
+					"max(p;5dlu), fill:max(p;15dlu), 5dlu, 10dlu:grow, max(p;5dlu), max(p;15dlu), 5dlu, 28dlu, 10dlu:grow, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
 			showsTableModel = new ShowsTableModel();
 			showsTable = new JTable();
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));
 			getShowsScrollPane().setViewportView(showsTable);
-			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 5, 2, 6, fill, fill"));
+			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 6, fill, fill"));
 			getContentPane().add(episodeChooserPanel, new CellConstraints("6, 9, 4, 2, fill, fill"));
-			getContentPane().add(getOkButton(), new CellConstraints("9, 14, 1, 1, default, default"));
-			getContentPane().add(getCancelButton(), new CellConstraints("7, 14, 1, 1, default, default"));
-			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("6, 5, 4, 1, fill, fill"));
-			getContentPane().add(getJHelpButton(), new CellConstraints("2, 14, 1, 1, left, default"));
-			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, bottom"));
-			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("6, 7, 4, 1, left, bottom"));
+			getContentPane().add(getOkButton(), new CellConstraints("9, 13, 1, 1, default, default"));
+			getContentPane().add(getCancelButton(), new CellConstraints("7, 13, 1, 1, default, default"));
+			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("6, 4, 4, 1, fill, fill"));
+			getContentPane().add(getJHelpButton(), new CellConstraints("2, 13, 1, 1, left, default"));
+			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, fill"));
+			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("6, 6, 4, 1, left, bottom"));
 			getContentPane().add(getShowNameLabel(), new CellConstraints("6, 2, 4, 1, left, bottom"));
-			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 12, 2, 1, default, default"));
-			getContentPane().add(getBuyDVDLabel(), new CellConstraints("6, 12, 4, 1, left, default"));
-			getContentPane().add(getJSearchField(), new CellConstraints("2, 4, 1, 1, default, default"));
+			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 11, 2, 1, default, default"));
+			getContentPane().add(getBuyDVDLabel(), new CellConstraints("6, 11, 4, 1, left, default"));
+			getContentPane().add(getJSearchField(), new CellConstraints("3, 2, 1, 1, default, fill"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());
 			
@@ -150,7 +150,6 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				}});		
 			
 			jSearchField.addKeyListener(this);
-			jSearchField.addMouseListener(this);
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -452,16 +451,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	public void mouseClicked(MouseEvent arg0) 
 	{
-		String source = arg0.getSource().toString();
-		if (source.contains("javax.swing.JTextField"))
-		{
-			jSearchField.setText("");
-		}
-		else
-		{
-			// clicked on label to buy dvd
-			this.tedMain.openBuyLink(this.selectedSerie.getName());
-		}
+		// clicked on label to buy dvd
+		this.tedMain.openBuyLink(this.selectedSerie.getName());
 		
 	}
 
@@ -512,8 +503,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	
 	private JTextField getJSearchField() {
 		if(jSearchField == null) {
-			jSearchField = new JTextField();
-			jSearchField.setText("<SEARCH>");
+			jSearchField = new SearchTextField();
 		}
 		return jSearchField;
 	}

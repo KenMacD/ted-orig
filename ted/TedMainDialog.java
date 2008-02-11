@@ -1,7 +1,9 @@
 package ted;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -168,7 +170,15 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			
 			// set initial size of maindialog
 			this.setSize(350, 500);
-			this.setLocation(20, 20);
+			
+			// Get the screen size
+		    Toolkit toolkit = Toolkit.getDefaultToolkit();
+		    Dimension screenSize = toolkit.getScreenSize();
+			int x = (screenSize.width - this.getWidth()) / 2;
+		    int y = (screenSize.height - this.getHeight()) / 2;
+
+		    //Set the new frame location
+		    this.setLocation(x, y);
 			
 			new TedConfigDialog(this, false);
 		}

@@ -13,7 +13,6 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,7 +23,6 @@ import javax.swing.table.TableColumn;
 import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedFeedsTableModel;
-import ted.TedMainDialog;
 import ted.TedSerie;
 import ted.TedSerieFeed;
 import ted.ui.TableRenderer;
