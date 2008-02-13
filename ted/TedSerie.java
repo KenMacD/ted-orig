@@ -68,7 +68,7 @@ public class TedSerie implements Serializable
 	private boolean usePresets;
 	private String tvCom;
 	protected boolean isDaily = false;
-	private String searchName;
+	private String searchName = "";
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -1110,7 +1110,7 @@ public class TedSerie implements Serializable
 	
 	public String getSearchName()
 	{
-		if (!searchName.equals(""))
+		if (!(searchName == null) && !searchName.equals(""))
 		{
 			return this.searchName;
 		}
