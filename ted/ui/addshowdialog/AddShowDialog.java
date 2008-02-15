@@ -108,7 +108,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		{
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
-					"max(p;5dlu), 68dlu:grow, max(p;68dlu), max(p;15dlu), 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
+					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
 					"max(p;5dlu), fill:max(p;15dlu), 5dlu, 10dlu:grow, max(p;5dlu), max(p;15dlu), 5dlu, 28dlu, 10dlu:grow, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
@@ -124,7 +124,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			getContentPane().add(getJHelpButton(), new CellConstraints("2, 13, 1, 1, left, default"));
 			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, fill"));
 			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 4, 1, left, bottom"));
-			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, bottom"));
+			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, fill"));
 			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 11, 2, 1, default, default"));
 			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 11, 4, 1, left, default"));
 			getContentPane().add(getJSearchField(), new CellConstraints("3, 2, 1, 1, default, fill"));
@@ -421,7 +421,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JLabel getShowNameLabel() {
 		if (showNameLabel == null) {
 			showNameLabel = new JLabel();
-			showNameLabel.setFont(new java.awt.Font("Tahoma",1,14));
+			showNameLabel.setFont(new java.awt.Font("Dialog",1,18));
 
 		}
 		return showNameLabel;
