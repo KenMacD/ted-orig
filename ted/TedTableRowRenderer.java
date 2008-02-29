@@ -19,8 +19,15 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 	private final ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
 	private final ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
 	private final ImageIcon showActive = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
-	private final ImageIcon activityIm = new ImageIcon(getClass().getClassLoader().getResource("icons/activity.gif"));
-
+	//private final ImageIcon activityIm = new ImageIcon(getClass().getClassLoader().getResource("icons/activity.gif"));
+	JPanel currentPanel = new JPanel();
+	JLabel nameLabel = new JLabel();
+	JLabel searchforLabel = new JLabel();
+	JLabel progressLabel = new JLabel();
+	JLabel iconLabel = new JLabel();
+	JProgressBar progressBar = new JProgressBar(0, 100);
+	
+	
 	/**
 	 * 
 	 */
@@ -33,7 +40,6 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 	{
 		
 		// TODO: move panel/label creation to init of renderer?? 
-		JPanel currentPanel = new JPanel();
 		currentPanel.setLayout(null);
 		
 		// we can assume value is a tedserie
@@ -42,29 +48,28 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 		currentPanel.setBackground(colorForRow(row, isSelected));
 		  
 		// name
-		JLabel nameLabel = new JLabel(serie.getName());
+		nameLabel.setText(serie.getName());
 		nameLabel.setFont(LARGE_FONT);
 		nameLabel.setForeground(this.getFontColor(Color.BLACK, isSelected));
 		nameLabel.setBounds(28, 3, nameLabel.getPreferredSize().width, nameLabel.getPreferredSize().height);
 		currentPanel.add(nameLabel);
 		// search for
-		JLabel searchforLabel = new JLabel (serie.getSearchForString());
+		searchforLabel.setText(serie.getSearchForString());
 		searchforLabel.setFont(SMALL_FONT);
 		searchforLabel.setBounds(28, 23, searchforLabel.getPreferredSize().width, searchforLabel.getPreferredSize().height);
 		searchforLabel.setForeground(this.getFontColor(Color.DARK_GRAY, isSelected));
 		currentPanel.add(searchforLabel);
         // progress
-		JLabel progressLabel = new JLabel (serie.getStatusString());
+		progressLabel.setText(serie.getStatusString());
 		progressLabel.setForeground(this.getFontColor(Color.GRAY, isSelected));
 		progressLabel.setFont(SMALL_FONT);
 		progressLabel.setBounds(63, 38, progressLabel.getPreferredSize().width, progressLabel.getPreferredSize().height);
 		currentPanel.add(progressLabel);
 		// icon
-		JLabel iconLabel = new JLabel (this.getIconForShow(serie));
+		iconLabel.setIcon(this.getIconForShow(serie));
 		iconLabel.setBounds(6, 4, iconLabel.getPreferredSize().width, iconLabel.getPreferredSize().height);
 		currentPanel.add(iconLabel);
 		// progress bar
-		JProgressBar progressBar = new JProgressBar(0, 100);
 		progressBar.setValue(serie.getProgress());
 		progressBar.setStringPainted(true);
 		progressBar.setString("");

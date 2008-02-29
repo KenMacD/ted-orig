@@ -123,7 +123,7 @@ public class DailyDate  extends StandardStructure implements Comparable
 	 */
 	public String toString()
 	{
-		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		return df.format(this.getDate().getTime());
 	}
 

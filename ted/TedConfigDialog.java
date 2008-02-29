@@ -177,11 +177,15 @@ public class TedConfigDialog extends javax.swing.JDialog
 
 		this.jHelpButton = new JButton();
 		getContentPane().add(this.jHelpButton);
-		this.jHelpButton.setIcon(new ImageIcon(getClass()
-				.getClassLoader().getResource("icons/help.png")));
+		if (!TedSystemInfo.osIsMac())
+		{
+			this.jHelpButton.setIcon(new ImageIcon(getClass()
+					.getClassLoader().getResource("icons/help.png")));
+		}
 		this.jHelpButton.setActionCommand("Help");
 		this.jHelpButton.setBounds(bottomButtonHelpX, bottomButtonLocationY, 28, 28);
 		this.jHelpButton.addActionListener(this.TCListener);
+		jHelpButton.putClientProperty("JButton.buttonType", "help");
 		
 		this.generalPanel = new GeneralPanel();
 		this.jConfigTabs.add("general", this.generalPanel);

@@ -1,5 +1,7 @@
 package ted.datastructures;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +12,10 @@ import ted.Lang;
 public class StandardStructure 
 {
 	int quality = 0;
-	private Date publishDate;
+	protected Date publishDate; // date torrent was published online
+	protected Date airDate; // date episode was aired on tv
+	protected String title; // episode title
+	protected String summaryURL = "";
 	
 	/**
 	 * @return Returns the quality.
@@ -66,5 +71,48 @@ public class StandardStructure
 	public void setPublishDate(Date publishDate)
 	{
 		this.publishDate = publishDate;
+	}
+	
+	public void setSummaryURL(String url)
+	{
+		this.summaryURL = url;
+	}
+	
+	public URL getSummaryURL() throws MalformedURLException
+	{
+		return new URL(this.summaryURL);
+	}
+	public String getSummaryURLString()
+	{
+		return this.summaryURL;
+	}
+	
+	public Date getAirDate() 
+	{
+		return airDate;
+	}
+	public void setAirDate(Date airDate) 
+	{
+		this.airDate = airDate;
+	}
+	public String getTitle() 
+	{
+		return title;
+	}
+	public void setTitle(String title) 
+	{
+		this.title = title;
+	}
+	public String getFormattedAirDate() 
+	{
+		if (this.airDate != null)
+		{
+			DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+			return df.format(this.airDate);
+		}
+		else
+		{
+			return "-";
+		}
 	}
 }

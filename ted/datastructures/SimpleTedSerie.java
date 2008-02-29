@@ -1,5 +1,9 @@
 package ted.datastructures;
 
+import java.util.Vector;
+
+import ted.epguides.EpguidesParser;
+
 /**
  * @author Roel
  *
@@ -22,6 +26,18 @@ public class SimpleTedSerie
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	/**
+	 * @return A vector of episodes that are currently aired (from epguides info)
+	 * and the next episode
+	 */
+	public Vector<SeasonEpisode> getAiredEpisodes()
+	{
+		// New instance of the parser
+        EpguidesParser tedEP = new EpguidesParser();
+        
+        return tedEP.getPastSeasonEpisodes(this.getName());
 	}
 	
 	

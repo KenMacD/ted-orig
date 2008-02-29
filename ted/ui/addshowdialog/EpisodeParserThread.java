@@ -42,8 +42,6 @@ public class EpisodeParserThread extends Thread
 	{
 		this.episodeChooserPanel = ecp;
 		this.selectedSerie = ts;
-		this.episodeChooserPanel.setActivityStatus(true);
-		this.episodeChooserPanel.clear();
 	}
 	
 	/****************************************************
@@ -52,42 +50,12 @@ public class EpisodeParserThread extends Thread
 	
 	public void run()
 	{
+		this.episodeChooserPanel.setActivityStatus(true);
+		this.episodeChooserPanel.clear();
 		if(selectedSerie!=null)
-		{	
-			// parse all feeds in the show
-			TedParser showParser = new TedParser();
-			Vector seasonEpisodes = showParser.getItems(selectedSerie);
-			
-			// add the next upcoming episode	
-			if (seasonEpisodes.size() > 0)
-			{
-				if (selectedSerie.isDaily())
-				{
-					DailyDate sRow = (DailyDate)seasonEpisodes.get(0);
-					DailyDate upcoming = new DailyDate();
-					upcoming.setDate(sRow.getDate());
-					upcoming.setDay(upcoming.getDay()+1);
-					upcoming.setQuality(0);
-					upcoming.setPublishDate(null);
-					
-					seasonEpisodes.add(0, upcoming);
-					
-				}
-				else
-				{
-					SeasonEpisode sRow = (SeasonEpisode) seasonEpisodes.get(0);
-					SeasonEpisode upcoming = new SeasonEpisode();
-					upcoming.setEpisode(sRow.getEpisode()+1);
-					upcoming.setSeason(sRow.getSeason());
-					upcoming.setQuality(0);
-					upcoming.setPublishDate(null);
-					
-					seasonEpisodes.add(0, upcoming);
-				}
-			}
-				
+		{		
 			// add vector to chooser panel
-			this.episodeChooserPanel.setSeasonEpisodes(seasonEpisodes);
+			this.episodeChooserPanel.setSeasonEpisodes(selectedSerie.getPubishedAndAiredEpisodes());
 		}
 		
 		// disable avtivity image

@@ -1,11 +1,26 @@
 package ted.datastructures;
 
+import java.util.Date;
+
 import ted.Lang;
 
 public class SeasonEpisode extends StandardStructure implements Comparable
 {
 	private int season = 0;
 	private int episode = 0;
+	
+	public SeasonEpisode(int season2, int episode2, Date airdate2, String title2) 
+	{
+		this.season = season2;
+		this.episode = episode2;
+		this.airDate = airdate2;
+		this.title = title2;
+	}
+	
+	public SeasonEpisode() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @return Returns the episode.
 	 */
@@ -35,6 +50,9 @@ public class SeasonEpisode extends StandardStructure implements Comparable
 	{
 		this.season = season;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	public int compareTo(Object arg0)
 	{
 		SeasonEpisode second = (SeasonEpisode) arg0;

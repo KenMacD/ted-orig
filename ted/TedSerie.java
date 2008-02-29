@@ -8,6 +8,7 @@ import java.util.Vector;
 import org.w3c.dom.Element;
 
 import ted.datastructures.SeasonEpisode;
+import ted.epguides.EpguidesParser;
 import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
@@ -1130,5 +1131,99 @@ public class TedSerie implements Serializable
 	{
 		this.searchName = sName;
 	}
+	
+	/**
+	 * @return A vector of episodes that are currently aired (from epguides info)
+	 * and the next episode
+	 */
+	private Vector<SeasonEpisode> getAiredEpisodes()
+	{
+		// New instance of the parser
+        EpguidesParser tedEP = new EpguidesParser();
+        String nameWithoutSpaces = this.getName().replace(" ", "");
+        
+        return tedEP.getPastSeasonEpisodes(nameWithoutSpaces);
+	}
+	
+	/**
+	 * @return Vector with season/episode combinations taken from the torrent
+	 * feeds from this show
+	 */
+	private Vector<SeasonEpisode> getPublishedEpisodes()
+	{
+		TedParser showParser = new TedParser();
+		Vector<SeasonEpisode> publishedSeasonEpisodes = showParser.getItems(this);
+		return publishedSeasonEpisodes;
+	}
+
+	public Vector<SeasonEpisode> getPubishedAndAiredEpisodes() 
+	{
+		Vector<SeasonEpisode> publishedEpisodes = this.getPublishedEpisodes();
+		Vector<SeasonEpisode> airedEpisodes = this.getAiredEpisodes();
+		Vector<SeasonEpisode> results = new Vector<SeasonEpisode>();
 		
+		if (publishedEpisodes.size() > 0 && airedEpisodes.size() > 0)
+		{
+			// filter out any items in publishedEpisodes that are not in airedEpisodes
+			int airedCounter = 0;
+			int publishedCounter = 0;
+			// get first elements
+			SeasonEpisode publishedEpisode = publishedEpisodes.elementAt(publishedCounter);
+			SeasonEpisode airedEpisode = airedEpisodes.elementAt(airedCounter);		
+			airedCounter++;
+			publishedCounter++;
+			
+			while (airedCounter < airedEpisodes.size() && publishedCounter < publishedEpisodes.size())
+			{
+				// compare the two episodes.
+				
+				// if published > aired get next published
+				if (publishedEpisode.compareTo(airedEpisode) < 0 && publishedCounter < publishedEpisodes.size())
+				{
+					publishedEpisode = publishedEpisodes.elementAt(publishedCounter);
+					publishedCounter ++;					
+				}
+				// if published < aired get next aired
+				else if (publishedEpisode.compareTo(airedEpisode) > 0 && airedCounter < airedEpisodes.size())
+				{
+					airedEpisode = airedEpisodes.elementAt(airedCounter);
+					airedCounter ++;
+				}
+				// if published == aired, save episode into result vector and get next of both
+				else if (publishedEpisode.compareTo(airedEpisode) == 0)
+				{
+					publishedEpisode.setAirDate(airedEpisode.getAirDate());
+					publishedEpisode.setTitle(airedEpisode.getTitle());
+					publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
+					results.add(publishedEpisode);
+					
+					if (publishedCounter < publishedEpisodes.size())
+					{
+						publishedEpisode = publishedEpisodes.elementAt(publishedCounter);
+						publishedCounter ++;
+					}
+					if (airedCounter < airedEpisodes.size())
+					{
+						airedEpisode = airedEpisodes.elementAt(airedCounter);
+						airedCounter ++;
+					}
+				}
+			}
+			// make sure to check the last episodes, could be skipped by while loop
+			if (publishedEpisode.compareTo(airedEpisode) == 0)
+			{
+				publishedEpisode.setAirDate(airedEpisode.getAirDate());
+				publishedEpisode.setTitle(airedEpisode.getTitle());
+				publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
+				results.add(publishedEpisode);
+			}
+		}
+		else
+		{
+			return publishedEpisodes;
+		}
+		
+		
+		return results;
+	}
 }

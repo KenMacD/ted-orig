@@ -39,6 +39,7 @@ import ted.TedIO;
 import ted.TedLog;
 import ted.TedMainDialog;
 import ted.TedSerie;
+import ted.TedSystemInfo;
 import ted.TedXMLParser;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
@@ -88,6 +89,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JLabel buyDVDLabel;
 	private JButton buttonAddEmptyShow;
 	private Vector<SimpleTedSerie> allShows;
+	private SimpleTedSerie selectedShow;
 
 	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel(this);
 	
@@ -213,39 +215,45 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		int selectedRow = showsTable.getSelectedRow();
 		
 		if (selectedRow >= 0)
-		{
+		{			
 			// get the simple info of the show
 			SimpleTedSerie selectedShow = this.showsTableModel.getSerieAt(selectedRow);
-			this.showNameLabel.setText(selectedShow.getName());
 			
-			// get the details of the show
-			TedXMLParser parser = new TedXMLParser();
-			Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
-			
-			TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
-			
-			buyDVDLabel.setText("<html><u>"+ Lang.getString("TedAddShowDialog.LabelSupportTed1")+ " " + selectedSerie.getName() +" " + Lang.getString("TedAddShowDialog.LabelSupportTed2") +"</u></html>");
-			
-			// create a new infoPane to (correctly) show the information
-			showInfoPane = null;
-			showInfoScrollPane.setViewportView(this.getShowInfoPane());
-			
-			// add auto-generated search based feeds to the show
-			Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
-			items = parser.getAutoFeedLocations(series);
-			selectedSerie.generateFeedLocations(items);
-			
-			// retrieve the show info and the episodes from the web
-			ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
-			sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
-			EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie);
-			ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
-			
-			sit.start();
-			ept.start();	
-			
-			// set the selected show
-			this.setSelectedSerie(selectedSerie);
+			if (this.selectedShow == null || !(this.selectedShow.getName().equals(selectedShow.getName())))
+			{
+				this.selectedShow = selectedShow;
+						
+				this.showNameLabel.setText(selectedShow.getName());
+				
+				// get the details of the show
+				TedXMLParser parser = new TedXMLParser();
+				Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+				
+				TedSerie selectedSerie = parser.getSerie(series, selectedShow.getName());
+				
+				buyDVDLabel.setText("<html><u>"+ Lang.getString("TedAddShowDialog.LabelSupportTed1")+ " " + selectedSerie.getName() +" " + Lang.getString("TedAddShowDialog.LabelSupportTed2") +"</u></html>");
+				
+				// create a new infoPane to (correctly) show the information
+				showInfoPane = null;
+				showInfoScrollPane.setViewportView(this.getShowInfoPane());
+				
+				// add auto-generated search based feeds to the show
+				Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
+				items = parser.getAutoFeedLocations(series);
+				selectedSerie.generateFeedLocations(items);
+				
+				// retrieve the show info and the episodes from the web
+				ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
+				sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
+				EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie);
+				ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
+				
+				sit.start();
+				ept.start();	
+				
+				// set the selected show
+				this.setSelectedSerie(selectedSerie);
+			}
 		}
 	}
 	
@@ -340,6 +348,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private void close() 
 	{
 		this.showsTableModel.removeSeries();
+		this.episodeChooserPanel.clear();
 		// close the dialog
 		this.setVisible(false);
 		this.dispose();
@@ -392,10 +401,14 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		if (jHelpButton == null) {
 			jHelpButton = new JButton();
 			jHelpButton.setActionCommand("Help");
-			jHelpButton.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("icons/help.png")));
+			if (!TedSystemInfo.osIsMac())
+			{
+				jHelpButton.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("icons/help.png")));
+			}
 			jHelpButton.setBounds(11, 380, 28, 28);
 			jHelpButton.addActionListener(this);
+			jHelpButton.putClientProperty("JButton.buttonType", "help");
 			jHelpButton.setToolTipText(Lang.getString("TedGeneral.ButtonHelpToolTip"));
 		}
 		return jHelpButton;

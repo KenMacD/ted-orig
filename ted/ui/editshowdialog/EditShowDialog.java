@@ -148,8 +148,12 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 
 		jHelpButton = new JButton();
 		getContentPane().add(jHelpButton);
-		jHelpButton.setIcon(new ImageIcon(getClass()
-				.getClassLoader().getResource("icons/help.png")));
+		if (!TedSystemInfo.osIsMac())
+		{
+			jHelpButton.setIcon(new ImageIcon(getClass()
+					.getClassLoader().getResource("icons/help.png")));
+		}
+		jHelpButton.putClientProperty("JButton.buttonType", "help");
 		jHelpButton.setActionCommand("Help");
 		jHelpButton.setBounds(bottomButtonHelpX, bottomButtonLocationY, 28, 28);
 		jHelpButton.addActionListener(this);

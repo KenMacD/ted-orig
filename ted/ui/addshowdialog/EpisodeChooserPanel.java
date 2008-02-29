@@ -52,6 +52,7 @@ public class EpisodeChooserPanel extends JPanel
 	
 	private StandardStructure selectedStructure = null;
 	private EpisodeChooserListener episodesChooserListener;
+	private boolean active;
 
 	/**
 	 * Create a episode chooser panel
@@ -60,6 +61,7 @@ public class EpisodeChooserPanel extends JPanel
 	public EpisodeChooserPanel(EpisodeChooserListener ecld)
 	{
 		this.episodesChooserListener = ecld;
+		this.active = false;
 		this.initGUI();
 	}
 	
@@ -187,7 +189,8 @@ public class EpisodeChooserPanel extends JPanel
 	}
 	
 	private Canvas getActivityCanvas() {
-		if (activityCanvas == null) {
+		if (activityCanvas == null) 
+		{
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
 			Image activityIm = toolkit.getImage(getClass().getClassLoader().getResource("icons/activity.gif"));
 			
@@ -204,6 +207,7 @@ public class EpisodeChooserPanel extends JPanel
 	 */
 	public void setActivityStatus(boolean active)
 	{
+		this.active = active;
 		this.activityCanvas.setVisible(active);
 	}
 
@@ -213,5 +217,10 @@ public class EpisodeChooserPanel extends JPanel
 	public StandardStructure getSelectedStructure() 
 	{
 		return this.selectedStructure;
+	}
+
+	public boolean getActivityStatus() 
+	{
+		return this.active;
 	}
 }

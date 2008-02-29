@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
+import ted.TedSystemInfo;
+
 public class SearchTextField extends JTextField
 {
 	/**
@@ -15,7 +17,7 @@ public class SearchTextField extends JTextField
 	
 	public SearchTextField()
 	{
-		
+		this.putClientProperty("JTextField.variant", "search");
 	}
 	
 	public boolean isOpaque()
@@ -28,7 +30,10 @@ public class SearchTextField extends JTextField
 		// first paint textfield
         super.paint(g);
         // then icon on top (for mac?)
-		searchIcon.paintIcon(this, g, this.getWidth()-22,6);			
+		if (!TedSystemInfo.osIsMac())
+		{
+			searchIcon.paintIcon(this, g, this.getWidth()-22,6);
+		}
 	}
 
 }

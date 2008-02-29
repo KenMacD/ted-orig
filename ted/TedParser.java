@@ -2,6 +2,7 @@ package ted;
 
 import java.awt.HeadlessException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -108,6 +109,12 @@ public class TedParser extends Thread
 		// parse the feeds for new episodes
 		this.parseFeeds(currentSerie, tMainDialog);
 		this.currentSerie.setActivity(TedSerie.IS_IDLE);
+		
+		// clear memory
+		this.feedsData = null;
+		this.parseLogInfo = null;
+		// call garbage collector to cleanup dirt
+		Runtime.getRuntime().gc(); 	
 	}
 	
 
@@ -157,11 +164,19 @@ public class TedParser extends Thread
 				
 				// create an RSS parser
 				parser = RssParserFactory.createDefault();
+				InputStream inputStream = urlc.getInputStream();
 				
-				rss = parser.parse(urlc.getInputStream());
+				rss = parser.parse(inputStream);
+				inputStream.close();
 				Channel channel = rss.getChannel();
+				
 				feedsData[i] = channel;
 				totalNumberOfFeedItems += channel.getItems().size();
+				
+				// clear memory
+				channel = null;
+				rss = null;
+				parser = null;
 
 			}
 			catch (RssParserException e) 
@@ -233,6 +248,7 @@ public class TedParser extends Thread
 		int itemProgress = 0;
 		double progressPerItem = 100.0 / this.totalNumberOfFeedItems;
 		this.checkedTorrents = 0;
+		Channel channel;
 		
 		for (int i = 0; i < feedsData.length; i++)
 		{
@@ -240,7 +256,8 @@ public class TedParser extends Thread
 			{
 				return;
 			}
-			Channel channel = feedsData[i];
+			
+			channel = feedsData[i];
 			
 			if (channel != null)
 			{
@@ -288,7 +305,9 @@ public class TedParser extends Thread
 		        		i = feeds.size();
 		        		j = 0;
 		        	}
-				} 
+				}
+		        
+		        items = null;
 			}
 		}
 		try
@@ -1316,9 +1335,11 @@ public class TedParser extends Thread
 				
 				// create an RSS parser
 				parser = RssParserFactory.createDefault();
-				//parser.
+				InputStream inputStream = urlc.getInputStream();
 				
-				rss = parser.parse(urlc.getInputStream());
+				rss = parser.parse(inputStream);
+				inputStream.close();
+				
 				Channel channel = rss.getChannel();
 		        Object[] items2 = channel.getItems().toArray();
 		        
@@ -1350,6 +1371,10 @@ public class TedParser extends Thread
 	        		}
 			       // }
 		        }
+		        
+		        // clear memory
+		        channel = null;
+		        items2 = null;
 			}
 			catch (RssParserException e) 
 			{
