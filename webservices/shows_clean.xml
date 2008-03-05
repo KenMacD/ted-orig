@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>29</version>
+	<version>30</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -560,6 +560,13 @@
 			<tv_com>68719</tv_com>
 		</show>
 		<show>
+			<name>Frank TV</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>300</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>74817</tv_com>
+		</show>
+		<show>
 			<name>Friday Night Lights</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -901,6 +908,13 @@
 			<tv_com>22839</tv_com>
 		</show>
 		<show>
+			<name>New Amsterdam</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68703</tv_com>
+		</show>
+		<show>
 			<name>NCIS</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -975,6 +989,13 @@
 			<seeders>10</seeders>
 			<daily>False</daily>
 			<tv_com>59369</tv_com>
+		</show>
+		<show>
+			<name>Quarterlife</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>75153</tv_com>
 		</show>
 		<show>
 			<name>Pushing Daisies</name>
