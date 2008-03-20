@@ -103,30 +103,32 @@ public class TedParserDateChecker
 	 * @return Int like 0, 1
 	 */
 	public int getMonth(String s)
-	{      
-        if(s.equals("jan"))
+	{
+		s.toLowerCase();
+		
+        if(s.equals("jan") || s.equals("january"))
         	return 0;
-		if(s.equals("feb"))
+		if(s.equals("feb") || s.equals("february"))
         	return 1;
-		if(s.equals("mar"))
+		if(s.equals("mar") || s.equals("march"))
         	return 2;
-		if(s.equals("apr"))
+		if(s.equals("apr") || s.equals("april"))
         	return 3;
 		if(s.equals("may"))
         	return 4;
-		if(s.equals("jun"))
+		if(s.equals("jun") || s.equals("june"))
         	return 5;
-		if(s.equals("jul"))
+		if(s.equals("jul") || s.equals("july"))
         	return 6;
-		if(s.equals("aug"))
+		if(s.equals("aug") || s.equals("august"))
         	return 7;
-		if(s.equals("sep"))
+		if(s.equals("sep") || s.equals("september"))
         	return 8;
-		if(s.equals("oct"))
+		if(s.equals("oct") || s.equals("october"))
         	return 9;
-		if(s.equals("nov"))
+		if(s.equals("nov") || s.equals("november"))
         	return 10;
-		if(s.equals("dec"))
+		if(s.equals("dec") || s.equals("december"))
         	return 11;
 		
 		//will hopefully never happen
