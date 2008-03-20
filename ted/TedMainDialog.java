@@ -376,7 +376,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if (TedConfig.isCheckVersion())
 		{
-			//this.setStatusString(Lang.getString("TedMain.CheckingNewTed"));
 			this.isNewTed(false);
 		}
 		
@@ -505,9 +504,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		if(!isParsing)
 		{
 			// first check if ted is up to date
-			if(TedConfig.getTimesParsedSinceLastCheck()==5)
+			if(TedConfig.getTimesParsedSinceLastCheck() == 5)
 			{
-				isNewTed(false);
+				if(TedConfig.isCheckVersion())
+				{
+					isNewTed(true);
+				}
+				
 				isNewPredefinedShowsXML(false);
 				TedConfig.setTimesParsedSinceLastCheck(0);
 			}
