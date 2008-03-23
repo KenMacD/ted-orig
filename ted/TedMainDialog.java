@@ -71,9 +71,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
-	private ImageIcon tedIdleIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
-	private ImageIcon tedActiveIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
-	private final Font SMALL_FONT = new Font("Dialog",0,10);
+	private ImageIcon tedIdleIcon    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
+	private ImageIcon tedActiveIcon  = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
+	private final Font SMALL_FONT    = new Font("Dialog",0,10);
 	
 	private JLabel label_count;
 	private JScrollPane jScrollPane1;
@@ -103,7 +103,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	private TedTrayIcon tedTray;
 	private MessengerCenter messengerCenter;
-	//
+	
+
+	private TedColorPicker colorPicker;
 
 
   	/****************************************************
@@ -379,6 +381,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.isNewTed(false);
 		}
 		
+		colorPicker = new TedColorPicker(this);
+		
 		uiInitialized = true;
 	}
 	
@@ -386,7 +390,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 * Update all GUI elements
 	 * Mostly called when the locale of ted is changed
 	 */
-	private void updateGUI()
+	public void updateGUI()
 	{
 		// only if UI is initialized
 		if (uiInitialized)
@@ -822,6 +826,10 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		else if(action.equals("language"))
 		{
 			this.openTranslationLink();
+		}
+		else if(action.equals("Color"))
+		{
+			colorPicker.setVisible(true);
 		}
 	}
 	

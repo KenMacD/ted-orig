@@ -186,7 +186,6 @@ public class TedTable extends JTable
 	public void tableUpdate()
 	{
 		serieTableModel.tableUpdate();
-		
 	}
 
 	/**
@@ -196,7 +195,6 @@ public class TedTable extends JTable
 	public void addSerie(TedSerie newSerie)
 	{
 		serieTableModel.addSerie(newSerie);
-		
 	}
 
 	/**

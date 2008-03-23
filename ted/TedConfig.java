@@ -59,6 +59,9 @@ public class TedConfig //implements Serializable
 	private static boolean allowLogging = true;
 	private static boolean logToFile = true;
 	
+	private static final Color defaultEvenRowColor = Color.WHITE;
+	private static final Color defaultOddRowColor  = new Color(236,243,254);
+	
 	private static Color evenRowColor     	= Color.WHITE;
 	private static Color oddRowColor      	= new Color(236,243,254);
 	private static Color selectedRowColor 	= new Color(61, 128, 223);  
@@ -584,5 +587,11 @@ public class TedConfig //implements Serializable
 	public static Color getGridColor()
 	{
 		return gridColor;
+	}
+	
+	public static void restoreDefaultColors()
+	{
+		setEvenRowColor(defaultEvenRowColor);
+		setOddRowColor (defaultOddRowColor );
 	}
 }

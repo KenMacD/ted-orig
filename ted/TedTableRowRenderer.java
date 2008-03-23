@@ -15,16 +15,16 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 {
 	private final Font SMALL_FONT = new Font("Dialog",0,10);
 	private final Font LARGE_FONT = new Font("Dialog",0,15);
-	private final ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
+	private final ImageIcon showPaused   = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
 	private final ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
 	private final ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
-	private final ImageIcon showActive = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
-	//private final ImageIcon activityIm = new ImageIcon(getClass().getClassLoader().getResource("icons/activity.gif"));
-	JPanel currentPanel = new JPanel();
-	JLabel nameLabel = new JLabel();
+	private final ImageIcon showActive   = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
+	
+	JPanel currentPanel   = new JPanel();
+	JLabel nameLabel      = new JLabel();
 	JLabel searchforLabel = new JLabel();
-	JLabel progressLabel = new JLabel();
-	JLabel iconLabel = new JLabel();
+	JLabel progressLabel  = new JLabel();
+	JLabel iconLabel      = new JLabel();
 	JProgressBar progressBar = new JProgressBar(0, 100);
 	
 	

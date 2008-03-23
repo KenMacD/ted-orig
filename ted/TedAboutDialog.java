@@ -123,11 +123,7 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 		
 		if (posSecretCode == secretCode.length())
 		{
-			posSecretCode = 0;
-			
-			TedColorPicker colorPicker = new TedColorPicker();
-			colorPicker.setVisible(true);
-			this.setVisible(false);
+			// For next secret project :)
 		}
 		
 	}

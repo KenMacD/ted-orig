@@ -3,6 +3,7 @@ package ted;
 /****************************************************
  * IMPORTS
  ****************************************************/
+import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -210,7 +211,9 @@ public class TedIO
 			fw.append("filterextensions=" + TedConfig.getFilterExtensions() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 			fw.append("loglines=" + t.getLines() + "\n"); //$NON-NLS-1$
 			fw.append("allowlogging=" + TedConfig.isAllowLogging() + "\n"); //$NON-NLS-1$
-			fw.append("logtofile=" + TedConfig.isLogToFile()); //$NON-NLS-1$
+			fw.append("logtofile=" + TedConfig.isLogToFile() + "\n"); //$NON-NLS-1$
+			fw.append("oddrowcolor=" +  TedConfig.getOddRowColor().getRGB() + "\n");
+			fw.append("evenrowcolor=" + TedConfig.getEvenRowColor().getRGB());
 			
 			fw.close();
 		}
@@ -384,6 +387,17 @@ public class TedIO
 				else if(token.equals("logtofile")) //$NON-NLS-1$
 				{
 					TedConfig.setLogToFile(Boolean.parseBoolean(tokenizer.nextToken()));
+				}
+				else if(token.equals("oddrowcolor"))
+				{
+					String s = tokenizer.nextToken();
+					Color color = new Color(Integer.parseInt(s));
+					TedConfig.setOddRowColor(color);
+				}
+				else if(token.equals("evenrowcolor"))
+				{
+					Color color = new Color(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setEvenRowColor(color);
 				}
 			}
 			
