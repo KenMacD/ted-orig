@@ -606,6 +606,9 @@ public class TedParser extends Thread
 		TorrentInfo torrentInfo;
 		
 		this.checkedTorrents++;
+
+		itemNr++;
+		parseLogInfo[itemNr][0] = torrentUrl.toString(); 
 		
 		try
 		{
@@ -615,7 +618,9 @@ public class TedParser extends Thread
 		{
 			String message = Lang.getString("TedParser.ErrorWhileChecking1") + " " + torrentUrl + " " + Lang.getString("TedParser.ErrorWhileChecking2") + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$
 			tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
-			e.printStackTrace();
+			
+			parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorTorrentInfo");
+			
 			return;
 		}
 		
@@ -626,9 +631,6 @@ public class TedParser extends Thread
 			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
-			
-			itemNr++;
-			parseLogInfo[itemNr][0] = torrentUrl.toString(); 
 						
 			try
 			{
