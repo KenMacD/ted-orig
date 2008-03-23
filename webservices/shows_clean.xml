@@ -171,8 +171,8 @@
 		<show>
 			<name>As The World Turns</name>
 			<daily>True</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
+			<minimumsize>150</minimumsize>
+			<maximumsize>300</maximumsize>
 			<seeders>20</seeders>
 			<tv_com>162</tv_com>
 		</show>
