@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>30</version>
+	<version>31</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -97,14 +97,6 @@
 			<tv_com>58326</tv_com>
 		</show>
 		<show>
-			<name>The 4400</name>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>23350</tv_com>
-		</show>
-		<show>
 			<name>The Adventures of Sarah Jane</name>
 		</show>
 		<show>
@@ -177,6 +169,14 @@
 			<tv_com>53003</tv_com>
 		</show>
 		<show>
+			<name>As The World Turns</name>
+			<daily>True</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>162</tv_com>
+		</show>
+		<show>
 			<name>Ashes to Ashes</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -243,21 +243,6 @@
 			<maximumsize>500</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>68650</tv_com>
-		</show>
-		<show>
-			<name>Bionic Woman</name>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>71468</tv_com>
-		</show>
-		<show>
-			<name>Blakes 7</name>
-			<daily>False</daily>
-			<minimumsize>150</minimumsize>
-			<maximumsize>400</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>3281</tv_com>
 		</show>
 		<show>
 			<name>Bones</name>
@@ -426,14 +411,6 @@
 			<tv_com>68659</tv_com>
 		</show>
 		<show>
-			<name>The Dead Zone</name>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<daily>False</daily>
-			<tv_com>7420</tv_com>
-		</show>	
-		<show>
 			<name>Desperate Housewives</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -476,13 +453,6 @@
 			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>34421</tv_com>
-		</show>
-		<show>
-			<name>Dresden Files</name>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>20</seeders>
-			<tv_com>50381</tv_com>
 		</show>
 		<show>
 			<name>Entourage</name>
@@ -602,6 +572,14 @@
 			<tv_com>21612</tv_com>
 		</show>
 		<show>
+			<name>Gossip Girl</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68744</tv_com>
+		</show>
+		<show>
 			<name>Greek</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -707,14 +685,6 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>69232</tv_com>
-		</show>
-		<show>
-			<name>Jericho</name>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>58068</tv_com>
 		</show>
 		<show>
 			<name>Journeyman</name>
@@ -1064,6 +1034,14 @@
 			<tv_com>58087</tv_com>
 		</show>
 		<show>
+			<name>Samantha Who?</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>250</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68654</tv_com>
+		</show>
+		<show>
 			<name>Saturday Night Live</name>
 			<minimumsize>400</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1270,6 +1248,14 @@
 			<tv_com>58486</tv_com>
 		</show>
 		<show>
+			<name>Unhitched</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>250</maximumsize>
+			<seeders>20</seeders>
+			<tv_com>68707</tv_com>
+		</show>
+		<show>
 			<name>The Unit</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -1298,14 +1284,6 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>28829</tv_com>
-		</show>
-		<show>
-			<name>The Wire</name>
-			<daily>False</daily>
-			<minimumsize>300</minimumsize>
-			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>8800</tv_com>
 		</show>
 		<show>
 			<name>WWE</name>
