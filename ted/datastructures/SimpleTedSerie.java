@@ -19,6 +19,21 @@ public class SimpleTedSerie
 	{
 		return name;
 	}
+	
+	/**
+	 * @return If the show name starts with The, The gets
+	 * 		   placed at the end of the name.
+	 */
+	public String getDisplayName()
+	{
+		String returnName = name;
+		if(name.startsWith("The "))
+		{
+			returnName = name.substring(4) + ", The";
+		}
+		
+		return returnName;
+	}
 
 	/**
 	 * @param name The name to set.

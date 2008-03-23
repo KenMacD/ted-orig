@@ -49,7 +49,7 @@ public class ShowsTableModel extends AbstractTableModel
 		switch (col)
 		{
 			case 0:
-				return " "+sRow.getName();
+				return " " + sRow.getDisplayName();
 		}
 		return null;
 		
