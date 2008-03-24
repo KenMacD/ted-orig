@@ -92,8 +92,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private Vector<SimpleTedSerie> allShows;
 	private SimpleTedSerie selectedShow;
 
-	private EpisodeChooserPanel episodeChooserPanel = new EpisodeChooserPanel(this);
-	private SubscribeOptionsPanel subcribeOptionsPanel = new SubscribeOptionsPanel();
+	private EpisodeChooserPanel   episodeChooserPanel   = new EpisodeChooserPanel(this);
+	private SubscribeOptionsPanel subscribeOptionsPanel = new SubscribeOptionsPanel();
 	
 	public AddShowDialog()
 	{
@@ -116,12 +116,20 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 					"max(p;5dlu), max(p;15dlu), 5dlu, 318dlu, 5dlu, max(p;15dlu), 5dlu, bottom:44dlu, 5dlu, 15dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
+			episodeChooserPanel.setVisible(false);			
+			subscribeOptionsPanel.setVisible(true);
+			
+			// You need to pass this dialog so the user can ask for the selected
+			// subscribe option.
+			episodeChooserPanel.setAddShowDialog(this);
+			
 			showsTableModel = new ShowsTableModel();
 			showsTable = new JTable();
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));
 			getShowsScrollPane().setViewportView(showsTable);
 			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 7, fill, fill"));
-			getContentPane().add(subcribeOptionsPanel, new CellConstraints("5, 8, 4, 1, fill, fill"));
+			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 4, 4, 5, fill, fill"));
+			getContentPane().add(subscribeOptionsPanel, new CellConstraints("5, 8, 4, 1, fill, fill"));
 			getContentPane().add(getSwitchButton(), new CellConstraints("5, 10, 1, 1, default, default"));
 			getContentPane().add(getOkButton(), new CellConstraints("8, 14, 1, 1, default, default"));
 			getContentPane().add(getCancelButton(), new CellConstraints("6, 14, 1, 1, default, default"));
@@ -316,6 +324,12 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		else if (command.equals("search"))
 		{
 			this.searchShows(jSearchField.getText());
+		}
+		else if (command.equals("switch"))
+		{
+			this.setSubscribeOption();			
+			episodeChooserPanel.setVisible(!episodeChooserPanel.isVisible());
+			subscribeOptionsPanel.setVisible(!subscribeOptionsPanel.isVisible());
 		}
 	}
 
@@ -566,7 +580,26 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		if(switchButton == null) {
 			switchButton = new JButton();
 			switchButton.setText("Switch!");
+			switchButton.addActionListener(this);
+			switchButton.setActionCommand("switch");
 		}
 		return switchButton;
+	}
+	
+	
+	private void setSubscribeOption()
+	{
+		int option = subscribeOptionsPanel.getSelectedOption();
+		
+		// If we only want to subscribe for a show select the first item
+		// in the table, this is the upcomming episode.
+		if (option == SubscribeOptionsPanel.ONLY_SUBSCRIBE)
+		{
+			episodeChooserPanel.selectEpisode(0);
+			return;
+		}
+		
+		// For all other options, you want to select the first row in the table. 
+		episodeChooserPanel.selectEpisode(1);
 	}
 }

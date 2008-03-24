@@ -60,5 +60,6 @@ public class EpisodeParserThread extends Thread
 		
 		// disable avtivity image
 		this.episodeChooserPanel.setActivityStatus(false);
+		this.episodeChooserPanel.selectEpisode();
 	}
 }
