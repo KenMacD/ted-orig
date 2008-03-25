@@ -512,7 +512,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			{
 				if(TedConfig.isCheckVersion())
 				{
-					isNewTed(true);
+					isNewTed(false);
 				}
 				
 				isNewPredefinedShowsXML(false);
