@@ -2,6 +2,7 @@
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -47,6 +48,7 @@ public class TedSerie implements Serializable
 	private int lastDayChecked;
 	private int lastYearChecked;
 	private boolean downloadAll;
+	public final static int STATUS_HIATUS = 3;
 	public final static int STATUS_HOLD = 2;
 	public final static int STATUS_PAUSE = 1;
 	public final static int STATUS_CHECK = 0;
@@ -70,6 +72,9 @@ public class TedSerie implements Serializable
 	private String tvCom;
 	protected boolean isDaily = false;
 	private String searchName = "";
+	private Vector<SeasonEpisode> scheduledEpisodes;
+	private Date checkEpisodeSchedule;
+	//private SeasonEpisode currentSeasonEpisode;
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -94,7 +99,7 @@ public class TedSerie implements Serializable
 		this.minSize = min;
 		this.maxSize = max;
 		this.keywords = key;
-		this.status = TedSerie.STATUS_CHECK;
+		this.setStatus(TedSerie.STATUS_CHECK);
 		this.lastWeekChecked = -1;
 		this.lastDayChecked = 0;
 		this.lastYearChecked = 0;
@@ -213,10 +218,18 @@ public class TedSerie implements Serializable
 		Calendar date =  new GregorianCalendar();
 		boolean dayToCheck = false;
 		
+		// if the show is on hiatus, check if there is already some
+		// episode planning for the next episode available
+		if (this.isHiatus())
+		{
+			this.goToNextSeasonEpisode(this.currentSeason, this.currentEpisode);
+		}
+		
+		this.checkAirDate();
 
 		if (this.useEpisodeSchedule)
 		{
-			if(this.status != TedSerie.STATUS_HOLD)
+			if(!this.isHold() && !this.isHiatus())
 			{
 				date.setFirstDayOfWeek(Calendar.SUNDAY);
 				int week = date.get(Calendar.WEEK_OF_YEAR);
@@ -256,7 +269,7 @@ public class TedSerie implements Serializable
 				if (dayToCheck)
 				{
 					// set status and date
-					this.status = TedSerie.STATUS_CHECK;
+					this.setStatus(TedSerie.STATUS_CHECK);
 					
 					this.lastDayChecked = day;					
 					this.lastWeekChecked = week;
@@ -272,7 +285,7 @@ public class TedSerie implements Serializable
 			// get date of today
 			date =  new GregorianCalendar();
 			
-			if (this.status == TedSerie.STATUS_HOLD)
+			if (this.isHold())
 			{
 				// check if its time to set the hold show on check again
 				if (this.breakUntil <= date.getTimeInMillis())
@@ -287,7 +300,7 @@ public class TedSerie implements Serializable
 			{
 				if(this.isUseBreakScheduleFrom() && (this.getBreakFrom() < date.getTimeInMillis()))
 				{
-					this.status = TedSerie.STATUS_HOLD;
+					this.setStatus(TedSerie.STATUS_HOLD);
 				}
 			}
 		}
@@ -683,10 +696,10 @@ public class TedSerie implements Serializable
 	/**
 	 * @return Returns the status of the show
 	 */
-	public int getStatus() 
+	/*public int getStatus() 
 	{
 		return status;
-	}
+	}*/
 
 	/**
 	 * Set the status of the show
@@ -696,7 +709,8 @@ public class TedSerie implements Serializable
 	{
 		if ( ( 	status == TedSerie.STATUS_CHECK || 
 				status == TedSerie.STATUS_HOLD || 
-				status == TedSerie.STATUS_PAUSE 
+				status == TedSerie.STATUS_PAUSE ||
+				status == TedSerie.STATUS_HIATUS
 				)
 				&& status != this.status
 			)
@@ -738,6 +752,11 @@ public class TedSerie implements Serializable
 	{
 		return this.status == TedSerie.STATUS_CHECK;
 	}
+	
+	private boolean isHiatus() 
+	{
+		return this.status == TedSerie.STATUS_HIATUS;
+	}
 
 	/**
 	 * @return Returns if ted has to use the episode scheduler
@@ -756,7 +775,7 @@ public class TedSerie implements Serializable
 	{
 		// if someone changed the schedule, set this week as last week
 		// unless the show is on hold
-		if (useSchedule && !arraysEqual(newdays, this.days) && !this.isHold())
+		if (useSchedule && !arraysEqual(newdays, this.days) && (!this.isHold() && ! this.isHiatus()))
 		{
 			this.setLastDatesToToday();
 		}
@@ -1007,7 +1026,7 @@ public class TedSerie implements Serializable
 	 */
 	private String makeDefaultStatusString()
 	{		
-		if (this.status == TedSerie.STATUS_HOLD)
+		if (this.isHold())
 		{
 			// if we use the breakschedule: return next date we put the show on check again
 			if (this.useBreakSchedule)
@@ -1028,7 +1047,7 @@ public class TedSerie implements Serializable
 			}
 			
 		}
-		else if (this.status == TedSerie.STATUS_PAUSE)
+		else if (this.isPaused())
 		{
 			// if we use the episode schedule: return next day the show will be on check again
 			if (this.useEpisodeSchedule)
@@ -1046,6 +1065,10 @@ public class TedSerie implements Serializable
 				return Lang.getString("TedSerie.OnPause"); //$NON-NLS-1$
 			}
 			
+		}
+		else if (this.isHiatus())
+		{
+			return "On hiatus";
 		}
 		else
 		{
@@ -1137,12 +1160,27 @@ public class TedSerie implements Serializable
 	 * and the next episode
 	 */
 	private Vector<SeasonEpisode> getAiredEpisodes()
-	{
-		// New instance of the parser
-        EpguidesParser tedEP = new EpguidesParser();
-        String nameWithoutSpaces = this.getName().replace(" ", "");
-        
-        return tedEP.getPastSeasonEpisodes(nameWithoutSpaces);
+	{	
+		Vector<SeasonEpisode> results = new Vector<SeasonEpisode>();
+		
+		if (this.updateEpisodeSchedule())
+		{
+			// system date
+	       	Date systemDate = new Date();
+			
+	       	SeasonEpisode current;
+			// return only seasonepisodes aired until today
+			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
+			{
+				current = this.scheduledEpisodes.elementAt(i);
+				if (current.getAirDate().before(systemDate))
+				{
+					results.add(current);
+				}
+			}
+		}
+		
+		return results;
 	}
 	
 	/**
@@ -1154,6 +1192,117 @@ public class TedSerie implements Serializable
 		TedParser showParser = new TedParser();
 		Vector<SeasonEpisode> publishedSeasonEpisodes = showParser.getItems(this);
 		return publishedSeasonEpisodes;
+	}
+	
+	// updateEpisodeSchedule
+	/**
+	 * @return Whether the schedule is filled (!= null and larger than 0 items)
+	 */
+	public boolean updateEpisodeSchedule()
+	{
+		// update interval
+		int updateIntervalInDays = 2;
+		// system date
+       	Date systemDate = new Date();
+		// check date
+		if (this.scheduledEpisodes == null || this.checkEpisodeSchedule == null || systemDate.after(this.checkEpisodeSchedule))
+		{
+			
+			// parse epguides
+			// New instance of the parser
+	        EpguidesParser tedEP = new EpguidesParser();
+	        String nameWithoutSpaces = this.getName().replace(" ", "");
+	        
+	        this.scheduledEpisodes = tedEP.getScheduledSeasonEpisodes(nameWithoutSpaces);
+	        
+	        // one week from now
+	        Calendar future = Calendar.getInstance();
+	        future.add(Calendar.DAY_OF_YEAR, updateIntervalInDays);
+	        this.checkEpisodeSchedule = future.getTime();
+	        
+	        return true;
+		}   
+		if (this.scheduledEpisodes != null && this.scheduledEpisodes.size() > 0)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Searches the episode in the future episode schedule
+	 * @param season
+	 * @param episode
+	 * @return SeasonEpisode for parameters. null if episode is not planned in schedule
+	 */
+	public SeasonEpisode getScheduledEpisode(int season, int episode)
+	{
+		SeasonEpisode result = null;
+		// check schedule for updates
+
+		if (this.updateEpisodeSchedule())
+		{
+			SeasonEpisode current;
+			// search for season, episode in vector
+			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
+			{
+				current = this.scheduledEpisodes.elementAt(i);
+				if (current.getSeason() == season && current.getEpisode() == episode)
+				{
+					result = current;
+					break;
+				}
+			}	
+		}
+		else
+		{
+			result = new SeasonEpisode();
+			result.setSeason(season);
+			result.setEpisode(episode);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * @param season
+	 * @param episode
+	 * @return Episode scheduled after season, episode parameters
+	 * null if episode is not found
+	 */
+	public SeasonEpisode getNextEpisode (int season, int episode)
+	{
+		SeasonEpisode result = null;
+		// check schedule for updates
+		
+		if (this.updateEpisodeSchedule())
+		{
+			
+			SeasonEpisode current;
+			// search for season, episode in vector
+			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
+			{
+				current = this.scheduledEpisodes.elementAt(i);
+				if (current.getSeason() == season && current.getEpisode() == episode)
+				{
+					// check if there are more elements in the list
+					if (i-1 >= 0)
+					{
+						result = this.scheduledEpisodes.elementAt(i-1);
+						break;
+					}
+				}
+			}
+		}
+		else
+		{
+			// no schedule present, just fill a result
+			result = new SeasonEpisode();
+			result.setSeason(season);
+			result.setEpisode(episode + 1);
+		}
+		return result;
 	}
 
 	public Vector<SeasonEpisode> getPubishedAndAiredEpisodes() 
@@ -1172,6 +1321,13 @@ public class TedSerie implements Serializable
 			SeasonEpisode airedEpisode = airedEpisodes.elementAt(airedCounter);		
 			airedCounter++;
 			publishedCounter++;
+			
+			// we're filling the list from most recent to old, so first add the next episode aired
+			SeasonEpisode nextEpisode = this.getNextEpisode(airedEpisode.getSeason(), airedEpisode.getEpisode());
+			if (nextEpisode != null)
+			{
+				results.add(nextEpisode);
+			}
 			
 			while (airedCounter < airedEpisodes.size() && publishedCounter < publishedEpisodes.size())
 			{
@@ -1217,13 +1373,80 @@ public class TedSerie implements Serializable
 				publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
 				results.add(publishedEpisode);
 			}
+			
 		}
 		else
 		{
 			return publishedEpisodes;
 		}
 		
+		// free references for garbage collection
+		airedEpisodes = null;
+		publishedEpisodes = null;
 		
 		return results;
+	}
+
+
+	public void checkAirDate() 
+	{
+		this.updateEpisodeSchedule();
+		// get airdate for current season / episode
+		SeasonEpisode currentSE = this.getScheduledEpisode(this.currentSeason, this.currentEpisode);
+		if (currentSE != null)
+		{
+			Date airDate = currentSE.getAirDate();
+			if (airDate != null)
+			{
+				Date currentDate = new Date();
+				
+				if (currentDate.before(airDate))
+				{
+					// put serie on hold if airdate is after today
+					this.setBreakUntil(airDate.getTime());
+					this.setUseBreakSchedule(true);
+					this.setStatus(TedSerie.STATUS_HOLD);
+				}
+			}
+		}
+		else
+		{
+			this.setStatus(TedSerie.STATUS_HIATUS);
+		}
+		// TODO: what if currentSE == null? then nothing is planned? just put on hold?
+		// Do nothing because no planning is found
+	}
+	
+	public void goToNextSeasonEpisode(int season, int episode)
+	{
+		// get the next episode from the planning
+		SeasonEpisode nextSE = this.getNextEpisode(season, episode);
+		
+		// if no next SE is found, put ted on hiatus and leave Season/Episode as it is
+		if (nextSE == null)
+		{
+			this.setStatus(TedSerie.STATUS_HIATUS);
+		}
+		else
+		{
+			this.currentEpisode = nextSE.getEpisode();
+			this.currentSeason = nextSE.getSeason();
+		}
+
+	}
+
+	public void updateStatus(int episode) 
+	{
+		// check airdate
+		this.checkAirDate();
+		
+		if (this.checkBreakEpisode(episode) && !this.isHiatus())
+		{
+			this.setStatus(TedSerie.STATUS_HOLD);
+		}
+		else if (this.isUseEpisodeSchedule() && this.isCheck())
+		{
+			this.setStatus(TedSerie.STATUS_PAUSE);
+		}		
 	}
 }

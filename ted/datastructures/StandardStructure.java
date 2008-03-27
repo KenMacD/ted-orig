@@ -1,5 +1,6 @@
 package ted.datastructures;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -9,8 +10,12 @@ import java.util.GregorianCalendar;
 
 import ted.Lang;
 
-public class StandardStructure 
+public class StandardStructure implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6353477437638502291L;
 	int quality = 0;
 	protected Date publishDate; // date torrent was published online
 	protected Date airDate; // date episode was aired on tv

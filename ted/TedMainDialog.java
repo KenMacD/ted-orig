@@ -495,9 +495,17 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	{
 		serieTable.addSerie(newSerie);
 		
-		// parse new show
-		TedParseHandler handler = new TedParseHandler(newSerie, this);
-		handler.start();
+		// if it is the day to start checking the serie again
+		newSerie.checkDate();
+		
+		// if the serie is not paused
+		if(newSerie.isCheck())
+		{
+			
+			// parse new show
+			TedParseHandler handler = new TedParseHandler(newSerie, this);
+			handler.start();
+		}
 	}
 		
 	/**
@@ -948,7 +956,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			TedSerie serie = serieTable.getSerieAt(i);
 			// only reset the statusstring if the status of the show is not check
-			if (serie.getStatus() == TedSerie.STATUS_CHECK)
+			if (serie.isCheck())
 			{
 				serie.resetStatus(resetCheck);
 			}

@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -353,6 +354,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
 				selectedSerie.setCurrentEpisode(se.getEpisode());
 				selectedSerie.setCurrentSeason(se.getSeason());
+				
+				selectedSerie.checkAirDate();
 			}
 			
 			// add the serie

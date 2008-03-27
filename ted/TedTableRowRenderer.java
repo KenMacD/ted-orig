@@ -121,11 +121,11 @@ private ImageIcon getIconForShow(TedSerie show)
 		{
 			return showActive;
 		}
-		if (show.getStatus() == TedSerie.STATUS_PAUSE)
+		if (show.isPaused())
 		{
 			return showPaused;
 		}
-		else if (show.getStatus() == TedSerie.STATUS_CHECK)
+		else if (show.isCheck())
 		{
 			return showPlay;
 		}

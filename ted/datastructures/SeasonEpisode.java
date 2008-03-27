@@ -4,8 +4,12 @@ import java.util.Date;
 
 import ted.Lang;
 
-public class SeasonEpisode extends StandardStructure implements Comparable
+public class SeasonEpisode extends StandardStructure implements Comparable<SeasonEpisode>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 933251042852089885L;
 	private int season = 0;
 	private int episode = 0;
 	
@@ -15,6 +19,7 @@ public class SeasonEpisode extends StandardStructure implements Comparable
 		this.episode = episode2;
 		this.airDate = airdate2;
 		this.title = title2;
+		this.quality = 0;
 	}
 	
 	public SeasonEpisode() {
@@ -53,9 +58,9 @@ public class SeasonEpisode extends StandardStructure implements Comparable
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(Object arg0)
+	public int compareTo(SeasonEpisode arg0)
 	{
-		SeasonEpisode second = (SeasonEpisode) arg0;
+		SeasonEpisode second = arg0;
 		
 		if (this.getSeason() < second.getSeason())
 		{

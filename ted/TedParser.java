@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.Collections;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -167,7 +168,7 @@ public class TedParser extends Thread
 				InputStream inputStream = urlc.getInputStream();
 				
 				rss = parser.parse(inputStream);
-				inputStream.close();
+				
 				Channel channel = rss.getChannel();
 				
 				feedsData[i] = channel;
@@ -177,6 +178,7 @@ public class TedParser extends Thread
 				channel = null;
 				rss = null;
 				parser = null;
+				inputStream.close();
 
 			}
 			catch (RssParserException e) 
@@ -1012,18 +1014,25 @@ public class TedParser extends Thread
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			
 			// check if this episode is the break episode
-			if (serie.checkBreakEpisode(episode))
+			/*if (serie.checkBreakEpisode(episode))
 			{
 				serie.setStatus(TedSerie.STATUS_HOLD);
 			}
 			else
 			{
 				foundTorrent = true;
-			}
+			}*/
+			
+			serie.goToNextSeasonEpisode(season, episode);
+			serie.updateStatus(episode);
 			
 			// update serie to look for next episode
-			serie.setCurrentEpisode(episode+1);
-			serie.setCurrentSeason(season);
+			//serie.setCurrentEpisode(episode+1);
+			//serie.setCurrentSeason(season);
+			
+			
+			// check airdate for next episode
+			//serie.checkAirDate();
 			
 			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 			
@@ -1032,7 +1041,7 @@ public class TedParser extends Thread
 			
 			// if no episode is found set the date of this serie
 	        // otherwise ted checks again the whole feed
-	        if(foundTorrent)
+	        /*if(foundTorrent)
 	        {
 	        	TedLog.simpleLog(generateLogMessage());
 	        	
@@ -1043,8 +1052,16 @@ public class TedParser extends Thread
 		        }
 		        
 		        // but we have to parse the serie until we have all the availble torrents
-		        parseFeeds(serie, tMainDialog);
-	        }			
+		        if (serie.isCheck() || serie.isPaused())
+		        {
+		        	parseFeeds(serie, tMainDialog);
+		        }
+	        }*/	
+			
+			if (serie.isCheck() || serie.isPaused())
+			{
+				parseFeeds(serie, tMainDialog);
+			}
 		}
 		else
 		{
@@ -1103,14 +1120,14 @@ public class TedParser extends Thread
 			
 			// if no episode is found set the date of this serie
 	        // otherwise ted checks again the whole feed
-	        if(foundTorrent)
+	        /*if(foundTorrent)
 	        {
 	        	// we found something so we can pause the serie again
 	        	if (serie.isUseEpisodeSchedule())
 		        {
 		        	serie.setStatus(TedSerie.STATUS_PAUSE);
 		        }
-		    }			
+		    }*/			
 		}
 		else
 		{

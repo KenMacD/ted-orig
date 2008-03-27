@@ -208,4 +208,15 @@ public class EpguidesParser {
     	return this.parseSeasonEpisodes(showName, systemDate, yearFromNow.getTime(), false);
     }
     
+    public Vector<SeasonEpisode> getScheduledSeasonEpisodes(String showName)
+    {
+    	Date past = new Date();   // Get time and date from system
+        past.setTime(0);
+       
+        // one year from now
+        Calendar yearFromNow = Calendar.getInstance();
+        yearFromNow.add(Calendar.YEAR, 1);
+    	return this.parseSeasonEpisodes(showName, past, yearFromNow.getTime(), false);
+    }
+    
 } // TedEpguidesParser ends

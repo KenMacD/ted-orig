@@ -207,7 +207,7 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 			//	when the user wants to put the show immediatly on hold
 			if(!(currentSerie.isUseBreakScheduleEpisode() || currentSerie.isUseBreakScheduleFrom()))
 			{
-				if(currentSerie.isUseBreakSchedule() && (currentSerie.getStatus() == TedSerie.STATUS_CHECK))
+				if(currentSerie.isUseBreakSchedule() && (currentSerie.isCheck()))
 					currentSerie.setStatus(TedSerie.STATUS_HOLD);
 				else if(this.wasUseBreakSchedule && !currentSerie.isUseBreakSchedule())
 					currentSerie.setStatus(TedSerie.STATUS_CHECK);

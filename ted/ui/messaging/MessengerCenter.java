@@ -45,7 +45,7 @@ public class MessengerCenter
 	
 	public void displayMessage (String title, String body)
 	{
-		this.checkCurrentMessenger();
+		//this.checkCurrentMessenger();
 		currentMessenger.displayMessage(title, body);
 	}
 	
@@ -53,7 +53,7 @@ public class MessengerCenter
 	{
 		if (TedConfig.isShowErrors())
 		{
-			this.checkCurrentMessenger();
+			//this.checkCurrentMessenger();
 			currentMessenger.displayError(title, body);
 		}
 	}
@@ -85,7 +85,7 @@ public class MessengerCenter
 	{
 		if (TedConfig.isShowHurray())
 		{
-			this.checkCurrentMessenger();
+			//this.checkCurrentMessenger();
 			currentMessenger.displayHurray(title, body);
 		}
 	}
