@@ -1,6 +1,7 @@
  package ted;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -52,6 +53,7 @@ public class TedSerie implements Serializable
 	public final static int STATUS_HOLD = 2;
 	public final static int STATUS_PAUSE = 1;
 	public final static int STATUS_CHECK = 0;
+	public final static int STATUS_DISABLED = 4;
 	public final static int IS_PARSING = 1;
 	public final static int IS_IDLE = 0;
 	private int activity = 0;
@@ -215,99 +217,100 @@ public class TedSerie implements Serializable
 	 */
 	public void checkDate() 
 	{
-		Calendar date =  new GregorianCalendar();
-		boolean dayToCheck = false;
-		
-		// if the show is on hiatus, check if there is already some
-		// episode planning for the next episode available
-		if (this.isHiatus())
-		{
-			this.goToNextSeasonEpisode(this.currentSeason, this.currentEpisode);
-		}
-		
-		this.checkAirDate();
-
-		if (this.useEpisodeSchedule)
-		{
-			if(!this.isHold() && !this.isHiatus())
+		if (!this.isDisabled())
 			{
-				date.setFirstDayOfWeek(Calendar.SUNDAY);
-				int week = date.get(Calendar.WEEK_OF_YEAR);
-				int day = date.get(Calendar.DAY_OF_WEEK);
-				int year = date.get(Calendar.YEAR);
-
-				// minus one day, sunday is 1 in java, 0 in our array
-				day --;
-				// get week and 2 weeks ago
-				date.add(Calendar.WEEK_OF_YEAR, -1);
-				int weekAgo = date.get(Calendar.WEEK_OF_YEAR);
-				date.add(Calendar.WEEK_OF_YEAR, -1);
-				int twoWeeksAgo = date.get(Calendar.WEEK_OF_YEAR);
-				int yearTwoWeeksAgo = date.get(Calendar.YEAR); 
-				
-				if ((this.lastWeekChecked == week) && (this.checkDay(lastDayChecked + 1, day)))
-				{
-					// if we last checked in the current week, and there is a day selected between the lastchecked day and today
-					dayToCheck = true;
-				}
-				else if((this.lastWeekChecked == weekAgo) && (this.checkDay(0, day) || this.checkDay(lastDayChecked + 1, 6)))
-				{
-					// if the last week we checked was last week, and there is a day checked in this week (from start to today) or in the last week (from last checked day to the end of the week)
-					dayToCheck = true;
-				}
-				else if ((this.lastWeekChecked <= twoWeeksAgo && this.lastYearChecked == yearTwoWeeksAgo) && (this.checkDay(0, 6)))
-				{
-					// if we last checked 2 weeks ago and there is at least one day checked in the preferences
-					dayToCheck = true;
-				}
-				else if ((this.lastYearChecked < year) && (this.checkDay(0, 6)))
-				{
-					// if we last checked last year and there is one day checked in the preferences
-					dayToCheck = true;
-				}
-				
-				if (dayToCheck)
-				{
-					// set status and date
-					this.setStatus(TedSerie.STATUS_CHECK);
-					
-					this.lastDayChecked = day;					
-					this.lastWeekChecked = week;
-					this.lastYearChecked = year;
-				}
-			}	
-		}
-		
-		
-		
-		if(this.useBreakSchedule)
-		{
-			// get date of today
-			date =  new GregorianCalendar();
+			Calendar date =  new GregorianCalendar();
+			boolean dayToCheck = false;
 			
-			if (this.isHold())
+			// if the show is on hiatus, check if there is already some
+			// episode planning for the next episode available
+			if (this.isHiatus())
 			{
-				// check if its time to set the hold show on check again
-				if (this.breakUntil <= date.getTimeInMillis())
-				{
-					this.status = TedSerie.STATUS_CHECK;
-					this.useBreakSchedule = false;
-					this.useBreakScheduleFrom = false;
-					this.useBreakScheduleEpisode = false;
-				}
+				this.goToNextSeasonEpisode(this.currentSeason, this.currentEpisode);
 			}
-			else
-			{
-				if(this.isUseBreakScheduleFrom() && (this.getBreakFrom() < date.getTimeInMillis()))
-				{
-					this.setStatus(TedSerie.STATUS_HOLD);
-				}
-			}
-		}
-		
-		
-	}
+			
+			this.checkAirDate();
 	
+			if (this.useEpisodeSchedule)
+			{
+				if(!this.isHold() && !this.isHiatus())
+				{
+					date.setFirstDayOfWeek(Calendar.SUNDAY);
+					int week = date.get(Calendar.WEEK_OF_YEAR);
+					int day = date.get(Calendar.DAY_OF_WEEK);
+					int year = date.get(Calendar.YEAR);
+	
+					// minus one day, sunday is 1 in java, 0 in our array
+					day --;
+					// get week and 2 weeks ago
+					date.add(Calendar.WEEK_OF_YEAR, -1);
+					int weekAgo = date.get(Calendar.WEEK_OF_YEAR);
+					date.add(Calendar.WEEK_OF_YEAR, -1);
+					int twoWeeksAgo = date.get(Calendar.WEEK_OF_YEAR);
+					int yearTwoWeeksAgo = date.get(Calendar.YEAR); 
+					
+					if ((this.lastWeekChecked == week) && (this.checkDay(lastDayChecked + 1, day)))
+					{
+						// if we last checked in the current week, and there is a day selected between the lastchecked day and today
+						dayToCheck = true;
+					}
+					else if((this.lastWeekChecked == weekAgo) && (this.checkDay(0, day) || this.checkDay(lastDayChecked + 1, 6)))
+					{
+						// if the last week we checked was last week, and there is a day checked in this week (from start to today) or in the last week (from last checked day to the end of the week)
+						dayToCheck = true;
+					}
+					else if ((this.lastWeekChecked <= twoWeeksAgo && this.lastYearChecked == yearTwoWeeksAgo) && (this.checkDay(0, 6)))
+					{
+						// if we last checked 2 weeks ago and there is at least one day checked in the preferences
+						dayToCheck = true;
+					}
+					else if ((this.lastYearChecked < year) && (this.checkDay(0, 6)))
+					{
+						// if we last checked last year and there is one day checked in the preferences
+						dayToCheck = true;
+					}
+					
+					if (dayToCheck)
+					{
+						// set status and date
+						this.setStatus(TedSerie.STATUS_CHECK);
+						
+						this.lastDayChecked = day;					
+						this.lastWeekChecked = week;
+						this.lastYearChecked = year;
+					}
+				}	
+			}
+			
+			
+			
+			if(this.useBreakSchedule)
+			{
+				// get date of today
+				date =  new GregorianCalendar();
+				
+				if (this.isHold())
+				{
+					// check if its time to set the hold show on check again
+					if (this.breakUntil <= date.getTimeInMillis())
+					{
+						this.status = TedSerie.STATUS_CHECK;
+						this.useBreakSchedule = false;
+						this.useBreakScheduleFrom = false;
+						this.useBreakScheduleEpisode = false;
+					}
+				}
+				else
+				{
+					if(this.isUseBreakScheduleFrom() && (this.getBreakFrom() < date.getTimeInMillis()))
+					{
+						this.setStatus(TedSerie.STATUS_HOLD);
+					}
+				}
+			}
+		}	
+	}
+
 	/**
 	 * Toggle the status of the show from hold, pause to check
 	 */
@@ -710,7 +713,8 @@ public class TedSerie implements Serializable
 		if ( ( 	status == TedSerie.STATUS_CHECK || 
 				status == TedSerie.STATUS_HOLD || 
 				status == TedSerie.STATUS_PAUSE ||
-				status == TedSerie.STATUS_HIATUS
+				status == TedSerie.STATUS_HIATUS ||
+				status == TedSerie.STATUS_DISABLED
 				)
 				&& status != this.status
 			)
@@ -756,6 +760,12 @@ public class TedSerie implements Serializable
 	private boolean isHiatus() 
 	{
 		return this.status == TedSerie.STATUS_HIATUS;
+	}
+	
+	
+	boolean isDisabled() 
+	{
+		return this.status == TedSerie.STATUS_DISABLED;
 	}
 
 	/**
@@ -1030,16 +1040,10 @@ public class TedSerie implements Serializable
 		{
 			// if we use the breakschedule: return next date we put the show on check again
 			if (this.useBreakSchedule)
-			{
-				Calendar c = new GregorianCalendar();
-				c.setTimeInMillis(breakUntil);
+			{			
+				DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 				
-				String date = ""; //$NON-NLS-1$
-				date += (c.get(Calendar.DAY_OF_MONTH)) + "/"; //$NON-NLS-1$
-				date += (c.get(Calendar.MONTH)+1)+ "/"; //$NON-NLS-1$
-				date += (c.get(Calendar.YEAR));
-				
-				return Lang.getString("TedSerie.StatusOnHoldUntill") + " " + date; //$NON-NLS-1$
+				return Lang.getString("TedSerie.StatusOnHoldUntill") + " " + df.format(breakUntil); //$NON-NLS-1$
 			}
 			else
 			{
@@ -1068,7 +1072,11 @@ public class TedSerie implements Serializable
 		}
 		else if (this.isHiatus())
 		{
-			return "On hiatus";
+			return Lang.getString("TedSerie.Hiatus");
+		}
+		else if (this.isDisabled())
+		{
+			return Lang.getString("TedSerie.Disabled");
 		}
 		else
 		{

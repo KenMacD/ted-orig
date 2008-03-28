@@ -35,14 +35,16 @@ public class TedTablePopupMenu extends JPopupMenu
 	private ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
 	private ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
 	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
+	private ImageIcon showDisabled    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 	private JMenuItem menuDelete;
 	private JMenuItem menuEdit;
 	private JMenuItem buyDVD;
-	JMenuItem menuParse;
-	JMenu menuStatus;
-	JMenuItem statusCheck;
-	JMenuItem statusPause;
-	JMenuItem statusHold;
+	private JMenuItem menuParse;
+	private JMenu menuStatus;
+	private JMenuItem statusCheck;
+	private JMenuItem statusPause;
+	private JMenuItem statusHold;
+	private JMenuItem statusDisabled;
 
 	/****************************************************
 	 * CONSTRUCTORS
@@ -84,6 +86,11 @@ public class TedTablePopupMenu extends JPopupMenu
 		statusHold.setActionCommand("setstatushold"); //$NON-NLS-1$
 		statusHold.setIcon(showStopped);
 		
+		statusDisabled = new JMenuItem (); //$NON-NLS-1$
+		statusDisabled.addActionListener(mainDialog);
+		statusDisabled.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
+		statusDisabled.setIcon(showDisabled);
+		
 		buyDVD = new JMenuItem ();
 		buyDVD.addActionListener(mainDialog);
 		buyDVD.setActionCommand("buyDVDselectedshow");
@@ -98,6 +105,7 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuStatus.add(statusCheck);
 		menuStatus.add(statusPause);
 		menuStatus.add(statusHold);
+		menuStatus.add(statusDisabled);
 		
 		this.updateText();
 	}
@@ -107,15 +115,15 @@ public class TedTablePopupMenu extends JPopupMenu
 	 */
 	public void updateText()
 	{
-		menuEdit.setText(Lang.getString("TedTablePopupMenu.Edit")); //$NON-NLS-1$
-		menuDelete.setText( Lang.getString("TedTablePopupMenu.Delete") ); //$NON-NLS-1$
+		menuEdit.setText(Lang.getString("TedMainMenuBar.Edit.Edit")); //$NON-NLS-1$
+		menuDelete.setText( Lang.getString("TedMainMenuBar.Edit.Delete") ); //$NON-NLS-1$
 		menuParse.setText( Lang.getString("TedTablePopupMenu.CheckShow") ); //$NON-NLS-1$
-		menuStatus.setText( Lang.getString("TedTablePopupMenu.SetStatus") ); //$NON-NLS-1$
-		statusCheck.setText(Lang.getString("TedTablePopupMenu.SetStatus.Check")); //$NON-NLS-1$
-		statusPause.setText(Lang.getString("TedTablePopupMenu.SetStatus.Pause")); //$NON-NLS-1$
-		statusHold.setText(Lang.getString("TedTablePopupMenu.SetStatus.Hold")); //$NON-NLS-1$
-		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));
-		
+		menuStatus.setText( Lang.getString("TedMainMenuBar.Edit.SetStatus") ); //$NON-NLS-1$
+		statusCheck.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Check")); //$NON-NLS-1$
+		statusPause.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Pause")); //$NON-NLS-1$
+		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
+		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
+		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));	
 	}
 	
 	/**

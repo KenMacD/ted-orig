@@ -19,6 +19,7 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 	private final ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
 	private final ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
 	private final ImageIcon showActive   = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
+	private final ImageIcon showDisabled    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 	
 	JPanel currentPanel   = new JPanel();
 	JLabel nameLabel      = new JLabel();
@@ -128,6 +129,10 @@ private ImageIcon getIconForShow(TedSerie show)
 		else if (show.isCheck())
 		{
 			return showPlay;
+		}
+		else if (show.isDisabled())
+		{
+			return showDisabled;
 		}
 		else// if (show.getStatus() == TedSerie.STATUS_HOLD)
 		{

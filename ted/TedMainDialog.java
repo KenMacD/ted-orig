@@ -666,6 +666,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			serieTable.setSelectedStatus(TedSerie.STATUS_HOLD);
 			this.saveShows();
 		}
+		else if (action.equals("setstatusdisabled"))
+		{
+			serieTable.setSelectedStatus(TedSerie.STATUS_DISABLED);
+			this.saveShows();
+		}
 		else if (action.equals("checkupdates")) //$NON-NLS-1$
 		{
 			this.isNewTed(true);

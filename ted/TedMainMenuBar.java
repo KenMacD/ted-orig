@@ -36,6 +36,7 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem statusCheck;
 	private JMenuItem statusHold;
 	private JMenuItem statusPause;
+	private JMenuItem statusDisabled;
 	private JMenuItem versionItem;
 	private JMenuItem donateItem;
 	private JMenuItem webItem;
@@ -118,6 +119,7 @@ public class TedMainMenuBar extends JMenuBar
 				ImageIcon showPaused 	= new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
 				ImageIcon showPlay		 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
 				ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
+				ImageIcon showDisabled    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 				
 				menuStatus = new JMenu(  ); //$NON-NLS-1$
 				
@@ -137,9 +139,15 @@ public class TedMainMenuBar extends JMenuBar
 				statusHold.setActionCommand("setstatushold"); //$NON-NLS-1$
 				statusHold.setIcon(showStopped);
 				
+				statusDisabled = new JMenuItem (); //$NON-NLS-1$
+				statusDisabled.addActionListener(tMain);
+				statusDisabled.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
+				statusDisabled.setIcon(showDisabled);
+				
 				menuStatus.add(statusCheck);
 				menuStatus.add(statusPause);
 				menuStatus.add(statusHold);
+				menuStatus.add(statusDisabled);
 				jMenu4.add(menuStatus);
 			}
 			
@@ -153,14 +161,15 @@ public class TedMainMenuBar extends JMenuBar
 			logMenuItem.setActionCommand("Log"); //$NON-NLS-1$
 			logMenuItem.addActionListener(tMain);
 			
-			jMenu4.add(jSeparator1);
+			
 			
 			//show color chooser
-			colorChooserItem = new JMenuItem();
+			// TODO: move to preferences / look and feel
+			/*colorChooserItem = new JMenuItem();
 			colorChooserItem.setText("Choose your colors");
 			colorChooserItem.setActionCommand("Color");
 			colorChooserItem.addActionListener(tMain);
-			jMenu4.add(colorChooserItem);
+			jMenu4.add(colorChooserItem);*/
 						
 			if (!TedSystemInfo.osIsMac())
 			{
@@ -277,12 +286,10 @@ public class TedMainMenuBar extends JMenuBar
 		
 		menuStatus.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus"));
 		
-		statusCheck.setText (Lang.getString("TedMainMenuBar.Edit.SetStatus.Check")); //$NON-NLS-1$
-		
+		statusCheck.setText (Lang.getString("TedMainMenuBar.Edit.SetStatus.Check")); //$NON-NLS-1$		
 		statusPause.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Pause")); //$NON-NLS-1$
-
-		
 		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
+		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
 		
 		logMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.ShowLog")); //$NON-NLS-1$
 		
