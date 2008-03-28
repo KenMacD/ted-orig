@@ -32,6 +32,8 @@ import javax.swing.JOptionPane;
 import org.w3c.dom.Element;
 
 import ted.ui.editshowdialog.FeedPopupItem;
+import ted.ui.messaging.GrowlMessenger;
+import ted.ui.messaging.PopupMessenger;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -847,6 +849,40 @@ public class TedIO
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean checkForShowsXML()
+	{
+		// Checks if the show xml file is present on the user system.
+		// If not, alert the user.
+		File showXML =new File(XML_SHOWS_FILE);
+	    
+	    if(!showXML.exists())
+	    {
+	    	// Alert Mac users
+	    	if(TedSystemInfo.osIsMac())
+	    	{
+	    		// what if growl isn't supported?
+	    	    GrowlMessenger gm = new GrowlMessenger();
+	    		gm.displayError(Lang.getString("TedGeneral.Error"),
+	    						Lang.getString("TedIO.ShowsFileNotPresent"));
+	        }
+	        
+	    	// Alert Windows users
+	    	if(TedSystemInfo.osSupportsBalloon())
+	    	{
+	    		// by balloon?
+	    	    PopupMessenger pm = new PopupMessenger(null);
+	    		pm.messagePopUp(Lang.getString("TedGeneral.Error"),
+								Lang.getString("TedIO.ShowsFileNotPresent"));
+	        }
+	    	
+	    	return false;
+	    }
+	    else
+	    {
+	    	return true;
+	    }
 	}
 	
 	/****************************************************

@@ -22,22 +22,20 @@ public class PopupMessenger implements MessengerInterface
 	public void displayError(String title, String body) 
 	{
 		this.messagePopUp(title, body);
-		
 	}
 
 	public void displayHurray(String title, String body) 
 	{
 		this.messagePopUp(title, body);
-		
 	}
 	
-	private void messagePopUp(String title, String body)
+	public void messagePopUp(String title, String body)
 	{
 		JOptionPane.showMessageDialog(null, body, title,  JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public int getType() {
+	public int getType() 
+	{
 		return this.type;
 	}
-
 }

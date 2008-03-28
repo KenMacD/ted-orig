@@ -358,19 +358,23 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		// if the shows.xml file does not exist download it
 		File f = new File(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+		TedIO tio = new TedIO();
 		if(!f.exists())
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
-			TedIO tio = new TedIO();
 			tio.downloadXML(this, TedConfig.getTimeOutInSecs(), -1);
-			tio.UpdateShow(this, true, this.serieTable);
 		}
 		// check to see if there is a new shows.xml file available
 		else if (TedConfig.isAutoUpdateFeedList() || TedConfig.askAutoUpdateFeedList())
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
-			TedIO tio = new TedIO();
 			tio.checkNewXMLFile(this, false, serieTable);
+		}
+		
+		// Check if the file is now actually present on the user's system.
+		if(tio.checkForShowsXML())
+		{
+			tio.UpdateShow(this, true, this.serieTable);
 		}
 		
 		// start the counter
