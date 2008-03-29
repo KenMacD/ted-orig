@@ -136,14 +136,14 @@ public class EpguidesParser {
                          }  */          
                          /* The if checks to see if the parsed episode has same air date with the previous
                           * wich means it's a double aired episode */                          
-                         if (parsedAirDate.equals(previousParsedAirDate))
+                         /*if (parsedAirDate.equals(previousParsedAirDate))
                          {
                         	 // TODO: add handling code for double episodes
                              foundDouble = true;
                              doubleSeason = matcher.group(1);
                              doubleEpisode = matcher.group(3);
                              doubleAirDate = matcher.group(7)+"/" + matcher.group(9) + "/" + matcher.group(11);
-                         }
+                         }*/
                          if (parsedAirDate.after(from) && parsedAirDate.before(to))
                          {
                         	 int season = Integer.parseInt(matcher.group(1));

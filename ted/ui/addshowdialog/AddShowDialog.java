@@ -120,10 +120,6 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			episodeChooserPanel.setVisible(false);			
 			subscribeOptionsPanel.setVisible(true);
 			
-			// You need to pass this dialog so the user can ask for the selected
-			// subscribe option.
-			episodeChooserPanel.setAddShowDialog(this);
-			
 			showsTableModel = new ShowsTableModel();
 			showsTable = new JTable();
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));

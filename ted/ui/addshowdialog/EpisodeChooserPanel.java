@@ -45,7 +45,6 @@ public class EpisodeChooserPanel extends JPanel
 	private static final long serialVersionUID = 8763021531797512857L;
 	private EpisodesTable episodesTable;
 	private JScrollPane episodesScrollPane;
-	private AddShowDialog addShowDialog;
 	private EpisodesTableModel episodesTableModel = new EpisodesTableModel();
 
 	private Canvas activityCanvas;
@@ -233,10 +232,5 @@ public class EpisodeChooserPanel extends JPanel
 	public void selectEpisode(int indexInTable) 
 	{
 		episodesTable.setRowSelectionInterval(indexInTable, indexInTable);
-	}
-	
-	public void setAddShowDialog(AddShowDialog dialog)
-	{
-		this.addShowDialog = dialog;
 	}
 }

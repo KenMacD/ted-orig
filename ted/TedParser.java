@@ -1013,53 +1013,19 @@ public class TedParser extends Thread
 			
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			
-			// check if this episode is the break episode
-			/*if (serie.checkBreakEpisode(episode))
-			{
-				serie.setStatus(TedSerie.STATUS_HOLD);
-			}
-			else
-			{
-				foundTorrent = true;
-			}*/
-			
+			// increase the season/episode based on the schedule
 			serie.goToNextSeasonEpisode(season, episode);
+			// check the status of the show
 			serie.updateStatus(episode);
-			
-			// update serie to look for next episode
-			//serie.setCurrentEpisode(episode+1);
-			//serie.setCurrentSeason(season);
-			
-			
-			// check airdate for next episode
-			//serie.checkAirDate();
-			
+						
 			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 			
 			// save the shows
 			tMainDialog.saveShows();
 			
-			// if no episode is found set the date of this serie
-	        // otherwise ted checks again the whole feed
-	        /*if(foundTorrent)
-	        {
-	        	TedLog.simpleLog(generateLogMessage());
-	        	
-		        // we found something so we can pause the serie again
-		        if (serie.isUseEpisodeSchedule())
-		        {
-		        	serie.setStatus(TedSerie.STATUS_PAUSE);
-		        }
-		        
-		        // but we have to parse the serie until we have all the availble torrents
-		        if (serie.isCheck() || serie.isPaused())
-		        {
-		        	parseFeeds(serie, tMainDialog);
-		        }
-	        }*/	
-			
 			if (serie.isCheck() || serie.isPaused())
 			{
+				// search for more torrents if the status is check or pause
 				parseFeeds(serie, tMainDialog);
 			}
 		}
