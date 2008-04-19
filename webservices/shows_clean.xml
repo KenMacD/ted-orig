@@ -169,6 +169,14 @@
 			<tv_com>53003</tv_com>
 		</show>
 		<show>
+			<name>The Armstrong and Miller Show</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>5</seeders>
+			<daily>False</daily>
+			<tv_com>5090</tv_com>
+		</show>
+		<show>
 			<name>As The World Turns</name>
 			<daily>True</daily>
 			<minimumsize>150</minimumsize>
@@ -455,6 +463,14 @@
 			<tv_com>34421</tv_com>
 		</show>
 		<show>
+			<name>Eli Stone</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68652</tv_com>
+		</show>
+		<show>
 			<name>Entourage</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -515,9 +531,16 @@
 			<tv_com>71360</tv_com>
 		</show>
 		<show>
+			<name>The Fixer</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75455</tv_com>
+		</show>
+		<show>
 			<name>Flash Gordon</name>
 			<minimumsize>300</minimumsize>
-			<maximumsize>700</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>71778</tv_com>
 		</show>
@@ -535,7 +558,14 @@
 			<maximumsize>300</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>74817</tv_com>
-		</show>
+		</show>		
+   		<show>
+      		<name>Free Radio</name>
+      		<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>21583</tv_com>
+        </show>
 		<show>
 			<name>Friday Night Lights</name>
 			<minimumsize>300</minimumsize>
@@ -701,6 +731,13 @@
 			<tv_com>68692</tv_com>
 		</show>
 		<show>
+      		<name>Kenny vs. Spenny</name>
+      		<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>21583</tv_com>
+   		</show>
+		<show>
 			<name>Kid Nation</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>600</maximumsize>
@@ -776,6 +813,14 @@
 			<maximumsize>800</maximumsize>
 			<keywords>suv</keywords>
 			<tv_com>334</tv_com>
+		</show>
+		<show>
+			<name>Life</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68729</tv_com>
 		</show>
 		<show>
 			<name>Life On Mars</name>
@@ -876,6 +921,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22839</tv_com>
+		</show>
+		<show>
+			<name>The New Adventures of Old Christine</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>33698</tv_com>
 		</show>
 		<show>
 			<name>New Amsterdam</name>
@@ -1092,6 +1144,14 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>146</tv_com>
+		</show>
+		<show>
+			<name>Skins</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>67845</tv_com>
 		</show>
 		<show>
 			<name>Smallville</name>
