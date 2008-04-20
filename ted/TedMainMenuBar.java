@@ -47,7 +47,6 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem buyDVDItem;
 	private JMenuItem translateItem;
 	private JMenuItem languageItem;
-	private JMenuItem colorChooserItem;
 	
 	private JMenu subUpdateMenu;
 	private JMenu subLangMenu;
@@ -161,16 +160,6 @@ public class TedMainMenuBar extends JMenuBar
 			logMenuItem.setActionCommand("Log"); //$NON-NLS-1$
 			logMenuItem.addActionListener(tMain);
 			
-			
-			
-			//show color chooser
-			// TODO: move to preferences / look and feel
-			/*colorChooserItem = new JMenuItem();
-			colorChooserItem.setText("Choose your colors");
-			colorChooserItem.setActionCommand("Color");
-			colorChooserItem.addActionListener(tMain);
-			jMenu4.add(colorChooserItem);*/
-						
 			if (!TedSystemInfo.osIsMac())
 			{
 				jSeparator1 = new JSeparator();

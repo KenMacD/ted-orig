@@ -78,18 +78,18 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	private JLabel label_count;
 	private JScrollPane jScrollPane1;
 	
-	private TedTable serieTable;
-	
-	private TedCounter tCounter;
-	
-	private TedLogDialog tLog;
-	
-	private TedParseHandler tParseHandler;
-	
-	private TedMainToolBar TedToolBar;
-	private JPanel jStatusPanel;
-	
-	
+	private TedTable          serieTable;	
+	private TedCounter        tCounter;	
+	private TedLogDialog      tLog;	
+	private TedParseHandler   tParseHandler;	
+	private TedMainToolBar    TedToolBar;
+	private TedConfigDialog   tConfigDialog;
+	private TedTablePopupMenu ttPopupMenu;
+	private TedMainMenuBar    tMenuBar;
+	private TedColorPicker    colorPicker;
+	private TedTrayIcon       tedTray;
+		
+	private JPanel jStatusPanel;	
 	private JPanel jPanel1;
 
 	private boolean osHasTray = TedSystemInfo.osSupportsTray();
@@ -98,15 +98,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	private boolean uiInitialized = false;
 	
-	private TedTablePopupMenu ttPopupMenu;
-	private TedMainMenuBar tMenuBar;
-	
-	private TedTrayIcon tedTray;
 	private MessengerCenter messengerCenter;
 	
-
-	private TedColorPicker colorPicker;
-
 
   	/****************************************************
 	 * CONSTRUCTORS
@@ -182,7 +175,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		    //Set the new frame location
 		    this.setLocation(x, y);
 			
-			new TedConfigDialog(this, false);
+			new TedConfigDialog(this, false, true);
 		}
 		
 		Lang.setLanguage(TedConfig.getLocale());
@@ -385,7 +378,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.isNewTed(false);
 		}
 		
-		colorPicker = new TedColorPicker(this);
+		tConfigDialog = new TedConfigDialog(this, true, false);
+		
+		colorPicker   = new TedColorPicker(this);
 		
 		uiInitialized = true;
 	}
@@ -610,7 +605,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if(action.equals("Preferences...")) //$NON-NLS-1$
 		{
-			new TedConfigDialog(this, true);
+			new TedConfigDialog(this, true, true);
 		}
 		else if(action.equals("Log")) //$NON-NLS-1$
 		{
@@ -846,6 +841,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Color"))
 		{
+			tConfigDialog.setVisible(false);
 			colorPicker.setVisible(true);
 		}
 	}
@@ -857,7 +853,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	public void showPreferencesDialog()
 	{
-		new TedConfigDialog(this, true);
+		tConfigDialog.setVisible(true);
 	}
 	
 	public void quit()

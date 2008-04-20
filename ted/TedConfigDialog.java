@@ -78,13 +78,15 @@ public class TedConfigDialog extends javax.swing.JDialog
 	 * @param tc Current TedConfig
 	 * @param showcancelbutton Show a cancel button in the config dialog?
 	 */
-	public TedConfigDialog(TedMainDialog frame, boolean showcancelbutton) 
+	public TedConfigDialog(TedMainDialog frame, boolean showcancelbutton,
+							boolean showDialog) 
 	{
 		this.setModal(true);
 		this.setResizable(false);
 		this.main = frame;
 		this.show_cancel_btn = showcancelbutton;
 		initGUI();
+		this.setVisible(showDialog);
 	}
 	
 	/****************************************************
@@ -94,9 +96,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 	{
 		try 
 		{
-
 			this.setSize(this.width, this.height);
-
 
 		    //Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -202,8 +202,6 @@ public class TedConfigDialog extends javax.swing.JDialog
 		this.updatesPanel = new UpdatesPanel(this.main);
 		this.jConfigTabs.add("updates", this.updatesPanel);
 		this.updatesPanel.setValues();
-		
-		this.setVisible(true);
 	}
 
 	

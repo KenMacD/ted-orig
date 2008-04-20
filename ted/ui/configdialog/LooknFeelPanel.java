@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Locale;
+import javax.swing.JButton;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -40,22 +41,24 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 	 * 
 	 */
 	private static final long serialVersionUID = -6042247710601857318L;
-	private JPanel lookFeelPanel;
-	private JLabel labelUpdate;
-	private JCheckBox checkLogToFile;
-	private JCheckBox checkAllowLogging;
+	private JPanel     lookFeelPanel;
+	private JLabel     labelUpdate;
+	private JCheckBox  checkLogToFile;
+	private JCheckBox  checkAllowLogging;
 	private JSeparator jSeparator1;
-	private JCheckBox checkStartMinimized;
-	private JCheckBox checkAlertNewTorrent;
+	private JCheckBox  checkStartMinimized;
+	private JCheckBox  checkAlertNewTorrent;
 	private JSeparator jSeparator4;
-	private JCheckBox checkAddSystemTray;
-	private JComboBox comboLanguages;
+	private JCheckBox  checkAddSystemTray;
+	private JComboBox  comboLanguages;
 	private JSeparator jSeparator5;
-	private JCheckBox checkAlertErrors;
-	private JLabel labelLanguage;
-	private Locale[] locales = Lang.getAvailableLocales();
+	private JCheckBox  checkAlertErrors;
+	private JLabel     labelLanguage;
+	private Locale[]   locales = Lang.getAvailableLocales();
 	private TedMainDialog tMain;
-	
+	private JButton colorPickerButton;
+	private JSeparator jSeparator2;
+
 	public LooknFeelPanel()
 	{
 		this.initGUI();
@@ -71,18 +74,22 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 	{
 		try 
 		{
+			{
+				this.setPreferredSize(new java.awt.Dimension(350, 345));
+			}
 			//this.setPreferredSize(new Dimension(width, height));
 
 		lookFeelPanel = new JPanel();
 		this.add(lookFeelPanel);
 		//lookFeelPanel.setPreferredSize(new Dimension(width, height));
 		FormLayout lookFeelPanelLayout = new FormLayout(
-			"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)",
-			"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu)");
+				"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)", 
+				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 		lookFeelPanel.setLayout(lookFeelPanelLayout);
+		lookFeelPanel.setPreferredSize(new java.awt.Dimension(342, 344));
 
 		labelLanguage = new JLabel();
-		lookFeelPanel.add(labelLanguage, new CellConstraints("2, 11, 2, 1, default, default"));
+		lookFeelPanel.add(labelLanguage, new CellConstraints("2, 13, 2, 1, default, default"));
 		labelLanguage.setText(Lang.getString("TedConfigDialog.LabelLanguage"));
 		labelLanguage.setBounds(231, 483, 371, 28);
 
@@ -110,7 +117,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		jSeparator5.setBounds(-28, 266, 350, 7);
 
 		comboLanguages = new JComboBox();
-		lookFeelPanel.add(comboLanguages, new CellConstraints("2, 12, 2, 1, default, default"));
+		lookFeelPanel.add(comboLanguages, new CellConstraints("2, 14, 2, 1, default, default"));
 		//comboLanguages.setSelectedIndex(toSelect);
 		comboLanguages.setBounds(21, 530, 343, 28);
 
@@ -140,12 +147,23 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		}
 		{
 			labelUpdate = new JLabel();
-			lookFeelPanel.add(labelUpdate, new CellConstraints("3, 13, 1, 1, default, default"));
+			lookFeelPanel.add(labelUpdate, new CellConstraints("3, 15, 1, 1, default, default"));
 			labelUpdate.setForeground(Color.BLUE);
 			labelUpdate.setFont(new java.awt.Font("Dialog",1,12));
 			labelUpdate.addMouseListener(this);
 			labelUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			labelUpdate.setText("<html><u>"+ Lang.getString("TedMainMenuBar.Help.LanguageUpdate")+"</u></html>");
+		}
+		{
+			jSeparator2 = new JSeparator();
+			lookFeelPanel.add(jSeparator2, new CellConstraints("2, 12, 2, 1, default, default"));
+		}
+		{
+			colorPickerButton = new JButton();
+			lookFeelPanel.add(colorPickerButton, new CellConstraints("2, 11, 2, 1, default, default"));
+			colorPickerButton.setText("Choose your table colors");
+			colorPickerButton.setActionCommand("Color");
+			colorPickerButton.addActionListener(tMain);
 		}
 
 		} catch (Exception e) {
