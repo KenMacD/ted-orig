@@ -94,7 +94,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private SimpleTedSerie selectedShow;
 
 	private EpisodeChooserPanel   episodeChooserPanel   = new EpisodeChooserPanel(this);
-	private SubscribeOptionsPanel subscribeOptionsPanel = new SubscribeOptionsPanel();
+	private SubscribeOptionsPanel subscribeOptionsPanel = new SubscribeOptionsPanel(this);
 	
 	public AddShowDialog()
 	{
@@ -114,7 +114,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
-					"max(p;5dlu), max(p;15dlu), 5dlu, 318dlu, 5dlu, max(p;15dlu), 5dlu, bottom:44dlu, 5dlu, 15dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
+					"max(p;5dlu), max(p;15dlu), 5dlu, 250dlu, 5dlu, max(p;15dlu), 5dlu, bottom:100dlu, 5dlu, 15dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
 			episodeChooserPanel.setVisible(false);			
@@ -253,7 +253,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				// retrieve the show info and the episodes from the web
 				ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
 				sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
-				EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie);
+				EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie, this.subscribeOptionsPanel);
 				ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
 				
 				sit.start();
@@ -347,7 +347,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			}
 			else
 			{
-				SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
+				//SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
+				SeasonEpisode se = (SeasonEpisode)this.subscribeOptionsPanel.getSelectedEpisode();
 				selectedSerie.setCurrentEpisode(se.getEpisode());
 				selectedSerie.setCurrentSeason(se.getSeason());
 				
@@ -509,7 +510,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	{
 		// called when episode selection is changed.		
 		// check if episode and show selected
-		if (selectedSerie != null && this.episodeChooserPanel.getSelectedStructure() != null)
+		if (selectedSerie != null && this.subscribeOptionsPanel.getSelectedEpisode() != null)
 		{
 			// enable add button
 			this.okButton.setEnabled(true);

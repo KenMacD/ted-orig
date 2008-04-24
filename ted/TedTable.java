@@ -1,6 +1,7 @@
 package ted;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
@@ -106,6 +107,7 @@ public class TedTable extends JTable
 			// or did the user click right?
 			else if (SwingUtilities.isRightMouseButton(evt))
 			{
+				Component henk = evt.getComponent();
 				// show context menu
 				int selectedrow = this.rowAtPoint(evt.getPoint());
 				ListSelectionModel selectionModel = this.getSelectionModel();

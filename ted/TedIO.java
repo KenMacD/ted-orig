@@ -873,7 +873,7 @@ public class TedIO
 	    	{
 	    		// by balloon?
 	    	    PopupMessenger pm = new PopupMessenger(null);
-	    		pm.messagePopUp(Lang.getString("TedGeneral.Error"),
+	    		pm.displayError(Lang.getString("TedGeneral.Error"),
 								Lang.getString("TedIO.ShowsFileNotPresent"));
 	        }
 	    	

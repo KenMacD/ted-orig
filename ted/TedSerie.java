@@ -63,6 +63,7 @@ public class TedSerie implements Serializable
 	private boolean useBreakSchedule;
 	private boolean useBreakScheduleEpisode;
 	private boolean useBreakScheduleFrom;
+	private boolean useAutoSchedule;
 	private long breakUntil = 0;
 	private long breakFrom = 0;
 	private int breakEpisode;
@@ -111,6 +112,7 @@ public class TedSerie implements Serializable
 		this.useBreakSchedule = false;
 		this.useBreakScheduleEpisode = false;
 		this.useBreakScheduleFrom = false;
+		this.useAutoSchedule = true;
 		this.breakEpisode = 1;
 		this.breakFrom  = 0;
 		this.breakUntil = 0;
@@ -143,6 +145,7 @@ public class TedSerie implements Serializable
 		this.useBreakSchedule = false;
 		this.useBreakScheduleEpisode = false;
 		this.useBreakScheduleFrom = false;
+		this.useAutoSchedule = true;
 		this.breakEpisode = 1;
 		this.breakFrom  = 0;
 		this.breakUntil = 0;
@@ -1143,11 +1146,12 @@ public class TedSerie implements Serializable
 		if (this.scheduler == null)
 		{
 			this.scheduler = new SeasonEpisodeScheduler(this);
+			this.useAutoSchedule = true;
 		}
 		return this.scheduler;
 	}
 
-	public Vector getPubishedAndAiredEpisodes() 
+	public Vector<SeasonEpisode> getPubishedAndAiredEpisodes() 
 	{
 		return this.getScheduler().getPubishedAndAiredEpisodes();
 	}
@@ -1167,5 +1171,23 @@ public class TedSerie implements Serializable
 		this.lastDayChecked = day;
 		this.lastWeekChecked = week;
 		this.lastYearChecked = year;	
+	}
+
+	public boolean isUseAutoSchedule() 
+	{
+		return useAutoSchedule;
+	}
+
+	public void setUseAutoSchedule(boolean useAutoSchedule) 
+	{
+		this.useAutoSchedule = useAutoSchedule;
+	}
+
+	public void setEpguidesName(String text)
+	{
+		if (!text.equals(this.getEpguidesName()))
+		{
+			this.epguidesName = text;
+		}	
 	}
 }

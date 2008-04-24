@@ -381,8 +381,9 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 					this.filterPanel.saveValues(show);
 					this.schedulePanel.saveValues(show);
 						
-					show.checkDate();
-					show.resetStatus(true);
+					//show.checkDate();
+					show.checkAirDate();
+					//show.resetStatus(true);
 					// backup name
 					this.currentSerieName = show.getName();
 					return true;

@@ -288,6 +288,11 @@ public class SeasonEpisodeScheduler implements Serializable
 					serie.setUseBreakSchedule(true);
 					serie.setStatus(TedSerie.STATUS_HOLD);
 				}
+				else
+				{
+					// put show on check?
+					serie.setStatus(TedSerie.STATUS_CHECK);
+				}
 			}
 		}
 		else
@@ -317,81 +322,87 @@ public class SeasonEpisodeScheduler implements Serializable
 			}
 			
 			// check the airdate for the selected season/episode
-			this.checkAirDate();
-	
-			if (serie.isUseEpisodeSchedule())
+			if (serie.isUseAutoSchedule())
 			{
-				if(!serie.isHold() && !serie.isHiatus())
+				this.checkAirDate();
+			}
+			else
+			{
+				// use manual schedules
+				if (serie.isUseEpisodeSchedule())
 				{
-					// check if the current day is a selected air day
-					date.setFirstDayOfWeek(Calendar.SUNDAY);
-					int week = date.get(Calendar.WEEK_OF_YEAR);
-					int day = date.get(Calendar.DAY_OF_WEEK);
-					int year = date.get(Calendar.YEAR);
-	
-					// minus one day, sunday is 1 in java, 0 in our array
-					day --;
-					// get week and 2 weeks ago
-					date.add(Calendar.WEEK_OF_YEAR, -1);
-					int weekAgo = date.get(Calendar.WEEK_OF_YEAR);
-					date.add(Calendar.WEEK_OF_YEAR, -1);
-					int twoWeeksAgo = date.get(Calendar.WEEK_OF_YEAR);
-					int yearTwoWeeksAgo = date.get(Calendar.YEAR);
-					int lastWeekChecked = serie.getLastWeekChecked();
-					int lastDayChecked = serie.getLastDayChecked();
-					int lastYearChecked = serie.getLastYearChecked();
-					
-					if ((lastWeekChecked == week) && (serie.checkDay(lastDayChecked + 1, day)))
+					if(!serie.isHold() && !serie.isHiatus())
 					{
-						// if we last checked in the current week, and there is a day selected between the lastchecked day and today
-						dayToCheck = true;
-					}
-					else if((lastWeekChecked == weekAgo) && (serie.checkDay(0, day) || serie.checkDay(lastDayChecked + 1, 6)))
-					{
-						// if the last week we checked was last week, and there is a day checked in this week (from start to today) or in the last week (from last checked day to the end of the week)
-						dayToCheck = true;
-					}
-					else if ((lastWeekChecked <= twoWeeksAgo && lastYearChecked == yearTwoWeeksAgo) && (serie.checkDay(0, 6)))
-					{
-						// if we last checked 2 weeks ago and there is at least one day checked in the preferences
-						dayToCheck = true;
-					}
-					else if ((lastYearChecked < year) && (serie.checkDay(0, 6)))
-					{
-						// if we last checked last year and there is one day checked in the preferences
-						dayToCheck = true;
-					}
-					
-					if (dayToCheck)
-					{
-						// set status and date
-						serie.setStatus(TedSerie.STATUS_CHECK);
+						// check if the current day is a selected air day
+						date.setFirstDayOfWeek(Calendar.SUNDAY);
+						int week = date.get(Calendar.WEEK_OF_YEAR);
+						int day = date.get(Calendar.DAY_OF_WEEK);
+						int year = date.get(Calendar.YEAR);
+		
+						// minus one day, sunday is 1 in java, 0 in our array
+						day --;
+						// get week and 2 weeks ago
+						date.add(Calendar.WEEK_OF_YEAR, -1);
+						int weekAgo = date.get(Calendar.WEEK_OF_YEAR);
+						date.add(Calendar.WEEK_OF_YEAR, -1);
+						int twoWeeksAgo = date.get(Calendar.WEEK_OF_YEAR);
+						int yearTwoWeeksAgo = date.get(Calendar.YEAR);
+						int lastWeekChecked = serie.getLastWeekChecked();
+						int lastDayChecked = serie.getLastDayChecked();
+						int lastYearChecked = serie.getLastYearChecked();
 						
-						serie.setLastDateChecked(day, week, year);
-					}
+						if ((lastWeekChecked == week) && (serie.checkDay(lastDayChecked + 1, day)))
+						{
+							// if we last checked in the current week, and there is a day selected between the lastchecked day and today
+							dayToCheck = true;
+						}
+						else if((lastWeekChecked == weekAgo) && (serie.checkDay(0, day) || serie.checkDay(lastDayChecked + 1, 6)))
+						{
+							// if the last week we checked was last week, and there is a day checked in this week (from start to today) or in the last week (from last checked day to the end of the week)
+							dayToCheck = true;
+						}
+						else if ((lastWeekChecked <= twoWeeksAgo && lastYearChecked == yearTwoWeeksAgo) && (serie.checkDay(0, 6)))
+						{
+							// if we last checked 2 weeks ago and there is at least one day checked in the preferences
+							dayToCheck = true;
+						}
+						else if ((lastYearChecked < year) && (serie.checkDay(0, 6)))
+						{
+							// if we last checked last year and there is one day checked in the preferences
+							dayToCheck = true;
+						}
+						
+						if (dayToCheck)
+						{
+							// set status and date
+							serie.setStatus(TedSerie.STATUS_CHECK);
+							
+							serie.setLastDateChecked(day, week, year);
+						}
+					}	
 				}	
-			}	
-			if(serie.isUseBreakSchedule())
-			{
-				// get date of today
-				date =  new GregorianCalendar();
-				
-				if (serie.isHold())
+				if(serie.isUseBreakSchedule())
 				{
-					// check if its time to set the hold show on check again
-					if (serie.getBreakUntil() <= date.getTimeInMillis())
+					// get date of today
+					date =  new GregorianCalendar();
+					
+					if (serie.isHold())
 					{
-						serie.setStatus(TedSerie.STATUS_CHECK);
-						serie.setUseBreakSchedule(false);
-						serie.setUseBreakScheduleFrom(false);
-						serie.setUseBreakScheduleEpisode(false);
+						// check if its time to set the hold show on check again
+						if (serie.getBreakUntil() <= date.getTimeInMillis())
+						{
+							serie.setStatus(TedSerie.STATUS_CHECK);
+							serie.setUseBreakSchedule(false);
+							serie.setUseBreakScheduleFrom(false);
+							serie.setUseBreakScheduleEpisode(false);
+						}
 					}
-				}
-				else
-				{
-					if(serie.isUseBreakScheduleFrom() && (serie.getBreakFrom() < date.getTimeInMillis()))
+					else
 					{
-						serie.setStatus(TedSerie.STATUS_HOLD);
+						if(serie.isUseBreakScheduleFrom() && (serie.getBreakFrom() < date.getTimeInMillis()))
+						{
+							serie.setStatus(TedSerie.STATUS_HOLD);
+						}
 					}
 				}
 			}

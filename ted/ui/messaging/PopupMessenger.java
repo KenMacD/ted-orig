@@ -29,7 +29,7 @@ public class PopupMessenger implements MessengerInterface
 		this.messagePopUp(title, body);
 	}
 	
-	public void messagePopUp(String title, String body)
+	private void messagePopUp(String title, String body)
 	{
 		JOptionPane.showMessageDialog(null, body, title,  JOptionPane.INFORMATION_MESSAGE);
 	}

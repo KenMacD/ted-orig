@@ -266,7 +266,31 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 		return true;
 	}
 		
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		breakUpdate();
+	}
+
+	public void setContentsEnabled(boolean enable)
+	{
+		// dis-enable all items on this panel 		
+		jCheckBreakSchedule.setEnabled(enable);	
+		
+		if (enable)
+		{
+			// check for disabled items according to checkboxes
+			this.breakUpdate();
+		}
+		else
+		{
+			jCheckBoxBreakEpisode.setEnabled(enable);
+			jCheckBoxBreakFrom.setEnabled(enable);
+			
+			untilBreakDatePanel.setEnabledContents(enable);
+			fromBreakDatePanel.setEnabledContents(enable);
+			jBreakEpisode.setEnabled(enable);
+			jBreakLabel2.setEnabled(enable);
+		}
+		
 	}
 }

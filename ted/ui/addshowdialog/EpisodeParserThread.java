@@ -29,21 +29,31 @@ public class EpisodeParserThread extends Thread
 	 ****************************************************/
 	private EpisodeChooserPanel episodeChooserPanel;
 	private TedSerie selectedSerie;
+	private SubscribeOptionsPanel subscribeOptionsPanel = null;
 	
 	/****************************************************
 	 * CONSTRUCTOR
 	 ****************************************************/
 	/**
 	 * Create a new counter
+	 * @param subscribeOptionsPanel 
 	 * @param m the TedMainDialog
 	 * @param tc the current config
 	 */
-	public EpisodeParserThread(EpisodeChooserPanel ecp, TedSerie ts)
+	public EpisodeParserThread(EpisodeChooserPanel ecp, TedSerie ts, SubscribeOptionsPanel subscribeOptionsPanel)
 	{
 		this.episodeChooserPanel = ecp;
 		this.selectedSerie = ts;
+		this.subscribeOptionsPanel = subscribeOptionsPanel;
 	}
 	
+	public EpisodeParserThread(EpisodeChooserPanel episodeChooserPanel2,
+			TedSerie show)
+	{
+		this.episodeChooserPanel = episodeChooserPanel2;
+		this.selectedSerie = show;
+	}
+
 	/****************************************************
 	 * PUBLIC METHODS
 	 ****************************************************/
@@ -52,10 +62,18 @@ public class EpisodeParserThread extends Thread
 	{
 		this.episodeChooserPanel.setActivityStatus(true);
 		this.episodeChooserPanel.clear();
+		if (this.subscribeOptionsPanel != null)
+		{
+			this.subscribeOptionsPanel.clear();
+		}
 		if(selectedSerie!=null)
 		{		
 			// add vector to chooser panel
 			this.episodeChooserPanel.setSeasonEpisodes(selectedSerie.getPubishedAndAiredEpisodes());
+			if (this.subscribeOptionsPanel != null)
+			{
+				this.subscribeOptionsPanel.setSeasonEpisodes(selectedSerie.getPubishedAndAiredEpisodes());
+			}
 		}
 		
 		// disable avtivity image

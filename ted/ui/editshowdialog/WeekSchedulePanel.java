@@ -37,7 +37,7 @@ public class WeekSchedulePanel extends JPanel implements ActionListener
 	private JCheckBox jCheckWednesday;
 	private JCheckBox jCheckTuesday;
 	private JCheckBox jCheckMonday;
-	private JLabel jLabel16;
+	private JLabel jLabelEpisode;
 	private JLabel jScheduleText;
 	
 	public WeekSchedulePanel() 
@@ -67,12 +67,12 @@ public class WeekSchedulePanel extends JPanel implements ActionListener
 			jScheduleText.setText(Lang
 				.getString("TedEpisodeDialog.LabelEpisodeSchedule"));
 			{
-				jLabel16 = new JLabel();
-				jScheduleText.add(jLabel16);
-				jLabel16
+				jLabelEpisode = new JLabel();
+				jScheduleText.add(jLabelEpisode);
+				jLabelEpisode
 					.setText(Lang
 						.getString("TedEpisodeDialog.LabelEpisodeScheduleCheck"));
-				jLabel16.setBounds(24, 61, 192, 30);
+				jLabelEpisode.setBounds(24, 61, 192, 30);
 			}
 		}
 		{
@@ -157,15 +157,7 @@ public class WeekSchedulePanel extends JPanel implements ActionListener
 	{
 		boolean b = jCheckSchedule.isSelected();
 		
-		// set all the days and labels for the schedule 
-		jCheckSunday.setEnabled(b);
-		jCheckMonday.setEnabled(b);
-		jCheckTuesday.setEnabled(b);
-		jCheckWednesday.setEnabled(b);
-		jCheckThursday.setEnabled(b);
-		jCheckFriday.setEnabled(b);
-		jCheckSaturday.setEnabled(b);
-		jScheduleText.setEnabled(b);
+		setScheduleEnabled(b);
 	}
 	
 	/**
@@ -197,5 +189,36 @@ public class WeekSchedulePanel extends JPanel implements ActionListener
 	
 	public void actionPerformed(ActionEvent arg0) {
 		scheduleUpdate();
+	}
+
+	public void setContentsEnabled(boolean enabled)
+	{	
+		jCheckSchedule.setEnabled(enabled);
+		jScheduleText.setEnabled(enabled);
+		jLabelEpisode.setEnabled(enabled);
+		
+		if (enabled)
+		{
+			// check for disabled items according to checkboxes
+			this.scheduleUpdate();
+		}
+		else
+		{
+			// set all items to enabled bool
+			setScheduleEnabled(enabled);
+		}
+	}
+	
+	public void setScheduleEnabled(boolean enabled)
+	{
+		// set all the days and labels for the schedule 
+		jCheckSunday.setEnabled(enabled);
+		jCheckMonday.setEnabled(enabled);
+		jCheckTuesday.setEnabled(enabled);
+		jCheckWednesday.setEnabled(enabled);
+		jCheckThursday.setEnabled(enabled);
+		jCheckFriday.setEnabled(enabled);
+		jCheckSaturday.setEnabled(enabled);
+		jScheduleText.setEnabled(enabled);
 	}
 }

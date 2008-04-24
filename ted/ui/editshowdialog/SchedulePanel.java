@@ -1,12 +1,25 @@
 package ted.ui.editshowdialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 
+import ted.BrowserLauncher;
+import ted.Lang;
 import ted.TedSerie;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -20,7 +33,7 @@ import com.jgoodies.forms.layout.FormLayout;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class SchedulePanel extends JPanel
+public class SchedulePanel extends JPanel implements ActionListener
 {
 	/**
 	 * 
@@ -29,7 +42,11 @@ public class SchedulePanel extends JPanel
 	private JSeparator jSeparator1;
 	WeekSchedulePanel wPanel;
 	BreakSchedulePanel bPanel;
-	
+	private JButton jOpenButton;
+	private JTextField textEpguidesID;
+	private JLabel labelEpGuides;
+	private JCheckBox checkAutoSchedule;
+
 	public SchedulePanel()
 	{
 		this.initUI();
@@ -40,20 +57,46 @@ public class SchedulePanel extends JPanel
 		try 
 		{
 			FormLayout thisLayout = new FormLayout(
-				"max(p;5dlu), 15dlu:grow, max(p;15dlu)",
-				"max(p;66dlu), 5dlu, 115dlu");
+					"max(p;5dlu), 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu):grow, max(p;15dlu), max(p;15dlu)", 
+					"max(p;15dlu), max(p;15dlu), max(p;66dlu), 5dlu, 115dlu");
 			this.setLayout(thisLayout);
 			wPanel = new WeekSchedulePanel();
 			bPanel = new BreakSchedulePanel(); 
 			{
-				this.add(wPanel, new CellConstraints("2, 1, 1, 1, default, default"));
+				this.add(wPanel, new CellConstraints("3, 3, 5, 1, default, default"));
 			}
 			{
 				jSeparator1 = new JSeparator();
-				this.add(jSeparator1, new CellConstraints("2, 2, 1, 1, default, default"));
+				this.add(jSeparator1, new CellConstraints("3, 4, 5, 1, default, default"));
 			}
 			{
-				this.add(bPanel, new CellConstraints("2, 3, 1, 1, default, default"));
+				checkAutoSchedule = new JCheckBox();
+				this.add(checkAutoSchedule, new CellConstraints("2, 1, 5, 1, default, default"));
+				checkAutoSchedule.setText("Use auto schedule");
+				checkAutoSchedule.setActionCommand("autoupdate");
+				checkAutoSchedule.addActionListener(this);
+			}
+			{
+				this.add(bPanel, new CellConstraints("3, 5, 5, 1, default, default"));
+				{
+					labelEpGuides = new JLabel();
+					this.add(labelEpGuides, new CellConstraints("3, 2, 1, 1, default, default"));
+					labelEpGuides.setText("Epguides ID");
+				}
+				{
+					textEpguidesID = new JTextField();
+					this.add(textEpguidesID, new CellConstraints("5, 2, 2, 1, default, default"));
+				}
+				{
+					jOpenButton = new JButton();
+					this.add(jOpenButton, new CellConstraints("7, 2, 1, 1, default, default"));
+					jOpenButton.setText(Lang.getString("TedEpisodeDialog.ButtonOpen"));
+					jOpenButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/EditShowDialog-feeds-open.png")));
+					jOpenButton.setActionCommand("openepguides");
+					jOpenButton.setToolTipText(Lang.getString("TedEpisodeDialog.ButtonToolTipOpen"));
+					jOpenButton.setBounds(205, 248, 70, 21);
+					jOpenButton.addActionListener(this);
+				}
 			}
 		}
 		catch (Exception e)
@@ -66,16 +109,64 @@ public class SchedulePanel extends JPanel
 	{
 		wPanel.saveValues(serie);
 		bPanel.saveValues(serie);
+		
+		serie.setUseAutoSchedule(this.checkAutoSchedule.isSelected());
+		serie.setEpguidesName(this.textEpguidesID.getText());
 	}
 	
 	public void setValues(TedSerie serie)
 	{
 		wPanel.setValues(serie);
 		bPanel.setValues(serie);
+		
+		this.checkAutoSchedule.setSelected(serie.isUseAutoSchedule());
+		this.updatePanels();
+		
+		this.textEpguidesID.setText(serie.getEpguidesName());
 	}
 	
 	public boolean checkValues()
 	{
 		return bPanel.checkValues();
+	}
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		String command = e.getActionCommand();
+		if (command.equals("autoupdate"))
+		{
+			updatePanels();
+		}
+		else if (command.equals("openepguides"))
+		{
+			String epguidesid = this.textEpguidesID.getText();
+			try
+			{
+				BrowserLauncher.openURL("http://www.epguides.com/" + epguidesid + "/");
+				
+			} 
+			catch (MalformedURLException e1)
+			{
+				// show popup?
+			} catch (IOException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+		
+	}
+
+	private void updatePanels()
+	{
+		boolean isAutoSchedule = checkAutoSchedule.isSelected();
+		
+		this.labelEpGuides.setEnabled(isAutoSchedule);
+		this.textEpguidesID.setEnabled(isAutoSchedule);
+		this.jOpenButton.setEnabled(isAutoSchedule);
+		
+		wPanel.setContentsEnabled(!isAutoSchedule);
+		bPanel.setContentsEnabled(!isAutoSchedule);
 	}
 }

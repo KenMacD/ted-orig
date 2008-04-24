@@ -4,9 +4,11 @@ package ted;
  * IMPORTS
  ****************************************************/
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -45,6 +47,7 @@ public class TedTablePopupMenu extends JPopupMenu
 	private JMenuItem statusPause;
 	private JMenuItem statusHold;
 	private JMenuItem statusDisabled;
+	private JCheckBoxMenuItem checkAutoSchedule;
 
 	/****************************************************
 	 * CONSTRUCTORS
@@ -68,6 +71,7 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuParse = new JMenuItem(); //$NON-NLS-1$
 		menuParse.addActionListener(mainDialog);
 		menuParse.setActionCommand("parse selected"); //$NON-NLS-1$
+		
 		
 		menuStatus = new JMenu(); //$NON-NLS-1$
 		
@@ -95,11 +99,20 @@ public class TedTablePopupMenu extends JPopupMenu
 		buyDVD.addActionListener(mainDialog);
 		buyDVD.setActionCommand("buyDVDselectedshow");
 		
+		checkAutoSchedule = new JCheckBoxMenuItem();
+		checkAutoSchedule.addActionListener(mainDialog);
+		checkAutoSchedule.setActionCommand("toggleautoschedule");
+		
+		JSeparator separator = new JSeparator();
+		JSeparator separator2 = new JSeparator();
 		
 		this.add( menuEdit );
 		this.add( menuDelete );
 		this.add( menuParse );
+		this.add(separator);
+		this.add(checkAutoSchedule);
 		this.add( menuStatus );
+		this.add(separator2);
 		this.add( buyDVD);
 		
 		menuStatus.add(statusCheck);
@@ -124,6 +137,7 @@ public class TedTablePopupMenu extends JPopupMenu
 		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
 		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
 		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));	
+		checkAutoSchedule.setText("Use auto-schedule");
 	}
 	
 	/**
