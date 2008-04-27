@@ -841,7 +841,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Color"))
 		{
-			tConfigDialog.setVisible(false);
 			colorPicker.setVisible(true);
 		}
 	}

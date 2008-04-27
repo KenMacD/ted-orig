@@ -3,14 +3,12 @@
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import org.w3c.dom.Element;
 
 import ted.datastructures.SeasonEpisode;
-import ted.epguides.EpguidesParser;
 import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
@@ -300,7 +298,7 @@ public class TedSerie implements Serializable
 		{
 			this.setName(XMLserie.getName());
 			
-			Vector feeds = new Vector();
+			Vector<TedSerieFeed> feeds = new Vector<TedSerieFeed>();
 			feeds = XMLserie.getFeeds();
 			feeds.addAll(this.getSelfmadeFeeds());
 			this.setFeeds(feeds);
@@ -513,11 +511,11 @@ public class TedSerie implements Serializable
 	/**
 	 * @return Vector with feeds for this show
 	 */
-	public Vector getFeeds()
+	public Vector<TedSerieFeed> getFeeds()
 	{
 		if (feeds == null)
 		{
-			feeds = new Vector();
+			feeds = new Vector<TedSerieFeed>();
 			TedSerieFeed tsf = new TedSerieFeed(url, checkDate);
 			feeds.add(tsf);
 		}
@@ -556,6 +554,13 @@ public class TedSerie implements Serializable
 	 */
 	public int getMaxSize() 
 	{
+		// If current episode is a double episode update the max size
+		// by a factor two.
+		if(this.isDoubleEpisode())
+		{
+			return this.maxSize * 2;
+		}
+		
 		return this.maxSize;
 	}
 	
@@ -831,7 +836,7 @@ public class TedSerie implements Serializable
 	 * Set the feeds for this serie
 	 * @param serieFeeds
 	 */
-	public void setFeeds(Vector serieFeeds)
+	public void setFeeds(Vector<TedSerieFeed> serieFeeds)
 	{	
 		this.feeds = serieFeeds;
 	}
@@ -1100,8 +1105,15 @@ public class TedSerie implements Serializable
 	
 	public void goToNextSeasonEpisode(int season, int episode)
 	{
+		// If the current episode is a double episode you want to increase
+		// the episode number by 2 instead of 1.
+		if (this.isDoubleEpisode())
+		{
+			++episode;
+		}
+		
 		// get the next episode from the planning
-		SeasonEpisode nextSE = this.getScheduler().getNextEpisode(season, episode);
+		SeasonEpisode nextSE = this.getScheduler().getNextEpisode(season, episode).getSeasonEpisode();
 		
 		// if no next SE is found, put ted on hiatus and leave Season/Episode as it is
 		if (nextSE == null)
@@ -1113,7 +1125,16 @@ public class TedSerie implements Serializable
 			this.currentEpisode = nextSE.getEpisode();
 			this.currentSeason = nextSE.getSeason();
 		}
-
+	}
+	
+	public boolean isDoubleEpisode()
+	{
+		return isDoubleEpisode(currentSeason, currentEpisode);
+	}
+	
+	public boolean isDoubleEpisode(int season, int episode)
+	{
+		return this.getScheduler().getEpisode(season, episode).getIsDoubleEpisode();
 	}
 
 	/**

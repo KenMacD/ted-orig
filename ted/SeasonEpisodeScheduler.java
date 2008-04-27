@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import ted.datastructures.SeasonEpisode;
+import ted.epguides.EpguidesPair;
 import ted.epguides.EpguidesParser;
 
 public class SeasonEpisodeScheduler implements Serializable
@@ -17,7 +18,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	 */
 	private static final long serialVersionUID = -2256145484789412126L;
 	private TedSerie serie;
-	private Vector<SeasonEpisode> scheduledEpisodes;
+	private Vector<EpguidesPair> scheduledEpisodes;
 	private Date checkEpisodeSchedule;
 	
 	public SeasonEpisodeScheduler (TedSerie serie)
@@ -42,7 +43,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			// return only seasonepisodes aired until today
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
-				current = this.scheduledEpisodes.elementAt(i);
+				current = this.scheduledEpisodes.elementAt(i).getSeasonEpisode();
 				if (current.getAirDate().before(systemDate))
 				{
 					results.add(current);
@@ -105,73 +106,77 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * @param episode
 	 * @return SeasonEpisode for parameters. null if episode is not planned in schedule
 	 */
-	private SeasonEpisode getScheduledEpisode(int season, int episode)
+	private EpguidesPair getScheduledEpisode(int season, int episode)
 	{
-		SeasonEpisode result = null;
+		EpguidesPair result = new EpguidesPair();
+		
 		// check schedule for updates
-
 		if (this.updateEpisodeSchedule())
 		{
 			SeasonEpisode current;
 			// search for season, episode in vector
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
-				current = this.scheduledEpisodes.elementAt(i);
+				current = this.scheduledEpisodes.elementAt(i).getSeasonEpisode();
 				if (current.getSeason() == season && current.getEpisode() == episode)
 				{
-					result = current;
+					result.setSeasonEpisode(current);
+					result.setIsDoubleEpisode(this.scheduledEpisodes.elementAt(i).getIsDoubleEpisode());
 					break;
 				}
 			}	
 		}
 		else
 		{
-			result = new SeasonEpisode();
-			result.setSeason(season);
-			result.setEpisode(episode);
+			SeasonEpisode temp = new SeasonEpisode();
+			temp.setSeason(season);
+			temp.setEpisode(episode);
+			result.setSeasonEpisode(temp);
 		}
 		
 		return result;
 	}
-
-	/**
-	 * @param season
-	 * @param episode
-	 * @return Episode scheduled after season, episode parameters
-	 * null if episode is not found
-	 */
-	public SeasonEpisode getNextEpisode (int season, int episode)
+	
+	public EpguidesPair getEpisode (int season, int episode)
 	{
-		SeasonEpisode result = null;
+		EpguidesPair result = null;
 		// check schedule for updates
 		
 		if (this.updateEpisodeSchedule())
 		{
 			
-			SeasonEpisode current;
+			EpguidesPair current;
 			// search for season, episode in vector
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
 				current = this.scheduledEpisodes.elementAt(i);
-				if (current.getSeason() == season && current.getEpisode() == episode)
+				if (current.getSeasonEpisode().getSeason() == season && current.getSeasonEpisode().getEpisode() == episode)
 				{
 					// check if there are more elements in the list
-					if (i-1 >= 0)
-					{
-						result = this.scheduledEpisodes.elementAt(i-1);
-						break;
-					}
+					result = this.scheduledEpisodes.elementAt(i);
+					break;
 				}
 			}
 		}
 		else
 		{
 			// no schedule present, just fill a result
-			result = new SeasonEpisode();
-			result.setSeason(season);
-			result.setEpisode(episode + 1);
+			result = new EpguidesPair();
+			result.getSeasonEpisode().setSeason(season);
+			result.getSeasonEpisode().setEpisode(episode + 1);
 		}
 		return result;
+	}
+	
+	/**
+	 * @param season
+	 * @param episode
+	 * @return Episode scheduled after season, episode parameters
+	 * null if episode is not found
+	 */
+	public EpguidesPair getNextEpisode (int season, int episode)
+	{
+		return getEpisode(season, episode + 1);
 	}
 
 	/**
@@ -199,10 +204,10 @@ public class SeasonEpisodeScheduler implements Serializable
 			publishedCounter++;
 			
 			// we're filling the list from most recent to old, so first add the next episode aired
-			SeasonEpisode nextEpisode = this.getNextEpisode(airedEpisode.getSeason(), airedEpisode.getEpisode());
+			EpguidesPair nextEpisode = this.getNextEpisode(airedEpisode.getSeason(), airedEpisode.getEpisode());
 			if (nextEpisode != null)
 			{
-				results.add(nextEpisode);
+				results.add(nextEpisode.getSeasonEpisode());
 			}
 			
 			while (airedCounter < airedEpisodes.size() && publishedCounter < publishedEpisodes.size())
@@ -273,10 +278,10 @@ public class SeasonEpisodeScheduler implements Serializable
 	{
 		this.updateEpisodeSchedule();
 		// get airdate for current season / episode
-		SeasonEpisode currentSE = this.getScheduledEpisode(serie.currentSeason, serie.currentEpisode);
+		EpguidesPair currentSE = this.getScheduledEpisode(serie.currentSeason, serie.currentEpisode);
 		if (currentSE != null)
 		{
-			Date airDate = currentSE.getAirDate();
+			Date airDate = currentSE.getSeasonEpisode().getAirDate();
 			if (airDate != null)
 			{
 				Date currentDate = new Date();
@@ -287,6 +292,7 @@ public class SeasonEpisodeScheduler implements Serializable
 					serie.setBreakUntil(airDate.getTime());
 					serie.setUseBreakSchedule(true);
 					serie.setStatus(TedSerie.STATUS_HOLD);
+					serie.setNextEpisodeIsDouble(currentSE.getIsDoubleEpisode());
 				}
 				else
 				{

@@ -2,6 +2,7 @@ package ted.datastructures;
 
 import java.util.Vector;
 
+import ted.epguides.EpguidesPair;
 import ted.epguides.EpguidesParser;
 
 /**
@@ -47,7 +48,7 @@ public class SimpleTedSerie
 	 * @return A vector of episodes that are currently aired (from epguides info)
 	 * and the next episode
 	 */
-	public Vector<SeasonEpisode> getAiredEpisodes()
+	public Vector<EpguidesPair> getAiredEpisodes()
 	{
 		// New instance of the parser
         EpguidesParser tedEP = new EpguidesParser();

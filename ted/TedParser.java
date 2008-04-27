@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
 import java.util.Collections;
 import java.util.Vector;
 import java.util.regex.Matcher;
