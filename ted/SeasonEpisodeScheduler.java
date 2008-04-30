@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import java.util.Vector;
 
 import ted.datastructures.SeasonEpisode;
@@ -275,7 +276,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * Puts the show on hiatus if a schedule is known but no airdate is found
 	 */
 	public void checkAirDate() 
-	{
+	{		
 		this.updateEpisodeSchedule();
 		// get airdate for current season / episode
 		EpguidesPair currentSE = this.getScheduledEpisode(serie.currentSeason, serie.currentEpisode);
@@ -292,7 +293,6 @@ public class SeasonEpisodeScheduler implements Serializable
 					serie.setBreakUntil(airDate.getTime());
 					serie.setUseBreakSchedule(true);
 					serie.setStatus(TedSerie.STATUS_HOLD);
-					serie.setNextEpisodeIsDouble(currentSE.getIsDoubleEpisode());
 				}
 				else
 				{

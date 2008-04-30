@@ -2,10 +2,16 @@ package ted.ui.configdialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Date;
+import java.util.TimeZone;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +47,9 @@ public class GeneralPanel extends JPanel implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel generalPanel;
+	private JLabel timeZoneLabel;
+	private JComboBox timeZoneComboBox;
+	private JSeparator jSeparator2;
 	private JCheckBox checkParseAtStart;
 	private JSeparator jSeparator3;
 	private JCheckBox openTorrentBox;
@@ -61,13 +70,16 @@ public class GeneralPanel extends JPanel implements ActionListener
 	private void initGUI() 
 	{
 		try {
+			{
+				this.setPreferredSize(new java.awt.Dimension(320, 243));
+			}
 			generalPanel = new JPanel();
 			this.add(generalPanel);
 			FormLayout generalPanelLayout = new FormLayout(
 					"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
-					"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu)");
+					"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 			generalPanel.setLayout(generalPanelLayout);
-	
+
 			Refresh_Label = new JLabel();
 			generalPanel.add(Refresh_Label, new CellConstraints("2, 2, 5, 1, default, default"));
 			Refresh_Label.setText(Lang.getString("TedConfigDialog.LabelRefreshTime"));
@@ -121,6 +133,53 @@ public class GeneralPanel extends JPanel implements ActionListener
 			checkParseAtStart.setText(Lang
 				.getString("TedConfigDialog.ParseAtStart"));
 			checkParseAtStart.setBounds(21, 175, 357, 21);
+			{
+				jSeparator2 = new JSeparator();
+				generalPanel.add(jSeparator2, new CellConstraints("2, 10, 5, 1, default, default"));
+			}
+			{
+				// Get all time zone ids
+			    String[] zoneIds = TimeZone.getAvailableIDs();
+			    String[] zoneNames = new String[zoneIds.length];
+			    
+			    // View every time zone
+			    int place = 0;
+			    String previousName = "";
+			    for (int i=0; i < zoneIds.length; i++) 
+			    {
+			        // Get time zone by time zone id
+			        TimeZone tz = TimeZone.getTimeZone(zoneIds[i]);
+			    
+			        // Get the display name
+			        String name  = tz.getDisplayName();
+			        if (name.startsWith("GMT") && !name.equals(previousName))
+			        {
+			        	zoneNames[place] = name;
+			        	previousName = name;
+			        	++place;
+			        }
+			    }
+			    
+			    // Remove empty places in array
+			    String[] copy = new String[place];
+			    for (int i = 0; i<place; i++)
+			    {
+			    	copy[i] = zoneNames[i];
+			    }			                               
+
+				ComboBoxModel timeZoneComboBoxModel = 
+					new DefaultComboBoxModel(copy);
+				
+				timeZoneComboBox = new JComboBox();
+								
+				generalPanel.add(timeZoneComboBox, new CellConstraints("2, 12, 5, 1, default, default"));
+				timeZoneComboBox.setModel(timeZoneComboBoxModel);
+			}
+			{
+				timeZoneLabel = new JLabel();
+				generalPanel.add(timeZoneLabel, new CellConstraints("2, 11, 5, 1, default, default"));
+				timeZoneLabel.setText("Select time zone");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,7 +197,18 @@ public class GeneralPanel extends JPanel implements ActionListener
 		
 		this.directory_nieuw = TedConfig.getDirectory();
 		directory_Field.setText(this.directory_nieuw);
-		
+	
+		// Find the timezone with the correct offset in the combobox
+		int offset = TedConfig.getTimeZoneOffset();
+		int i = 0;
+		for(; i < timeZoneComboBox.getItemCount(); ++i)
+		{
+			if (offset == TimeZone.getTimeZone((String) timeZoneComboBox.getItemAt(i)).getRawOffset())
+			{
+				break;
+			}
+		}
+		timeZoneComboBox.setSelectedIndex(i);
 	}
 	
 	/**
@@ -180,11 +250,15 @@ public class GeneralPanel extends JPanel implements ActionListener
 		boolean parseAtStart = checkParseAtStart.isSelected();
 		int newTime = Integer.parseInt(textRefresh.getText())*60;
 		
+		String timezone = timeZoneComboBox.getSelectedItem().toString();
+		int timezoneOffset = TimeZone.getTimeZone(timezone).getRawOffset();
+		
 		// write them to config
 		TedConfig.setRefreshTime(newTime);	
 		TedConfig.setDirectory(directory_nieuw);
 		TedConfig.setOpenTorrent(opentorrent);
 		TedConfig.setParseAtStart(parseAtStart);
+		TedConfig.setTimeZoneOffset(timezoneOffset);
 	}
 	
 	/**
@@ -219,5 +293,4 @@ public class GeneralPanel extends JPanel implements ActionListener
 			this.showDirectoryChooser();
 		}
 	}
-	
 }

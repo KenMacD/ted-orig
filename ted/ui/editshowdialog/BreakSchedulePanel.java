@@ -110,7 +110,6 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 		jCheckBoxBreakEpisode.setSelected(serie.isUseBreakScheduleEpisode());
 		jCheckBoxBreakFrom.setSelected(serie.isUseBreakScheduleFrom());
 		
-		
 		this.initBreakDate(serie.getBreakFrom(), serie.getBreakUntil());
 		
 		this.breakUpdate();

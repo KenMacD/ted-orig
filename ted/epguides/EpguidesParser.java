@@ -14,6 +14,7 @@ import java.net.URL;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 
+import ted.TedConfig;
 import ted.datastructures.SeasonEpisode;
 
 /* 
@@ -117,6 +118,16 @@ public class EpguidesParser {
                         	 int season = Integer.parseInt(matcher.group(1));
                              int episode = Integer.parseInt(matcher.group(3));
                              Date airdate = parsedAirDate;
+                             
+                            // If you're not living in the USA
+                     		if (TedConfig.getTimeZoneOffset() >= 0)
+                     		{
+                     			// Add one day to the schedule
+                     			long time = airdate.getTime();
+                     			time += 86400000;
+                     			airdate.setTime(time);
+                     		}
+                             
                              String title = "";
                         	 SeasonEpisode se = new SeasonEpisode(season, episode, airdate, title);
                         	 episodes.add(new EpguidesPair(se, foundDouble));                    	 

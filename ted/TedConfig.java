@@ -33,7 +33,7 @@ public class TedConfig //implements Serializable
 	public static final int DOWNLOADMOSTSEEDERS = 1;
 	
 	// create some default settings
-	private static int RefreshTime = 600;
+	private static int RefreshTime = 7200;
 	private static String Directory = System.getProperty("user.dir");
 	private static boolean ShowErrors = false;
 	private static boolean ShowHurray = true;
@@ -58,6 +58,7 @@ public class TedConfig //implements Serializable
 	private static int timesParsedSinceLastCheck = 0; 
 	private static boolean allowLogging = true;
 	private static boolean logToFile = true;
+	private static int timeZoneOffset = 0;
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
 	private static final Color defaultOddRowColor  = new Color(236,243,254);
@@ -593,5 +594,15 @@ public class TedConfig //implements Serializable
 	{
 		setEvenRowColor(defaultEvenRowColor);
 		setOddRowColor (defaultOddRowColor );
+	}
+
+	public static void setTimeZoneOffset(int timezoneOffset) 
+	{
+		TedConfig.timeZoneOffset = timezoneOffset;
+	}
+	
+	public static int getTimeZoneOffset()
+	{
+		return TedConfig.timeZoneOffset;
 	}
 }

@@ -215,7 +215,8 @@ public class TedIO
 			fw.append("allowlogging=" + TedConfig.isAllowLogging() + "\n"); //$NON-NLS-1$
 			fw.append("logtofile=" + TedConfig.isLogToFile() + "\n"); //$NON-NLS-1$
 			fw.append("oddrowcolor=" +  TedConfig.getOddRowColor().getRGB() + "\n");
-			fw.append("evenrowcolor=" + TedConfig.getEvenRowColor().getRGB());
+			fw.append("evenrowcolor=" + TedConfig.getEvenRowColor().getRGB() + "\n");
+			fw.append("timezoneoffset=" + TedConfig.getTimeZoneOffset());
 			
 			fw.close();
 		}
@@ -400,6 +401,10 @@ public class TedIO
 				{
 					Color color = new Color(Integer.parseInt(tokenizer.nextToken()));
 					TedConfig.setEvenRowColor(color);
+				}
+				else if(token.equals("timezoneoffset"))
+				{
+					TedConfig.setTimeZoneOffset(Integer.parseInt(tokenizer.nextToken()));
 				}
 			}
 			

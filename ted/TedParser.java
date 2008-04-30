@@ -781,6 +781,13 @@ public class TedParser extends Thread
 		int minSize = serie.getMinSize();
 		int maxSize = serie.getMaxSize();
 		
+		// If current episode is a double episode update the max size
+		// by a factor two.
+		if(serie.isDoubleEpisode())
+		{
+			maxSize *= 2;
+		}
+		
 		// get torrent info (for size)
 		TorrentInfo torrentInfo = torrent.getInfo();
 		// first check if size is between min and max

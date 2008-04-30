@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ted.Lang;
+import ted.TedConfig;
 
 public class StandardStructure implements Serializable
 {
@@ -92,9 +93,9 @@ public class StandardStructure implements Serializable
 		return this.summaryURL;
 	}
 	
-	public Date getAirDate() 
+	public Date getAirDate()
 	{
-		return airDate;
+		return this.airDate;
 	}
 	public void setAirDate(Date airDate) 
 	{

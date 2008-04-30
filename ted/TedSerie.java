@@ -74,7 +74,6 @@ public class TedSerie implements Serializable
 	protected boolean isDaily = false;
 	private String searchName = "";
 	private SeasonEpisodeScheduler scheduler;
-	//private SeasonEpisode currentSeasonEpisode;
 	private String epguidesName;
 
 	/****************************************************
@@ -553,14 +552,7 @@ public class TedSerie implements Serializable
 	 * @return The max size for the torrent contents
 	 */
 	public int getMaxSize() 
-	{
-		// If current episode is a double episode update the max size
-		// by a factor two.
-		if(this.isDoubleEpisode())
-		{
-			return this.maxSize * 2;
-		}
-		
+	{		
 		return this.maxSize;
 	}
 	
