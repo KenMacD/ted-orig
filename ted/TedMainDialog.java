@@ -843,6 +843,15 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			colorPicker.setVisible(true);
 		}
+		else if(action.equals("toggleautoschedule"))
+		{
+			TedSerie selectedSerie = serieTable.getSelectedShow();
+			
+			if (selectedSerie != null)
+			{
+				selectedSerie.setUseAutoSchedule(!selectedSerie.isUseAutoSchedule());
+			}
+		}
 	}
 	
 	public void showAboutDialog() 

@@ -34,10 +34,10 @@ public class TedTablePopupMenu extends JPopupMenu
 	 ****************************************************/
 	private static final long serialVersionUID = 6924907434718003055L;
 	private TedMainDialog mainDialog;
-	private ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
-	private ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
-	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
-	private ImageIcon showDisabled    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
+	private ImageIcon showPaused   = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
+	private ImageIcon showPlay	   = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
+	private ImageIcon showStopped  = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
+	private ImageIcon showDisabled = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 	private JMenuItem menuDelete;
 	private JMenuItem menuEdit;
 	private JMenuItem buyDVD;
@@ -155,4 +155,9 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.menuDelete.setEnabled(true);
 	}
 
+	public void CheckAutoSchedule(boolean b)
+	{
+		this.checkAutoSchedule.setState(b);
+		this.menuStatus.setEnabled(!b);
+	}
 }

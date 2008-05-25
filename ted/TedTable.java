@@ -98,10 +98,11 @@ public class TedTable extends JTable
 		
 		if (row >= 0)
 		{
+			TedSerie selectedserie = serieTableModel.getSerieAt(row);
+			
 			// else show the EpisodeDialog of the selected show
 			if (evt.getClickCount() == 2)
 			{	
-				TedSerie selectedserie = serieTableModel.getSerieAt(row);
 				new EditShowDialog(tedMain, selectedserie, false);		
 			}
 			// or did the user click right?
@@ -112,6 +113,9 @@ public class TedTable extends JTable
 				int selectedrow = this.rowAtPoint(evt.getPoint());
 				ListSelectionModel selectionModel = this.getSelectionModel();
 				selectionModel.setSelectionInterval(selectedrow, selectedrow);
+				
+				ttPopupMenu.CheckAutoSchedule(selectedserie.isUseAutoSchedule());
+				
 				ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
 			}
 		}
