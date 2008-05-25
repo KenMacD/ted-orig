@@ -1110,6 +1110,7 @@ public class TedSerie implements Serializable
 		// if no next SE is found, put ted on hiatus and leave Season/Episode as it is
 		if (nextSE == null)
 		{
+			this.currentEpisode++;
 			this.setStatus(TedSerie.STATUS_HIATUS);
 		}
 		else

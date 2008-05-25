@@ -140,12 +140,12 @@ public class SeasonEpisodeScheduler implements Serializable
 	
 	public EpguidesPair getEpisode (int season, int episode)
 	{
-		EpguidesPair result = null;
-		// check schedule for updates
+		// Create an empty pair where the member seasonEpisode is null
+		EpguidesPair result = new EpguidesPair();
 		
+		// check schedule for updates
 		if (this.updateEpisodeSchedule())
 		{
-			
 			EpguidesPair current;
 			// search for season, episode in vector
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
@@ -166,6 +166,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			result.getSeasonEpisode().setSeason(season);
 			result.getSeasonEpisode().setEpisode(episode + 1);
 		}
+		
 		return result;
 	}
 	
@@ -280,7 +281,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		this.updateEpisodeSchedule();
 		// get airdate for current season / episode
 		EpguidesPair currentSE = this.getScheduledEpisode(serie.currentSeason, serie.currentEpisode);
-		if (currentSE != null)
+		if (currentSE.getSeasonEpisode() != null)
 		{
 			Date airDate = currentSE.getSeasonEpisode().getAirDate();
 			if (airDate != null)
