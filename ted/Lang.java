@@ -189,7 +189,6 @@ public class Lang
 
 		String urlString = Lang.class.getClassLoader().getResource(
 				bundleFolder.concat(extension)).toExternalForm();
-		//System.out.println("urlString: " + urlString);
 		String[] bundles = null;
 
 		if (urlString.startsWith("jar:file:"))
@@ -201,7 +200,6 @@ public class Lang
 			{
 				try
 				{
-					// System.out.println("jar: " + jar.getAbsolutePath());
 					JarFile jarFile = new JarFile(jar);
 					Enumeration entries = jarFile.entries();
 					ArrayList list = new ArrayList(250);
@@ -211,10 +209,8 @@ public class Lang
 						if (jarEntry.getName().startsWith(bundleFolder)
 								&& jarEntry.getName().endsWith(extension))
 						{
-							// System.out.println("jarEntry: " + jarEntry.getName());
 							list.add(jarEntry.getName().substring(
 									bundleFolder.length() - prefix.length()));
-							// "MessagesBundle_de_DE.properties"
 						}
 					}
 					bundles = (String[]) list.toArray(new String[list.size()]);
@@ -227,8 +223,6 @@ public class Lang
 		{
 			File bundleDirectory = new File(URI.create(urlString))
 					.getParentFile();
-			//      System.out.println("bundleDirectory: " +
-			// bundleDirectory.getAbsolutePath());
 
 			bundles = bundleDirectory.list(new FilenameFilter()
 			{
@@ -272,13 +266,12 @@ public class Lang
 		{
 			String sBundle = (String) val.next();
 
-			// System.out.println("ResourceBundle: " + bundles[i]);
 			if (prefix.length() + 1 < sBundle.length() - extension.length())
 			{
 				String locale = sBundle.substring(prefix.length() + 1, sBundle
 						.length()
 						- extension.length());
-				//System.out.println("Locale: " + locale);
+
 				String[] sLocalesSplit = locale.split("_", 3);
 				if (sLocalesSplit.length > 0 && sLocalesSplit[0].length() == 2)
 				{
@@ -365,8 +358,6 @@ public class Lang
 				int posPling = url_str.lastIndexOf('!');
 
 				String jarName = url_str.substring(4, posPling);
-
-				//        System.out.println("jarName: " + jarName);
 
 				URI uri = URI.create(jarName);
 

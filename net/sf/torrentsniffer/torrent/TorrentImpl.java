@@ -87,7 +87,6 @@ public class TorrentImpl implements Torrent {
      */
     public TorrentImpl(URL url, int timeOutInSecs) {
         // Get the Root dictionary
-    	//System.out.println(url.toString());
         root = (Dictionary) bencoding.decode(url, timeOutInSecs);
         initialize(root);
     }

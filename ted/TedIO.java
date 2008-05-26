@@ -808,10 +808,8 @@ public class TedIO
 			if (TedSystemInfo.osIsWindows())
 	    	{
 	        	String [] open = { "cmd" , "/C", loc};   //$NON-NLS-1$ //$NON-NLS-2$
-	        	System.out.println(loc);
 	        
-	        	Runtime.getRuntime().exec(open);
-			
+	        	Runtime.getRuntime().exec(open);			
 			}
 			else if (TedSystemInfo.osIsMac()) 
 			{
