@@ -45,6 +45,7 @@ import ted.TedXMLParser;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.SimpleTedSerie;
+import ted.datastructures.StandardStructure;
 import ted.interfaces.EpisodeChooserListener;
 import ted.ui.TableRenderer;
 import ted.ui.editshowdialog.EditShowDialog;
@@ -127,7 +128,6 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 7, fill, fill"));
 			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 4, 4, 1, fill, fill"));
 			getContentPane().add(subscribeOptionsPanel, new CellConstraints("5, 8, 4, 1, fill, fill"));
-			getContentPane().add(getSwitchButton(), new CellConstraints("5, 10, 1, 1, default, default"));
 			getContentPane().add(getOkButton(), new CellConstraints("8, 14, 1, 1, default, default"));
 			getContentPane().add(getCancelButton(), new CellConstraints("6, 14, 1, 1, default, default"));
 			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("5, 4, 4, 1, fill, fill"));
@@ -233,6 +233,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 						
 				this.showNameLabel.setText(selectedShow.getName());
 				
+				this.episodeChooserPanel.setVisible(false);
+				
 				// get the details of the show
 				TedXMLParser parser = new TedXMLParser();
 				Element series = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
@@ -252,9 +254,9 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				
 				// retrieve the show info and the episodes from the web
 				ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
-				sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
+				//sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
 				EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie, this.subscribeOptionsPanel);
-				ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
+				//ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
 				
 				sit.start();
 				ept.start();	
@@ -324,7 +326,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		}
 		else if (command.equals("switch"))
 		{
-			this.setSubscribeOption();			
+			//this.setSubscribeOption();			
 			episodeChooserPanel.setVisible(!episodeChooserPanel.isVisible());
 			//subscribeOptionsPanel.setVisible(!subscribeOptionsPanel.isVisible());
 		}
@@ -508,18 +510,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	public void episodeSelectionChanged() 
 	{
-		// called when episode selection is changed.		
-		// check if episode and show selected
-		if (selectedSerie != null && this.subscribeOptionsPanel.getSelectedEpisode() != null)
-		{
-			// enable add button
-			this.okButton.setEnabled(true);
-		}
-		else
-		{
-			this.okButton.setEnabled(false);
-		}
-		
+		StandardStructure selectedStructure = episodeChooserPanel.getSelectedStructure();
+		this.subscribeOptionsPanel.setCustomEpisode(selectedStructure);
 	}
 
 	/* (non-Javadoc)
@@ -576,36 +568,24 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	public void keyReleased(KeyEvent arg0) { searchShows(jSearchField.getText()); }
 	public void keyTyped   (KeyEvent arg0) { }
 	
-	private JButton getSwitchButton() {
-		if(switchButton == null) {
-			switchButton = new JButton();
-			switchButton.setText("Show selected episode");
-			switchButton.addActionListener(this);
-			switchButton.setActionCommand("switch");
-		}
-		return switchButton;
-	}
-	
-	
-	private void setSubscribeOption()
+	public void subscribeOptionChanged() 
 	{
-		// If no serie isn't set nothing can be selected.
-		if (selectedSerie == null)
+		// called when episode selection is changed.		
+		// check if episode and show selected
+		if (selectedSerie != null && this.subscribeOptionsPanel.getSelectedEpisode() != null)
 		{
-			return;
+			// enable add button
+			this.okButton.setEnabled(true);
 		}
-		
-		int option = subscribeOptionsPanel.getSelectedOption();
-		
-		// If we only want to subscribe for a show select the first item
-		// in the table, this is the upcomming episode.
-		if (option == SubscribeOptionsPanel.ONLY_SUBSCRIBE)
+		else
 		{
-			episodeChooserPanel.selectEpisode(0);
-			return;
-		}
+			this.okButton.setEnabled(false);
+		}		
+	}
+
+	public void setEpisodeChooserVisible(boolean b) 
+	{
+		this.episodeChooserPanel.setVisible(b);
 		
-		// For all other options, you want to select the first row in the table. 
-		episodeChooserPanel.selectEpisode(1);
 	}
 }

@@ -162,7 +162,7 @@ public class EpisodesTableModel extends AbstractTableModel
 		for (int i = 0; i < this.tableData.size(); i++)
 		{
 			 sRow = (StandardStructure)tableData.get(i);
-			 if (sRow.getQuality() > tempQuality)
+			 if (sRow!=null && sRow.getQuality() > tempQuality)
 			 {
 				 tempQuality = sRow.getQuality();
 			 }

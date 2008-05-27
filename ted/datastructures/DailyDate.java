@@ -171,8 +171,12 @@ public class DailyDate  extends StandardStructure implements Comparable
 	{
 		this.setDay(date.get(Calendar.DAY_OF_MONTH));
 		this.setYear(date.get(Calendar.YEAR));
-		this.setMonth(date.get(Calendar.MONTH));
-		
+		this.setMonth(date.get(Calendar.MONTH));		
+	}
+	
+	public String getSearchString()
+	{
+		return this.toString();
 	}
 	
 }

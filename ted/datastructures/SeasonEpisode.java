@@ -87,4 +87,9 @@ public class SeasonEpisode extends StandardStructure implements Comparable<Seaso
 	{
 		return Lang.getString("TedTableModel.Season")+": "+ this.season + ", " + Lang.getString("TedTableModel.Episode")+": "+ this.episode;
 	}
+	
+	public String getSearchString()
+	{
+		return this.toString() + ". " + this.getFormattedAirDateWithText() + ".";
+	}
 }

@@ -164,6 +164,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			// no schedule present, just fill a result
 			result = new EpguidesPair();
 			result.getSeasonEpisode().setSeason(season);
+			// TODO: shoulnd this just read episode?
 			result.getSeasonEpisode().setEpisode(episode + 1);
 		}
 		
@@ -207,7 +208,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			
 			// we're filling the list from most recent to old, so first add the next episode aired
 			EpguidesPair nextEpisode = this.getNextEpisode(airedEpisode.getSeason(), airedEpisode.getEpisode());
-			if (nextEpisode != null)
+			if (nextEpisode.getSeasonEpisode() != null)
 			{
 				results.add(nextEpisode.getSeasonEpisode());
 			}

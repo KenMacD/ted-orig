@@ -33,7 +33,7 @@ public class TedConfig //implements Serializable
 	public static final int DOWNLOADMOSTSEEDERS = 1;
 	
 	// create some default settings
-	private static int RefreshTime = 7200;
+	private static int RefreshTime = 600;
 	private static String Directory = System.getProperty("user.dir");
 	private static boolean ShowErrors = false;
 	private static boolean ShowHurray = true;

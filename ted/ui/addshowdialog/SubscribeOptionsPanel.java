@@ -50,6 +50,7 @@ public class SubscribeOptionsPanel extends JPanel
 	private int selectedOption = 0;
 	private JLabel futureEpisodeLabel;
 	private JLabel airedEpisodeLabel;
+	private JLabel customEpisodeLabel;
 	
 	private JRadioButton downloadLatestAndSubscribe;
 	private JRadioButton OnlySubscribe;
@@ -59,14 +60,12 @@ public class SubscribeOptionsPanel extends JPanel
 	private StandardStructure nextEpisode;
 	private StandardStructure lastAiredEpisode;
 	
-	private EpisodeChooserListener episodesChooserListener;
+	private AddShowDialog addShowDialog;
 	
-	public SubscribeOptionsPanel(EpisodeChooserListener episodesChooserListener)
+	public SubscribeOptionsPanel(AddShowDialog addDialog)
 	{
 		init();
-		this.episodesChooserListener = episodesChooserListener;
-		futureEpisodeLabel.setText("henk");
-		airedEpisodeLabel.setText("airedhenk");
+		this.addShowDialog = addDialog;
 	}
 	
 	private void init()
@@ -98,7 +97,7 @@ public class SubscribeOptionsPanel extends JPanel
 		
 		FormLayout thisLayout = new FormLayout(
 				"max(p;10dlu), max(p;5dlu):grow, max(p;5dlu)", 
-				"max(p;5dlu), max(p;0dlu), 5dlu, max(p;5dlu), max(p;0dlu), 5dlu, max(p;5dlu)");
+				"max(p;5dlu), max(p;0dlu), 5dlu, max(p;5dlu), max(p;0dlu), 5dlu, max(p;5dlu), max(p;0dlu)");
 		this.setLayout(thisLayout);
 		
 		futureEpisodeLabel = new JLabel();
@@ -107,12 +106,16 @@ public class SubscribeOptionsPanel extends JPanel
 		airedEpisodeLabel	= new JLabel();
 		airedEpisodeLabel.setFont(this.SMALL_FONT);
 		airedEpisodeLabel.setForeground(Color.DARK_GRAY);
+		customEpisodeLabel	= new JLabel();
+		customEpisodeLabel.setFont(this.SMALL_FONT);
+		customEpisodeLabel.setForeground(Color.DARK_GRAY);
 		
 		this.add(OnlySubscribe, new CellConstraints("1, 1, 2, 1, default, default"));
 		this.add(futureEpisodeLabel, new CellConstraints("2, 2, 1, 1, default, default"));
 		this.add(downloadLatestAndSubscribe, new CellConstraints("1, 4, 2, 1, default, default"));
 		this.add(airedEpisodeLabel, new CellConstraints("2, 5, 1, 1, default, default"));
 		this.add(SubscribeAndSelectEpisode, new CellConstraints("1, 7, 2, 1, default, default"));
+		this.add(customEpisodeLabel, new CellConstraints("2, 8, 2, 1, default, default"));
 	}
 	
 	public int getSelectedOption()
@@ -133,18 +136,24 @@ public class SubscribeOptionsPanel extends JPanel
 		{
 			selectedOption = DOWNLOAD_LATEST;
 			this.selectedStructure = this.lastAiredEpisode;
+			this.addShowDialog.setEpisodeChooserVisible(false);
 		}
 		else if (action.equals("only"))
 		{
 			selectedOption = ONLY_SUBSCRIBE;
 			this.selectedStructure = this.nextEpisode;
+			this.addShowDialog.setEpisodeChooserVisible(false);
 		}
 		else if  (action.equals("select"))
 		{
 			// show epchooser dialog
 			selectedOption = SELECT_EPISODE;
+			this.addShowDialog.setEpisodeChooserVisible(true);
+			this.customEpisodeLabel.setText("Select a custom episode above...");
 		}
-		this.episodesChooserListener.episodeSelectionChanged();
+		
+		this.addShowDialog.subscribeOptionChanged();
+		
 	}
 
 	public void clear()
@@ -154,37 +163,54 @@ public class SubscribeOptionsPanel extends JPanel
 		this.airedEpisodeLabel.setText("");
 		OnlySubscribe.setEnabled(false);
 		this.futureEpisodeLabel.setText("");
-		SubscribeAndSelectEpisode.setEnabled(false);		
+		SubscribeAndSelectEpisode.setEnabled(false);
+		this.customEpisodeLabel.setText("");
+	}
+	
+	/**
+	 * This method is used as callback when the user selects a custom structure from
+	 * the episode selection panel.
+	 * @param customStructure
+	 */
+	public void setCustomEpisode(StandardStructure customStructure)
+	{
+		if (customStructure != null)
+		{
+			this.selectedStructure = customStructure;
+			// show in label
+			
+			// also set as selected in addshow dialog
+			this.addShowDialog.subscribeOptionChanged();
+			
+			this.customEpisodeLabel.setText(customStructure.getSearchString());
+		}
 	}
 
-	public void setSeasonEpisodes(Vector<SeasonEpisode> episodes)
+	public void setSeasonEpisodes(Vector episodes)
 	{
+		// TODO: add handling for episodes without airdate and for daily episodes
 		Date current = new Date();
 		
 		int i = 0;
 		// find last aired episode
 		for (i = 0; i < episodes.size(); i++)
 		{
-			SeasonEpisode currentEpisode = episodes.get(i);
-			if (episodes.get(i).getAirDate().before(current))
+			StandardStructure currentEpisode = (StandardStructure)episodes.get(i);
+			if (currentEpisode.getAirDate().before(current))
 			{
 				downloadLatestAndSubscribe.setEnabled(true);
 				this.lastAiredEpisode = currentEpisode;
-				this.airedEpisodeLabel.setText(	"Season: " + currentEpisode.getSeason() + 
-												", Episode: " + currentEpisode.getEpisode() +
-												". Aired on " + currentEpisode.getFormattedAirDate());
+				this.airedEpisodeLabel.setText(	currentEpisode.getSearchString());
 				break;
 			}
 		}
 		// check if next episode is also available
 		if (i > 0)
 		{
-			SeasonEpisode nextEpisode = episodes.get(i-1);	
+			StandardStructure nextEpisode = (StandardStructure)episodes.get(i-1);	
 			this.nextEpisode = nextEpisode;
 			this.selectedStructure = nextEpisode;
-			this.futureEpisodeLabel.setText("Season: " + nextEpisode.getSeason() + 
-											", Episode " + nextEpisode.getEpisode() +
-											". Will air on " + nextEpisode.getFormattedAirDate());
+			this.futureEpisodeLabel.setText( nextEpisode.getSearchString());
 		}
 		else
 		{
@@ -200,7 +226,9 @@ public class SubscribeOptionsPanel extends JPanel
 			SubscribeAndSelectEpisode.setEnabled(true);
 		}
 		
-		this.episodesChooserListener.episodeSelectionChanged();
-		this.validate();	
+		//this.addShowDialog.episodeSelectionChanged();
+		this.addShowDialog.subscribeOptionChanged();
+		//this.validate();	
 	}
 }
+

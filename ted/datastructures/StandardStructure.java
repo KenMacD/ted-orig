@@ -18,8 +18,8 @@ public class StandardStructure implements Serializable
 	 */
 	private static final long serialVersionUID = 6353477437638502291L;
 	int quality = 0;
-	protected Date publishDate; // date torrent was published online
-	protected Date airDate; // date episode was aired on tv
+	protected Date publishDate = null; // date torrent was published online
+	protected Date airDate = null; // date episode was aired on tv
 	protected String title; // episode title
 	protected String summaryURL = "";
 	
@@ -120,5 +120,45 @@ public class StandardStructure implements Serializable
 		{
 			return "-";
 		}
+	}
+	public String getSearchString() 
+	{
+		return "";
+	}
+	
+	
+	/**
+	 * @return If this episode has been aired on or before today
+	 */
+	public boolean airedBeforeOrOnToday()
+	{
+		Date current = new Date();
+		if (this.getAirDate() != null)
+		{
+			return this.getAirDate().before(current);
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public String getFormattedAirDateWithText()
+	{
+		String result = "";
+		
+		if (this.getAirDate() != null)
+		{
+			if (this.airedBeforeOrOnToday())
+			{
+				result = "Aired on " + this.getFormattedAirDate();
+			}
+			else
+			{
+				result = "Will air on " + this.getFormattedAirDate();
+			}
+		}
+		
+		return result;
 	}
 }
