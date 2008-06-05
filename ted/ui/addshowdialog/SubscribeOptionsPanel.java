@@ -188,7 +188,7 @@ public class SubscribeOptionsPanel extends JPanel
 
 	public void setSeasonEpisodes(Vector episodes)
 	{
-		// TODO: add handling for episodes without airdate and for daily episodes
+		// TODO: add handling for episodes without airdate
 		Date current = new Date();
 		
 		int i = 0;

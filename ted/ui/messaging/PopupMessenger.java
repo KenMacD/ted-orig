@@ -3,6 +3,7 @@ package ted.ui.messaging;
 import javax.swing.JOptionPane;
 
 import ted.TedMainDialog;
+import ted.ui.TimedOptionPane;
 
 public class PopupMessenger implements MessengerInterface 
 {
@@ -31,7 +32,8 @@ public class PopupMessenger implements MessengerInterface
 	
 	private void messagePopUp(String title, String body)
 	{
-		JOptionPane.showMessageDialog(null, body, title,  JOptionPane.INFORMATION_MESSAGE);
+		//JOptionPane.showMessageDialog(null, body, title,  JOptionPane.INFORMATION_MESSAGE);
+		TimedOptionPane.showTimedOptionPane(null, body, title, "henk", 10000, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
 	}
 
 	public int getType() 

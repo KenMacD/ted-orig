@@ -300,9 +300,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				// copy items that are listed on the general panel
 				copy.setName(generalPanel.getShowName());
 				copy.setUsePresets(generalPanel.isUsePresets());
-				this.currentSerie = copy;
-				
-				
+				this.currentSerie = copy;		
 			}
 			else
 			{
@@ -330,7 +328,9 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		// first check for showname
 		if (this.generalPanel.checkValues())
 		{
-			this.generalPanel.saveValues(show);
+			// save schedule info
+			this.schedulePanel.saveValues(show);
+			this.generalPanel.saveValues(show);			
 			
 			if (!currentName.equals(show.getName()) && !currentName.equals(""))
 			{
@@ -348,6 +348,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				{
 					show.setSearchName("");
 					show.generateFeedLocations();
+					schedulePanel.setValues(show);
 					feedsPanel.setValues(show);
 					this.feedsPanel.saveValues(show);
 				}
