@@ -32,13 +32,7 @@ public class TedTableModel extends AbstractTableModel
 	 ****************************************************/
 	private static final long serialVersionUID = -7286125312855308470L;
 	private Vector tableData = new Vector();
-	/*private String[] tableColumns = {" ", Lang.getString("TedTableModel.Name")  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            , Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$;*/
 	private String [] tableColumns ={""};
-	/*private ImageIcon showPaused = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
-	private ImageIcon showPlay	 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
-	private ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
-	private ImageIcon showActive = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$*/
 
 	/****************************************************
 	 * PUBLIC METHODS

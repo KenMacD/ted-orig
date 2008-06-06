@@ -64,8 +64,7 @@ public class TedTable extends JTable
 		this.setDragEnabled(true);
 		
 		//	disable horizontal lines in table
-		setShowHorizontalLines(true);
-		this.setGridColor(TedConfig.getGridColor());
+		setShowHorizontalLines(false);
         setShowVerticalLines(false);
         
 		this.setRowHeight(55);
@@ -273,8 +272,6 @@ public class TedTable extends JTable
             for (int i = rowCount; i <= height/rowHeight; ++i) {
                 g.setColor(ttrr.colorForRow(i, (i == this.getSelectedRow())));
                 g.fillRect(clip.x, i * rowHeight, clip.width, rowHeight);
-                g.setColor(TedConfig.getGridColor());
-                g.drawLine(clip.x, i * rowHeight + rowHeight-1, clip.width, i * rowHeight + rowHeight -1);
             }
         }
         
@@ -286,8 +283,8 @@ public class TedTable extends JTable
             g.fillRect(clip.x, 0, clip.width, 20);
             // text
             g.setColor(Color.BLACK);
-            g.setFont(new java.awt.Font("Dialog",0,10));
-            g.drawString(Lang.getString("TedMainDialog.PleaseAddShows"), clip.x+40, 14);
+            g.setFont(new java.awt.Font("Dialog",0,13));
+            g.drawString(Lang.getString("TedMainDialog.PleaseAddShows"), clip.x+10, 14);
         }
     }
     
