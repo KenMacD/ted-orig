@@ -65,7 +65,7 @@ public class TimedOptionPane {
 		String valueString = result.toString();
 		if (JOptionPane.UNINITIALIZED_VALUE.equals(valueString)) 
 		{
-			return JOptionPane.CANCEL_OPTION;
+			return JOptionPane.CLOSED_OPTION;
 		}
 		return ((Integer)result).intValue();		
 	}
