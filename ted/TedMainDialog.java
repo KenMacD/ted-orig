@@ -68,7 +68,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 ****************************************************/
 	private static final long serialVersionUID = 3722636937353936684L;
 
-	private static final double tedVersion = 0.91;
+	private static final double tedVersion = 0.92;
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
@@ -926,15 +926,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
             								"\n" + Lang.getString("TedMainDialog.DialogNewVersion2")+ " " +  TedMainDialog.tedVersion + "\n" +  //$NON-NLS-1$
             								Lang.getString("TedMainDialog.DialogNewVersion3");
 			String title = Lang.getString("TedMainDialog.DialogNewVersionHeader");
-			/*int answer = JOptionPane.showOptionDialog(null,
-	                Lang.getString("TedMainDialog.DialogNewVersion1Begin")+ " (" + currentVersion + ") "+ Lang.getString("TedMainDialog.DialogNewVersion1End") + //$NON-NLS-1$ //$NON-NLS-2$
-	                "\n" + Lang.getString("TedMainDialog.DialogNewVersion2")+ " " +  TedMainDialog.tedVersion + "\n" +  //$NON-NLS-1$
-									Lang.getString("TedMainDialog.DialogNewVersion3"), //$NON-NLS-1$
-	                Lang.getString("TedMainDialog.DialogNewVersionHeader"), //$NON-NLS-1$
-	                JOptionPane.YES_NO_OPTION,
-	                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);*/
 			
-			int answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+			int answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
 			
 			if (answer == JOptionPane.YES_OPTION)
 			{	

@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 
 import org.w3c.dom.Element;
 
+import ted.ui.TimedOptionPane;
 import ted.ui.editshowdialog.FeedPopupItem;
 import ted.ui.messaging.GrowlMessenger;
 import ted.ui.messaging.PopupMessenger;
@@ -516,11 +517,10 @@ public class TedIO
 			// ask user for confirmation if we have to
 			if (TedConfig.askAutoUpdateFeedList())
 			{
-				answer = JOptionPane.showOptionDialog(null,
-		                Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"), //$NON-NLS-1$ //$NON-NLS-2$
-		                Lang.getString("TedIO.DialogNewPredefinedShowsHeader"), //$NON-NLS-1$
-		                JOptionPane.YES_NO_OPTION,
-		                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+				String message = Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"); //$NON-NLS-1$ //$NON-NLS-2$;
+				String title =  Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
+								
+				answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
 			}
 			
 			if (answer == JOptionPane.YES_OPTION || TedConfig.isAutoUpdateFeedList())
@@ -536,13 +536,12 @@ public class TedIO
 				{
 					if(TedConfig.askAutoAdjustFeeds())
 					{
-						answer = JOptionPane.showConfirmDialog(null,
-				                Lang.getString("TedIO.DialogUpdateShows1")+ "\n" +//$NON-NLS-1$
-				                Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
-				                Lang.getString("TedIO.DialogUpdateShows3"), //$NON-NLS-1$
-				                Lang.getString("TedIO.DialogUpdateShowsHeader"), //$NON-NLS-1$
-				                JOptionPane.YES_NO_OPTION,
-				                JOptionPane.QUESTION_MESSAGE);
+						String message = Lang.getString("TedIO.DialogUpdateShows1")+ "\n" +//$NON-NLS-1$
+		                				 Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
+		                				 Lang.getString("TedIO.DialogUpdateShows3");
+						String title =	Lang.getString("TedIO.DialogUpdateShowsHeader"); //$NON-NLS-1$
+
+						answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
 					}
 					if(TedConfig.isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
 					{

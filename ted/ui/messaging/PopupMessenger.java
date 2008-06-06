@@ -32,8 +32,8 @@ public class PopupMessenger implements MessengerInterface
 	
 	private void messagePopUp(String title, String body)
 	{
-		//JOptionPane.showMessageDialog(null, body, title,  JOptionPane.INFORMATION_MESSAGE);
-		TimedOptionPane.showTimedOptionPane(null, body, title, "henk", 10000, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
+		// show auto-destruct panel
+		TimedOptionPane.showTimedOptionPane(null, body, title, "", 10000, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
 	}
 
 	public int getType() 

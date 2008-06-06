@@ -3,11 +3,14 @@ package ted.ui;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.StringTokenizer;
  
+import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,12 +56,48 @@ public class TimedOptionPane {
 	public final static int showTimedOptionPane(Frame f, String message, String title,
 			String timeoutMessage, final long timeout, int messageType, int optionType) 
 	{
- 
-		final JDialog dialog = new JDialog(f, title, true);
 		final Message messageComponent = new Message(message, timeout,
 				timeoutMessage);
 		final JOptionPane pane = new JOptionPane(messageComponent, messageType,
 				optionType);
+		Object result = showTimedOptionPane(f, title, messageComponent, pane);
+		
+		String valueString = result.toString();
+		if (JOptionPane.UNINITIALIZED_VALUE.equals(valueString)) 
+		{
+			return JOptionPane.CANCEL_OPTION;
+		}
+		return ((Integer)result).intValue();		
+	}
+	
+	// Same as above, only with custom button options that need some conversion
+	public static int showTimedOptionPane(Frame f, String message, String title,
+			String timeoutMessage, final long timeout, int messageType, int optionType, Icon icon, Object[] options,
+			Object defaultOption) 
+	{
+		
+		final Message messageComponent = new Message(message, timeout,
+				timeoutMessage);
+		final JOptionPane pane = new JOptionPane(messageComponent, messageType,
+				optionType, icon, options, defaultOption);
+		String result = (String)showTimedOptionPane(f, title, messageComponent, pane);
+		int intResult = JOptionPane.CLOSED_OPTION;
+		// convert custom button to int result
+		for (int i = 0; i < options.length; i++)
+		{
+			if (result.equals(options[i]))
+			{
+				intResult = i;
+			}
+		}
+		return intResult;
+	}
+	
+	public static Object showTimedOptionPane(Frame f, String title, final Message messageComponent, final JOptionPane pane)
+	{
+		final JDialog dialog = new JDialog(f, title, true);
+		dialog.setResizable(false);
+
 		dialog.setContentPane(pane);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Timer timer = new Timer(UPDATE_PERIOD, new ActionListener() 
@@ -89,12 +128,8 @@ public class TimedOptionPane {
 		dialog.pack();
 		dialog.setLocationRelativeTo(f);
 		dialog.setVisible(true);
-		String valueString = pane.getValue().toString();
-		if (JOptionPane.UNINITIALIZED_VALUE.equals(valueString)) 
-		{
-			return JOptionPane.CANCEL_OPTION;
-		}
-		return ((Integer) pane.getValue()).intValue();
+
+		return pane.getValue();
 	}
  
 	/**
@@ -108,7 +143,6 @@ public class TimedOptionPane {
 	{
  
 		private final static String RS = "Auto-close in ";
-		JLabel message;
 		JLabel remaining;
 		private long timeout;
 		private long ellapsed = 0;
@@ -126,10 +160,26 @@ public class TimedOptionPane {
 		protected Message(String message, long milliseconds, String timeoutMessage) 
 		{
 			super(new BorderLayout());
+			//JLabel messageLabel;
+			JPanel messagePanel = new JPanel();
+			GridLayout gridLayout = new GridLayout(0,1);
+			messagePanel.setLayout(gridLayout);
+
+			
 			Font SMALL_FONT = new Font("Dialog",0,10);
 			this.timeout = milliseconds;
-			this.message = new JLabel(message);
-			add(this.message, BorderLayout.NORTH);
+			// tokenize message on "\n"
+			StringTokenizer tokenizer = new StringTokenizer(message, "\n");
+			while (tokenizer.hasMoreTokens())
+			{
+				String token = tokenizer.nextToken();
+				JLabel messageLabel = new JLabel(token);
+				messagePanel.add(messageLabel);			
+			}
+			
+			
+			this.add(messagePanel);
+			
 			this.remaining = new JLabel(formatRemainingSeconds(milliseconds));
 			this.remaining.setFont(SMALL_FONT);
 			add(this.remaining, BorderLayout.SOUTH);
@@ -161,4 +211,6 @@ public class TimedOptionPane {
 			repaint();
 		}
 	}
+
+	
 }
