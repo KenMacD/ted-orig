@@ -82,19 +82,19 @@ public class SeasonEpisode extends StandardStructure
 		
 		if (this.getSeason() < second.getSeason())
 		{
-			return -1;
+			return 1;
 		}
 		else if (this.getSeason() > second.getSeason())
 		{
-			return 1;
+			return -1;
 		}
 		else if (this.getEpisode() < second.getEpisode())
 		{
-			return -1;
+			return 1;
 		}
 		else if (this.getEpisode() > second.getEpisode())
 		{
-			return 1;
+			return -1;
 		}
 		
 		return 0;
