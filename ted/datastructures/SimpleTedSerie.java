@@ -36,13 +36,13 @@ public class SimpleTedSerie
 	 * @return A vector of episodes that are currently aired (from epguides info)
 	 * and the next episode
 	 */
-	public Vector<StandardStructure> getAiredEpisodes()
-	{
-		// New instance of the parser
-        EpguidesParser tedEP = new EpguidesParser();
-        
-        return tedEP.getPastSeasonEpisodes(this.getName());
-	}
+//	public Vector<StandardStructure> getAiredEpisodes()
+//	{
+//		// New instance of the parser
+//        EpguidesParser tedEP = new EpguidesParser();
+//        
+//        return tedEP.getPastSeasonEpisodes(this.getName());
+//	}
 	
 	
 }

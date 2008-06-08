@@ -7,8 +7,8 @@ public class tedEpguidesParserTester
         // New instance of the parser
         EpguidesParser tedEP = new EpguidesParser();
         
-        tedEP.getPastSeasonEpisodes(args[0]);
-        tedEP.getFutureSeasonEpisodes(args[0]);
+        tedEP.getPastSeasonEpisodes(args[0], false);
+        tedEP.getFutureSeasonEpisodes(args[0], false);
                 
     }
 }

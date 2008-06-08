@@ -86,7 +86,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			// New instance of the parser
 	        EpguidesParser tedEP = new EpguidesParser();
 	        
-	        this.scheduledEpisodes = tedEP.getScheduledSeasonEpisodes(serie.getEpguidesName());
+	        this.scheduledEpisodes = tedEP.getScheduledSeasonEpisodes(serie.getEpguidesName(), serie.isDaily);
 	        
 	        // one week from now
 	        Calendar future = Calendar.getInstance();
@@ -120,7 +120,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
 				StandardStructure current = this.scheduledEpisodes.elementAt(i);
-				if (current.compareTo(episodeToFind) == 0)
+				if (current.equals(episodeToFind))
 				{
 					result = current;
 					break;

@@ -29,10 +29,7 @@ import ted.datastructures.StandardStructure;
 
 
 public class EpguidesParser 
-{
-    // A flag that shows if a double episode (no matter when it's aired) is found
-    private boolean foundDouble = false;
-    
+{    
     // The general pattern that epguides follows for their show lists
     // Format:   1.   1- 1        100     22 Sep 04   <a target="_blank" href="http://www.tv.com/lost/pilot-1/episode/334467/summary.html">Pilot (1)</a>
     private String regex       = "(\\d+)(\\-|\\-\\s)(\\d+)(\\s+)(\\w*+)(\\s+)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
@@ -89,6 +86,11 @@ public class EpguidesParser
                             // If you're not living in the USA
                      		if (TedConfig.getTimeZoneOffset() >= 0)
                      		{
+                     			if (airdate.getYear() < 1000)
+                     			{
+                     				int henk = airdate.getYear();
+                     				henk++;
+                     			}
                      			// Add one day to the schedule
                      			long time = airdate.getTime();
                      			time += 86400000;
@@ -124,8 +126,11 @@ public class EpguidesParser
                 {
                 	if (isDaily)
                 	{
-                		DailyDate dd = new DailyDate(airdate.getDay(), airdate.getMonth(), airdate.getYear(), title);
-                		episodes.add(dd);
+                		if (airdate != null)
+                		{           			
+                			DailyDate dd = new DailyDate(airdate, title);
+                			episodes.add(dd);
+                		}
                 	}
                 	else
                 	{
@@ -173,15 +178,15 @@ public class EpguidesParser
     } // parse() ends
     
     
-    public Vector<StandardStructure> getPastSeasonEpisodes(String showName)
+    public Vector<StandardStructure> getPastSeasonEpisodes(String showName, boolean isDaily)
     {
     	Date systemDate = new Date();   // Get time and date from system
         Date past = new Date();   // Get time and date from system
         past.setTime(0);
-        return this.parseSeasonEpisodes(showName, past, systemDate, false);
+        return this.parseSeasonEpisodes(showName, past, systemDate, isDaily);
     }
     
-    public Vector<StandardStructure> getFutureSeasonEpisodes(String showName)
+    public Vector<StandardStructure> getFutureSeasonEpisodes(String showName, boolean isDaily)
     {
     	// system date
        	Date systemDate = new Date();
@@ -189,10 +194,10 @@ public class EpguidesParser
         // one year from now
         Calendar yearFromNow = Calendar.getInstance();
         yearFromNow.add(Calendar.YEAR, 1);
-    	return this.parseSeasonEpisodes(showName, systemDate, yearFromNow.getTime(), false);
+    	return this.parseSeasonEpisodes(showName, systemDate, yearFromNow.getTime(), isDaily);
     }
     
-    public Vector<StandardStructure> getScheduledSeasonEpisodes(String showName)
+    public Vector<StandardStructure> getScheduledSeasonEpisodes(String showName, boolean isDaily)
     {
     	Date past = new Date();   // Get time and date from system
         past.setTime(0);
@@ -200,7 +205,7 @@ public class EpguidesParser
         // one year from now
         Calendar yearFromNow = Calendar.getInstance();
         yearFromNow.add(Calendar.YEAR, 1);
-    	return this.parseSeasonEpisodes(showName, past, yearFromNow.getTime(), false);
+    	return this.parseSeasonEpisodes(showName, past, yearFromNow.getTime(), isDaily);
     }
     
 } // TedEpguidesParser ends

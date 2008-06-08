@@ -3,6 +3,7 @@ package ted.datastructures;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DailyDate  extends StandardStructure
@@ -28,22 +29,24 @@ public class DailyDate  extends StandardStructure
 	{
 		this.Day   = day;
 		this.Month = month;
-		this.Year  = year;
+		this.setYear(year);
 	}
 	
 	/**
 	 * This method creates a DailyDate with a set date
 	 */
-	public DailyDate(int day, int month, int year, String title)
-	{
-		this.Day   = day;
-		this.Month = month;
-		this.Year  = year;
-		this.title = title;
+	public DailyDate(Date airdate, String title)
+	{		
+		this.Day     = airdate.getDay();
+		this.Month   = airdate.getMonth();
+		this.setYear(airdate.getYear());
+		this.airDate = airdate;
+		this.title   = title;
 	}
 	
-	public boolean equals (DailyDate dd)
+	public boolean equals (StandardStructure ss)
 	{
+		DailyDate dd = (DailyDate) ss;
 		return (this.Day == dd.Day && this.Month == dd.Month && this.Year == dd.Year);
 	}
 	
@@ -53,6 +56,19 @@ public class DailyDate  extends StandardStructure
 	 */
 	public void setYear(int year)
 	{
+		if (year < 50)
+		{
+			year += 2000;
+		}
+		else if (year < 100)
+		{
+			year += 1900;
+		}
+		else if (year < 1000)
+		{
+			year += 1900;
+		}
+		
 		this.Year = year;
 	}
 	
@@ -193,5 +209,10 @@ public class DailyDate  extends StandardStructure
 	{
 		return this.toString();
 	}
-	
+
+	public DailyDate nextEpisode()
+	{
+		Date date = new Date(this.airDate.getTime() + 86400000);
+		return new DailyDate(date, "");
+	}
 }

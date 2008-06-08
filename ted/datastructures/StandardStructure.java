@@ -208,12 +208,7 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		
 		return 0;
 	}
-	
-//	public boolean equals(Object arg0)
-//	{
-//		return 
-//	}
-	
+		
 	public StandardStructure nextEpisode() 
 	{
 		return new StandardStructure();
