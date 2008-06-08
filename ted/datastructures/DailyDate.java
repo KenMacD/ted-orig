@@ -117,7 +117,7 @@ public class DailyDate  extends StandardStructure
 	 * Compares this DailyDate with a second date.
 	 * @return 1 if this date is larger, -1 if this date is lower and 0 if dates are equal
 	 */
-	public int compareTo(Object arg0)
+	public int compareTo(StandardStructure arg0)
 	{
 		DailyDate second = (DailyDate) arg0;
 		

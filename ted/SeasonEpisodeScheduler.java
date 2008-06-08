@@ -119,9 +119,10 @@ public class SeasonEpisodeScheduler implements Serializable
 			// search for season, episode in vector
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
-				if (this.scheduledEpisodes.elementAt(i).compareTo(episodeToFind) == 0)
+				StandardStructure current = this.scheduledEpisodes.elementAt(i);
+				if (current.compareTo(episodeToFind) == 0)
 				{
-					result = this.scheduledEpisodes.elementAt(i);
+					result = current;
 					break;
 				}	
 			}

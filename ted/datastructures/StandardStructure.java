@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import ted.Lang;
 import ted.TedConfig;
 
-public class StandardStructure implements Serializable, Comparable
+public class StandardStructure implements Serializable, Comparable<StandardStructure>
 {
 	/**
 	 * 
@@ -172,9 +172,9 @@ public class StandardStructure implements Serializable, Comparable
 		return result;
 	}
 	
-	public int compareTo(Object arg0)
+	public int compareTo(StandardStructure arg0)
 	{
-		StandardStructure ss = (StandardStructure) arg0;
+		StandardStructure ss = arg0;
 		
 		long thisSeconds = 0;
 		long ssSeconds   = 0;

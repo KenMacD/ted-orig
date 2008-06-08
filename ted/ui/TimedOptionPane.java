@@ -164,7 +164,6 @@ public class TimedOptionPane {
 			JPanel messagePanel = new JPanel();
 			GridLayout gridLayout = new GridLayout(0,1);
 			messagePanel.setLayout(gridLayout);
-
 			
 			Font SMALL_FONT = new Font("Dialog",0,10);
 			this.timeout = milliseconds;
