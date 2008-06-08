@@ -207,7 +207,7 @@ public class DailyDate  extends StandardStructure
 	
 	public String getSearchString()
 	{
-		return this.toString();
+		return this.title + ". " + this.getFormattedAirDateWithText();
 	}
 
 	public DailyDate nextEpisode()

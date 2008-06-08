@@ -32,12 +32,6 @@ public class SeasonEpisode extends StandardStructure
 		// TODO Auto-generated constructor stub
 	}	
 
-	public boolean equals (StandardStructure arg)
-	{
-		SeasonEpisode ss = (SeasonEpisode) arg;
-		return (this.season == ss.season && this.episode == ss.episode);
-	}
-	
 	public SeasonEpisode nextEpisode()
 	{
 		int nextEpisodeNr  = episode + 1;
@@ -100,6 +94,11 @@ public class SeasonEpisode extends StandardStructure
 		return 0;
 	}
 	
+	public boolean equals (StandardStructure arg)
+	{
+		SeasonEpisode ss = (SeasonEpisode) arg;
+		return (this.season == ss.season && this.episode == ss.episode);
+	}
 	
 	public String toString()
 	{

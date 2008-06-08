@@ -120,7 +120,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
 				StandardStructure current = this.scheduledEpisodes.elementAt(i);
-				if (current.equals(episodeToFind))
+				if (current.compareTo(episodeToFind) == 0)
 				{
 					result = current;
 					break;

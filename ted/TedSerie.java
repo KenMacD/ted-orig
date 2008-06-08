@@ -1132,7 +1132,10 @@ public class TedSerie implements Serializable
 	
 	public boolean isDoubleEpisode(int season, int episode)
 	{
-		return this.getScheduler().getEpisode(new SeasonEpisode(season, episode)).isDouble();
+		SeasonEpisode temp = new SeasonEpisode(season, episode);
+		SeasonEpisode tempInSchedule = (SeasonEpisode) this.getScheduler().getEpisode(temp);
+		return tempInSchedule.isDouble();
+		//return this.getScheduler().getEpisode(new SeasonEpisode(season, episode)).isDouble();
 	}
 
 	/**
