@@ -196,7 +196,14 @@ public class SubscribeOptionsPanel extends JPanel
 		for (i = 0; i < episodes.size(); i++)
 		{
 			StandardStructure currentEpisode = (StandardStructure)episodes.get(i);
-			if (currentEpisode.getAirDate().before(current))
+			Date airdate = currentEpisode.getAirDate();
+			
+			if (airdate == null)
+			{
+				continue;
+			}
+			
+			if (airdate.before(current))
 			{
 				downloadLatestAndSubscribe.setEnabled(true);
 				this.lastAiredEpisode = currentEpisode;

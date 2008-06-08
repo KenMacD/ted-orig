@@ -5,7 +5,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class DailyDate  extends StandardStructure implements Comparable
+public class DailyDate  extends StandardStructure
 {
 	private int Year=0;
 	private int Month=0;
@@ -19,7 +19,6 @@ public class DailyDate  extends StandardStructure implements Comparable
 	 */
 	public DailyDate()
 	{
-		
 	}
 	
 	/**
@@ -27,9 +26,25 @@ public class DailyDate  extends StandardStructure implements Comparable
 	 */
 	public DailyDate(int day, int month, int year)
 	{
-		this.Day = day;
+		this.Day   = day;
 		this.Month = month;
-		this.Year = year;
+		this.Year  = year;
+	}
+	
+	/**
+	 * This method creates a DailyDate with a set date
+	 */
+	public DailyDate(int day, int month, int year, String title)
+	{
+		this.Day   = day;
+		this.Month = month;
+		this.Year  = year;
+		this.title = title;
+	}
+	
+	public boolean equals (DailyDate dd)
+	{
+		return (this.Day == dd.Day && this.Month == dd.Month && this.Year == dd.Year);
 	}
 	
 	/**

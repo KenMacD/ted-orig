@@ -9,6 +9,7 @@ import java.util.Vector;
 import org.w3c.dom.Element;
 
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
@@ -1105,7 +1106,7 @@ public class TedSerie implements Serializable
 		}
 		
 		// get the next episode from the planning
-		SeasonEpisode nextSE = this.getScheduler().getNextEpisode(season, episode).getSeasonEpisode();
+		SeasonEpisode nextSE = (SeasonEpisode) this.getScheduler().getNextEpisode(new SeasonEpisode(season, episode));
 		
 		// if no next SE is found, put ted on hiatus and leave Season/Episode as it is
 		if (nextSE == null)
@@ -1131,7 +1132,7 @@ public class TedSerie implements Serializable
 	
 	public boolean isDoubleEpisode(int season, int episode)
 	{
-		return this.getScheduler().getEpisode(season, episode).getIsDoubleEpisode();
+		return this.getScheduler().getEpisode(new SeasonEpisode(season, episode)).isDouble();
 	}
 
 	/**
@@ -1169,7 +1170,7 @@ public class TedSerie implements Serializable
 		return this.scheduler;
 	}
 
-	public Vector<SeasonEpisode> getPubishedAndAiredEpisodes() 
+	public Vector<StandardStructure> getPubishedAndAiredEpisodes() 
 	{
 		return this.getScheduler().getPubishedAndAiredEpisodes();
 	}

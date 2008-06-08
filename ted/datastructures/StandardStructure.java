@@ -11,18 +11,28 @@ import java.util.GregorianCalendar;
 import ted.Lang;
 import ted.TedConfig;
 
-public class StandardStructure implements Serializable
+public class StandardStructure implements Serializable, Comparable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6353477437638502291L;
-	int quality = 0;
-	protected Date publishDate = null; // date torrent was published online
-	protected Date airDate = null; // date episode was aired on tv
-	protected String title; // episode title
-	protected String summaryURL = "";
 	
+	          int     quality      = 0;
+	protected Date    publishDate  = null; // date torrent was published online
+	protected Date    airDate      = null; // date episode was aired on tv
+	protected String  title        = "";   // episode title
+	protected String  summaryURL   = "";
+	protected boolean isDouble     = false;
+	
+	public boolean isDouble() 
+	{
+		return isDouble;
+	}
+	public void setDouble(boolean isDouble) 
+	{
+		this.isDouble = isDouble;
+	}
 	/**
 	 * @return Returns the quality.
 	 */
@@ -160,5 +170,52 @@ public class StandardStructure implements Serializable
 		}
 		
 		return result;
+	}
+	
+	public int compareTo(Object arg0)
+	{
+		StandardStructure ss = (StandardStructure) arg0;
+		
+		long thisSeconds = 0;
+		long ssSeconds   = 0;
+		
+		if (this.airDate != null)
+		{
+			thisSeconds = this.airDate.getTime();
+		}
+		else
+		{
+			thisSeconds = this.publishDate.getTime();
+		}
+		
+		if (ss.airDate != null)
+		{
+			ssSeconds   = ss.airDate.getTime();;
+		}
+		else
+		{
+			ssSeconds   = ss.publishDate.getTime();
+		}
+		
+		if (thisSeconds < ssSeconds)
+		{
+			return -1;
+		}
+		else if (thisSeconds > ssSeconds)
+		{
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+//	public boolean equals(Object arg0)
+//	{
+//		return 
+//	}
+	
+	public StandardStructure nextEpisode() 
+	{
+		return new StandardStructure();
 	}
 }

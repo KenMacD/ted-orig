@@ -15,7 +15,9 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 
 import ted.TedConfig;
+import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 /* 
  * TedEpguidesParser parses an epguides.com webpage and retrieves 
@@ -26,98 +28,63 @@ import ted.datastructures.SeasonEpisode;
  */
 
 
-public class EpguidesParser {
-    // A flag that shows if next episode is found
-    private boolean foundNext=false;
+public class EpguidesParser 
+{
     // A flag that shows if a double episode (no matter when it's aired) is found
-    private boolean foundDouble=false;
+    private boolean foundDouble = false;
     
     // The general pattern that epguides follows for their show lists
-    private String regex = "(\\d+)(\\-|\\-\\s)(\\d+)(\\s+)(\\w*+)(\\s+)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
+    // Format:   1.   1- 1        100     22 Sep 04   <a target="_blank" href="http://www.tv.com/lost/pilot-1/episode/334467/summary.html">Pilot (1)</a>
+    private String regex       = "(\\d+)(\\-|\\-\\s)(\\d+)(\\s+)(\\w*+)(\\s+)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
+    private String regexNoDate = "(\\d+)(\\-|\\-\\s)(\\d+)(\\s+)(\\w*+)(\\s+)";
+    private String regexName   = "(>)(.+)(</a>)(\\s*)$";
     
     
-	private Vector<EpguidesPair> parseSeasonEpisodes (String seriesName, Date from, Date to, boolean findNextAfterTo)
+	private Vector<StandardStructure> parseSeasonEpisodes (String seriesName, Date from, Date to, boolean isDaily)
     {
         Date parsedAirDate=null;
-        Date previousParsedAirDate=null;
         String DATE_FORMAT = "d/MMM/yy";        
        
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);        
-        Pattern pattern =Pattern.compile(regex);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
         
-        Vector<EpguidesPair> episodes = new Vector<EpguidesPair>();
+        Pattern pattern       = Pattern.compile(regex);
+        Pattern patternNoDate = Pattern.compile(regexNoDate); 
+        Pattern patternName   = Pattern.compile(regexName);
+        
+        Vector<StandardStructure> episodes = new Vector<StandardStructure>();
         
         try 
         {
             URL epguides = new URL("http://www.epguides.com/" + seriesName + "/");
             BufferedReader in = new BufferedReader( new InputStreamReader(epguides.openStream())); 
-            
-            /* An integer that holds the number of times while has gone through
-             * and also shows a unique increment number that can be used for comparison */             
-            int runs = 0;      
+                
             String inputLine;
             while ((inputLine = in.readLine()) != null) 
-            {
+            {               
+                Matcher matcher       = pattern      .matcher(inputLine);      
+                Matcher matcherNoDate = patternNoDate.matcher(inputLine);
+                Matcher matcherName   = patternName  .matcher(inputLine);
                 
-                previousParsedAirDate = parsedAirDate;
+                boolean date   = matcher.find();
+                boolean noDate = matcherNoDate.find();
                 
-                if (runs==0)
-                {
-                    /* RE-initialize variables for first time runs (run=0)
-                     * It's necessary in order to avoid conflicts with multiple shows parsing
-                     * But could be skipped depending on how we'll use the parser */                
-                    foundNext=!findNextAfterTo;
-                    foundDouble=false;
-                    try 
-                    {
-                        previousParsedAirDate=sdf.parse("1/Jan/50");                                              
-                        
-                    }
-                    catch (java.text.ParseException pe)
-                    {
-                        // ParseAirDate failled
-                        // TODO: Add Handling Code
-                    }
-                }
-                Matcher matcher = pattern.matcher(inputLine);                 
-                if (matcher.find()) 
+                int season   = 0;
+                int episode  = 0;
+                String title = "";
+                Date airdate = null;
+                
+                if (date) 
                 { 
-                    // Increase runs by one if the parser finds a line containing our regular expression
-                    runs++;
                     try
                     {
                         // Convert between String and Date
                         parsedAirDate = sdf.parse(matcher.group(7)+"/" + matcher.group(9) + "/" + matcher.group(11));
                          
-                         // Find one episode after the "to" date if that is needed                         
-                         if ((parsedAirDate.after(to)) & (!foundNext)) {
-                             foundNext=true;
-                             int season = Integer.parseInt(matcher.group(1));
-                             int episode = Integer.parseInt(matcher.group(3));
-                             Date airdate = parsedAirDate;
-                             String title = "";
-                        	 SeasonEpisode se = new SeasonEpisode(season, episode, airdate, title);
-                        	 episodes.add(new EpguidesPair(se, foundDouble));
-                         }
-                         // The if checks to see if the parsed episode is the current one       
-                         /*if ((parsedAirDate.before(systemDate)) & (parsedAirDate.after(previousParsedAirDate)))
-                         {
-                             currentSeason = matcher.group(1);
-                             currentEpisode = matcher.group(3);
-                             currentAirDate = matcher.group(7)+"/" + matcher.group(9) + "/" + matcher.group(11);
-                         }  */          
-                         /* The if checks to see if the parsed episode has same air date with the previous
-                          * wich means it's a double aired episode */                          
-                         if (parsedAirDate.equals(previousParsedAirDate))
-                         {
-                             foundDouble = true;
-                             episodes.lastElement().setIsDoubleEpisode(foundDouble);
-                         }
                          if (parsedAirDate.after(from) && parsedAirDate.before(to))
                          {
-                        	 int season = Integer.parseInt(matcher.group(1));
-                             int episode = Integer.parseInt(matcher.group(3));
-                             Date airdate = parsedAirDate;
+                        	 season   = Integer.parseInt(matcher.group(1));
+                             episode  = Integer.parseInt(matcher.group(3));
+                             airdate = parsedAirDate;
                              
                             // If you're not living in the USA
                      		if (TedConfig.getTimeZoneOffset() >= 0)
@@ -127,30 +94,47 @@ public class EpguidesParser {
                      			time += 86400000;
                      			airdate.setTime(time);
                      		}
-                             
-                             String title = "";
-                        	 SeasonEpisode se = new SeasonEpisode(season, episode, airdate, title);
-                        	 episodes.add(new EpguidesPair(se, foundDouble));                    	 
+                                    
+                             if (matcherName.find())
+                             {
+                            	 title = matcherName.group(2);
+                             }
                          }
-                            
-                         foundDouble = false;
                     }
                     catch (java.text.ParseException pe) 
                     {
                             // ParseAirDate or Season / episode failed
                             // TODO: Add Handling Code
                     }                       
-                 } // matcher.find() ends             
+                } // matcher.find() ends 
+                else if (noDate)
+                {
+                	// We've found an episode without a date.                	
+                    season  = Integer.parseInt(matcherNoDate.group(1));
+                    episode = Integer.parseInt(matcherNoDate.group(3));
+                                                
+                    if (matcherName.find())
+                    {
+                   	 title = matcherName.group(2);
+                    }
+                }
+                
+
+                if (date || noDate)
+                {
+                	if (isDaily)
+                	{
+                		DailyDate dd = new DailyDate(airdate.getDay(), airdate.getMonth(), airdate.getYear(), title);
+                		episodes.add(dd);
+                	}
+                	else
+                	{
+                		SeasonEpisode se = new SeasonEpisode(season, episode, airdate, title);
+                		episodes.add(se);
+                	}
+                }
             } // while ends
             in.close();
-            
-            /* The found double check must be out of the while loop in order to compare  
-             * the last dates that are stored in the strings and not the passed double episodes */             
-            /*if (foundDouble)
-            {
-                if (doubleAirDate.equalsIgnoreCase(currentAirDate)){ currentIsDouble=true; }
-                if (doubleAirDate.equalsIgnoreCase(nextAirDate)){ nextIsDouble=true; }
-            } */
            
         } catch (MalformedURLException e) {
             // new URL() failed     
@@ -164,12 +148,32 @@ public class EpguidesParser {
         // sort the seasons and episodes in ascending order
         Collections.sort(episodes);
         
+        // Finally detect double episodes
+        // Walk backwards over all episodes, if the previous episode (the one with the
+        // higher episode number) has the same air date than we've found a double episode.
+        if (episodes.size() > 0)
+        {
+        	Date airDate         = null;
+	        Date previousAirDate = episodes.get(episodes.size()-1).getAirDate();
+	        for (int i = episodes.size() - 2; i >= 0; i--)
+	        {
+	        	airDate = episodes.get(i).getAirDate();
+	        	
+	        	if (airDate == previousAirDate)
+	        	{
+	        		episodes.get(i).setDouble(true);
+	        	}
+	        	
+	        	previousAirDate = airDate;
+	        }
+    	}
+        
         return episodes;
         
     } // parse() ends
     
     
-    public Vector<EpguidesPair> getPastSeasonEpisodes(String showName)
+    public Vector<StandardStructure> getPastSeasonEpisodes(String showName)
     {
     	Date systemDate = new Date();   // Get time and date from system
         Date past = new Date();   // Get time and date from system
@@ -177,7 +181,7 @@ public class EpguidesParser {
         return this.parseSeasonEpisodes(showName, past, systemDate, false);
     }
     
-    public Vector<EpguidesPair> getFutureSeasonEpisodes(String showName)
+    public Vector<StandardStructure> getFutureSeasonEpisodes(String showName)
     {
     	// system date
        	Date systemDate = new Date();
@@ -188,7 +192,7 @@ public class EpguidesParser {
     	return this.parseSeasonEpisodes(showName, systemDate, yearFromNow.getTime(), false);
     }
     
-    public Vector<EpguidesPair> getScheduledSeasonEpisodes(String showName)
+    public Vector<StandardStructure> getScheduledSeasonEpisodes(String showName)
     {
     	Date past = new Date();   // Get time and date from system
         past.setTime(0);
