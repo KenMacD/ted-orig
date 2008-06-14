@@ -159,12 +159,14 @@ public class EpguidesParser
         if (episodes.size() > 0)
         {
         	Date airDate         = null;
-	        Date previousAirDate = episodes.get(episodes.size()-1).getAirDate();
-	        for (int i = episodes.size() - 2; i >= 0; i--)
+	        Date previousAirDate = episodes.get(0).getAirDate();
+	        for (int i = 1; i < episodes.size(); i++)
 	        {
 	        	airDate = episodes.get(i).getAirDate();
 	        	
-	        	if (airDate == previousAirDate)
+	        	if (   airDate != null
+	        		&& previousAirDate != null
+	        		&& airDate.getTime() == previousAirDate.getTime())
 	        	{
 	        		episodes.get(i).setDouble(true);
 	        	}

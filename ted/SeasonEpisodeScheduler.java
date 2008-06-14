@@ -45,6 +45,10 @@ public class SeasonEpisodeScheduler implements Serializable
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
 				current = this.scheduledEpisodes.elementAt(i);
+				if (current.getAirDate() == null)
+				{
+					continue;
+				}
 				if (current.getAirDate().before(systemDate))
 				{
 					results.add(current);
@@ -134,44 +138,6 @@ public class SeasonEpisodeScheduler implements Serializable
 		
 		return result;
 	}
-	
-//	public StandardStructure getEpisode (StandardStructure ss)
-//	{
-//		// Create an empty pair where the member seasonEpisode is null
-//		StandardStructure result = new StandardStructure();
-//		
-//		// check schedule for updates
-//		if (this.updateEpisodeSchedule())
-//		{
-//			StandardStructure current;
-//			// search for season, episode in vector
-//			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
-//			{
-//				current = this.scheduledEpisodes.elementAt(i);
-//				if (   (current.getSeason() == season     && current.getEpisode() == episode)
-//					|| (current.getSeason() == season + 1 && current.getEpisode() == 1))
-//				{
-//					// check if there are more elements in the list
-//					result = this.scheduledEpisodes.elementAt(i);
-//					
-//					// Only break if we found a SE of the current season.
-//					// Otherwise we've found a new season already, but there still might be episodes
-//					// left of the previous season.
-//					if (current.getSeason() == season)
-//					{
-//						break;
-//					}
-//				}
-//			}
-//		}
-//		else
-//		{
-//			// no schedule present, just fill a result
-//			result = ss;
-//		}
-//		
-//		return result;
-//	}
 	
 	/**
 	 * @param season
