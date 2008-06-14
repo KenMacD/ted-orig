@@ -9,16 +9,22 @@ import java.util.Vector;
 
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 import ted.epguides.EpguidesParser;
 
 public class SeasonEpisodeScheduler implements Serializable
 {
+
+	public class NoEpisodeFoundException extends Exception {
+
+	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2256145484789412126L;
 	private TedSerie serie;
+	// Vector containing the scheduled episodes. Sorted on airdate. First item is with highest airdate
 	private Vector<StandardStructure> scheduledEpisodes;
 	private Date checkEpisodeSchedule;
 	
@@ -29,7 +35,6 @@ public class SeasonEpisodeScheduler implements Serializable
 	
 	/**
 	 * @return A vector of episodes that are currently aired (from epguides info)
-	 * and the next episode
 	 */
 	private Vector<StandardStructure> getAiredEpisodes()
 	{	
@@ -45,18 +50,59 @@ public class SeasonEpisodeScheduler implements Serializable
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
 				current = this.scheduledEpisodes.elementAt(i);
-				if (current.getAirDate() == null)
+				try 
+				{
+					if (current.getAirDate().before(systemDate))
+					{
+						results.add(current);
+					}
+				} 
+				catch (AirDateUnknownException e) 
 				{
 					continue;
-				}
-				if (current.getAirDate().before(systemDate))
-				{
-					results.add(current);
 				}
 			}
 		}
 		
 		return results;
+	}
+	
+	public StandardStructure getNextToAirEpisode() throws NoEpisodeFoundException
+	{
+		StandardStructure result = null;
+		
+		if (this.updateEpisodeSchedule())
+		{
+			// system date
+	       	Date systemDate = new Date();
+			
+	       	StandardStructure current;
+			// return only seasonepisodes aired until today
+			for (int i = this.scheduledEpisodes.size()-1; i >= 0; i--)
+			{
+				current = this.scheduledEpisodes.elementAt(i);
+				try 
+				{
+					if (current.getAirDate().after(systemDate))
+					{
+						result = current;
+						break;
+					}
+				} 
+				catch (AirDateUnknownException e) 
+				{
+					// do nothing for now..
+				}
+			}
+		}
+		
+		if (result == null)
+		{
+			NoEpisodeFoundException noEpisodeFoundException = new NoEpisodeFoundException();
+			throw noEpisodeFoundException;
+		}
+		
+		return result;
 	}
 	
 	
@@ -166,6 +212,13 @@ public class SeasonEpisodeScheduler implements Serializable
 		
 		if (publishedEpisodes.size() > 0 && airedEpisodes.size() > 0)
 		{
+			// first add next to air episode
+			try {
+				results.add(this.getNextToAirEpisode());
+			} catch (NoEpisodeFoundException e) {
+				// do nothing
+			}
+			
 			// filter out any items in publishedEpisodes that are not in airedEpisodes
 			int airedCounter = 0;
 			int publishedCounter = 0;
@@ -201,7 +254,14 @@ public class SeasonEpisodeScheduler implements Serializable
 				// if published == aired, save episode into result vector and get next of both
 				else if (publishedEpisode.compareTo(airedEpisode) == 0)
 				{
-					publishedEpisode.setAirDate(airedEpisode.getAirDate());
+					try 
+					{
+						publishedEpisode.setAirDate(airedEpisode.getAirDate());
+					} 
+					catch (AirDateUnknownException e) 
+					{
+						// do nothing
+					}
 					publishedEpisode.setTitle(airedEpisode.getTitle());
 					publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
 					results.add(publishedEpisode);
@@ -221,16 +281,22 @@ public class SeasonEpisodeScheduler implements Serializable
 			// make sure to check the last episodes, could be skipped by while loop
 			if (publishedEpisode.compareTo(airedEpisode) == 0)
 			{
-				publishedEpisode.setAirDate(airedEpisode.getAirDate());
+				try 
+				{
+					publishedEpisode.setAirDate(airedEpisode.getAirDate());
+				} 
+				catch (AirDateUnknownException e) 
+				{
+					// do nothing
+				}
 				publishedEpisode.setTitle(airedEpisode.getTitle());
 				publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
 				results.add(publishedEpisode);
-			}
-			
+			}			
 		}
 		else
 		{
-			return publishedEpisodes;
+			results = publishedEpisodes;
 		}
 		
 		// free references for garbage collection
@@ -253,9 +319,10 @@ public class SeasonEpisodeScheduler implements Serializable
 		StandardStructure currentSE = this.getEpisode(new SeasonEpisode(serie.currentSeason, serie.currentEpisode));
 		if (currentSE != null)
 		{
-			Date airDate = currentSE.getAirDate();
-			if (airDate != null)
+			Date airDate;
+			try 
 			{
+				airDate = currentSE.getAirDate();
 				Date currentDate = new Date();
 				
 				if (currentDate.before(airDate))
@@ -270,8 +337,8 @@ public class SeasonEpisodeScheduler implements Serializable
 					// put show on check?
 					serie.setStatus(TedSerie.STATUS_CHECK);
 				}
-			}
-			else
+			} 
+			catch (AirDateUnknownException e) 
 			{
 				serie.setStatus(TedSerie.STATUS_HIATUS);
 			}

@@ -154,8 +154,9 @@ public class DailyDate  extends StandardStructure
 	 */
 	public String toString()
 	{
-		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-		return df.format(this.getDate().getTime());
+		//DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
+		//return df.format(this.getDate().getTime());
+		return this.getTitle();
 	}
 
 	/**

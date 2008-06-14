@@ -12,6 +12,10 @@ import ted.Lang;
 
 public class StandardStructure implements Serializable, Comparable<StandardStructure>
 {
+	public class AirDateUnknownException extends Exception {
+
+	}
+
 	/**
 	 * 
 	 */
@@ -102,9 +106,17 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		return this.summaryURL;
 	}
 	
-	public Date getAirDate()
+	public Date getAirDate() throws AirDateUnknownException
 	{
-		return this.airDate;
+		if (this.airDate != null)
+		{
+			return this.airDate;
+		}
+		else
+		{
+			AirDateUnknownException e = new AirDateUnknownException();
+			throw e;
+		}
 	}
 	public void setAirDate(Date airDate) 
 	{
@@ -142,13 +154,13 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	public boolean airedBeforeOrOnToday()
 	{
 		Date current = new Date();
-		if (this.getAirDate() != null)
+		
+		try 
 		{
 			return this.getAirDate().before(current);
-		}
-		else
+		} catch (AirDateUnknownException e) 
 		{
-			return true;
+			return false;
 		}
 	}
 	
@@ -156,16 +168,13 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	{
 		String result = "";
 		
-		if (this.getAirDate() != null)
+		if (this.airedBeforeOrOnToday())
 		{
-			if (this.airedBeforeOrOnToday())
-			{
-				result = "Aired on " + this.getFormattedAirDate();
-			}
-			else
-			{
-				result = "Will air on " + this.getFormattedAirDate();
-			}
+			result = "Aired on " + this.getFormattedAirDate();
+		}
+		else
+		{
+			result = "Will air on " + this.getFormattedAirDate();
 		}
 		
 		return result;

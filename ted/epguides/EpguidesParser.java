@@ -18,6 +18,7 @@ import ted.TedConfig;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 
 /* 
  * TedEpguidesParser parses an epguides.com webpage and retrieves 
@@ -158,21 +159,25 @@ public class EpguidesParser
         // higher episode number) has the same air date than we've found a double episode.
         if (episodes.size() > 0)
         {
-        	Date airDate         = null;
-	        Date previousAirDate = episodes.get(0).getAirDate();
-	        for (int i = 1; i < episodes.size(); i++)
-	        {
-	        	airDate = episodes.get(i).getAirDate();
-	        	
-	        	if (   airDate != null
-	        		&& previousAirDate != null
-	        		&& airDate.getTime() == previousAirDate.getTime())
-	        	{
-	        		episodes.get(i).setDouble(true);
-	        	}
-	        	
-	        	previousAirDate = airDate;
-	        }
+        	Date airDate;
+        	Date previousAirDate;
+			try 
+			{
+				previousAirDate = episodes.get(0).getAirDate();
+				for (int i = 1; i < episodes.size(); i++)
+		        {
+					airDate = episodes.get(i).getAirDate();
+					if ( airDate.getTime() == previousAirDate.getTime())
+		        	{
+		        		episodes.get(i).setDouble(true);
+		        	}
+					previousAirDate = airDate;
+				}      	        	
+		     }
+        	catch (AirDateUnknownException e) 
+			{
+				// do nothing	
+			}       	        	
     	}
         
         return episodes;

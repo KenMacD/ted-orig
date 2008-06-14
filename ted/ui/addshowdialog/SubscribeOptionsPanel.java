@@ -19,6 +19,7 @@ import javax.swing.JRadioButton;
 
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 import ted.interfaces.EpisodeChooserListener;
 
 
@@ -188,7 +189,6 @@ public class SubscribeOptionsPanel extends JPanel
 
 	public void setSeasonEpisodes(Vector episodes)
 	{
-		// TODO: add handling for episodes without airdate
 		Date current = new Date();
 		
 		int i = 0;
@@ -196,19 +196,22 @@ public class SubscribeOptionsPanel extends JPanel
 		for (i = 0; i < episodes.size(); i++)
 		{
 			StandardStructure currentEpisode = (StandardStructure)episodes.get(i);
-			Date airdate = currentEpisode.getAirDate();
-			
-			if (airdate == null)
+			Date airdate;
+			try 
 			{
+				airdate = currentEpisode.getAirDate();
+				if (airdate.before(current))
+				{
+					downloadLatestAndSubscribe.setEnabled(true);
+					this.lastAiredEpisode = currentEpisode;
+					this.airedEpisodeLabel.setText(	currentEpisode.getSearchString());
+					break;
+				}
+			} 
+			catch (AirDateUnknownException e) 
+			{
+				// TODO: add handling for episodes without airdate
 				continue;
-			}
-			
-			if (airdate.before(current))
-			{
-				downloadLatestAndSubscribe.setEnabled(true);
-				this.lastAiredEpisode = currentEpisode;
-				this.airedEpisodeLabel.setText(	currentEpisode.getSearchString());
-				break;
 			}
 		}
 		// check if next episode is also available
