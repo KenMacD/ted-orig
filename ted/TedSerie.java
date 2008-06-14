@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import org.w3c.dom.Element;
 
+import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
 import ted.ui.editshowdialog.FeedPopupItem;
@@ -1105,23 +1106,20 @@ public class TedSerie implements Serializable
 			++episode;
 		}
 		
-		// get the next episode from the planning
-		SeasonEpisode nextSE = (SeasonEpisode) this.getScheduler().getNextEpisode(new SeasonEpisode(season, episode));
-		
-		// if no next SE is found, put ted on hiatus and leave Season/Episode as it is
-		if (nextSE == null)
+		try
 		{
-			// Don't update the counter every parsing round
+			SeasonEpisode nextSE = (SeasonEpisode) this.getScheduler().getNextEpisode(new SeasonEpisode(season, episode));
+			this.currentEpisode = nextSE.getEpisode();
+			this.currentSeason = nextSE.getSeason();
+		}
+		catch (NoEpisodeFoundException e) 
+		{
+			// if no next SE is found, put ted on hiatus and increment episode with 1
 			if (this.status != TedSerie.STATUS_HIATUS)
 			{
 				this.currentEpisode++;
 				this.setStatus(TedSerie.STATUS_HIATUS);
 			}
-		}
-		else
-		{
-			this.currentEpisode = nextSE.getEpisode();
-			this.currentSeason = nextSE.getSeason();
 		}
 	}
 	
@@ -1133,9 +1131,16 @@ public class TedSerie implements Serializable
 	public boolean isDoubleEpisode(int season, int episode)
 	{
 		SeasonEpisode temp = new SeasonEpisode(season, episode);
-		SeasonEpisode tempInSchedule = (SeasonEpisode) this.getScheduler().getEpisode(temp);
-		return tempInSchedule.isDouble();
-		//return this.getScheduler().getEpisode(new SeasonEpisode(season, episode)).isDouble();
+		SeasonEpisode tempInSchedule;
+		try 
+		{
+			tempInSchedule = (SeasonEpisode) this.getScheduler().getEpisode(temp);
+			return tempInSchedule.isDouble();
+		} 
+		catch (NoEpisodeFoundException e) 
+		{
+			return false;
+		}
 	}
 
 	/**
