@@ -1,13 +1,16 @@
 package ted.datastructures;
 
 import java.net.URL;
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DailyDate  extends StandardStructure
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1927588319782671765L;
 	private int Year=0;
 	private int Month=0;
 	private int Day=0;

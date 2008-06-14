@@ -14,6 +14,11 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 {
 	public class AirDateUnknownException extends Exception {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3174854029126884504L;
+
 	}
 
 	/**

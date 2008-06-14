@@ -371,7 +371,7 @@ public class SeasonEpisodeScheduler implements Serializable
 				}
 				else
 				{
-					// put show on check?
+					// put show on check
 					serie.setStatus(TedSerie.STATUS_CHECK);
 				}
 			} 
@@ -384,8 +384,6 @@ public class SeasonEpisodeScheduler implements Serializable
 		{
 			serie.setStatus(TedSerie.STATUS_HIATUS);
 		}
-		// TODO: what if currentSE == null? then nothing is planned? just put on hold?
-		// Do nothing because no planning is found
 	}
 	
 	/**
