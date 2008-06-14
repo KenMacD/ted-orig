@@ -2,3 +2,4 @@ Manifest-Version: 1.1
 Main-Class: ted.TedMain
 Class-Path: rssutils.jar jdic.jar forms-1.1.0.jar
 Sealed: true
+
