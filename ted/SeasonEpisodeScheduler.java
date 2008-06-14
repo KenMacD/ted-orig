@@ -94,7 +94,35 @@ public class SeasonEpisodeScheduler implements Serializable
 					// do nothing for now..
 				}
 			}
+			
+			if (result == null)
+			{
+				// run through episodes
+				// get first episode after all aired episodes
+				int count = -1;
+				for (int i = this.scheduledEpisodes.size()-1; i >= 0; i--)
+				{
+					current = this.scheduledEpisodes.elementAt(i);
+					try 
+					{
+						if (current.getAirDate().before(systemDate))
+						{
+							count = i;
+						}
+					} 
+					catch (AirDateUnknownException e) 
+					{
+						continue;
+					}
+				}
+				if (count - 1 > 0)
+				{
+					result = this.scheduledEpisodes.elementAt(count - 1);
+				}		
+			}
 		}
+		
+		
 		
 		if (result == null)
 		{
