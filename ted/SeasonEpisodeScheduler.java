@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import java.util.Vector;
 
 import ted.datastructures.SeasonEpisode;
@@ -16,6 +15,11 @@ public class SeasonEpisodeScheduler implements Serializable
 {
 
 	public class NoEpisodeFoundException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3156780544495682045L;
 
 	}
 
@@ -67,6 +71,12 @@ public class SeasonEpisodeScheduler implements Serializable
 		return results;
 	}
 	
+	/**
+	 * @return The next episode scheduled to air. Will first search though all episodes
+	 * with airdate. If that gives no result, will search episodes with no airdate, scheduled after
+	 * episodes with airdate. If nothing is found, this will throw an exception
+	 * @throws NoEpisodeFoundException Thrown when no next to air episode is found.
+	 */
 	public StandardStructure getNextToAirEpisode() throws NoEpisodeFoundException
 	{
 		StandardStructure result = null;
@@ -97,8 +107,9 @@ public class SeasonEpisodeScheduler implements Serializable
 			
 			if (result == null)
 			{
+				// nothing found while searching through the episodes with airdates
 				// run through episodes
-				// get first episode after all aired episodes
+				// get first episode after all aired episodes, with presumable no airdate
 				int count = -1;
 				for (int i = this.scheduledEpisodes.size()-1; i >= 0; i--)
 				{
@@ -115,15 +126,13 @@ public class SeasonEpisodeScheduler implements Serializable
 						continue;
 					}
 				}
-				if (count - 1 > 0)
+				if (count - 1 >= 0)
 				{
 					result = this.scheduledEpisodes.elementAt(count - 1);
 				}		
 			}
 		}
-		
-		
-		
+			
 		if (result == null)
 		{
 			NoEpisodeFoundException noEpisodeFoundException = new NoEpisodeFoundException();
