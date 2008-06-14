@@ -606,7 +606,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if(action.equals("Preferences...")) //$NON-NLS-1$
 		{
-			new TedConfigDialog(this, true, true);
+			tConfigDialog.setVisible(true);
 		}
 		else if(action.equals("Log")) //$NON-NLS-1$
 		{
@@ -842,6 +842,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Color"))
 		{
+			tConfigDialog.setVisible(false);
 			colorPicker.setVisible(true);
 		}
 		else if(action.equals("toggleautoschedule"))
