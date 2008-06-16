@@ -139,7 +139,7 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	{
 		if (this.airDate != null)
 		{
-			DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 			return df.format(this.airDate);
 		}
 		else
@@ -173,13 +173,20 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	{
 		String result = "";
 		
-		if (this.airedBeforeOrOnToday())
+		if (this.airDate != null)
 		{
-			result = "Aired on " + this.getFormattedAirDate();
+			if (this.airedBeforeOrOnToday())
+			{
+				result = "Aired on " + this.getFormattedAirDate();
+			}
+			else
+			{
+				result = "Will air on " + this.getFormattedAirDate();
+			}
 		}
 		else
 		{
-			result = "Will air on " + this.getFormattedAirDate();
+			result = "Unknown airdate";
 		}
 		
 		return result;

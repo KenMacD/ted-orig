@@ -343,7 +343,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			// set season and episode settings
 			if (selectedSerie.isDaily())
 			{
-				DailyDate dd = (DailyDate)this.episodeChooserPanel.getSelectedStructure();
+				DailyDate dd = (DailyDate)this.subscribeOptionsPanel.getSelectedEpisode();
 				GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay());
 				((TedDailySerie)selectedSerie).setLatestDownloadDate(d.getTimeInMillis());
 			}

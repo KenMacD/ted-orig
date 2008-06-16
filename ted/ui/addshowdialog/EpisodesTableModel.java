@@ -33,7 +33,7 @@ public class EpisodesTableModel extends AbstractTableModel
 	 * GLOBAL VARIABLES
 	 ****************************************************/
 	private static final long serialVersionUID = -7286125312855308470L;
-	private Vector tableData = new Vector();
+	private Vector<StandardStructure> tableData = new Vector<StandardStructure>();
 	private String[] tableColumns = {Lang.getString("TedTableModel.Episode"), Lang.getString("TedAddShowDialog.EpisodesTable.Heading.PublishDate"), Lang.getString("TedAddShowDialog.EpisodesTable.Heading.Availability")};
 	
 	/****************************************************
@@ -73,6 +73,16 @@ public class EpisodesTableModel extends AbstractTableModel
 	}
 	
 	/**
+	 * Add a season episode to the table at a specific index
+	 * @param newSerie
+	 */
+	public void addSeasonEpisode (StandardStructure se, int index)
+	{
+		tableData.add(index, se);
+		fireTableRowsInserted(index, index);
+	}
+	
+	/**
 	 * @param row
 	 * @return Serie at specified row
 	 */
@@ -108,7 +118,7 @@ public class EpisodesTableModel extends AbstractTableModel
 	/**
 	 * @return Everything in the table
 	 */
-	public Vector getSeasonEpisodes() 
+	public Vector<StandardStructure> getSeasonEpisodes() 
 	{
 		return tableData;
 	}
@@ -117,7 +127,7 @@ public class EpisodesTableModel extends AbstractTableModel
 	 * Set the series to the table
 	 * @param vector Series
 	 */
-	public void setSeasonEpisodes(Vector vector) 
+	public void setSeasonEpisodes(Vector<StandardStructure> vector) 
 	{
 		tableData.clear();
 		tableData.addAll(vector);

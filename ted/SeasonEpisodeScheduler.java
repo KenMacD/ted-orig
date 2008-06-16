@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
 import ted.datastructures.StandardStructure.AirDateUnknownException;
@@ -73,69 +74,73 @@ public class SeasonEpisodeScheduler implements Serializable
 	
 	/**
 	 * @return The next episode scheduled to air. Will first search though all episodes
-	 * with airdate. If that gives no result, will search episodes with no airdate, scheduled after
-	 * episodes with airdate. If nothing is found, this will throw an exception
-	 * @throws NoEpisodeFoundException Thrown when no next to air episode is found.
+	 * from epguides. If nothing is found, it will generate one based on the last published episode.
+	 * And if that also does not give a result (so no scheduled/published episodes) it will return a new episode
+	 * (season 1 episode 1 or daily based on todays date)
 	 */
-	public StandardStructure getNextToAirEpisode() throws NoEpisodeFoundException
+	public StandardStructure getNextToAirEpisode()
 	{
 		StandardStructure result = null;
 		
 		if (this.updateEpisodeSchedule())
 		{
-			Vector<StandardStructure> airedEpisodes = this.getAiredEpisodes();
-			
-			if (airedEpisodes.size() > 0)
+
+			// nothing found while searching through the episodes with airdates
+			// run through episodes
+			// get first episode after all aired episodes, with presumable no airdate
+			int count = -1;
+			StandardStructure current;
+			// system date
+	       	Date systemDate = new Date();
+	       	// first find last aired episode in list
+			for (int i = this.scheduledEpisodes.size()-1; i >= 0; i--)
 			{
-				StandardStructure airedEpisode = airedEpisodes.elementAt(0);					
-				// first add the next episode aired
+				current = this.scheduledEpisodes.elementAt(i);
 				try 
 				{
-					result = this.getNextEpisode(airedEpisode);
-				} 
-				catch (NoEpisodeFoundException e1) 
-				{
-					// do nothing
-				}
-			}		
-			airedEpisodes = null;
-			
-			if (result == null)
-			{
-				// nothing found while searching through the episodes with airdates
-				// run through episodes
-				// get first episode after all aired episodes, with presumable no airdate
-				int count = -1;
-				StandardStructure current;
-				// system date
-		       	Date systemDate = new Date();
-				for (int i = this.scheduledEpisodes.size()-1; i >= 0; i--)
-				{
-					current = this.scheduledEpisodes.elementAt(i);
-					try 
+					if (current.getAirDate().before(systemDate))
 					{
-						if (current.getAirDate().before(systemDate))
-						{
-							count = i;
-						}
-					} 
-					catch (AirDateUnknownException e) 
-					{
-						continue;
+						count = i;
 					}
-				}
-				if (count - 1 >= 0)
+				} 
+				catch (AirDateUnknownException e) 
 				{
-					result = this.scheduledEpisodes.elementAt(count - 1);
-				}		
+					continue;
+				}
 			}
-		}
+			// then get the next episode
+			if (count - 1 >= 0)
+			{
+				result = this.scheduledEpisodes.elementAt(count - 1);
+			}		
 			
+		}
+
+		// nothing found based on schedule, just guess what the next episode is
 		if (result == null)
 		{
-			NoEpisodeFoundException noEpisodeFoundException = new NoEpisodeFoundException();
-			throw noEpisodeFoundException;
+			Vector<StandardStructure> publishedEps = this.getPubishedAndAiredEpisodes();
+			if (publishedEps.size() > 0)
+			{
+				// element 0 is the last aired or published ep. get the next from it
+				result = publishedEps.elementAt(0).nextEpisode();
+			}
 		}
+		
+		// nothing found, generate default 
+		if (result == null)
+		{
+			if (serie.isDaily)
+			{
+				Date systemDate = new Date();
+				result = new DailyDate(systemDate);
+			}
+			else
+			{
+				result = new SeasonEpisode(1, 1);
+			}
+		}
+
 		
 		return result;
 	}
@@ -165,8 +170,7 @@ public class SeasonEpisodeScheduler implements Serializable
        	
 		// check date
 		if (this.scheduledEpisodes == null || this.checkEpisodeSchedule == null || systemDate.after(this.checkEpisodeSchedule))
-		{
-			
+		{	
 			// parse epguides
 			// New instance of the parser
 	        EpguidesParser tedEP = new EpguidesParser();
@@ -177,8 +181,6 @@ public class SeasonEpisodeScheduler implements Serializable
 	        Calendar future = Calendar.getInstance();
 	        future.add(Calendar.DAY_OF_YEAR, updateIntervalInDays);
 	        this.checkEpisodeSchedule = future.getTime();
-	        
-	        return true;
 		}   
 		if (this.scheduledEpisodes != null && this.scheduledEpisodes.size() > 0)
 		{
@@ -256,9 +258,10 @@ public class SeasonEpisodeScheduler implements Serializable
 				result = this.scheduledEpisodes.elementAt(count - 1);
 			}
 		}
-		
+
 		if (result == null)
 		{
+			// throw exception and let client solve the problem when no future episodes are scheduled
 			NoEpisodeFoundException e = new NoEpisodeFoundException();
 			throw e;
 		}
@@ -279,17 +282,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		Vector<StandardStructure> results           = new Vector<StandardStructure>();
 		
 		if (publishedEpisodes.size() > 0 && airedEpisodes.size() > 0)
-		{
-			// first add next to air episode
-			try 
-			{
-				results.add(this.getNextToAirEpisode());
-			} 
-			catch (NoEpisodeFoundException e) 
-			{
-				// do nothing
-			}
-			
+		{		
 			// filter out any items in publishedEpisodes that are not in airedEpisodes
 			int airedCounter = 0;
 			int publishedCounter = 0;
@@ -383,7 +376,16 @@ public class SeasonEpisodeScheduler implements Serializable
 		StandardStructure currentSE;
 		try 
 		{
-			currentSE = this.getEpisode(new SeasonEpisode(serie.currentSeason, serie.currentEpisode));
+			if (!serie.isDaily)
+			{
+				currentSE = this.getEpisode(new SeasonEpisode(serie.currentSeason, serie.currentEpisode));
+			}
+			else
+			{
+				TedDailySerie temp = ((TedDailySerie)serie);
+				Date currentDate = new Date (temp.getLatestDownloadDateInMillis());
+				currentSE = this.getEpisode(new DailyDate(currentDate));
+			}
 			Date airDate;
 			try 
 			{
@@ -405,7 +407,16 @@ public class SeasonEpisodeScheduler implements Serializable
 			} 
 			catch (AirDateUnknownException e) 
 			{
-				serie.setStatus(TedSerie.STATUS_HIATUS);
+				if (this.updateEpisodeSchedule())
+				{
+					// if schedule is available, wait until airdate becomes known
+					serie.setStatus(TedSerie.STATUS_HIATUS);
+				}
+				else
+				{
+					// if schedule is not available, just put the show on check
+					serie.setStatus(TedSerie.STATUS_CHECK);
+				}		
 			}
 		} 
 		catch (NoEpisodeFoundException e1) 

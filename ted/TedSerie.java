@@ -1178,6 +1178,9 @@ public class TedSerie implements Serializable
 		return this.scheduler;
 	}
 
+	/**
+	 * @return All aired and published episodes for this show
+	 */
 	public Vector<StandardStructure> getPubishedAndAiredEpisodes() 
 	{
 		return this.getScheduler().getPubishedAndAiredEpisodes();
@@ -1216,5 +1219,14 @@ public class TedSerie implements Serializable
 		{
 			this.epguidesName = text;
 		}	
+	}
+
+	/**
+	 * @return The next to air episode. Either based on the schedule (if there is one) or generated
+	 * from known (published) episodes
+	 */
+	public StandardStructure getNextEpisode() 
+	{
+		return this.getScheduler().getNextToAirEpisode();
 	}
 }

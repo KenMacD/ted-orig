@@ -6,6 +6,7 @@ import ted.TedParser;
 import ted.TedSerie;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -69,14 +70,23 @@ public class EpisodeParserThread extends Thread
 		if(selectedSerie!=null)
 		{		
 			// add vector to chooser panel
-			this.episodeChooserPanel.setSeasonEpisodes(selectedSerie.getPubishedAndAiredEpisodes());
+			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes();
+			StandardStructure nextEpisode = selectedSerie.getNextEpisode();
+			
+			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
+			this.episodeChooserPanel.setNextEpisode(selectedSerie.getNextEpisode());
+			
 			if (this.subscribeOptionsPanel != null)
 			{
-				this.subscribeOptionsPanel.setSeasonEpisodes(selectedSerie.getPubishedAndAiredEpisodes());
+				this.subscribeOptionsPanel.setAiredSeasonEpisodes(publishedEpisodes);
+				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
 			}
+			
+			// free vector for garbage collection
+			publishedEpisodes = null;
 		}
 		
-		// disable avtivity image
+		// disable activity image
 		this.episodeChooserPanel.setActivityStatus(false);
 		this.episodeChooserPanel.selectEpisode();
 	}

@@ -47,6 +47,17 @@ public class DailyDate  extends StandardStructure
 		this.title   = title;
 	}
 	
+	/**
+	 * This method creates a DailyDate with a set date
+	 */
+	public DailyDate(Date airdate)
+	{		
+		this.Day     = airdate.getDay();
+		this.Month   = airdate.getMonth();
+		this.setYear(airdate.getYear());
+		this.airDate = airdate;
+	}
+	
 	public boolean equals (StandardStructure ss)
 	{
 		DailyDate dd = (DailyDate) ss;

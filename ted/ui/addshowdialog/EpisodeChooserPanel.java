@@ -233,4 +233,13 @@ public class EpisodeChooserPanel extends JPanel
 	{
 		episodesTable.setRowSelectionInterval(indexInTable, indexInTable);
 	}
+
+	public void setNextEpisode(StandardStructure nextEpisode) 
+	{
+		// insert next episode in front of data
+		if (nextEpisode != null)
+		{
+			this.episodesTableModel.addSeasonEpisode(nextEpisode, 0);	
+		}
+	}
 }
