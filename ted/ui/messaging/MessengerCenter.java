@@ -21,7 +21,7 @@ public class MessengerCenter
 		{
 			currentMessenger = new TrayMessenger(tedMain);
 		}
-		/*else if (TedSystemInfo.osIsMac())
+		else if (TedSystemInfo.osIsMac())
 		{
 			if (this.isGrowlEnabled())
 			{
@@ -34,7 +34,7 @@ public class MessengerCenter
 				currentMessenger = new PopupMessenger(tedMain);
 			}
 				
-		}*/
+		}
 		else
 		{
 			// nothing fancy supported
