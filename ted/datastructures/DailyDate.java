@@ -41,9 +41,12 @@ public class DailyDate  extends StandardStructure
 	 */
 	public DailyDate(Date airdate, String title)
 	{		
-		this.Day     = airdate.getDay();
-		this.Month   = airdate.getMonth();
-		this.setYear(airdate.getYear());
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(airdate);
+		
+		this.Day     = cal.get(Calendar.DAY_OF_MONTH);
+		this.Month   = cal.get(Calendar.MONTH);
+		this.setYear(cal.get(Calendar.YEAR));
 		this.airDate = airdate;
 		this.title   = title;
 	}
@@ -52,10 +55,12 @@ public class DailyDate  extends StandardStructure
 	 * This method creates a DailyDate with a set date
 	 */
 	public DailyDate(Date airdate)
-	{		
-		this.Day     = airdate.getDay();
-		this.Month   = airdate.getMonth();
-		this.setYear(airdate.getYear());
+	{	
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(airdate);
+		this.Day     = cal.get(Calendar.DAY_OF_MONTH);
+		this.Month   = cal.get(Calendar.MONTH);
+		this.setYear(cal.get(Calendar.YEAR));
 		this.airDate = airdate;
 	}
 	
@@ -63,9 +68,11 @@ public class DailyDate  extends StandardStructure
 	{
 		long time = latestDownloadDate.getTimeInMillis();
 		Date d = new Date(time);
-		this.Day     = d.getDay();
-		this.Month   = d.getMonth();
-		this.setYear(d.getYear());
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(d);
+		this.Day     = cal.get(Calendar.DAY_OF_MONTH);
+		this.Month   = cal.get(Calendar.MONTH);
+		this.setYear(cal.get(Calendar.YEAR));
 		this.airDate = d;
 	}
 

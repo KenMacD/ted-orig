@@ -250,8 +250,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		if (TedSystemInfo.osIsMac())
 		{
 			new TedMainMacListener(this);				
-		}
-		
+		}		
 		
 		this.addWindowListener(new WindowAdapter() 
 			{
