@@ -2,25 +2,19 @@ package ted.ui.addshowdialog;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.Vector;
-
-import javax.swing.BoxLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import ted.datastructures.SeasonEpisode;
+import ted.Lang;
 import ted.datastructures.StandardStructure;
-import ted.datastructures.StandardStructure.AirDateUnknownException;
-import ted.interfaces.EpisodeChooserListener;
 
 
 /**
@@ -73,19 +67,19 @@ public class SubscribeOptionsPanel extends JPanel
 	
 	private void init()
 	{
-		String buttonString = "Last aired episode";
+		String buttonString = Lang.getString("AddShowDialog.SubscribeOptions.LastAired");
 		lastAiredRadio = new JRadioButton(buttonString);
 		lastAiredRadio.setActionCommand("latest");
 		lastAiredRadio.addActionListener(this);
 		lastAiredRadio.setFont(this.LARGE_FONT);
 				
-		buttonString = "Next episode";
+		buttonString = Lang.getString("AddShowDialog.SubscribeOptions.NextEpisode");
 		nextEpisodeRadio = new JRadioButton(buttonString);
 		nextEpisodeRadio.setActionCommand("only");
 		nextEpisodeRadio.addActionListener(this);
 		nextEpisodeRadio.setFont(this.LARGE_FONT);
 		
-		buttonString = "Custom episode";
+		buttonString = Lang.getString("AddShowDialog.SubscribeOptions.CustomEpisode");
 		customSelectRadio = new JRadioButton(buttonString);
 		customSelectRadio.setActionCommand("select");
 		customSelectRadio.addActionListener(this);
@@ -163,7 +157,7 @@ public class SubscribeOptionsPanel extends JPanel
 			
 			if (this.customStructure == null)
 			{
-				this.customEpisodeLabel.setText("Select a custom episode above...");
+				this.customEpisodeLabel.setText(Lang.getString("AddShowDialog.SubscribeOptions.CustomEpisodeSelect"));
 			}
 		}
 		
@@ -185,6 +179,13 @@ public class SubscribeOptionsPanel extends JPanel
 		this.futureEpisodeLabel.setText("");
 		customSelectRadio.setEnabled(false);
 		this.customEpisodeLabel.setText("");
+		
+		lastAiredRadio.setVisible(false);
+		this.airedEpisodeLabel.setVisible(false);
+		nextEpisodeRadio.setVisible(false);
+		this.futureEpisodeLabel.setVisible(false);
+		customSelectRadio.setVisible(false);
+		this.customEpisodeLabel.setVisible(false);
 		
 		this.nextEpisode = null;
 		this.lastAiredEpisode = null;
@@ -239,6 +240,14 @@ public class SubscribeOptionsPanel extends JPanel
 	
 	private void updateEnabledOptions()
 	{
+		// set visible
+		lastAiredRadio.setVisible(true);
+		this.airedEpisodeLabel.setVisible(true);
+		nextEpisodeRadio.setVisible(true);
+		this.futureEpisodeLabel.setVisible(true);
+		customSelectRadio.setVisible(true);
+		this.customEpisodeLabel.setVisible(true);
+		
 		// enable/disable
 		if (this.nextEpisode != null)
 		{

@@ -137,7 +137,7 @@ public class TedTablePopupMenu extends JPopupMenu
 		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
 		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
 		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));	
-		checkAutoSchedule.setText("Use auto-schedule");
+		checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
 	}
 	
 	/**

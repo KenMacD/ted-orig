@@ -147,8 +147,7 @@ public class TedDailySerie extends TedSerie
 	 */
 	public String getSearchForString() 
 	{
-		DailyDate dd = new DailyDate();
-		dd.setDate(this.latestDownloadDate);
+		DailyDate dd = new DailyDate(this.latestDownloadDate);
 		
 		String text;
 		if (this.getMaxDownloads() == 1)
@@ -161,6 +160,6 @@ public class TedDailySerie extends TedSerie
 			text = "TedTableModel.LabelDailyMultiple";
 		}
 		
-		return Lang.getString(text) +" " + dd.toString();
+		return Lang.getString(text) +" " + dd.getFormattedAirDate();
 	}
 }

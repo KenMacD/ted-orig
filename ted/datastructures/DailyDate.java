@@ -1,6 +1,7 @@
 package ted.datastructures;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -58,6 +59,16 @@ public class DailyDate  extends StandardStructure
 		this.airDate = airdate;
 	}
 	
+	public DailyDate(GregorianCalendar latestDownloadDate) 
+	{
+		long time = latestDownloadDate.getTimeInMillis();
+		Date d = new Date(time);
+		this.Day     = d.getDay();
+		this.Month   = d.getMonth();
+		this.setYear(d.getYear());
+		this.airDate = d;
+	}
+
 	public boolean equals (StandardStructure ss)
 	{
 		DailyDate dd = (DailyDate) ss;
@@ -151,11 +162,11 @@ public class DailyDate  extends StandardStructure
 	{
 		DailyDate second = (DailyDate) arg0;
 		
-		if(this.getDate().getTimeInMillis()<second.getDate().getTimeInMillis())
+		if(this.getDate().before(second.getDate()))
 		{
 			return 1;
 		}
-		else if(this.getDate().getTimeInMillis()>second.getDate().getTimeInMillis())
+		else if(this.getDate().after(second.getDate()))
 		{
 			return -1;
 		}
@@ -168,8 +179,6 @@ public class DailyDate  extends StandardStructure
 	 */
 	public String toString()
 	{
-		//DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-		//return df.format(this.getDate().getTime());
 		return this.getTitle();
 	}
 

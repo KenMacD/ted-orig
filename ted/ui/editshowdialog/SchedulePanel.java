@@ -72,7 +72,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 			{
 				checkAutoSchedule = new JCheckBox();
 				this.add(checkAutoSchedule, new CellConstraints("2, 1, 5, 1, default, default"));
-				checkAutoSchedule.setText("Use auto schedule");
+				checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
 				checkAutoSchedule.setActionCommand("autoupdate");
 				checkAutoSchedule.addActionListener(this);
 			}

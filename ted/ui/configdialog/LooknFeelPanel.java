@@ -161,7 +161,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		{
 			colorPickerButton = new JButton();
 			lookFeelPanel.add(colorPickerButton, new CellConstraints("2, 11, 2, 1, default, default"));
-			colorPickerButton.setText("Choose your table colors");
+			colorPickerButton.setText(Lang.getString("TedConfigDialog.ChooseColors"));
 			colorPickerButton.setActionCommand("Color");
 			colorPickerButton.addActionListener(tMain);
 		}
