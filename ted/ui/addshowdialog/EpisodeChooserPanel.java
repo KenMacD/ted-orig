@@ -103,7 +103,8 @@ public class EpisodeChooserPanel extends JPanel
 
 	private JTable getEpisodesTable() 
 	{
-		if (episodesTable == null) {
+		if (episodesTable == null) 
+		{
 			
 			episodesTable = new EpisodesTable();
 			episodesTable.setModel(episodesTableModel);
@@ -208,7 +209,7 @@ public class EpisodeChooserPanel extends JPanel
 	public void setActivityStatus(boolean active)
 	{
 		this.active = active;
-		this.activityCanvas.setVisible(active);
+		this.getActivityCanvas().setVisible(active);
 	}
 
 	/**

@@ -115,7 +115,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
-					"max(p;5dlu), max(p;15dlu), 5dlu, 250dlu, 5dlu, max(p;15dlu), 5dlu, bottom:100dlu, 5dlu, 15dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
+					"max(p;5dlu), max(p;15dlu), 5dlu, 50dlu:grow, 5dlu, max(p;15dlu), 5dlu, bottom:100dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
 			episodeChooserPanel.setVisible(false);			
@@ -125,18 +125,18 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			showsTable = new JTable();
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));
 			getShowsScrollPane().setViewportView(showsTable);
-			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 7, fill, fill"));
+			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 5, fill, fill"));
 			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 4, 4, 1, fill, fill"));
 			getContentPane().add(subscribeOptionsPanel, new CellConstraints("5, 8, 4, 1, fill, fill"));
-			getContentPane().add(getOkButton(), new CellConstraints("8, 14, 1, 1, default, default"));
-			getContentPane().add(getCancelButton(), new CellConstraints("6, 14, 1, 1, default, default"));
+			getContentPane().add(getOkButton(), new CellConstraints("8, 12, 1, 1, default, default"));
+			getContentPane().add(getCancelButton(), new CellConstraints("6, 12, 1, 1, default, default"));
 			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("5, 4, 4, 1, fill, fill"));
-			getContentPane().add(getJHelpButton(), new CellConstraints("2, 14, 1, 1, left, default"));
+			getContentPane().add(getJHelpButton(), new CellConstraints("2, 12, 1, 1, left, default"));
 			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, fill"));
 			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 4, 1, left, bottom"));
 			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, fill"));
-			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 12, 2, 1, default, default"));
-			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 12, 4, 1, left, default"));
+			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 10, 2, 1, default, default"));
+			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 10, 4, 1, left, default"));
 			getContentPane().add(getJSearchField(), new CellConstraints("3, 2, 1, 1, default, fill"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());

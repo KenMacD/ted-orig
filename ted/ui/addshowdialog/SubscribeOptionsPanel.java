@@ -2,8 +2,11 @@ package ted.ui.addshowdialog;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -59,13 +62,20 @@ public class SubscribeOptionsPanel extends JPanel
 
 	private StandardStructure customStructure;
 	
+	private Canvas activityCanvas;
+	
+	public SubscribeOptionsPanel()
+	{
+		
+	}
+	
 	public SubscribeOptionsPanel(AddShowDialog addDialog)
 	{
-		init();
+		initGUI();
 		this.addShowDialog = addDialog;
 	}
 	
-	private void init()
+	private void initGUI()
 	{
 		String buttonString = Lang.getString("AddShowDialog.SubscribeOptions.LastAired");
 		lastAiredRadio = new JRadioButton(buttonString);
@@ -94,7 +104,7 @@ public class SubscribeOptionsPanel extends JPanel
 		
 		FormLayout thisLayout = new FormLayout(
 				"max(p;10dlu), max(p;5dlu):grow, max(p;5dlu)", 
-				"max(p;5dlu), max(p;0dlu), 5dlu, max(p;5dlu), max(p;0dlu), 5dlu, max(p;5dlu), max(p;0dlu)");
+				"max(p;16dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu)");
 		this.setLayout(thisLayout);
 		
 		futureEpisodeLabel = new JLabel();
@@ -107,7 +117,11 @@ public class SubscribeOptionsPanel extends JPanel
 		customEpisodeLabel.setFont(this.SMALL_FONT);
 		customEpisodeLabel.setForeground(Color.DARK_GRAY);
 		
+		this.clear();	
+		getActivityCanvas().setVisible(false);
+		
 		this.add(nextEpisodeRadio, new CellConstraints("1, 1, 2, 1, default, default"));
+		this.add(getActivityCanvas(), new CellConstraints("1, 1, 1, 1, default, default"));
 		this.add(futureEpisodeLabel, new CellConstraints("2, 2, 1, 1, default, default"));
 		this.add(lastAiredRadio, new CellConstraints("1, 4, 2, 1, default, default"));
 		this.add(airedEpisodeLabel, new CellConstraints("2, 5, 1, 1, default, default"));
@@ -269,6 +283,27 @@ public class SubscribeOptionsPanel extends JPanel
 		}
 		
 		this.addShowDialog.subscribeOptionChanged();
+	}
+	
+	private Canvas getActivityCanvas() {
+		if (activityCanvas == null) 
+		{
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Image activityIm = toolkit.getImage(getClass().getClassLoader().getResource("icons/activity.gif"));
+			
+			activityCanvas = new ImageCanvas(activityIm.getSource());
+			activityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
+		}
+		return activityCanvas;
+	}
+	
+	/**
+	 * When activity status is true, a activity icon is shown
+	 * @param active
+	 */
+	public void setActivityStatus(boolean active)
+	{
+		getActivityCanvas().setVisible(active);
 	}
 }
 

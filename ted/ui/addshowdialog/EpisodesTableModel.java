@@ -34,7 +34,7 @@ public class EpisodesTableModel extends AbstractTableModel
 	 ****************************************************/
 	private static final long serialVersionUID = -7286125312855308470L;
 	private Vector<StandardStructure> tableData = new Vector<StandardStructure>();
-	private String[] tableColumns = {Lang.getString("TedTableModel.Episode"), Lang.getString("TedAddShowDialog.EpisodesTable.Heading.PublishDate"), Lang.getString("TedAddShowDialog.EpisodesTable.Heading.Availability")};
+	private String[] tableColumns = {Lang.getString("TedTableModel.Episode"), Lang.getString("TedAddShowDialog.EpisodesTable.Heading.AirDate"), Lang.getString("TedAddShowDialog.EpisodesTable.Heading.Availability")};
 	
 	/****************************************************
 	 * PUBLIC METHODS

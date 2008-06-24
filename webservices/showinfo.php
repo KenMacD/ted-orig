@@ -3,6 +3,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>ted show info</title>
+<script language="JavaScript" type="text/javascript" src="pphlogger.js"></script>
+
+<noscript><img alt="" src="http://www.rulecam.net/pphlogger/pphlogger.php?id=ted&st=img"></noscript>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-66753-2";
+urchinTracker();
+</script>
+
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000" link="#0000FF">

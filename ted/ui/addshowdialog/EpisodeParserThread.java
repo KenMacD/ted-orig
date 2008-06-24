@@ -61,11 +61,16 @@ public class EpisodeParserThread extends Thread
 	
 	public void run()
 	{
-		this.episodeChooserPanel.setActivityStatus(true);
+		
 		this.episodeChooserPanel.clear();
 		if (this.subscribeOptionsPanel != null)
 		{
 			this.subscribeOptionsPanel.clear();
+			this.subscribeOptionsPanel.setActivityStatus(true);
+		}
+		else
+		{
+			this.episodeChooserPanel.setActivityStatus(true);
 		}
 		if(selectedSerie!=null)
 		{		
@@ -80,14 +85,18 @@ public class EpisodeParserThread extends Thread
 			{
 				this.subscribeOptionsPanel.setAiredSeasonEpisodes(publishedEpisodes);
 				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
+				this.subscribeOptionsPanel.setActivityStatus(false);
+			}
+			else
+			{
+				this.episodeChooserPanel.setActivityStatus(false);
 			}
 			
 			// free vector for garbage collection
 			publishedEpisodes = null;
 		}
 		
-		// disable activity image
-		this.episodeChooserPanel.setActivityStatus(false);
+		// disable activity image	
 		this.episodeChooserPanel.selectEpisode();
 	}
 }
