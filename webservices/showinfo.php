@@ -3,17 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>ted show info</title>
-<script language="JavaScript" type="text/javascript" src="pphlogger.js"></script>
-
-<noscript><img alt="" src="http://www.rulecam.net/pphlogger/pphlogger.php?id=ted&st=img"></noscript>
-
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-</script>
-<script type="text/javascript">
-_uacct = "UA-66753-2";
-urchinTracker();
-</script>
-
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000" link="#0000FF">
@@ -150,3 +139,22 @@ urchinTracker();
 
 </body>
 </html>
+
+<?php
+$var_utmac='UA-66753-2'; //enter the new urchin code
+$var_utmhn='ted.nu'; //enter your domain
+$var_utmn=rand(1000000000,9999999999);//random request number
+$var_cookie=rand(10000000,99999999);//random cookie number
+$var_random=rand(1000000000,2147483647); //number under 2147483647
+$var_today=time(); //today
+$var_referer=$_SERVER['HTTP_REFERER']; //referer url
+
+$var_uservar=$tvcom; //enter your own user defined variable
+$var_utmp='/showinfo/'.$_SERVER['REMOTE_ADDR']; //this example adds a fake page request to the (fake) rss directory (the viewer IP to check for absolute unique RSS readers)
+
+$urchinUrl='http://www.google-analytics.com/__utm.gif?utmwv=1&utmn='.$var_utmn.'&utmsr=-&utmsc=-&utmul=-&utmje=0&utmfl=-&utmdt=-&utmhn='.$var_utmhn.'&utmr='.$var_referer.'&utmp='.$var_utmp.'&utmac='.$var_utmac.'&utmcc=__utma%3D'.$var_cookie.'.'.$var_random.'.'.$var_today.'.'.$var_today.'.'.$var_today.'.2%3B%2B__utmb%3D'.$var_cookie.'%3B%2B__utmc%3D'.$var_cookie.'%3B%2B__utmz%3D'.$var_cookie.'.'.$var_today.'.2.2.utmccn%3D(direct)%7Cutmcsr%3D(direct)%7Cutmcmd%3D(none)%3B%2B__utmv%3D'.$var_cookie.'.'.$var_uservar.'%3B';
+ 
+$handle = fopen ($urchinUrl, "r");
+$test = fgets($handle);
+fclose($handle);
+?>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>31</version>
+	<version>32</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -151,6 +151,13 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>21935</tv_com>
+		</show>
+		<show>
+			<name>American Gladiators</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>74956</tv_com>
 		</show>
 		<show>
 			<name>American Idol</name>
@@ -442,11 +449,18 @@
 			<tv_com>62683</tv_com>
 		</show>
 		<show>
-		<name>Dirt</name>
+			<name>Dirt</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>30</seeders>
 			<tv_com>60202</tv_com>
+		</show>
+		<show>
+			<name>Do Not Disturb</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75499</tv_com>
 		</show>
 		<show>
 			<name>Doctor Who</name>
@@ -518,6 +532,12 @@
 			<tv_com>348</tv_com>
 		</show>
 		<show>
+			<name>Fear Itself</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>75199</tv_com>
+		</show>
+		<show>
 			<name>Feasting on Asphalt</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -574,6 +594,13 @@
 			<tv_com>58137</tv_com>
 		</show>
 		<show>
+			<name>Fringe</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75146</tv_com>
+		</show>
+		<show>
 			<name>Frisky Dingo</name>
 			<minimumsize>50</minimumsize>
 			<maximumsize>150</maximumsize>
@@ -594,6 +621,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>33483</tv_com>
+		</show>
+		<show>
+			<name>Gladiators UK</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>75606</tv_com>
 		</show>
 		<show>
 			<name>Good Eats</name>
@@ -687,6 +721,12 @@
 			<maximumsize>300</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>74603</tv_com>
+		</show>
+		<show>
+			<name>In Plain Sight</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>67607</tv_com>
 		</show>
 		<show>
 			<name>Inked</name>
@@ -885,6 +925,13 @@
 			<maximumsize>250</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>38890</tv_com>
+		</show>
+		<show>
+			<name>The Middleman</name>
+			<minimumsize>350</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75211</tv_com>
 		</show>
 		<show>
 			<name>Monk</name>
@@ -1268,6 +1315,13 @@
 			<tv_com>10020</tv_com>
 		</show>
 		<show>
+			<name>Til Death</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>35</seeders>
+			<tv_com>58392</tv_com>
+		</show>
+		<show>
 			<name>Top Chef</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1290,6 +1344,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>50470</tv_com>
+		</show>
+		<show>
+			<name>True Blood</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>74645</tv_com>
 		</show>
 		<show>
 			<name>Two And A Half Men</name>
