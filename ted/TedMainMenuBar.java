@@ -78,7 +78,11 @@ public class TedMainMenuBar extends JMenuBar
 			
 			newFileMenuItem.addActionListener(tMain);
 			newFileMenuItem.setActionCommand("New"); //$NON-NLS-1$
-			jMenu3.add(exportMenuItem);
+			
+			// Disabled this menu item because it's rather useless at
+			// the moment. Left it in the code because maybe we want
+			// to use it again some day.
+			//jMenu3.add(exportMenuItem);
 			
 			exportMenuItem.setActionCommand("Export"); //$NON-NLS-1$
 			exportMenuItem.addActionListener(tMain);
