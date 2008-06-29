@@ -58,7 +58,7 @@ public class TedConfig //implements Serializable
 	private static int timesParsedSinceLastCheck = 0; 
 	private static boolean allowLogging = true;
 	private static boolean logToFile = true;
-	private static int timeZoneOffset = 0;
+	private static int timeZoneOffset = -1;
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
 	private static final Color defaultOddRowColor  = new Color(236,243,254);

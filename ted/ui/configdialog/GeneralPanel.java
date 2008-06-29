@@ -200,15 +200,24 @@ public class GeneralPanel extends JPanel implements ActionListener
 	
 		// Find the timezone with the correct offset in the combobox
 		int offset = TedConfig.getTimeZoneOffset();
-		int i = 0;
-		for(; i < timeZoneComboBox.getItemCount(); ++i)
+		
+		// If not time zone is specified determine time zone based on
+		// OS settings. 
+		if (offset == -1)
+		{
+			TimeZone defaultTimeZone = TimeZone.getDefault();
+			offset = defaultTimeZone.getRawOffset();
+		}
+		
+		// Select the correct time zone in the list.
+		for(int i = 0; i < timeZoneComboBox.getItemCount(); ++i)
 		{
 			if (offset == TimeZone.getTimeZone((String) timeZoneComboBox.getItemAt(i)).getRawOffset())
 			{
+				timeZoneComboBox.setSelectedIndex(i);
 				break;
 			}
-		}
-		timeZoneComboBox.setSelectedIndex(i);
+		}		
 	}
 	
 	/**
