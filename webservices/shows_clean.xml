@@ -1336,6 +1336,7 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>27682</tv_com>
+			<timezone>0</timezone>
 		</show>
 		<show>
 			<name>Torchwood</name>

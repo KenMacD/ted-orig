@@ -111,6 +111,11 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		return this.summaryURL;
 	}
 	
+	public Date getAirDateNoException()
+	{
+		return this.airDate;
+	}
+	
 	public Date getAirDate() throws AirDateUnknownException
 	{
 		if (this.airDate != null)

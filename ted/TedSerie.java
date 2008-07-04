@@ -77,6 +77,7 @@ public class TedSerie implements Serializable
 	private String searchName = "";
 	private SeasonEpisodeScheduler scheduler;
 	private String epguidesName;
+	private int timeZone = -1;
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -1101,7 +1102,8 @@ public class TedSerie implements Serializable
 	{
 		// If the current episode is a double episode you want to increase
 		// the episode number by 2 instead of 1.
-		if (this.isDoubleEpisode())
+		boolean doubleEpisode = this.isDoubleEpisode(); // seperate boolean for the catch block
+		if (doubleEpisode)
 		{
 			++episode;
 		}
@@ -1118,6 +1120,12 @@ public class TedSerie implements Serializable
 			if (this.status != TedSerie.STATUS_HIATUS)
 			{
 				this.currentEpisode++;
+				
+				if (doubleEpisode)
+				{
+					this.currentEpisode++;
+				}
+				
 				this.setStatus(TedSerie.STATUS_HIATUS);
 			}
 		}
@@ -1228,5 +1236,15 @@ public class TedSerie implements Serializable
 	public StandardStructure getNextEpisode() 
 	{
 		return this.getScheduler().getNextToAirEpisode();
+	}
+	
+	public void setTimeZone(int timeZone)
+	{
+		this.timeZone = timeZone;
+	}
+	
+	public int getTimeZone()
+	{
+		return this.timeZone;
 	}
 }

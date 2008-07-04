@@ -166,6 +166,10 @@ public class TedXMLParser
 					if(temp!=-1)
 						serie.setMinNumOfSeeders(temp);
 					
+					temp = getIntValue(show, "timezone");
+					if (temp!=-1)
+						serie.setTimeZone(temp);
+					
 					// set the feeds
 					Vector tempF = getVectorValue(show, "feeds", "feed");
 					Vector feeds = new Vector();

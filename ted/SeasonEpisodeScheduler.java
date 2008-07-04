@@ -181,6 +181,8 @@ public class SeasonEpisodeScheduler implements Serializable
 	        Calendar future = Calendar.getInstance();
 	        future.add(Calendar.DAY_OF_YEAR, updateIntervalInDays);
 	        this.checkEpisodeSchedule = future.getTime();
+	        
+	        AdjustAirDates(scheduledEpisodes);
 		}   
 		if (this.scheduledEpisodes != null && this.scheduledEpisodes.size() > 0)
 		{
@@ -335,6 +337,7 @@ public class SeasonEpisodeScheduler implements Serializable
 					}
 				}
 			}
+						
 			// make sure to check the last episodes, could be skipped by while loop
 			if (publishedEpisode.compareTo(airedEpisode) == 0)
 			{
@@ -363,6 +366,38 @@ public class SeasonEpisodeScheduler implements Serializable
 		return results;
 	}
 
+	// Adjust the air date of the episodes based on the time zone of 
+	// the user and the time zone in which the show was aired.
+	private void AdjustAirDates(Vector<StandardStructure> episodes)
+	{
+		for (int episode = 0; episode < episodes.size(); episode++)
+		{
+			StandardStructure ss = episodes.elementAt(episode);
+			
+			Date airdate;
+			try 
+			{
+				airdate = ss.getAirDate();
+			} 
+			catch (AirDateUnknownException e) 
+			{			
+				e.printStackTrace();
+				break;
+			}
+			
+	        // If you're not living in the USA
+	 		if (TedConfig.getTimeZoneOffset() >= 0)
+	 		{
+	 			if (serie.getTimeZone() < 0)
+	 			{
+		 			// Add one day to the schedule
+		 			long time = airdate.getTime();
+		 			time += 86400000;
+		 			airdate.setTime(time);
+	 			}
+	 		}
+ 		}
+	}
 
 	/**
 	 * Checks the airdate for the current season/episode of the show.

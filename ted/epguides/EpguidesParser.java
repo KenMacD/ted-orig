@@ -24,7 +24,8 @@ import ted.datastructures.StandardStructure.AirDateUnknownException;
  * TedEpguidesParser parses an epguides.com webpage and retrieves 
  * informations that match a regular expression (regex) pattern.
  * 
- * @author bororo
+ * @orignal author: bororo
+ * Refactored by: Joost
  * 
  */
 
@@ -83,21 +84,7 @@ public class EpguidesParser
                         	 season   = Integer.parseInt(matcher.group(1));
                              episode  = Integer.parseInt(matcher.group(3));
                              airdate = parsedAirDate;
-                             
-                            // If you're not living in the USA
-                     		if (TedConfig.getTimeZoneOffset() >= 0)
-                     		{
-                     			if (airdate.getYear() < 1000)
-                     			{
-                     				int henk = airdate.getYear();
-                     				henk++;
-                     			}
-                     			// Add one day to the schedule
-                     			long time = airdate.getTime();
-                     			time += 86400000;
-                     			airdate.setTime(time);
-                     		}
-                                    
+                                                                
                              if (matcherName.find())
                              {
                             	 title = matcherName.group(2);
@@ -159,25 +146,25 @@ public class EpguidesParser
         // higher episode number) has the same air date than we've found a double episode.
         if (episodes.size() > 0)
         {
-        	Date airDate;
-        	Date previousAirDate;
-			try 
-			{
-				previousAirDate = episodes.get(0).getAirDate();
-				for (int i = 1; i < episodes.size(); i++)
-		        {
-					airDate = episodes.get(i).getAirDate();
-					if ( airDate.getTime() == previousAirDate.getTime())
-		        	{
-		        		episodes.get(i).setDouble(true);
-		        	}
-					previousAirDate = airDate;
-				}      	        	
-		     }
-        	catch (AirDateUnknownException e) 
-			{
-				// do nothing	
-			}       	        	
+        	Date airDate = new Date(0);
+        	Date previousAirDate = new Date(0);
+			for (int i = 0; i < episodes.size(); i++)
+	        {
+				airDate = episodes.get(i).getAirDateNoException();
+				
+				if (airDate == null)
+				{
+					episodes.remove(i);
+					i--;
+					continue;
+				}
+				
+				if ( airDate.getTime() == previousAirDate.getTime())
+	        	{
+	        		episodes.get(i).setDouble(true);
+	        	}
+				previousAirDate = airDate;
+			}	        	
     	}
         
         return episodes;
