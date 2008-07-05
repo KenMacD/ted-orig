@@ -1102,7 +1102,7 @@ public class TedSerie implements Serializable
 	{
 		// If the current episode is a double episode you want to increase
 		// the episode number by 2 instead of 1.
-		boolean doubleEpisode = this.isDoubleEpisode(); // seperate boolean for the catch block
+		boolean doubleEpisode = this.isDoubleEpisode(); // separate boolean for the catch block
 		if (doubleEpisode)
 		{
 			++episode;

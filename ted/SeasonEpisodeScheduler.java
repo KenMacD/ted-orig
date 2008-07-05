@@ -381,8 +381,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			} 
 			catch (AirDateUnknownException e) 
 			{			
-				e.printStackTrace();
-				break;
+				continue;
 			}
 			
 	        // If you're not living in the USA

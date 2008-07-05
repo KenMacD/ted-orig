@@ -150,19 +150,20 @@ public class EpguidesParser
         	Date previousAirDate = new Date(0);
 			for (int i = 0; i < episodes.size(); i++)
 	        {
-				airDate = episodes.get(i).getAirDateNoException();
-				
-				if (airDate == null)
+				try 
 				{
-					episodes.remove(i);
-					i--;
+					airDate = episodes.get(i).getAirDate();
+				} 
+				catch (AirDateUnknownException e) 
+				{
 					continue;
 				}
-				
-				if ( airDate.getTime() == previousAirDate.getTime())
+								
+				if (airDate.getTime() == previousAirDate.getTime())
 	        	{
 	        		episodes.get(i).setDouble(true);
 	        	}
+				
 				previousAirDate = airDate;
 			}	        	
     	}
