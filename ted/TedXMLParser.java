@@ -327,7 +327,7 @@ public class TedXMLParser
 	 * @param s Name of the object
 	 * @return The string value
 	 */
-	private String getTextValue(Element el, String s)
+	public String getTextValue(Element el, String s)
 	{
 		try
 		{
@@ -353,7 +353,7 @@ public class TedXMLParser
 	 * @param s Name of the object
 	 * @return The integer value	 
 	 * */
-	private int getIntValue(Element el, String s)
+	public int getIntValue(Element el, String s)
 	{
 		try
 		{

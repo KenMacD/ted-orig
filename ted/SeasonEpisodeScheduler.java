@@ -175,7 +175,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			// New instance of the parser
 			ScheduleParser tedEP = new ScheduleParser();
 	        
-	        this.scheduledEpisodes = tedEP.getScheduledSeasonEpisodes(serie.getEpguidesName(), serie.isDaily);
+	        this.scheduledEpisodes = tedEP.getScheduledSeasonEpisodes(serie);
 	        
 	        // one week from now
 	        Calendar future = Calendar.getInstance();
