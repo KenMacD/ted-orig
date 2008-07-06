@@ -10,7 +10,7 @@ import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
 import ted.datastructures.StandardStructure.AirDateUnknownException;
-import ted.epguides.EpguidesParser;
+import ted.schedule.parser.ScheduleParser;
 
 public class SeasonEpisodeScheduler implements Serializable
 {
@@ -173,7 +173,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		{	
 			// parse epguides
 			// New instance of the parser
-	        EpguidesParser tedEP = new EpguidesParser();
+	        ScheduleParser tedEP = new ScheduleParser();
 	        
 	        this.scheduledEpisodes = tedEP.getScheduledSeasonEpisodes(serie.getEpguidesName(), serie.isDaily);
 	        
