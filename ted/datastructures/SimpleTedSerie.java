@@ -1,9 +1,5 @@
 package ted.datastructures;
 
-import java.util.Vector;
-
-import ted.schedule.parser.ScheduleParser;
-
 /**
  * @author Roel
  *
