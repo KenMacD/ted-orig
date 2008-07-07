@@ -231,8 +231,9 @@ public class ScheduleParser
 			{
 				// There is only on episode list
 				Element episodeList = (Element)foundSeasonsList.item(0);
-				// Go through max. 100 seasons
-				for (int seasonNumber = 0; seasonNumber <  100; ++seasonNumber)
+				boolean searchForNextSeason = true;
+				int seasonNumber = 1;
+				while (searchForNextSeason)
 				{
 					// Which has multiple seasons
 					NodeList seasonEpisodes = episodeList.getElementsByTagName("Season" + seasonNumber);
@@ -285,6 +286,12 @@ public class ScheduleParser
 								}
 							}
 						}
+						
+						seasonNumber++;
+					}
+					else
+					{
+						searchForNextSeason = false;
 					}
 				}
 			}
