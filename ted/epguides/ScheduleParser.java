@@ -36,6 +36,16 @@ import org.w3c.dom.NodeList;
 
 public class ScheduleParser 
 {      
+	public class CouldNotConstructEpisodeException extends Exception 
+	{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7064312325315795974L;
+
+	}
+
 	private Vector<StandardStructure> parseEpguides (String seriesName, Date from, Date to, boolean isDaily)
     {
 		// The general pattern that epguides follows for their show lists
@@ -110,7 +120,14 @@ public class ScheduleParser
 
                 if (date || noDate)
                 {
-                	episodes.add(constructEpisode(isDaily, season, episode, title, airdate));
+                	try 
+                	{
+						episodes.add(constructEpisode(isDaily, season, episode, title, airdate));
+					} 
+                	catch (CouldNotConstructEpisodeException e) 
+					{
+						// do nothing
+					}
                 }
             } // while ends
             in.close();
@@ -131,17 +148,30 @@ public class ScheduleParser
         
     }
 	
-	private StandardStructure constructEpisode(boolean isDaily, int season, int episode, String title, Date airdate)
+	private StandardStructure constructEpisode(boolean isDaily, int season, int episode, String title, Date airdate) throws CouldNotConstructEpisodeException
 	{
+		StandardStructure result = null;
 		if (isDaily)
     	{
     		if (airdate != null)
     		{           			
-    			return new DailyDate(airdate, title);
+    			result = new DailyDate(airdate, title);
     		}
     	}
-    	
-		return new SeasonEpisode(season, episode, airdate, title);	
+		else
+		{
+			result = new SeasonEpisode(season, episode, airdate, title);	
+		}
+		
+		if (result == null)
+		{
+			CouldNotConstructEpisodeException e = new CouldNotConstructEpisodeException();
+			throw e;
+		}
+		else
+		{
+			return result;
+		}
 	}
 	
 	private Vector<StandardStructure> parseTvRage(String showName, Date from, Date to, boolean isDaily)
@@ -201,7 +231,8 @@ public class ScheduleParser
 			{
 				// There is only on episode list
 				Element episodeList = (Element)foundSeasonsList.item(0);
-				for (int seasonNumber = 0; seasonNumber < 100; ++seasonNumber)
+				// Go through max. 100 seasons
+				for (int seasonNumber = 0; seasonNumber <  100; ++seasonNumber)
 				{
 					// Which has multiple seasons
 					NodeList seasonEpisodes = episodeList.getElementsByTagName("Season" + seasonNumber);
@@ -242,7 +273,15 @@ public class ScheduleParser
 				                    	continue;
 				                    }  
 									
-				                	episodes.add(constructEpisode(isDaily, seasonNumber, episode, title, airdate));
+				                	try 
+				                	{
+				                		StandardStructure standardEpisode = constructEpisode(isDaily, seasonNumber, episode, title, airdate);
+										episodes.add(standardEpisode);
+									} 
+				                	catch (CouldNotConstructEpisodeException e) 
+									{
+										// do nothing
+									}
 								}
 							}
 						}
@@ -356,22 +395,16 @@ public class ScheduleParser
 		return combinedList;
 	}
     
-    public Vector<StandardStructure> getPastSeasonEpisodes(String showName, boolean isDaily)
+    public Vector<StandardStructure> getPastSeasonEpisodes(TedSerie serie)
     {
     	Date systemDate = new Date();   // Get time and date from system
         Date past = new Date();   // Get time and date from system
         past.setTime(0);
-        
-        Vector<StandardStructure> episodes1 = this.parseTvRage(showName, past, systemDate, isDaily);
-        Vector<StandardStructure> episodes2 = this.parseEpguides(showName, past, systemDate, isDaily);
-        Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
-        
-        detectDoubleEpisodes(episodes);
-        
-        return episodes; 
+               
+        return getEpisodes(serie, past, systemDate);
     }
     
-    public Vector<StandardStructure> getFutureSeasonEpisodes(String showName, boolean isDaily)
+    public Vector<StandardStructure> getFutureSeasonEpisodes(TedSerie serie)
     {
     	// system date
        	Date systemDate = new Date();
@@ -379,14 +412,8 @@ public class ScheduleParser
         // one year from now
         Calendar yearFromNow = Calendar.getInstance();
         yearFromNow.add(Calendar.YEAR, 1);
-        
-        Vector<StandardStructure> episodes1 = this.parseTvRage(showName, systemDate, yearFromNow.getTime(), isDaily);
-        Vector<StandardStructure> episodes2 = this.parseEpguides(showName, systemDate, yearFromNow.getTime(), isDaily);
-        Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
-        
-        detectDoubleEpisodes(episodes);
-        
-        return episodes; 
+               
+        return getEpisodes(serie, systemDate, yearFromNow.getTime()); 
     }
     
     public Vector<StandardStructure> getScheduledSeasonEpisodes(TedSerie serie)
@@ -397,13 +424,19 @@ public class ScheduleParser
         // one year from now
         Calendar yearFromNow = Calendar.getInstance();
         yearFromNow.add(Calendar.YEAR, 1);
-                
-        Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), past, yearFromNow.getTime(), serie.isDaily());
-        Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getEpguidesName(), past, yearFromNow.getTime(), serie.isDaily());
+        
+        return getEpisodes(serie, past, yearFromNow.getTime());   
+    }
+
+	private Vector<StandardStructure> getEpisodes(TedSerie serie, Date from,
+			Date to) 
+	{
+		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily());
+        Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getEpguidesName(), from, to, serie.isDaily());
         Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
         detectDoubleEpisodes(episodes);
         
         return episodes;
-    }
+	}
     
 } 

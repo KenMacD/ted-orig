@@ -42,6 +42,7 @@ public class SubscribeOptionsPanel extends JPanel
 	public static final int SELECT_EPISODE  = 2;
 	
 	private final Font SMALL_FONT = new Font("Dialog",0,10);
+	private final Font MEDIUM_FONT = new Font("Dialog",0,12);
 	private final Font LARGE_FONT = new Font("Dialog",0,15);
 	
 	private ButtonGroup subscribeOptions;
@@ -57,7 +58,10 @@ public class SubscribeOptionsPanel extends JPanel
 	private StandardStructure selectedStructure = null;
 	private StandardStructure nextEpisode;
 	private StandardStructure lastAiredEpisode;
-	
+	private JLabel airedEpisodeTitleLabel;
+	private JLabel futureEpisodeTitleLabel;
+	private JLabel customEpisodeTitleLabel;
+
 	private AddShowDialog addShowDialog;
 
 	private StandardStructure customStructure;
@@ -104,7 +108,7 @@ public class SubscribeOptionsPanel extends JPanel
 		
 		FormLayout thisLayout = new FormLayout(
 				"max(p;10dlu), max(p;5dlu):grow, max(p;5dlu)", 
-				"max(p;16dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu)");
+				"max(p;16dlu), max(p;0dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), max(p;0px)");
 		this.setLayout(thisLayout);
 		
 		futureEpisodeLabel = new JLabel();
@@ -122,11 +126,14 @@ public class SubscribeOptionsPanel extends JPanel
 		
 		this.add(nextEpisodeRadio, new CellConstraints("1, 1, 2, 1, default, default"));
 		this.add(getActivityCanvas(), new CellConstraints("1, 1, 1, 1, default, default"));
-		this.add(futureEpisodeLabel, new CellConstraints("2, 2, 1, 1, default, default"));
-		this.add(lastAiredRadio, new CellConstraints("1, 4, 2, 1, default, default"));
-		this.add(airedEpisodeLabel, new CellConstraints("2, 5, 1, 1, default, default"));
-		this.add(customSelectRadio, new CellConstraints("1, 7, 2, 1, default, default"));
-		this.add(customEpisodeLabel, new CellConstraints("2, 8, 2, 1, default, default"));
+		this.add(futureEpisodeLabel, new CellConstraints("2, 3, 1, 1, default, default"));
+		this.add(lastAiredRadio, new CellConstraints("1, 5, 2, 1, default, default"));
+		this.add(airedEpisodeLabel, new CellConstraints("2, 7, 1, 1, default, default"));
+		this.add(customSelectRadio, new CellConstraints("1, 9, 2, 1, default, default"));
+		this.add(customEpisodeLabel, new CellConstraints("2, 11, 2, 1, default, default"));
+		this.add(getCustomEpisodeTitleLabel(), new CellConstraints("2, 10, 2, 1, default, default"));
+		this.add(getFutureEpisodeTitleLabel(), new CellConstraints("2, 2, 2, 1, default, default"));
+		this.add(getAiredEpisodeTitleLabel(), new CellConstraints("2, 6, 2, 1, default, default"));
 	}
 	
 	public int getSelectedOption()
@@ -189,10 +196,13 @@ public class SubscribeOptionsPanel extends JPanel
 		// remove text for season/epsiodes and disable options
 		lastAiredRadio.setEnabled(false);
 		this.airedEpisodeLabel.setText("");
+		this.getAiredEpisodeTitleLabel().setText("");
 		nextEpisodeRadio.setEnabled(false);
 		this.futureEpisodeLabel.setText("");
+		this.getFutureEpisodeTitleLabel().setText("");
 		customSelectRadio.setEnabled(false);
 		this.customEpisodeLabel.setText("");
+		this.getCustomEpisodeTitleLabel().setText("");
 		
 		lastAiredRadio.setVisible(false);
 		this.airedEpisodeLabel.setVisible(false);
@@ -224,6 +234,7 @@ public class SubscribeOptionsPanel extends JPanel
 			this.addShowDialog.subscribeOptionChanged();
 			
 			this.customEpisodeLabel.setText(customStructure.getSearchString());
+			this.getCustomEpisodeTitleLabel().setText(customStructure.getTitle());
 		}
 	}
 
@@ -234,6 +245,7 @@ public class SubscribeOptionsPanel extends JPanel
 		{
 			this.lastAiredEpisode = episodes.elementAt(0);
 			this.airedEpisodeLabel.setText(	this.lastAiredEpisode.getSearchString());
+			this.getAiredEpisodeTitleLabel().setText(this.lastAiredEpisode.getTitle());
 			
 			// enable custom selection
 			customSelectRadio.setEnabled(true);
@@ -248,6 +260,7 @@ public class SubscribeOptionsPanel extends JPanel
 			this.nextEpisode = nextEpisode2;
 			this.selectedStructure = nextEpisode;
 			this.futureEpisodeLabel.setText( nextEpisode.getSearchString());
+			this.getFutureEpisodeTitleLabel().setText(nextEpisode2.getTitle());
 			this.updateEnabledOptions();
 		}		
 	}
@@ -304,6 +317,33 @@ public class SubscribeOptionsPanel extends JPanel
 	public void setActivityStatus(boolean active)
 	{
 		getActivityCanvas().setVisible(active);
+	}
+	
+	private JLabel getCustomEpisodeTitleLabel() {
+		if(customEpisodeTitleLabel == null) {
+			customEpisodeTitleLabel = new JLabel();
+			customEpisodeTitleLabel.setFont(this.MEDIUM_FONT);
+			customEpisodeTitleLabel.setForeground(Color.DARK_GRAY);
+		}
+		return customEpisodeTitleLabel;
+	}
+	
+	private JLabel getFutureEpisodeTitleLabel() {
+		if(futureEpisodeTitleLabel == null) {
+			futureEpisodeTitleLabel = new JLabel();
+			futureEpisodeTitleLabel.setFont(this.MEDIUM_FONT);
+			futureEpisodeTitleLabel.setForeground(Color.DARK_GRAY);
+		}
+		return futureEpisodeTitleLabel;
+	}
+	
+	private JLabel getAiredEpisodeTitleLabel() {
+		if(airedEpisodeTitleLabel == null) {
+			airedEpisodeTitleLabel = new JLabel();
+			airedEpisodeTitleLabel.setFont(this.MEDIUM_FONT);
+			airedEpisodeTitleLabel.setForeground(Color.DARK_GRAY);
+		}
+		return airedEpisodeTitleLabel;
 	}
 }
 

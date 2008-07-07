@@ -2,7 +2,9 @@ package ted;
 
 import java.util.GregorianCalendar;
 
+import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
 
 public class TedDailySerie extends TedSerie
 {
@@ -161,5 +163,25 @@ public class TedDailySerie extends TedSerie
 		}
 		
 		return Lang.getString(text) +" " + dd.getFormattedAirDate();
+	}
+	
+	public boolean isDoubleEpisode()
+	{
+		return isDoubleEpisode(this.latestDownloadDate);
+	}
+
+	private boolean isDoubleEpisode(GregorianCalendar date) 
+	{
+		DailyDate temp = new DailyDate(date);
+		DailyDate tempInSchedule;
+		try 
+		{
+			tempInSchedule = (DailyDate) this.getScheduler().getEpisode(temp);
+			return tempInSchedule.isDouble();
+		} 
+		catch (NoEpisodeFoundException e) 
+		{
+			return false;
+		}
 	}
 }

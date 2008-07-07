@@ -1,7 +1,6 @@
 package ted.datastructures;
 
 import java.net.URL;
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -238,7 +237,7 @@ public class DailyDate  extends StandardStructure
 	
 	public String getSearchString()
 	{
-		return this.title + ". " + this.getFormattedAirDateWithText();
+		return this.getFormattedAirDateWithText();
 	}
 
 	public DailyDate nextEpisode()

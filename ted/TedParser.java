@@ -172,6 +172,7 @@ public class TedParser extends Thread
 				Channel channel = rss.getChannel();
 				
 				feedsData[i] = channel;
+				// This call can throw a nullpointer exception if no items are present in the feed, catched below
 				totalNumberOfFeedItems += channel.getItems().size();
 				
 				// clear memory
@@ -208,7 +209,6 @@ public class TedParser extends Thread
 	        	// no items in the feed
 	        	String message = "ted could not find any items in the feed of " + serie.getName() + "\nFeed: " + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
 				tMainDialog.displayError("ted Error!", message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				e.printStackTrace();
 				feedsData[i] = null;
 	        }
 	        catch (Exception e)
@@ -751,6 +751,7 @@ public class TedParser extends Thread
 		catch (RuntimeException e)
 		{
 			// happens when scraping tracker for torrent seeder information
+			e.printStackTrace();
             TedLog.error(e, e.getLocalizedMessage());
 			
 			parseLogInfo[itemNr][1] =
