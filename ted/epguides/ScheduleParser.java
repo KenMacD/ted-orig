@@ -224,6 +224,12 @@ public class ScheduleParser
 	        url = "http://www.tvrage.com/feeds/episode_list.php?sid=" + showId;	
 			Element foundShowElement = parser.readXMLFromURL(url);
 			
+			// No information available
+			if (foundShowElement == null)
+			{
+				return episodes;
+			}
+			
 			// The xml file consist out of an episodelist 
 			NodeList foundSeasonsList = foundShowElement.getElementsByTagName("Episodelist");
 			
