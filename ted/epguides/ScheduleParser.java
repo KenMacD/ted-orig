@@ -335,11 +335,23 @@ public class ScheduleParser
 	
 	private Vector<StandardStructure> combineLists(Vector<StandardStructure> firstList, Vector<StandardStructure> secondList)
 	{
+		// If one of both lists is empty return the other.
+		int firstSize  = firstList.size();
+		int secondSize = secondList.size();		
+		if (firstSize == 0)
+		{
+			return secondList;
+		}
+		else if (secondSize == 0)
+		{
+			return firstList;
+		}
+		
 		// Combine both lists into one new list
 		Vector<StandardStructure> combinedList = new Vector<StandardStructure>();
-		
+			
 		// Take all the elements of both lists
-		int maxListSize = Math.max(firstList.size(), secondList.size());
+		int maxListSize = Math.max(firstSize, secondSize);
 		
 		// As the lists are sorted walk through them step by step
 		int firstPos  = 0;
@@ -348,12 +360,12 @@ public class ScheduleParser
 		StandardStructure s2 = null;
 		for (int i = 0; i < maxListSize; i++)
 		{			
-			if (firstPos < firstList.size())
+			if (firstPos < firstSize)
 			{
 				s1 = firstList.get(firstPos);
 			}
 			
-			if (secondPos < secondList.size())
+			if (secondPos < secondSize)
 			{
 				s2 = secondList.get(secondPos);
 			}
