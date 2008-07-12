@@ -478,13 +478,16 @@ public class SeasonEpisodeScheduler implements Serializable
 				// when the current episode is not known in the schedule,
 				// get the next episode from the planning
 				SeasonEpisode currentSE;
+				// TODO: handle daily dates here
 				try 
 				{
 					currentSE = (SeasonEpisode) this.getEpisode(new SeasonEpisode(serie.currentSeason, serie.currentEpisode));
 				} 
 				catch (NoEpisodeFoundException e) 
 				{
-					serie.goToNextSeasonEpisode(serie.currentSeason, serie.currentEpisode);
+					// No episode found. Go check and see if there might be another one scheduled after 
+					// currentSeason / currentEpisode-1
+					serie.goToNextSeasonEpisode(serie.currentSeason, serie.currentEpisode-1);
 				}
 			}
 			
