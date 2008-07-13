@@ -12,10 +12,10 @@
 </manifest>
 <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
 <file path="/ted/icons/pause.png"/>
+<javaElement handleIdentifier="=ted/&lt;ted.epguides"/>
 <file path="/ted/icons/TedConfigDialog-advanced.png"/>
 <javaElement handleIdentifier="=ted/&lt;ted.datastructures"/>
 <file path="/ted/icons/TedConfigDialog-general.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted.epguides{EpguidesParser.java"/>
 <file path="/ted/icons/Aid.png"/>
 <javaElement handleIdentifier="=ted/&lt;ted.ui.configdialog"/>
 <file path="/ted/icons/TedMainDialog.addshow32.png"/>
@@ -23,8 +23,8 @@
 <file path="/ted/icons/activity.gif"/>
 <javaElement handleIdentifier="=ted/&lt;ted.translations"/>
 <javaElement handleIdentifier="=ted/&lt;ted.interfaces"/>
-<file path="/ted/icons/EditShowDialog-feeds.png"/>
 <file path="/ted/icons/up.png"/>
+<file path="/ted/icons/EditShowDialog-feeds.png"/>
 <file path="/ted/icons/Edit.png"/>
 <file path="/ted/icons/EditShowDialog-feeds-open.png"/>
 <javaElement handleIdentifier="=ted/&lt;ted"/>
@@ -46,8 +46,8 @@
 <file path="/ted/icons/TedConfigDialog-updates.png"/>
 <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.tracker"/>
 <file path="/ted/icons/dir.png"/>
-<file path="/ted/icons/macicon.icns"/>
 <file path="/ted/icons/stop.png"/>
+<file path="/ted/icons/macicon.icns"/>
 <file path="/ted/icons/TedMainDialog.startsearching.png"/>
 <file path="/ted/icons/icon-active-ted.gif"/>
 <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.torrent"/>
@@ -57,8 +57,8 @@
 <javaElement handleIdentifier="=ted/&lt;ted.ui.messaging"/>
 <javaElement handleIdentifier="=ted/&lt;com.growl"/>
 <file path="/ted/icons/EditShowDialog-general.png"/>
-<file path="/ted/icons/icon-ted.gif"/>
 <file path="/ted/icons/play.png"/>
+<file path="/ted/icons/icon-ted.gif"/>
 <file path="/ted/icons/TedConfigDialog-looknfeel.png"/>
 </selectedElements>
 <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
