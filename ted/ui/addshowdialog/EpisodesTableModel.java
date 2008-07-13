@@ -52,7 +52,7 @@ public class EpisodesTableModel extends AbstractTableModel
 		switch (col)
 		{
 			case 0:
-				return sRow;
+				return sRow.getEpisodeChooserTitle();
 			case 2:
 				return sRow.getQuality()+"";
 			case 1:

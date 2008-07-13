@@ -1,9 +1,12 @@
 package ted.datastructures;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import sun.tools.tree.ThisExpression;
 
 public class DailyDate  extends StandardStructure
 {
@@ -244,5 +247,35 @@ public class DailyDate  extends StandardStructure
 	{
 		Date date = new Date(this.airDate.getTime() + 86400000);
 		return new DailyDate(date, "");
+	}
+	
+	/**
+	 * @return the date the episode is aired in its original timezone
+	 */
+	public String getFormattedEpisodeDate() 
+	{
+		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
+		return df.format(this.getDate().getTime());
+	}
+	
+	public String getEpisodeChooserTitle()
+	{
+		String result = this.getFormattedEpisodeDate();
+		if (this.getTitle() != "")
+		{
+			result += ": \"" + this.getTitle() + "\"";
+		}
+		
+		return result;
+	}
+	public String getSubscribtionOptionsTitle()
+	{
+		String result = this.getFormattedEpisodeDate();
+		if (this.getTitle() != "")
+		{
+			result += ": \"" + this.getTitle() + "\"";
+		}
+		
+		return result;
 	}
 }

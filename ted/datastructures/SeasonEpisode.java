@@ -109,4 +109,17 @@ public class SeasonEpisode extends StandardStructure
 	{
 		return this.toString() + ". " + this.getFormattedAirDateWithText() + ".";
 	}
+	
+	public String getEpisodeChooserTitle()
+	{
+		String result;
+		result = this.season + "x" + this.episode;
+		
+		if (this.getTitle() != "")
+		{
+			result += ": \"" + this.getTitle() +"\"";
+		}
+		
+		return result;
+	}
 }

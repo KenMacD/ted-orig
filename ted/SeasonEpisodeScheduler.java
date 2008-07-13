@@ -88,38 +88,35 @@ public class SeasonEpisodeScheduler implements Serializable
 			// nothing found while searching through the episodes with airdates
 			// run through episodes
 			// get first episode after all aired episodes, with presumable no airdate
-			int count = -1;
 			StandardStructure current;
 			// system date
 	       	Date systemDate = new Date();
 	       	// first find last aired episode in list
-			for (int i = this.scheduledEpisodes.size()-1; i >= 0; i--)
+			for (int i = 0 ; i < this.scheduledEpisodes.size(); i++)
 			{
 				current = this.scheduledEpisodes.elementAt(i);
 				try 
 				{
-					if (current.getAirDate().before(systemDate))
+					if (current.getAirDate().after(systemDate))
 					{
-						count = i;
+						result = current;
+					}
+					else
+					{
+						break;
 					}
 				} 
 				catch (AirDateUnknownException e) 
 				{
 					continue;
 				}
-			}
-			// then get the next episode
-			if (count - 1 >= 0)
-			{
-				result = this.scheduledEpisodes.elementAt(count - 1);
-			}		
-			
+			}			
 		}
 
 		// nothing found based on schedule, just guess what the next episode is
 		if (result == null)
 		{
-			Vector<StandardStructure> publishedEps = this.getPubishedAndAiredEpisodes();
+			Vector<StandardStructure> publishedEps = this.getPubishedAndAiredEpisodes(true);
 			if (publishedEps.size() > 0)
 			{
 				// element 0 is the last aired or published ep. get the next from it
@@ -277,7 +274,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * @return a vector with season/episodes that have been aired and published plus
 	 * one next episode that is scheduled to air
 	 */
-	Vector<StandardStructure> getPubishedAndAiredEpisodes() 
+	Vector<StandardStructure> getPubishedAndAiredEpisodes(boolean noScheduledEpisodes) 
 	{
 		Vector<StandardStructure> publishedEpisodes = this.getPublishedEpisodes();
 		Vector<StandardStructure> airedEpisodes     = this.getAiredEpisodes();
@@ -356,7 +353,11 @@ public class SeasonEpisodeScheduler implements Serializable
 		}
 		else
 		{
-			results = publishedEpisodes;
+			// if there are no scheduled episodes, return the published episodes as result
+			if (noScheduledEpisodes)
+			{
+				results = publishedEpisodes;
+			}
 		}
 		
 		// free references for garbage collection

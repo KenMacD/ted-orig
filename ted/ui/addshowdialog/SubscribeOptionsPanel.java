@@ -234,7 +234,7 @@ public class SubscribeOptionsPanel extends JPanel
 			this.addShowDialog.subscribeOptionChanged();
 			
 			this.customEpisodeLabel.setText(customStructure.getSearchString());
-			this.getCustomEpisodeTitleLabel().setText(customStructure.getTitle());
+			this.getCustomEpisodeTitleLabel().setText(customStructure.getSubscribtionOptionsTitle());
 		}
 	}
 
@@ -245,7 +245,7 @@ public class SubscribeOptionsPanel extends JPanel
 		{
 			this.lastAiredEpisode = episodes.elementAt(0);
 			this.airedEpisodeLabel.setText(	this.lastAiredEpisode.getSearchString());
-			this.getAiredEpisodeTitleLabel().setText(this.lastAiredEpisode.getTitle());
+			this.getAiredEpisodeTitleLabel().setText(this.lastAiredEpisode.getSubscribtionOptionsTitle());
 			
 			// enable custom selection
 			customSelectRadio.setEnabled(true);
@@ -260,7 +260,7 @@ public class SubscribeOptionsPanel extends JPanel
 			this.nextEpisode = nextEpisode2;
 			this.selectedStructure = nextEpisode;
 			this.futureEpisodeLabel.setText( nextEpisode.getSearchString());
-			this.getFutureEpisodeTitleLabel().setText(nextEpisode2.getTitle());
+			this.getFutureEpisodeTitleLabel().setText(nextEpisode2.getSubscribtionOptionsTitle());
 			this.updateEnabledOptions();
 		}		
 	}
@@ -306,6 +306,7 @@ public class SubscribeOptionsPanel extends JPanel
 			
 			activityCanvas = new ImageCanvas(activityIm.getSource());
 			activityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
+			activityCanvas.setVisible(false);
 		}
 		return activityCanvas;
 	}

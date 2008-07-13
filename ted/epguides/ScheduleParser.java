@@ -224,12 +224,6 @@ public class ScheduleParser
 	        url = "http://www.tvrage.com/feeds/episode_list.php?sid=" + showId;	
 			Element foundShowElement = parser.readXMLFromURL(url);
 			
-			// No information available
-			if (foundShowElement == null)
-			{
-				return episodes;
-			}
-			
 			// The xml file consist out of an episodelist 
 			NodeList foundSeasonsList = foundShowElement.getElementsByTagName("Episodelist");
 			
@@ -237,6 +231,7 @@ public class ScheduleParser
 			{
 				// There is only on episode list
 				Element episodeList = (Element)foundSeasonsList.item(0);
+
 				boolean searchForNextSeason = true;
 				int seasonNumber = 1;
 				while (searchForNextSeason)
@@ -292,7 +287,6 @@ public class ScheduleParser
 								}
 							}
 						}
-						
 						seasonNumber++;
 					}
 					else
@@ -341,23 +335,11 @@ public class ScheduleParser
 	
 	private Vector<StandardStructure> combineLists(Vector<StandardStructure> firstList, Vector<StandardStructure> secondList)
 	{
-		// If one of both lists is empty return the other.
-		int firstSize  = firstList.size();
-		int secondSize = secondList.size();		
-		if (firstSize == 0)
-		{
-			return secondList;
-		}
-		else if (secondSize == 0)
-		{
-			return firstList;
-		}
-		
 		// Combine both lists into one new list
 		Vector<StandardStructure> combinedList = new Vector<StandardStructure>();
-			
+		
 		// Take all the elements of both lists
-		int maxListSize = Math.max(firstSize, secondSize);
+		int maxListSize = Math.max(firstList.size(), secondList.size());
 		
 		// As the lists are sorted walk through them step by step
 		int firstPos  = 0;
@@ -366,55 +348,86 @@ public class ScheduleParser
 		StandardStructure s2 = null;
 		for (int i = 0; i < maxListSize; i++)
 		{			
-			if (firstPos < firstSize)
+			if (firstPos < firstList.size())
 			{
 				s1 = firstList.get(firstPos);
 			}
 			
-			if (secondPos < secondSize)
+			if (secondPos < secondList.size())
 			{
 				s2 = secondList.get(secondPos);
 			}
 			
-			int compare = s1.compareTo(s2);
-			if (compare == 0)
+			if (s1 != null && s2 != null)
 			{
-				++firstPos;
-				++secondPos;
-				
-				// Compare the air dates, should be identical
-				try 
+				int compare = s1.compareTo(s2);
+				if (compare == 0)
 				{
-					if (s1.getAirDate() != s2.getAirDate())
+					++firstPos;
+					++secondPos;
+					
+					// Could be that one source has a airdate, the other does not:
+					Date s1AirDate = null;
+					try 
 					{
-						// Do what?
+						s1AirDate = s1.getAirDate();
+					} 
+					catch (AirDateUnknownException e1) 
+					{
+						// do nothing
 					}
-				} 
-				catch (AirDateUnknownException e) 
-				{
-					continue;
+					
+					Date s2AirDate = null;
+					try 
+					{
+						s2AirDate = s2.getAirDate();
+					} catch (AirDateUnknownException e1) 
+					{
+						// do nothing
+					}
+					
+					// copy airdates if they are known in one source but not in the other
+					if (s1AirDate == null && s2AirDate != null)
+					{
+						s1.setAirDate(s2AirDate);
+					}
+					else if (s1AirDate != null && s2AirDate == null)
+					{
+						s2.setAirDate(s2AirDate);
+					}
+					
+					// Could be that one source has a title, the other does not:
+					// Get as much information as possible from both sources.
+					if (s1.getTitle().equals(""))
+					{
+						combinedList.add(s2);
+					}
+					else
+					{
+						combinedList.add(s1);
+					}
 				}
-				
-				// Get as much information as possible from both sources.
-				if (s1.getTitle().equals(""))
+				else if (compare == -1)
 				{
-					combinedList.add(s2);
+					++firstPos;
+					combinedList.add(s1);
 				}
 				else
 				{
-					combinedList.add(s1);
-				}
+					++secondPos;
+					combinedList.add(s2);
+				}			
 			}
-			else if (compare == -1)
+			else if (s1 != null)
 			{
-				++firstPos;
 				combinedList.add(s1);
+				++firstPos;
 			}
-			else
+			else if (s2 != null)
 			{
-				++secondPos;
 				combinedList.add(s2);
-			}			
+				++secondPos;
+			}
 		}
 		
 		return combinedList;
@@ -460,6 +473,10 @@ public class ScheduleParser
         Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getEpguidesName(), from, to, serie.isDaily());
         Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
         detectDoubleEpisodes(episodes);
+        
+        // reset vectors for garbage collection
+        episodes1 = null;
+        episodes2 = null;
         
         return episodes;
 	}

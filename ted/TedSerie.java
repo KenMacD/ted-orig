@@ -1098,6 +1098,14 @@ public class TedSerie implements Serializable
 	
 
 	
+	/**
+	 * Will increment the season/episode of the show to the episode that is
+	 * scheduled after the params.
+	 * When the show is not on hiatus and no episode is found, the currentEpisode number
+	 * will be increased with 1.
+	 * @param season
+	 * @param episode
+	 */
 	public void goToNextSeasonEpisode(int season, int episode)
 	{
 		// If the current episode is a double episode you want to increase
@@ -1119,7 +1127,7 @@ public class TedSerie implements Serializable
 			// if no next SE is found, put ted on hiatus and increment episode with 1
 			if (this.status != TedSerie.STATUS_HIATUS)
 			{
-				this.currentEpisode++;
+				this.currentEpisode = episode + 1;
 				
 				if (doubleEpisode)
 				{
@@ -1189,9 +1197,9 @@ public class TedSerie implements Serializable
 	/**
 	 * @return All aired and published episodes for this show
 	 */
-	public Vector<StandardStructure> getPubishedAndAiredEpisodes() 
+	public Vector<StandardStructure> getPubishedAndAiredEpisodes(boolean noScheduledEpisodes) 
 	{
-		return this.getScheduler().getPubishedAndAiredEpisodes();
+		return this.getScheduler().getPubishedAndAiredEpisodes(noScheduledEpisodes);
 	}
 
 	public int getLastDayChecked() 

@@ -69,15 +69,17 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	 */
 	public String getFormattedPublishDate()
 	{
+		String result;
 		if (this.publishDate != null)
 		{
-			DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-			return df.format(this.publishDate);
+			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
+			result = df.format(this.publishDate);
 		}
 		else
 		{
-			return Lang.getString("TedAddShowDialog.EpisodesTable.Upcoming");
+			result = Lang.getString("TedAddShowDialog.EpisodesTable.Upcoming");
 		}
+		return result;
 	}
 	
 	/**
@@ -135,18 +137,24 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	{
 		this.title = title;
 	}
+	/**
+	 * @return The formatted air date. When no airdate is known: formatted torrent publish date.
+	 */
 	public String getFormattedAirDate() 
 	{
+		String result;
 		if (this.airDate != null)
 		{
 			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-			return df.format(this.airDate);
+			result = df.format(this.airDate);
 		}
 		else
 		{
-			return "-";
+			result = Lang.getString("StandardStructure.UnknownAirdate");
 		}
+		return result;
 	}
+	
 	public String getSearchString() 
 	{
 		return "";
@@ -232,5 +240,14 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	public StandardStructure nextEpisode() 
 	{
 		return new StandardStructure();
+	}
+	
+	public String getEpisodeChooserTitle()
+	{
+		return this.toString();
+	}
+	public String getSubscribtionOptionsTitle()
+	{
+		return this.getTitle();
 	}
 }

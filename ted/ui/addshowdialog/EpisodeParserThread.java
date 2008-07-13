@@ -7,6 +7,7 @@ import ted.TedSerie;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -75,11 +76,22 @@ public class EpisodeParserThread extends Thread
 		if(selectedSerie!=null)
 		{		
 			// add vector to chooser panel
-			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes();
 			StandardStructure nextEpisode = selectedSerie.getNextEpisode();
 			
+			// check if next episode has airdate. otherwise no scheduled episode was found
+			// and the scheduler can use the published episodes instead, when no aired episodes
+			// are listed in the schedule
+			boolean noScheduledEpisodes = true;
+			try {
+				nextEpisode.getAirDate();
+				noScheduledEpisodes = false;
+			} catch (AirDateUnknownException e) {
+				noScheduledEpisodes = true;
+			}
+			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes(noScheduledEpisodes);	
+			
 			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
-			this.episodeChooserPanel.setNextEpisode(selectedSerie.getNextEpisode());
+			this.episodeChooserPanel.setNextEpisode(nextEpisode);
 			
 			if (this.subscribeOptionsPanel != null)
 			{
