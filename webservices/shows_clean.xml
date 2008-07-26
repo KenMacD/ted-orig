@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>32</version>
+	<version>33</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -176,6 +176,14 @@
 			<tv_com>53003</tv_com>
 		</show>
 		<show>
+			<name>Anthony Bourdain: No Reservations</name>
+			<minimumsize>250</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>20</seeders>
+			<daily>False</daily>
+			<tv_com>38519</tv_com>
+		</show>
+		<show>
 			<name>The Armstrong and Miller Show</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
@@ -337,6 +345,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>68724</tv_com>
+		</show>
+		<show>
+			<name>The Cleaner</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<daily>False</daily>
+			<tv_com>75358</tv_com>
 		</show>
 		<show>
 			<name>The Closer</name>
@@ -565,6 +581,13 @@
 			<tv_com>71778</tv_com>
 		</show>
 		<show>
+			<name>Flashpoint</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75209</tv_com>
+		</show>
+		<show>
 			<name>Flight of the Conchords</name>
 			<keywords>flight of the conchords</keywords>
 			<minimumsize>150</minimumsize>
@@ -606,6 +629,13 @@
 			<maximumsize>150</maximumsize>
 			<seeders>5</seeders>
 			<tv_com>65209</tv_com>
+		</show>
+		<show>
+			<name>Generation Kill</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<daily>False</daily>
+			<tv_com>75066</tv_com>
 		</show>
 		<show>
 			<name>Ghost Hunters</name>
@@ -682,6 +712,14 @@
 			<tv_com>17552</tv_com>
 		</show>
 		<show>
+			<name>The Hollowmen</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75946</tv_com>
+		</show>
+		<show>
 			<name>House</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -699,9 +737,16 @@
 		<show>
 			<name>Human Weapon</name>
 			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>74629</tv_com>
+		</show>
+		<show>
+			<name>Hurl</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>80</seeders>
+			<tv_com>75605</tv_com>
 		</show>
 		<show>
 			<name>Hustle</name>
@@ -721,6 +766,13 @@
 			<maximumsize>300</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>74603</tv_com>
+		</show>
+		<show>
+			<name>I Survived a Japanese Game Show</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>75316</tv_com>
 		</show>
 		<show>
 			<name>In Plain Sight</name>
@@ -751,10 +803,17 @@
 		</show>
 		<show>
 			<name>Jekyll</name>
-			<minimumsize>600</minimumsize>
+			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>69232</tv_com>
+		</show>
+		<show>
+			<name>Jingles</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75508</tv_com>
 		</show>
 		<show>
 			<name>Journeyman</name>
@@ -1163,6 +1222,14 @@
 			<tv_com>3613</tv_com>
 		</show>
 		<show>
+			<name>The Secret Life of the American Teenager</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75441</tv_com>
+		</show>
+		<show>
 			<name>Shark</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1223,6 +1290,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>35810</tv_com>
+		</show>
+		<show>
+			<name>Sordid Lives: the Series</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>60618</tv_com>
 		</show>
 		<show>
 			<name>Storm Chasers</name>
