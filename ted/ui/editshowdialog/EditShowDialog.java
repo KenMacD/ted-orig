@@ -282,9 +282,15 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			}
 			
 			temp.setName(currentSerie.getName());
+			// copy the episode schedule
+			temp.setScheduler(currentSerie.getScheduler());
+			// disable schedule
+			temp.setUseAutoSchedule(false);
 			
 			if (this.saveShow(temp))
 			{		
+				// enable schedule
+				temp.setUseAutoSchedule(true);
 				// popup a select episode dialog
 				EpisodeChooserDialog ecd = new EpisodeChooserDialog(this);
 				ecd.loadEpisodes(temp);
@@ -351,6 +357,8 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 					schedulePanel.setValues(show);
 					feedsPanel.setValues(show);
 					this.feedsPanel.saveValues(show);
+					this.schedulePanel.saveValues(show);
+					
 				}
 			}
 		
@@ -382,9 +390,8 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 					this.filterPanel.saveValues(show);
 					this.schedulePanel.saveValues(show);
 						
-					//show.checkDate();
-					show.checkAirDate();
-					//show.resetStatus(true);
+					show.updateShowStatus();
+
 					// backup name
 					this.currentSerieName = show.getName();
 					return true;

@@ -3,6 +3,7 @@
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -11,6 +12,7 @@ import org.w3c.dom.Element;
 import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
@@ -38,6 +40,8 @@ public class TedSerie implements Serializable
 	static final long serialVersionUID= 7210007788942770687L;
 	protected int currentEpisode;
 	protected int currentSeason;
+	protected String currentEpisodeTitle;
+	protected Date currentEpisodeAirDate;
 	private int minSize;
 	private int maxSize;
 	private String name;
@@ -58,7 +62,7 @@ public class TedSerie implements Serializable
 	public final static int IS_IDLE = 0;
 	private int activity = 0;
 	private int weeklyInterval;
-	private int status = 0;
+	protected int status = 0;
 	private boolean useEpisodeSchedule;
 	private boolean useBreakSchedule;
 	private boolean useBreakScheduleEpisode;
@@ -75,7 +79,7 @@ public class TedSerie implements Serializable
 	private String tvCom;
 	protected boolean isDaily = false;
 	private String searchName = "";
-	private SeasonEpisodeScheduler scheduler;
+	protected SeasonEpisodeScheduler scheduler;
 	private String epguidesName;
 	private int timeZone = -1;
 
@@ -469,12 +473,13 @@ public class TedSerie implements Serializable
 	
 	/**
 	 * Set the current episode of the show
+	 * Deprecated! use SetCurrentEpisode
 	 * @param currentEpisode
 	 */
-	public void setCurrentEpisode(int currentEpisode) 
+	/*public void setCurrentEpisode(int currentEpisode) 
 	{
 		this.currentEpisode = currentEpisode;
-	}
+	}*/
 	
 	/**
 	 * @return The current season of the show
@@ -486,12 +491,13 @@ public class TedSerie implements Serializable
 	
 	/**
 	 * Set the current season of the show
+	 * Deprecated! use SetCurrentEpisode
 	 * @param currentSeason
 	 */
-	public void setCurrentSeason(int currentSeason) 
+	/*public void setCurrentSeason(int currentSeason) 
 	{
 		this.currentSeason = currentSeason;
-	}
+	}*/
 	
 	/**
 	 * @return The name of the show
@@ -1039,10 +1045,18 @@ public class TedSerie implements Serializable
 	 */
 	public String getSearchForString() 
 	{
+		String result = "";
 		SeasonEpisode se = new SeasonEpisode();
 		se.setSeason(this.currentSeason);
 		se.setEpisode(this.currentEpisode);
-		return se.toString();
+		result +=  se.toString();
+	
+		if (this.currentEpisodeTitle != "" && this.currentEpisodeTitle != null)
+		{
+			result += ": \"" + this.getCurrentEpisodeTitle() + "\"";
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -1106,7 +1120,7 @@ public class TedSerie implements Serializable
 	 * @param season
 	 * @param episode
 	 */
-	public void goToNextSeasonEpisode(int season, int episode)
+	public void goToNextEpisode(int season, int episode)
 	{
 		// If the current episode is a double episode you want to increase
 		// the episode number by 2 instead of 1.
@@ -1119,22 +1133,19 @@ public class TedSerie implements Serializable
 		try
 		{
 			SeasonEpisode nextSE = (SeasonEpisode) this.getScheduler().getNextEpisode(new SeasonEpisode(season, episode));
-			this.currentEpisode = nextSE.getEpisode();
-			this.currentSeason = nextSE.getSeason();
+			this.setCurrentEpisode(nextSE);
 		}
 		catch (NoEpisodeFoundException e) 
 		{
 			// if no next SE is found, put ted on hiatus and increment episode with 1
 			if (this.status != TedSerie.STATUS_HIATUS)
 			{
-				this.currentEpisode = episode + 1;
+				int newSeason = season;
+				int newEpisode = episode + 1;
 				
-				if (doubleEpisode)
-				{
-					this.currentEpisode++;
-				}
-				
-				this.setStatus(TedSerie.STATUS_HIATUS);
+				SeasonEpisode nextSE = new SeasonEpisode (newSeason, newEpisode);
+				this.setCurrentEpisode(nextSE);
+				//this.setStatus(TedSerie.STATUS_HIATUS);
 			}
 		}
 	}
@@ -1170,15 +1181,15 @@ public class TedSerie implements Serializable
 	/**
 	 * Checks the status of the show with the current date
 	 */
-	public void checkDate() 
+	public void updateShowStatus() 
 	{
-		this.getScheduler().checkDate();	
+		this.getScheduler().updateShowStatus();	
 	}
 
 	/**
 	 * Checks the status of the show with the scheduled airdate
 	 */
-	public void checkAirDate() 
+	private void checkAirDate() 
 	{
 		this.getScheduler().checkAirDate();	
 	}
@@ -1234,6 +1245,8 @@ public class TedSerie implements Serializable
 		if (!text.equals(this.getEpguidesName()))
 		{
 			this.epguidesName = text;
+			// update scheduler
+			this.getScheduler().forceScheduleUpdate();
 		}	
 	}
 
@@ -1254,5 +1267,78 @@ public class TedSerie implements Serializable
 	public int getTimeZone()
 	{
 		return this.timeZone;
+	}
+	
+	public String getCurrentEpisodeTitle()
+	{
+		return this.currentEpisodeTitle;
+	}
+
+	/**
+	 * Cache the values in the Serie so we don't need to update them from the schedule every time
+	 * Now they are pushed when the schedule is updated.
+	 * @param se
+	 */
+	public void setCurrentEpisode(StandardStructure se) 
+	{
+		SeasonEpisode episode = (SeasonEpisode) se;
+		this.currentEpisode = episode.getEpisode();
+		this.currentSeason = episode.getSeason();
+		try 
+		{
+			this.currentEpisodeAirDate = se.getAirDate();
+		} 
+		catch (AirDateUnknownException e) 
+		{
+			this.currentEpisodeAirDate = null;
+		}
+		this.currentEpisodeTitle = se.getTitle();
+		this.updateShowStatus();
+	}
+
+	public void setStatusString(String string) 
+	{
+		this.statusString = string;
+		
+	}
+
+	/**
+	 * Checks the schedule whether the current season/episode are known.
+	 * If not, checks the schedule if there is another episode known after the previous episode.
+	 */
+	public void checkIfCurrentEpisodeIsScheduled() 
+	{
+		try 
+		{
+			StandardStructure currentSE;
+			currentSE = scheduler.getEpisode(new SeasonEpisode(currentSeason, currentEpisode));
+		} 
+		catch (NoEpisodeFoundException e) 
+		{
+			// No episode found. Go check and see if there might be another one scheduled after 
+			// currentSeason / currentEpisode-1
+			goToNextEpisode(currentSeason, currentEpisode-1);
+		}		
+	}
+	
+	public StandardStructure getCurrentStandardStructure()
+	{
+		StandardStructure temp = new SeasonEpisode(currentSeason, currentEpisode);
+		StandardStructure result;
+		try
+		{
+			result = scheduler.getEpisode(temp);
+		}
+		catch (NoEpisodeFoundException e) 
+		{
+			result = temp;
+		}	
+		
+		return result;
+	}
+
+	public void setScheduler(SeasonEpisodeScheduler scheduler2) 
+	{
+		this.scheduler = scheduler2;		
 	}
 }

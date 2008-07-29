@@ -5,6 +5,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import ted.Lang;
+import ted.datastructures.DailyDate;
+import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -31,6 +34,7 @@ public class SeasonEpisodePanel extends JPanel
 	private JSpinner episodeSpinner;
 	private JLabel labelEpisode;
 	private JLabel labelSeason;
+	private SeasonEpisode currentSeasonEpisode = new SeasonEpisode();
 
 	private SpinnerNumberModel episodeSpinnerModel = new SpinnerNumberModel();
 	private SpinnerNumberModel seasonSpinnerModel = new SpinnerNumberModel();
@@ -112,5 +116,18 @@ public class SeasonEpisodePanel extends JPanel
 	public int getSeason() 
 	{
 		return this.seasonSpinnerModel.getNumber().intValue();
+	}
+	
+	public void setStandardStructure (StandardStructure dd)
+	{
+		this.currentSeasonEpisode = (SeasonEpisode) dd;
+		this.setSeasonEpisode(currentSeasonEpisode.getSeason(), currentSeasonEpisode.getEpisode());
+	}
+	
+	public StandardStructure getStandardStructure()
+	{
+		this.currentSeasonEpisode.setEpisode(getEpisode());
+		this.currentSeasonEpisode.setSeason(getSeason());
+		return this.currentSeasonEpisode;
 	}
 }

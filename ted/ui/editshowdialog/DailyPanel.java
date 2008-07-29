@@ -6,6 +6,8 @@ import javax.swing.SpinnerListModel;
 
 import ted.Lang;
 import ted.TedDailySerie;
+import ted.datastructures.DailyDate;
+import ted.datastructures.StandardStructure;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -38,6 +40,7 @@ public class DailyPanel extends JPanel
 	private JLabel maxEpisodesLabel2;
 	private JSpinner episodeSpinner;
 	private SpinnerListModel episodeSpinnerModel;
+	private DailyDate currentDate;
 
 	public DailyPanel ()
 	{
@@ -89,7 +92,9 @@ public class DailyPanel extends JPanel
 	public void setValues(TedDailySerie serie) 
 	{
 		// set latest download date
-		this.datePanel.setDate(serie.getLatestDownloadDateInMillis());
+		//this.datePanel.setDate(serie.getLatestDownloadDateInMillis());
+		this.currentDate = (DailyDate)(serie.getCurrentStandardStructure());
+		this.datePanel.setDate(currentDate.getDate().getTimeInMillis());
 		
 		// get number of episodes to download
 		Integer episodes = new Integer (serie.getMaxDownloads());
@@ -109,10 +114,11 @@ public class DailyPanel extends JPanel
 	public void saveValues(TedDailySerie serie) 
 	{
 		// set latest download date
-		int day = this.datePanel.getDay();
-		int month = this.datePanel.getMonth();
-		int year = this.datePanel.getYear();
-		serie.setLatestDownloadDate(day, month, year);
+		//int day = this.datePanel.getDay();
+		//int month = this.datePanel.getMonth();
+		//int year = this.datePanel.getYear();
+		//serie.setLatestDownloadDate(day, month, year);
+		serie.setCurrentEpisode(this.currentDate);
 		
 		// get number of episodes to download
 		int number;
@@ -131,8 +137,18 @@ public class DailyPanel extends JPanel
 	 */
 	public void setDate (long time) 
 	{
-		this.datePanel.setDate(time);
-		
+		this.datePanel.setDate(time);	
+	}
+	
+	public void setStandardStructure (StandardStructure dd)
+	{
+		this.currentDate = (DailyDate) dd;
+		this.setDate(currentDate.getDate().getTimeInMillis());
+	}
+	
+	public StandardStructure getStandardStructure()
+	{
+		return this.currentDate;
 	}
 
 }

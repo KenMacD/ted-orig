@@ -203,41 +203,19 @@ public class GeneralPanel extends JPanel
 		{
 			String serieName = currentSerie.getName();
 			String textNameS  = textName.getText();
-						
-			// Check if the name of this show has changed, if so ask if the user wants to
-			// regenerate the feeds. 
-			/*if (!serieName.equals(textNameS) && !serieName.equals(""))
-			{
-				result = JOptionPane.showConfirmDialog(null, Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") 
-														 + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"));
-				
-				// result == 1 means do nothing.
-				// Cancel operation.
-				if (result == 2)
-				{
-					return 2;
-				}
-				if (result == 0)
-				{
-					// if user redefined showname, update searchName
-					currentSerie.setSearchName("");
-				}
-			}*/
-			
+								
 			currentSerie.setName(textNameS);
 			currentSerie.setUsePresets(checkUpdatePresets.isSelected());
 			
 			if (currentSerie.isDaily())
 			{
-				// set date and max downloads
-				this.dailyPanel.saveValues((TedDailySerie)currentSerie);
+				currentSerie.setCurrentEpisode(dailyPanel.getStandardStructure());
 			}
 			else
 			{
-				// set season and episode
-				currentSerie.setCurrentEpisode(this.seasonEpisodePanel.getEpisode());
-				currentSerie.setCurrentSeason(this.seasonEpisodePanel.getSeason());
+				currentSerie.setCurrentEpisode(seasonEpisodePanel.getStandardStructure());
 			}
+			
 		}
 		return result;
 	}
@@ -256,7 +234,7 @@ public class GeneralPanel extends JPanel
 	 */
 	public void setEpisode(DailyDate selectedStructure) 
 	{
-		this.dailyPanel.setDate(selectedStructure.getDate().getTimeInMillis());
+		this.dailyPanel.setStandardStructure(selectedStructure);
 		
 	}
 	/**
@@ -265,7 +243,7 @@ public class GeneralPanel extends JPanel
 	 */
 	public void setEpisode(SeasonEpisode selectedStructure) 
 	{		
-		this.seasonEpisodePanel.setSeasonEpisode(selectedStructure.getSeason(), selectedStructure.getEpisode());
+		this.seasonEpisodePanel.setStandardStructure(selectedStructure);
 	}
 
 	public boolean isUsePresets() 

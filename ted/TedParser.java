@@ -22,6 +22,7 @@ import net.sf.torrentsniffer.torrent.TorrentInfo;
 import net.sf.torrentsniffer.torrent.TorrentState;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
 
 import com.sun.cnpi.rss.elements.Channel;
 import com.sun.cnpi.rss.elements.Item;
@@ -58,7 +59,7 @@ public class TedParser extends Thread
 	private TorrentState bestTorrentState;
 	private TorrentInfo bestTorrentInfo;
 	private URL bestTorrentUrl = null;
-	private Vector dailyItems;
+	private Vector<DailyDate> dailyItems;
 	private Channel[] feedsData = null;
 	private int totalNumberOfFeedItems = 0;
 	private TedSerie currentSerie;
@@ -478,8 +479,8 @@ public class TedParser extends Thread
 					if (answer == JOptionPane.YES_OPTION)
 					{
 						// download new season
-						serie.setCurrentEpisode(1);
-						serie.setCurrentSeason(season);
+						SeasonEpisode nextSeason = new SeasonEpisode(season, 1);
+						serie.setCurrentEpisode(nextSeason);
 						tMainDialog.saveShows();
 						
 						// only the season and episode are changed, no torrent has actually
@@ -921,9 +922,10 @@ public class TedParser extends Thread
 	private void downloadBestDaily(TedSerie serie)
 	{
 		Collections.sort(dailyItems);
+		TedDailySerie dailySerie = (TedDailySerie) serie;
 		
 		// if 0 is selected download everything, otherwise the given number
-		int maxDailyDownloads = ((TedDailySerie)serie).getMaxDownloads();
+		int maxDailyDownloads = dailySerie.getMaxDownloads();
 		int maxDownloads;
 		if(maxDailyDownloads==0)
 			maxDownloads = dailyItems.size();
@@ -932,7 +934,7 @@ public class TedParser extends Thread
 		
 		
 		DailyDate dd;
-		long oldDate = ((TedDailySerie)serie).getLatestDownloadDateInMillis();
+		long oldDate = dailySerie.getLatestDownloadDateInMillis();
 		long newDate = 0;
 		for(int i=0; i<dailyItems.size(); i++)
 		{
@@ -947,7 +949,7 @@ public class TedParser extends Thread
 			{				
 				try 
 				{
-					downloadBest((TedDailySerie)serie, dd);
+					downloadBest(dailySerie, dd);
 				} 
 				catch (Exception e)
 				{
@@ -956,16 +958,18 @@ public class TedParser extends Thread
 				}
 				
 				// add one day, to search for next episode
-				dd.setDay(dd.getDay()+1);
-				newDate = dd.getDate().getTimeInMillis();
+				//dd.setDay(dd.getDay()+1);
+				//newDate = dd.getDate().getTimeInMillis();
+				dailySerie.goToNextEpisode(dd);
+				newDate = dailySerie.getLatestDownloadDateInMillis();
 				
 				// when the new date is larger than the lastdownload date
-				if(newDate>oldDate)
+				/*if(newDate>oldDate)
 				{
 					// update olddate
 					oldDate=newDate;
 					((TedDailySerie)serie).setLatestDownloadDate(oldDate);
-				}
+				}*/
 			}
 			else
 			{
@@ -1022,9 +1026,9 @@ public class TedParser extends Thread
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			
 			// increase the season/episode based on the schedule
-			serie.goToNextSeasonEpisode(season, episode);
+			serie.goToNextEpisode(season, episode);
 			// check the status of the show
-			serie.updateStatus(episode);
+			//serie.updateStatus(episode);
 						
 			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 			
@@ -1690,18 +1694,18 @@ public class TedParser extends Thread
 	 * @param seasonEpisodes
 	 * @return
 	 */
-	private Vector removeDoublesSE(Vector seasonEpisodes)
+	private Vector<SeasonEpisode> removeDoublesSE(Vector<SeasonEpisode> seasonEpisodes)
 	{
 		// sort the seasons and episodes in ascending order
 		Collections.sort(seasonEpisodes);
 		
 		// create new empty vector
-		Vector singleVector = new Vector();
+		Vector<SeasonEpisode> singleVector = new Vector<SeasonEpisode>();
 		
 		if (seasonEpisodes.size() > 0)
 		{
 			// get the first
-			SeasonEpisode currentSE = (SeasonEpisode)seasonEpisodes.get(0);
+			SeasonEpisode currentSE = seasonEpisodes.get(0);
 			
 			currentSE.setQuality(1);
 		
@@ -1709,7 +1713,7 @@ public class TedParser extends Thread
 			for (int i = 1; i < seasonEpisodes.size(); i++)
 			{
 				// get the next
-				SeasonEpisode se = (SeasonEpisode)seasonEpisodes.get(i);
+				SeasonEpisode se = seasonEpisodes.get(i);
 				
 				// if it is the same as the current
 				if (se.compareTo(currentSE) == 0)
@@ -1739,21 +1743,21 @@ public class TedParser extends Thread
 		return singleVector;
 	}
 	
-	private Vector removeDoublesDD(Vector dailyDates)
+	private Vector<DailyDate> removeDoublesDD(Vector<DailyDate> dailyDates)
 	{
 		Collections.sort(dailyDates);
 		
-		Vector singleVector = new Vector();
+		Vector<DailyDate> singleVector = new Vector<DailyDate>();
 		
 		if (dailyDates.size() > 0)
 		{
-			DailyDate currentSE = (DailyDate)dailyDates.get(0);
+			DailyDate currentSE = dailyDates.get(0);
 			
 			currentSE.setQuality(1);
 		
 			for (int i = 1; i < dailyDates.size(); i++)
 			{
-				DailyDate se = (DailyDate)dailyDates.get(i);
+				DailyDate se = dailyDates.get(i);
 				
 				if (se.compareTo(currentSE) == 0)
 				{

@@ -340,22 +340,9 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		// add show
 		if (selectedSerie != null)
 		{
-			// set season and episode settings
-			if (selectedSerie.isDaily())
-			{
-				DailyDate dd = (DailyDate)this.subscribeOptionsPanel.getSelectedEpisode();
-				GregorianCalendar d = new GregorianCalendar(dd.getYear(), dd.getMonth(), dd.getDay());
-				((TedDailySerie)selectedSerie).setLatestDownloadDate(d.getTimeInMillis());
-			}
-			else
-			{
-				//SeasonEpisode se = (SeasonEpisode)this.episodeChooserPanel.getSelectedStructure();
-				SeasonEpisode se = (SeasonEpisode)this.subscribeOptionsPanel.getSelectedEpisode();
-				selectedSerie.setCurrentEpisode(se.getEpisode());
-				selectedSerie.setCurrentSeason(se.getSeason());
-				
-				selectedSerie.checkAirDate();
-			}
+			StandardStructure selectedEpisode = this.subscribeOptionsPanel.getSelectedEpisode();
+			selectedSerie.setCurrentEpisode(selectedEpisode);
+			selectedSerie.updateShowStatus();
 			
 			// add the serie
 			tedMain.addSerie(selectedSerie);

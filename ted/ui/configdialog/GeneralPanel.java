@@ -71,7 +71,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 	{
 		try {
 			{
-				this.setPreferredSize(new java.awt.Dimension(320, 243));
+				this.setPreferredSize(new java.awt.Dimension(320, 265));
 			}
 			generalPanel = new JPanel();
 			this.add(generalPanel);

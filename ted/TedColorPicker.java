@@ -20,7 +20,7 @@ import javax.swing.colorchooser.*;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class TedColorPicker extends javax.swing.JFrame
+public class TedColorPicker extends JDialog
                             implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
@@ -33,6 +33,7 @@ public class TedColorPicker extends javax.swing.JFrame
     	this.setSize(500, 450);
     	this.setTitle(Lang.getString("TedColorPicker.Choose"));
     	this.setResizable(false);
+    	this.setModal(true);
     	
     	mainDialog = main;
     	
@@ -100,8 +101,7 @@ public class TedColorPicker extends javax.swing.JFrame
 		else if (command.equals("return"))
 		{
 			this.setVisible(false);
-			ActionEvent event = new ActionEvent(this, 6, "Preferences...");
-			mainDialog.actionPerformed(event);
+			this.dispose();
 		}	
 		
 		mainDialog.updateGUI();

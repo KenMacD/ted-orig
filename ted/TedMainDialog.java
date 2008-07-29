@@ -84,10 +84,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	private TedLogDialog      tLog;	
 	private TedParseHandler   tParseHandler;	
 	private TedMainToolBar    TedToolBar;
-	private TedConfigDialog   tConfigDialog;
 	private TedTablePopupMenu ttPopupMenu;
 	private TedMainMenuBar    tMenuBar;
-	private TedColorPicker    colorPicker;
 	private TedTrayIcon       tedTray;
 		
 	private JPanel jStatusPanel;	
@@ -378,10 +376,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.isNewTed(false);
 		}
 		
-		tConfigDialog = new TedConfigDialog(this, true, false);
-		
-		colorPicker   = new TedColorPicker(this);
-		
 		uiInitialized = true;
 	}
 	
@@ -495,7 +489,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		serieTable.addSerie(newSerie);
 		
 		// if it is the day to start checking the serie again
-		newSerie.checkDate();
+		newSerie.updateShowStatus();
 		
 		// if the serie is not paused
 		if(newSerie.isCheck())
@@ -538,7 +532,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 				TedSerie serie = serieTable.getSerieAt(i);
 				
 				// if it is the day to start checking the serie again
-				serie.checkDate();
+				serie.updateShowStatus();
 				
 				// if the serie is not paused
 				if(serie.isCheck())
@@ -605,7 +599,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if(action.equals("Preferences...")) //$NON-NLS-1$
 		{
-			tConfigDialog.setVisible(true);
+			new TedConfigDialog(this, true, true);
 		}
 		else if(action.equals("Log")) //$NON-NLS-1$
 		{
@@ -839,11 +833,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			this.openTranslationLink();
 		}
-		else if(action.equals("Color"))
-		{
-			tConfigDialog.setVisible(false);
-			colorPicker.setVisible(true);
-		}
 		else if(action.equals("toggleautoschedule"))
 		{
 			TedSerie selectedSerie = serieTable.getSelectedShow();
@@ -862,7 +851,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	public void showPreferencesDialog()
 	{
-		tConfigDialog.setVisible(true);
+		new TedConfigDialog(this, true,true);
 	}
 	
 	public void quit()

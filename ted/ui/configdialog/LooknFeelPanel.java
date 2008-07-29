@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 import ted.Lang;
+import ted.TedColorPicker;
 import ted.TedConfig;
 import ted.TedMainDialog;
 import ted.TedSystemInfo;
@@ -75,7 +76,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		try 
 		{
 			{
-				this.setPreferredSize(new java.awt.Dimension(350, 345));
+				this.setPreferredSize(new java.awt.Dimension(400, 400));
 			}
 			//this.setPreferredSize(new Dimension(width, height));
 
@@ -86,7 +87,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 				"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)", 
 				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 		lookFeelPanel.setLayout(lookFeelPanelLayout);
-		lookFeelPanel.setPreferredSize(new java.awt.Dimension(342, 344));
+		lookFeelPanel.setPreferredSize(new java.awt.Dimension(400, 400));
 
 		labelLanguage = new JLabel();
 		lookFeelPanel.add(labelLanguage, new CellConstraints("2, 13, 2, 1, default, default"));
@@ -163,7 +164,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 			lookFeelPanel.add(colorPickerButton, new CellConstraints("2, 11, 2, 1, default, default"));
 			colorPickerButton.setText(Lang.getString("TedConfigDialog.ChooseColors"));
 			colorPickerButton.setActionCommand("Color");
-			colorPickerButton.addActionListener(tMain);
+			colorPickerButton.addActionListener(this);
 		}
 
 		} catch (Exception e) {
@@ -266,6 +267,12 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 			}
 			
 			this.checkStartMinimized.setEnabled(isChecked);
+		}
+		else if (command.equals("Color"))
+		{
+			// popup the color picker
+			TedColorPicker colorPicker = new TedColorPicker(this.tMain);
+			colorPicker.setVisible(true);
 		}
 		
 	}

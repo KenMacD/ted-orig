@@ -1,10 +1,13 @@
 package ted;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.StandardStructure;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 
 public class TedDailySerie extends TedSerie
 {
@@ -183,5 +186,92 @@ public class TedDailySerie extends TedSerie
 		{
 			return false;
 		}
+	}
+	
+	/**
+	 * Checks the schedule whether the current season/episode are known.
+	 * If not, checks the schedule if there is another episode known after the previous episode.
+	 */
+	public void checkIfCurrentEpisodeIsScheduled() 
+	{
+		try 
+		{
+			DailyDate temp = new DailyDate(this.latestDownloadDate);
+			StandardStructure currentSE;
+			currentSE = scheduler.getEpisode(temp);
+		} 
+		catch (NoEpisodeFoundException e) 
+		{
+			// No episode found. Go check and see if there might be another one scheduled after 
+			// currentSeason / currentEpisode-1
+			//goToNextSeasonEpisode(currentSeason, currentEpisode-1);
+	        Calendar oneDayBefore = Calendar.getInstance();
+	        oneDayBefore.setTime(this.latestDownloadDate.getTime());
+	        oneDayBefore.add(Calendar.DAY_OF_YEAR, -1);
+	        DailyDate tempDDate = new DailyDate(oneDayBefore.getTime());
+	        goToNextEpisode(tempDDate);
+	    }		
+	}
+	
+	public void goToNextEpisode(DailyDate dDate)
+	{
+		// ask next episode to scheduler
+		try 
+		{
+			DailyDate nextDate = (DailyDate) this.getScheduler().getNextEpisode(dDate);
+			this.setCurrentEpisode(nextDate);
+			this.updateShowStatus();
+		} 
+		catch (NoEpisodeFoundException e) 
+		{
+			// next episode is not known in schedule, increase date by one day
+			if (this.status != TedSerie.STATUS_HIATUS)
+			{
+				Calendar oneDayAfter = Calendar.getInstance();
+				oneDayAfter.setTime(dDate.getDate().getTime());
+				oneDayAfter.add(Calendar.DAY_OF_YEAR, 1);
+				// make new daily date that has the next day as date
+				DailyDate nextDate = new DailyDate(oneDayAfter.getTime());
+				this.setCurrentEpisode(nextDate);
+				this.setStatus(TedSerie.STATUS_HIATUS);
+			}		
+		}	
+	}
+	
+	/**
+	 * Cache the values in the Serie so we don't need to update them from the schedule every time
+	 * Now they are pushed when the schedule is updated.
+	 * @param se
+	 */
+	public void setCurrentEpisode(StandardStructure dd) 
+	{
+		DailyDate episode = (DailyDate) dd;
+		setLatestDownloadDate(episode.getDate().getTimeInMillis());
+		
+		try 
+		{
+			this.currentEpisodeAirDate = dd.getAirDate();
+		} 
+		catch (AirDateUnknownException e) 
+		{
+			this.currentEpisodeAirDate = null;
+		}
+		this.currentEpisodeTitle = dd.getTitle();
+	}
+	
+	public StandardStructure getCurrentStandardStructure()
+	{
+		StandardStructure temp = new DailyDate(this.latestDownloadDate);
+		StandardStructure result;
+		try
+		{
+			result = scheduler.getEpisode(temp);
+		}
+		catch (NoEpisodeFoundException e) 
+		{
+			result = temp;
+		}	
+		
+		return result;
 	}
 }
