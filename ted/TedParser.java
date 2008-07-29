@@ -1538,12 +1538,14 @@ public class TedParser extends Thread
 					String dayString = split[1];
 					int day = -1;
 					
-					if (dayString.length() == 2)
+					// If the string has size 1 or 2
+					if (dayString.length() <= 2 && dayString.length() != 0)
 					{
 						// only integer day available in input.
 						day = Integer.parseInt(dayString);
 					}
-					else if (dayString.length() == 4)
+					// Or when the string has size 3 or 4
+					else if (dayString.length() <= 4)
 					{
 						// remove 'st', 'nd', 'th' from name.
 						day  = Integer.parseInt(split[1].substring(0, (split[1].length()-2)));
