@@ -31,7 +31,7 @@ public class TedColorPicker extends javax.swing.JFrame
     public TedColorPicker(TedMainDialog main) 
     {       
     	this.setSize(500, 450);
-    	this.setTitle("Choose your colors");
+    	this.setTitle(Lang.getString("TedColorPicker.Choose"));
     	this.setResizable(false);
     	
     	mainDialog = main;
@@ -47,10 +47,10 @@ public class TedColorPicker extends javax.swing.JFrame
         
         panel.add(tcc, BorderLayout.NORTH);
   
-        JButton oddRowColor     = new JButton("Odd rows");
-        JButton evenRowColor    = new JButton("Even rows");
-        JButton restoreDefaults = new JButton("Restore defaults");
-    	JButton returnButton    = new JButton("Return to preferences");
+        JButton oddRowColor     = new JButton(Lang.getString("TedColorPicker.Odd"));
+        JButton evenRowColor    = new JButton(Lang.getString("TedColorPicker.Even"));
+        JButton restoreDefaults = new JButton(Lang.getString("TedColorPicker.Restore"));
+    	JButton returnButton    = new JButton(Lang.getString("TedColorPicker.Return"));
 
         oddRowColor    .addActionListener(this);
         evenRowColor   .addActionListener(this);
@@ -62,7 +62,7 @@ public class TedColorPicker extends javax.swing.JFrame
         restoreDefaults.setActionCommand("default");
     	returnButton   .setActionCommand("return");
 
-        JLabel label = new JLabel("Assign selected color to:");
+        JLabel label = new JLabel(Lang.getString("TedColorPicker.Assign"));
         
         JPanel buttonPanel  = new JPanel();
         JPanel buttonPanel2 = new JPanel();
