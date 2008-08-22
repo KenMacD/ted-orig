@@ -121,8 +121,18 @@ public class SeasonEpisodeScheduler implements Serializable
 			Vector<StandardStructure> publishedEps = this.getPubishedAndAiredEpisodes(true);
 			if (publishedEps.size() > 0)
 			{
-				// element 0 is the last aired or published ep. get the next from it
-				result = publishedEps.elementAt(0).nextEpisode();
+				// get the last aired episode from the episode list
+				StandardStructure temp = publishedEps.elementAt(0);
+				// try to see if one is scheduled after last aired episode
+				try 
+				{
+					result = this.getNextEpisode(temp);
+				} 
+				catch (NoEpisodeFoundException e) 
+				{
+					// no scheduled episode found, generate a next epsidoe
+					result = temp.nextEpisode();
+				}
 			}
 		}
 		
