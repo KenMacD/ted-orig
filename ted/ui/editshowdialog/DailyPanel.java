@@ -106,30 +106,6 @@ public class DailyPanel extends JPanel
 		}
 		
 	}
-	
-	/**
-	 * Save the values of the panel in the daily show
-	 * @param serie a daily show
-	 */
-	public void saveValues(TedDailySerie serie) 
-	{
-		// set latest download date
-		//int day = this.datePanel.getDay();
-		//int month = this.datePanel.getMonth();
-		//int year = this.datePanel.getYear();
-		//serie.setLatestDownloadDate(day, month, year);
-		serie.setCurrentEpisode(this.currentDate);
-		
-		// get number of episodes to download
-		int number;
-		Object value = episodeSpinner.getValue();
-		if(value.toString().equals(Lang.getString("TedGeneral.All")))
-			number = 0;
-		else number = Integer.parseInt(value.toString());
-		
-		serie.setMaxDownloads(number);
-		
-	}
 
 	/**
 	 * Set the date to display in the panel
@@ -149,6 +125,23 @@ public class DailyPanel extends JPanel
 	public StandardStructure getStandardStructure()
 	{
 		return this.currentDate;
+	}
+	
+	public int getNumberOfMaxDownloads()
+	{
+		// get number of episodes to download
+		int number;
+		Object value = episodeSpinner.getValue();
+		if(value.toString().equals(Lang.getString("TedGeneral.All")))
+		{
+			number = 0;
+		}
+		else 
+		{
+			number = Integer.parseInt(value.toString());
+		}
+		
+		return number;
 	}
 
 }

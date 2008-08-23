@@ -210,6 +210,7 @@ public class GeneralPanel extends JPanel
 			if (currentSerie.isDaily())
 			{
 				currentSerie.setCurrentEpisode(dailyPanel.getStandardStructure());
+				((TedDailySerie)currentSerie).setMaxDownloads(dailyPanel.getNumberOfMaxDownloads());
 			}
 			else
 			{
