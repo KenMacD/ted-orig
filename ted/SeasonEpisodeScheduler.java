@@ -303,10 +303,11 @@ public class SeasonEpisodeScheduler implements Serializable
 	}
 
 	/**
-	 * Cross-matches the published episodes (from the torrent websites) and the 
-	 * aired episodes (from the epguides schedule) to filter out fakes and display
-	 * the next aired episode that has not yet been published.
-	 * @return a vector with season/episodes that have been aired and published plus
+	 * Merges the published episodes (from the torrent websites) and the 
+	 * aired episodes (from the epguides schedule).
+	 * Adds availability of episodes on the torrent sites to the scheduled episodes
+	 * retrieved from the tv schedules webistes
+	 * @return a vector with season/episodes that have been aired plus
 	 * one next episode that is scheduled to air
 	 */
 	Vector<StandardStructure> getPubishedAndAiredEpisodes(boolean noScheduledEpisodes) 
@@ -317,6 +318,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		
 		if (publishedEpisodes.size() > 0 && airedEpisodes.size() > 0)
 		{		
+			results.addAll(airedEpisodes);
 			// filter out any items in publishedEpisodes that are not in airedEpisodes
 			int airedCounter = 0;
 			int publishedCounter = 0;
@@ -326,7 +328,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			airedCounter++;
 			publishedCounter++;
 			
-			while (airedCounter < airedEpisodes.size() && publishedCounter < publishedEpisodes.size())
+			while (airedCounter < results.size() && publishedCounter < publishedEpisodes.size())
 			{
 				// compare the two episodes.
 				
@@ -339,23 +341,13 @@ public class SeasonEpisodeScheduler implements Serializable
 				// if published < aired get next aired
 				else if (publishedEpisode.compareTo(airedEpisode) > 0 && airedCounter < airedEpisodes.size())
 				{
-					airedEpisode = airedEpisodes.elementAt(airedCounter);
+					airedEpisode = results.elementAt(airedCounter);
 					airedCounter ++;
 				}
 				// if published == aired, save episode into result vector and get next of both
 				else if (publishedEpisode.compareTo(airedEpisode) == 0)
 				{
-					try 
-					{
-						publishedEpisode.setAirDate(airedEpisode.getAirDate());
-					} 
-					catch (AirDateUnknownException e) 
-					{
-						// do nothing
-					}
-					publishedEpisode.setTitle(airedEpisode.getTitle());
-					publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
-					results.add(publishedEpisode);
+					airedEpisode.setQuality(publishedEpisode.getQuality());
 					
 					if (publishedCounter < publishedEpisodes.size())
 					{
@@ -364,7 +356,7 @@ public class SeasonEpisodeScheduler implements Serializable
 					}
 					if (airedCounter < airedEpisodes.size())
 					{
-						airedEpisode = airedEpisodes.elementAt(airedCounter);
+						airedEpisode = results.elementAt(airedCounter);
 						airedCounter ++;
 					}
 				}
@@ -373,18 +365,8 @@ public class SeasonEpisodeScheduler implements Serializable
 			// make sure to check the last episodes, could be skipped by while loop
 			if (publishedEpisode.compareTo(airedEpisode) == 0)
 			{
-				try 
-				{
-					publishedEpisode.setAirDate(airedEpisode.getAirDate());
-				} 
-				catch (AirDateUnknownException e) 
-				{
-					// do nothing
-				}
-				publishedEpisode.setTitle(airedEpisode.getTitle());
-				publishedEpisode.setSummaryURL(airedEpisode.getSummaryURLString());
-				results.add(publishedEpisode);
-			}			
+				airedEpisode.setQuality(publishedEpisode.getQuality());
+			}		
 		}
 		else
 		{

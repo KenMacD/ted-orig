@@ -131,7 +131,7 @@ public class EpisodeChooserPanel extends JPanel
 			ttpr = new TedTableProgressbarRenderer(0, 100);
 			ttpr.setStringPainted(false);
 			
-			TableRenderer tr = new TableRenderer();
+			EpisodesTableRenderer tr = new EpisodesTableRenderer();
 			episodesTable.setDefaultRenderer(Object.class, tr);
 			episodesTable.setRowHeight(episodesTable.getRowHeight()+5);
 			
