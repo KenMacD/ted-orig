@@ -611,6 +611,35 @@ public class SeasonEpisodeScheduler implements Serializable
 		}	
 	}
 	
+	public StandardStructure getLastAiredEpisode()
+	{
+		for (int i = 0; i < scheduledEpisodes.size(); ++i)
+		{
+			StandardStructure temp = scheduledEpisodes.elementAt(i);
+			
+			try 
+			{
+				Date date= temp.getAirDate(); 
+
+				// system date
+		       	Date systemDate = new Date();
+		       	
+				if (date != null && date.before(systemDate))
+				{
+					return temp;
+				}
+			} 
+			catch (AirDateUnknownException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		StandardStructure nothingFoundStructure = new StandardStructure();
+		return nothingFoundStructure;
+	}
+	
 	/**
 	 * Check what the status has to be after a certain episode has been found
 	 * @param episode

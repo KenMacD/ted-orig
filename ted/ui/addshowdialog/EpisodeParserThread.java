@@ -95,6 +95,7 @@ public class EpisodeParserThread extends Thread
 			if (this.subscribeOptionsPanel != null)
 			{				
 				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
+				this.subscribeOptionsPanel.setLastAiredEpisode(selectedSerie.getScheduler().getLastAiredEpisode());
 				this.subscribeOptionsPanel.setActivityStatus(false);
 			}
 			else
@@ -108,11 +109,7 @@ public class EpisodeParserThread extends Thread
 			
 			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
 			this.episodeChooserPanel.setNextEpisode(nextEpisode);
-			
-			if (this.subscribeOptionsPanel != null)
-			{
-				this.subscribeOptionsPanel.setAiredSeasonEpisodes(publishedEpisodes);
-			}
+			this.subscribeOptionsPanel.enableCustomEpisodes();
 			
 			// free vector for garbage collection
 			publishedEpisodes = null;

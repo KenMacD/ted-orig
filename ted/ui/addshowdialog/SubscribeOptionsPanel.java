@@ -238,19 +238,18 @@ public class SubscribeOptionsPanel extends JPanel
 		}
 	}
 
-	public void setAiredSeasonEpisodes(Vector<StandardStructure> episodes)
+	public void setLastAiredEpisode(StandardStructure episode)
 	{
-		// first item in list is last aired episode
-		if (episodes.size() > 0)
-		{
-			this.lastAiredEpisode = episodes.elementAt(0);
-			this.airedEpisodeLabel.setText(	this.lastAiredEpisode.getSearchString());
-			this.getAiredEpisodeTitleLabel().setText(this.lastAiredEpisode.getSubscribtionOptionsTitle());
-			
-			// enable custom selection
-			customSelectRadio.setEnabled(true);
-			this.updateEnabledOptions();
-		}	
+		this.lastAiredEpisode = episode;
+		this.airedEpisodeLabel.setText(	this.lastAiredEpisode.getSearchString());
+		this.getAiredEpisodeTitleLabel().setText(this.lastAiredEpisode.getSubscribtionOptionsTitle());
+		this.updateEnabledOptions();
+	}
+	
+	public void enableCustomEpisodes()
+	{
+		// enable custom selection
+		this.customSelectRadio.setEnabled(true);
 	}
 
 	public void setNextEpisode(StandardStructure nextEpisode2) 
