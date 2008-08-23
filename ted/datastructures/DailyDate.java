@@ -242,7 +242,7 @@ public class DailyDate  extends StandardStructure
 		return this.getFormattedAirDateWithText();
 	}
 
-	public DailyDate nextEpisode()
+	public DailyDate guessNextEpisode()
 	{
 		Date date = new Date(this.airDate.getTime() + 86400000);
 		return new DailyDate(date, "");

@@ -237,7 +237,7 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		return 0;
 	}
 		
-	public StandardStructure nextEpisode() 
+	public StandardStructure guessNextEpisode() 
 	{
 		return new StandardStructure();
 	}

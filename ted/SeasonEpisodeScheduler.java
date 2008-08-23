@@ -137,12 +137,13 @@ public class SeasonEpisodeScheduler implements Serializable
 		{			
 			try 
 			{
+				// Search for the next episode...
 				result = getNextEpisode(latestInScheduleWithDate);
 			} 
 			catch (NoEpisodeFoundException e1) 
 			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				// ... if one isn't found just do a guess.
+				result = latestInScheduleWithDate.guessNextEpisode();
 			}
 		}
 		

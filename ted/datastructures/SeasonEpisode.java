@@ -32,7 +32,7 @@ public class SeasonEpisode extends StandardStructure
 		// TODO Auto-generated constructor stub
 	}	
 
-	public SeasonEpisode nextEpisode()
+	public SeasonEpisode guessNextEpisode()
 	{
 		int nextEpisodeNr  = episode + 1;
 		return new SeasonEpisode(season, nextEpisodeNr);
