@@ -98,10 +98,6 @@ public class EpisodeParserThread extends Thread
 				this.subscribeOptionsPanel.setLastAiredEpisode(selectedSerie.getScheduler().getLastAiredEpisode());
 				this.subscribeOptionsPanel.setActivityStatus(false);
 			}
-			else
-			{
-				this.episodeChooserPanel.setActivityStatus(false);
-			}
 			
 			// Do this at the end. This way we save some time loading the
 			// episodes in the custom episode list.
@@ -109,7 +105,15 @@ public class EpisodeParserThread extends Thread
 			
 			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
 			this.episodeChooserPanel.setNextEpisode(nextEpisode);
-			this.subscribeOptionsPanel.enableCustomEpisodes();
+			
+			if (this.subscribeOptionsPanel != null)
+			{
+				this.subscribeOptionsPanel.enableCustomEpisodes();
+			}
+			else
+			{
+				this.episodeChooserPanel.setActivityStatus(false);
+			}
 			
 			// free vector for garbage collection
 			publishedEpisodes = null;
