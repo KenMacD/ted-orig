@@ -67,7 +67,7 @@ public class EpisodeParserThread extends Thread
 		if (this.subscribeOptionsPanel != null)
 		{
 			this.subscribeOptionsPanel.clear();
-			this.subscribeOptionsPanel.setActivityStatus(true);
+			this.subscribeOptionsPanel.setGlobalActivityStatus(true);
 		}
 		else
 		{
@@ -96,7 +96,8 @@ public class EpisodeParserThread extends Thread
 			{				
 				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
 				this.subscribeOptionsPanel.setLastAiredEpisode(selectedSerie.getScheduler().getLastAiredEpisode());
-				this.subscribeOptionsPanel.setActivityStatus(false);
+				this.subscribeOptionsPanel.setGlobalActivityStatus(false);
+				this.subscribeOptionsPanel.setCustomActivityStatus(true);
 			}
 			
 			// Do this at the end. This way we save some time loading the
@@ -109,6 +110,7 @@ public class EpisodeParserThread extends Thread
 			if (this.subscribeOptionsPanel != null)
 			{
 				this.subscribeOptionsPanel.enableCustomEpisodes();
+				this.subscribeOptionsPanel.setCustomActivityStatus(false);
 			}
 			else
 			{

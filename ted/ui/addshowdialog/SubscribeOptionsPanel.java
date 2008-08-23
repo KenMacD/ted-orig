@@ -66,7 +66,8 @@ public class SubscribeOptionsPanel extends JPanel
 
 	private StandardStructure customStructure;
 	
-	private Canvas activityCanvas;
+	private Canvas globalActivityCanvas;
+	private Canvas customActivityCanvas;
 	
 	public SubscribeOptionsPanel()
 	{
@@ -122,16 +123,18 @@ public class SubscribeOptionsPanel extends JPanel
 		customEpisodeLabel.setForeground(Color.DARK_GRAY);
 		
 		this.clear();	
-		getActivityCanvas().setVisible(false);
+		getGlobalActivitySpinner().setVisible(false);
+		getCustomActivitySpinner().setVisible(false);
 		
 		this.add(nextEpisodeRadio, new CellConstraints("1, 1, 2, 1, default, default"));
-		this.add(getActivityCanvas(), new CellConstraints("1, 1, 1, 1, default, default"));
+		this.add(getGlobalActivitySpinner(), new CellConstraints("1, 1, 1, 1, default, default"));
 		this.add(futureEpisodeLabel, new CellConstraints("2, 3, 1, 1, default, default"));
 		this.add(lastAiredRadio, new CellConstraints("1, 5, 2, 1, default, default"));
 		this.add(airedEpisodeLabel, new CellConstraints("2, 7, 1, 1, default, default"));
 		this.add(customSelectRadio, new CellConstraints("1, 9, 2, 1, default, default"));
 		this.add(customEpisodeLabel, new CellConstraints("2, 11, 2, 1, default, default"));
 		this.add(getCustomEpisodeTitleLabel(), new CellConstraints("2, 10, 2, 1, default, default"));
+		this.add(getCustomActivitySpinner(), new CellConstraints("2, 10, 2, 1, default, default"));
 		this.add(getFutureEpisodeTitleLabel(), new CellConstraints("2, 2, 2, 1, default, default"));
 		this.add(getAiredEpisodeTitleLabel(), new CellConstraints("2, 6, 2, 1, default, default"));
 	}
@@ -297,26 +300,48 @@ public class SubscribeOptionsPanel extends JPanel
 		this.addShowDialog.subscribeOptionChanged();
 	}
 	
-	private Canvas getActivityCanvas() {
-		if (activityCanvas == null) 
+	private Canvas getGlobalActivitySpinner() {
+		if (globalActivityCanvas == null) 
 		{
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
 			Image activityIm = toolkit.getImage(getClass().getClassLoader().getResource("icons/activity.gif"));
 			
-			activityCanvas = new ImageCanvas(activityIm.getSource());
-			activityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
-			activityCanvas.setVisible(false);
+			globalActivityCanvas = new ImageCanvas(activityIm.getSource());
+			globalActivityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
+			globalActivityCanvas.setVisible(false);
 		}
-		return activityCanvas;
+		return globalActivityCanvas;
+	}
+	
+	private Canvas getCustomActivitySpinner() {
+		if (customActivityCanvas == null) 
+		{
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Image activityIm = toolkit.getImage(getClass().getClassLoader().getResource("icons/activity.gif"));
+			
+			customActivityCanvas = new ImageCanvas(activityIm.getSource());
+			customActivityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
+			customActivityCanvas.setVisible(false);
+		}
+		return customActivityCanvas;
 	}
 	
 	/**
 	 * When activity status is true, a activity icon is shown
 	 * @param active
 	 */
-	public void setActivityStatus(boolean active)
+	public void setGlobalActivityStatus(boolean active)
 	{
-		getActivityCanvas().setVisible(active);
+		getGlobalActivitySpinner().setVisible(active);
+	}
+	
+	/**
+	 * When activity status is true, a activity icon is shown
+	 * @param active
+	 */
+	public void setCustomActivityStatus(boolean active)
+	{
+		getCustomActivitySpinner().setVisible(active);
 	}
 	
 	private JLabel getCustomEpisodeTitleLabel() {
