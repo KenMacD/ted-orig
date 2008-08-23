@@ -238,18 +238,26 @@ public class TedDailySerie extends TedSerie
 	 */
 	public void setCurrentEpisode(StandardStructure dd) 
 	{
-		DailyDate episode = (DailyDate) dd;
+		DailyDate episode;
+		try 
+		{
+			episode = (DailyDate) this.scheduler.getEpisode(dd);
+		} 
+		catch (NoEpisodeFoundException e1) 
+		{
+			episode = (DailyDate)dd;
+		}
 		setLatestDownloadDate(episode.getDate().getTimeInMillis());
 		
 		try 
 		{
-			this.currentEpisodeAirDate = dd.getAirDate();
+			this.currentEpisodeAirDate = episode.getAirDate();
 		} 
 		catch (AirDateUnknownException e) 
 		{
 			this.currentEpisodeAirDate = null;
 		}
-		this.currentEpisodeTitle = dd.getTitle();
+		this.currentEpisodeTitle = episode.getTitle();
 	}
 	
 	public StandardStructure getCurrentStandardStructure()

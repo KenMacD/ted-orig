@@ -1051,7 +1051,7 @@ public class TedSerie implements Serializable
 		se.setEpisode(this.currentEpisode);
 		result +=  se.toString();
 	
-		if (this.currentEpisodeTitle != "" && this.currentEpisodeTitle != null)
+		if (this.getCurrentEpisodeTitle() != "" && this.getCurrentEpisodeTitle() != null)
 		{
 			result += ": \"" + this.getCurrentEpisodeTitle() + "\"";
 		}
@@ -1282,18 +1282,27 @@ public class TedSerie implements Serializable
 	 */
 	public void setCurrentEpisode(StandardStructure se) 
 	{
-		SeasonEpisode episode = (SeasonEpisode) se;
+		SeasonEpisode episode;
+		try 
+		{
+			episode = (SeasonEpisode) this.scheduler.getEpisode(se);
+		} 
+		catch (NoEpisodeFoundException e1) 
+		{
+			episode = (SeasonEpisode)se;
+		}
+		
 		this.currentEpisode = episode.getEpisode();
 		this.currentSeason = episode.getSeason();
 		try 
 		{
-			this.currentEpisodeAirDate = se.getAirDate();
+			this.currentEpisodeAirDate = episode.getAirDate();
 		} 
 		catch (AirDateUnknownException e) 
 		{
 			this.currentEpisodeAirDate = null;
 		}
-		this.currentEpisodeTitle = se.getTitle();
+		this.currentEpisodeTitle = episode.getTitle();
 		this.updateShowStatus();
 	}
 
