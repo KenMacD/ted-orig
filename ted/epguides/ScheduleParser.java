@@ -51,8 +51,10 @@ public class ScheduleParser
     {
 		// The general pattern that epguides follows for their show lists
 	    // Format:   1.   1- 1        100     22 Sep 04   <a target="_blank" href="http://www.tv.com/lost/pilot-1/episode/334467/summary.html">Pilot (1)</a>
-	    String regex       = "(\\d+.\\s+)(\\d+)(\\-|\\-\\s)(\\d+)(\\s+)(\\.*+)(\\s+)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
-	    String regexNoDate = "(\\d+.\\s+)(\\d+)(\\-|\\-\\s)(\\d+)(\\s+)(\\.*+)(\\s+)";
+		//         640.   7-28       7028     22 Aug 02   <a target="_blank" href="http://www.tv.com/the-daily-show/matthew-perry/episode/992799/summary.html">Matthew Perry</a>
+
+	    String regex       = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
+	    String regexNoDate = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)";//(\\s)(\\.*)(\\s)";
 	    String regexName   = "(>)(.+)(</a>)(\\s*)$";
 	    
         Date parsedAirDate=null;
@@ -101,8 +103,8 @@ public class ScheduleParser
                          
                          if (parsedAirDate.after(from) && parsedAirDate.before(to))
                          {
-                        	 season   = Integer.parseInt(matcher.group(1));
-                             episode  = Integer.parseInt(matcher.group(3));
+                        	 season   = Integer.parseInt(matcher.group(2));
+                             episode  = Integer.parseInt(matcher.group(4));
                              airdate = parsedAirDate;                                                                
                          }
                     }
