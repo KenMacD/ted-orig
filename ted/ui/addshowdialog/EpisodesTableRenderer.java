@@ -56,7 +56,7 @@ public class EpisodesTableRenderer extends DefaultTableCellRenderer
 			if (episode.getQuality() == 0)
 			{
 				// draw text lightgray
-				setForeground(Color.DARK_GRAY);
+				setForeground(Color.LIGHT_GRAY);
 			}
 			else
 			{
