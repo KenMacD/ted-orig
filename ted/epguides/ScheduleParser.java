@@ -241,67 +241,57 @@ public class ScheduleParser
 			{
 				// There is only on episode list
 				Element episodeList = (Element)foundSeasonsList.item(0);
-
-				boolean searchForNextSeason = true;
-				int seasonNumber = 1;
-				while (searchForNextSeason)
+				
+				// Which has multiple seasons
+				NodeList seasonEpisodes = episodeList.getElementsByTagName("Season");// + seasonNumber);
+				int nrSeasons = seasonEpisodes.getLength();
+				if (seasonEpisodes != null && seasonEpisodes.getLength() > 0)
 				{
-					// Which has multiple seasons
-					NodeList seasonEpisodes = episodeList.getElementsByTagName("Season" + seasonNumber);
-					
-					if (seasonEpisodes != null && seasonEpisodes.getLength() > 0)
+					for (int i = 0; i < seasonEpisodes.getLength(); ++i)
 					{
-						for (int i = 0; i < seasonEpisodes.getLength(); ++i)
-						{
-							// For every season 
-							Element allSeasons = (Element)seasonEpisodes.item(i);
-						
-							// Get all the episodes of that season
-							NodeList episodesOfSeason = allSeasons.getElementsByTagName("episode");
+						// For every season 
+						Element allSeasons = (Element)seasonEpisodes.item(i);
+					
+						// Get all the episodes of that season
+						NodeList episodesOfSeason = allSeasons.getElementsByTagName("episode");
 
-							// Retrieve all the needed info
-							if (seasonEpisodes != null && seasonEpisodes.getLength() > 0)
+						// Retrieve all the needed info
+						if (seasonEpisodes != null && seasonEpisodes.getLength() > 0)
+						{
+							for (int z = 0; z < episodesOfSeason.getLength(); z++)
 							{
-								for (int z = 0; z < episodesOfSeason.getLength(); z++)
+								Element episodeInfo = (Element)episodesOfSeason.item(z);
+								
+								int episode = parser.getIntValue(episodeInfo, "seasonnum");
+								String title = parser.getTextValue(episodeInfo, "title");
+								Date airdate = null;
+								
+								try
+			                    {
+									String date = parser.getTextValue(episodeInfo, "airdate");
+			                        parsedAirDate = sdf.parse(date);
+			                         
+			                         if (parsedAirDate.after(from) && parsedAirDate.before(to))
+			                         {
+			                             airdate = parsedAirDate;                                                                
+			                         }
+			                    }
+			                    catch (java.text.ParseException pe) 
+			                    {
+			                    	continue;
+			                    }  
+								
+			                	try 
+			                	{
+			                		StandardStructure standardEpisode = constructEpisode(isDaily, i+1, episode, title, airdate);
+									episodes.add(standardEpisode);
+								} 
+			                	catch (CouldNotConstructEpisodeException e) 
 								{
-									Element episodeInfo = (Element)episodesOfSeason.item(z);
-									
-									int episode = parser.getIntValue(episodeInfo, "seasonnum");
-									String title = parser.getTextValue(episodeInfo, "title");
-									Date airdate = null;
-									
-									try
-				                    {
-										String date = parser.getTextValue(episodeInfo, "airdate");
-				                        parsedAirDate = sdf.parse(date);
-				                         
-				                         if (parsedAirDate.after(from) && parsedAirDate.before(to))
-				                         {
-				                             airdate = parsedAirDate;                                                                
-				                         }
-				                    }
-				                    catch (java.text.ParseException pe) 
-				                    {
-				                    	continue;
-				                    }  
-									
-				                	try 
-				                	{
-				                		StandardStructure standardEpisode = constructEpisode(isDaily, seasonNumber, episode, title, airdate);
-										episodes.add(standardEpisode);
-									} 
-				                	catch (CouldNotConstructEpisodeException e) 
-									{
-										// do nothing
-									}
+									// do nothing
 								}
 							}
 						}
-						seasonNumber++;
-					}
-					else
-					{
-						searchForNextSeason = false;
 					}
 				}
 			}
