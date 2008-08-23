@@ -407,7 +407,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		if (jHelpButton == null) {
 			jHelpButton = new JButton();
 			jHelpButton.setActionCommand("Help");
-			if (!TedSystemInfo.osIsMac())
+			if (!TedSystemInfo.osIsMacLeopardOrBetter())
 			{
 				jHelpButton.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("icons/help.png")));

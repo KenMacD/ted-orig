@@ -30,7 +30,7 @@ public class SearchTextField extends JTextField
 		// first paint textfield
         super.paint(g);
         // then icon on top (for mac?)
-		if (!TedSystemInfo.osIsMac())
+		if (!TedSystemInfo.osIsMacLeopardOrBetter())
 		{
 			searchIcon.paintIcon(this, g, this.getWidth()-22,6);
 		}

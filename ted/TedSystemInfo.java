@@ -1,6 +1,7 @@
 package ted;
 
 import java.io.File;
+import java.util.StringTokenizer;
 
 public class TedSystemInfo
 {
@@ -131,6 +132,31 @@ public class TedSystemInfo
 			return true;
 		}
 		return false;
+	}
+	
+	public static boolean osIsMacLeopardOrBetter()
+	{
+		int minMainVersion = 10;
+		int minSubVersion = 5;
+		boolean result = false;
+		
+		if (osIsMac())
+		{
+			String version = System.getProperty("os.version").toLowerCase();
+			StringTokenizer tokenizer = new StringTokenizer(version, ".");
+			// check first and second token
+			if (tokenizer.countTokens() >= 2)
+			{
+				int mainVersion = Integer.parseInt(tokenizer.nextToken());
+				int subVersion = Integer.parseInt(tokenizer.nextToken());
+				if (mainVersion >= minMainVersion && subVersion >= minSubVersion)
+				{
+					result = true;
+				}
+			}
+		}
+		
+		return result;
 	}
 	
 	/**

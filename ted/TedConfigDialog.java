@@ -177,7 +177,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 
 		this.jHelpButton = new JButton();
 		getContentPane().add(this.jHelpButton);
-		if (!TedSystemInfo.osIsMac())
+		if (!TedSystemInfo.osIsMacLeopardOrBetter())
 		{
 			this.jHelpButton.setIcon(new ImageIcon(getClass()
 					.getClassLoader().getResource("icons/help.png")));
