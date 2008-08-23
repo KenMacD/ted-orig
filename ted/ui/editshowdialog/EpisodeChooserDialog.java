@@ -1,4 +1,6 @@
 package ted.ui.editshowdialog;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,7 @@ import javax.swing.JDialog;
 
 import ted.Lang;
 import ted.TedSerie;
+import ted.TedSystemInfo;
 import ted.datastructures.StandardStructure;
 import ted.interfaces.EpisodeChooserListener;
 import ted.ui.addshowdialog.EpisodeChooserPanel;
@@ -42,7 +45,10 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 	public EpisodeChooserDialog(EditShowDialog frame)
 	{	
 		this.setModal(true);
-		this.setResizable(false);
+		FormLayout thisLayout = new FormLayout(
+				"max(p;5dlu):grow, max(p;5dlu), max(p;5dlu)", 
+				"5dlu:grow, 5dlu, 30dlu, 5dlu");
+		getContentPane().setLayout(thisLayout);
 		this.initGUI();
 		
 		editShowDialog = frame;
@@ -50,13 +56,20 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 	
 	private void initGUI() 
 	{
+		int okButtonColumn = 3;
+		int cancelButtonColumn = 2;
+		
+		if (TedSystemInfo.osIsWindows())
+		{
+			okButtonColumn = 2;
+			cancelButtonColumn = 3;
+		}
 		try {
 			{
-				this.setLayout(null);
 				okButton = new JButton();
-				this.add(okButton);
+				getContentPane().add(okButton, new CellConstraints(okButtonColumn+", 3, 1, 1, default, default"));
 				okButton.setText(Lang.getString("TedGeneral.ButtonOk"));
-				okButton.setBounds(280, 238, 98, 28);
+				//okButton.setBounds(280, 238, 98, 28);
 				okButton.addActionListener(this);
 				okButton.setActionCommand("ok");
 				this.okButton.setEnabled(false);
@@ -64,20 +77,20 @@ public class EpisodeChooserDialog extends JDialog implements ActionListener, Epi
 			}
 			{
 				cancelButton = new JButton();
-				this.add(cancelButton);
+				getContentPane().add(cancelButton, new CellConstraints(cancelButtonColumn+", 3, 1, 1, default, default"));
 				cancelButton.setText(Lang.getString("TedGeneral.ButtonCancel"));
-				cancelButton.setBounds(165, 238, 100, 28);
+				//cancelButton.setBounds(165, 238, 100, 28);
 				cancelButton.addActionListener(this);
 				cancelButton.setActionCommand("cancel");
 				
 				episodeChooserPanel = new EpisodeChooserPanel(this);
-				this.add(episodeChooserPanel);
-				episodeChooserPanel.setBounds(0, 0, 385, 231);
+				getContentPane().add(episodeChooserPanel, new CellConstraints("1, 1, 3, 1, fill, fill"));
+				//episodeChooserPanel.setBounds(0, 0, 385, 231);
 				
 				
 			}
 			{
-				this.setSize(393, 307);
+				this.setSize(500, 400);
 				
 //				Get the screen size
 			    Toolkit toolkit = Toolkit.getDefaultToolkit();
