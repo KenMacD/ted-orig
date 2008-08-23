@@ -1238,6 +1238,7 @@ public class TedSerie implements Serializable
 	public void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
 		this.useAutoSchedule = useAutoSchedule;
+		this.updateShowStatus();
 	}
 
 	public void setEpguidesName(String text)
@@ -1298,8 +1299,7 @@ public class TedSerie implements Serializable
 
 	public void setStatusString(String string) 
 	{
-		this.statusString = string;
-		
+		this.statusString = string;		
 	}
 
 	/**
@@ -1308,16 +1308,15 @@ public class TedSerie implements Serializable
 	 */
 	public void checkIfCurrentEpisodeIsScheduled() 
 	{
+		SeasonEpisode temp = new SeasonEpisode(currentSeason, currentEpisode);
 		try 
 		{
-			StandardStructure currentSE;
-			currentSE = scheduler.getEpisode(new SeasonEpisode(currentSeason, currentEpisode));
+			scheduler.getEpisode(new SeasonEpisode(currentSeason, currentEpisode));
 		} 
 		catch (NoEpisodeFoundException e) 
 		{
-			// No episode found. Go check and see if there might be another one scheduled after 
-			// currentSeason / currentEpisode-1
-			goToNextEpisode(currentSeason, currentEpisode-1);
+			// no episode found in schedule, try to see if there is a next episode known
+			goToNextEpisode(currentSeason, currentEpisode);
 		}		
 	}
 	

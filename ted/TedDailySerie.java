@@ -165,7 +165,7 @@ public class TedDailySerie extends TedSerie
 			text = "TedTableModel.LabelDailyMultiple";
 		}
 		
-		return Lang.getString(text) +" " + dd.getFormattedAirDate();
+		return Lang.getString(text) +" " + dd.getFormattedEpisodeDate();
 	}
 	
 	public boolean isDoubleEpisode()
@@ -194,22 +194,15 @@ public class TedDailySerie extends TedSerie
 	 */
 	public void checkIfCurrentEpisodeIsScheduled() 
 	{
+		DailyDate temp = new DailyDate(this.latestDownloadDate);
 		try 
 		{
-			DailyDate temp = new DailyDate(this.latestDownloadDate);
-			StandardStructure currentSE;
-			currentSE = scheduler.getEpisode(temp);
+			scheduler.getEpisode(temp);
 		} 
 		catch (NoEpisodeFoundException e) 
 		{
-			// No episode found. Go check and see if there might be another one scheduled after 
-			// currentSeason / currentEpisode-1
-			//goToNextSeasonEpisode(currentSeason, currentEpisode-1);
-	        Calendar oneDayBefore = Calendar.getInstance();
-	        oneDayBefore.setTime(this.latestDownloadDate.getTime());
-	        oneDayBefore.add(Calendar.DAY_OF_YEAR, -1);
-	        DailyDate tempDDate = new DailyDate(oneDayBefore.getTime());
-	        goToNextEpisode(tempDDate);
+			// no episode found in schedule, try to see if there is a next episode known
+			goToNextEpisode(temp);		
 	    }		
 	}
 	

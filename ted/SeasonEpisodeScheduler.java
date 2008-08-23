@@ -261,25 +261,26 @@ public class SeasonEpisodeScheduler implements Serializable
 	{
 		StandardStructure result = null;
 			
-		int count = -1;
 		// check schedule for updates
 		if (this.updateEpisodeSchedule())
 		{
+			StandardStructure tempResult = null;
 			// search for season, episode in vector
+			// find the next to air after episode to find.
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
 			{
 				StandardStructure current = this.scheduledEpisodes.elementAt(i);
-				if (current.compareTo(episodeToFind) == 0)
+				if (episodeToFind.compareTo(current) > 0)
 				{
-					count = i;
+					tempResult = this.scheduledEpisodes.elementAt(i);
+				}
+				else if (episodeToFind.compareTo(current) <= 0)
+				{
+					// break early for performance reasons
 					break;
-				}	
-			}
-			
-			if (count - 1 >= 0)
-			{
-				result = this.scheduledEpisodes.elementAt(count - 1);
-			}
+				}
+			}	
+			result = tempResult;
 		}
 
 		if (result == null)
