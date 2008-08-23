@@ -1020,8 +1020,14 @@ public class TedParser extends Thread
 			String message;			
 			
 			message = 	Lang.getString("TedParser.BalloonFoundTorrent1") + " " + season + " " + 
-							Lang.getString("TedParser.BalloonFoundTorrent2") + " " + episode + " " +
-							Lang.getString("TedParser.BalloonFoundTorrent3") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						Lang.getString("TedParser.BalloonFoundTorrent2") + " " + episode + " ";
+			
+			if (serie.isDoubleEpisode())
+			{
+				message += " & " + (episode+1) + " ";
+			}
+			
+			message +=				Lang.getString("TedParser.BalloonFoundTorrent3") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			

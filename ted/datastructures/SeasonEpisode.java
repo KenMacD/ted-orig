@@ -102,7 +102,12 @@ public class SeasonEpisode extends StandardStructure
 	
 	public String toString()
 	{
-		return Lang.getString("TedTableModel.Season")+": "+ this.season + ", " + Lang.getString("TedTableModel.Episode")+": "+ this.episode;
+		String result = Lang.getString("TedTableModel.Season")+": "+ this.season + ", " + Lang.getString("TedTableModel.Episode")+": "+ this.episode;
+		if (this.isDouble())
+		{
+			result += " & " + (this.episode + 1);
+		}
+		return result;
 	}
 	
 	public String getSearchString()
@@ -110,10 +115,25 @@ public class SeasonEpisode extends StandardStructure
 		return this.toString() + ". " + this.getFormattedAirDateWithText() + ".";
 	}
 	
+	public String getSearchStringWithTitle()
+	{
+		String result = this.toString();
+		if (this.title != "" && this.title != null)
+		{
+			result += ": \"" + this.title + "\"";
+		}
+		return result;
+	}
+	
 	public String getEpisodeChooserTitle()
 	{
 		String result;
 		result = this.season + "x" + this.episode;
+		
+		if (this.isDouble())
+		{
+			result += " & " + (this.episode + 1);
+		}
 		
 		if (this.getTitle() != "")
 		{

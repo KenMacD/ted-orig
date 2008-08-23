@@ -257,7 +257,7 @@ public class TedDailySerie extends TedSerie
 		{
 			this.currentEpisodeAirDate = null;
 		}
-		this.currentEpisodeTitle = episode.getTitle();
+		this.currentEpisodeSearchString = episode.getTitle();
 	}
 	
 	public StandardStructure getCurrentStandardStructure()

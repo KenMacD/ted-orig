@@ -40,7 +40,8 @@ public class TedSerie implements Serializable
 	static final long serialVersionUID= 7210007788942770687L;
 	protected int currentEpisode;
 	protected int currentSeason;
-	protected String currentEpisodeTitle;
+	protected String currentEpisodeSearchString;
+	protected boolean currentEpisodeIsDouble;
 	protected Date currentEpisodeAirDate;
 	private int minSize;
 	private int maxSize;
@@ -124,6 +125,7 @@ public class TedSerie implements Serializable
 		this.statusString = Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		this.usePresets = true;
 		this.searchName = sName;
+		currentEpisodeIsDouble = false;
 	}
 	
 	/**
@@ -157,6 +159,7 @@ public class TedSerie implements Serializable
 		this.statusString = Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		this.usePresets = true;
 		this.searchName = "";
+		currentEpisodeIsDouble = false;
 	}
 	
 	
@@ -472,32 +475,12 @@ public class TedSerie implements Serializable
 	}
 	
 	/**
-	 * Set the current episode of the show
-	 * Deprecated! use SetCurrentEpisode
-	 * @param currentEpisode
-	 */
-	/*public void setCurrentEpisode(int currentEpisode) 
-	{
-		this.currentEpisode = currentEpisode;
-	}*/
-	
-	/**
 	 * @return The current season of the show
 	 */
 	public int getCurrentSeason() 
 	{
 		return currentSeason;
 	}
-	
-	/**
-	 * Set the current season of the show
-	 * Deprecated! use SetCurrentEpisode
-	 * @param currentSeason
-	 */
-	/*public void setCurrentSeason(int currentSeason) 
-	{
-		this.currentSeason = currentSeason;
-	}*/
 	
 	/**
 	 * @return The name of the show
@@ -606,14 +589,6 @@ public class TedSerie implements Serializable
 	{
 		return this.downloadAll;
 	}
-
-	/**
-	 * @return Returns the status of the show
-	 */
-	/*public int getStatus() 
-	{
-		return status;
-	}*/
 
 	/**
 	 * Set the status of the show
@@ -1044,19 +1019,27 @@ public class TedSerie implements Serializable
 	 * @return A text that displays where this show is searching for
 	 */
 	public String getSearchForString() 
-	{
-		String result = "";
-		SeasonEpisode se = new SeasonEpisode();
-		se.setSeason(this.currentSeason);
-		se.setEpisode(this.currentEpisode);
-		result +=  se.toString();
-	
-		if (this.getCurrentEpisodeTitle() != "" && this.getCurrentEpisodeTitle() != null)
+	{	
+		if (this.currentEpisodeSearchString == "" || this.currentEpisodeSearchString == null)
 		{
-			result += ": \"" + this.getCurrentEpisodeTitle() + "\"";
+			// no search for string found, probably first time this show is loaded in new ted
+			try 
+			{
+				// get the se from the scheduler
+				SeasonEpisode se = (SeasonEpisode) this.getScheduler().getEpisode(new SeasonEpisode(this.currentSeason, this.currentEpisode));
+				this.currentEpisodeIsDouble = se.isDouble();
+				this.currentEpisodeSearchString = se.getSearchStringWithTitle();
+			} 
+			catch (NoEpisodeFoundException e) 
+			{
+				// nothing found in scheduler, generate from current season/episode
+				SeasonEpisode se = new SeasonEpisode();
+				se.setSeason(this.currentSeason);
+				se.setEpisode(this.currentEpisode);
+				this.currentEpisodeSearchString =  se.toString();
+			}	
 		}
-		
-		return result;
+		return this.currentEpisodeSearchString;
 	}
 	
 	/**
@@ -1152,22 +1135,7 @@ public class TedSerie implements Serializable
 	
 	public boolean isDoubleEpisode()
 	{
-		return isDoubleEpisode(currentSeason, currentEpisode);
-	}
-	
-	public boolean isDoubleEpisode(int season, int episode)
-	{
-		SeasonEpisode temp = new SeasonEpisode(season, episode);
-		SeasonEpisode tempInSchedule;
-		try 
-		{
-			tempInSchedule = (SeasonEpisode) this.getScheduler().getEpisode(temp);
-			return tempInSchedule.isDouble();
-		} 
-		catch (NoEpisodeFoundException e) 
-		{
-			return false;
-		}
+		return this.currentEpisodeIsDouble;
 	}
 
 	/**
@@ -1269,11 +1237,6 @@ public class TedSerie implements Serializable
 	{
 		return this.timeZone;
 	}
-	
-	public String getCurrentEpisodeTitle()
-	{
-		return this.currentEpisodeTitle;
-	}
 
 	/**
 	 * Cache the values in the Serie so we don't need to update them from the schedule every time
@@ -1302,7 +1265,8 @@ public class TedSerie implements Serializable
 		{
 			this.currentEpisodeAirDate = null;
 		}
-		this.currentEpisodeTitle = episode.getTitle();
+		this.currentEpisodeSearchString = episode.getSearchStringWithTitle();
+		this.currentEpisodeIsDouble = episode.isDouble();
 		this.updateShowStatus();
 	}
 

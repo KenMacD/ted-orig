@@ -327,6 +327,11 @@ public class ScheduleParser
 				if (airDate.getTime() == previousAirDate.getTime())
 	        	{
 	        		episodes.get(i).setDouble(true);
+	        		// remove i-1 from the list
+	        		if ((i-1) > 0)
+	        		{
+	        			episodes.remove(i-1);
+	        		}
 	        	}
 				
 				previousAirDate = airDate;
