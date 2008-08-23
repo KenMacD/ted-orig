@@ -115,7 +115,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
-					"max(p;5dlu), max(p;15dlu), 5dlu, 50dlu:grow, 5dlu, max(p;15dlu), 5dlu, bottom:110dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
+					"max(p;5dlu), max(p;15dlu), 5dlu, 50dlu:grow, 5dlu, max(p;15dlu), 5dlu, bottom:130dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
 			episodeChooserPanel.setVisible(false);			
