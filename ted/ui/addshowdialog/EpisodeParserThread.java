@@ -82,12 +82,28 @@ public class EpisodeParserThread extends Thread
 			// and the scheduler can use the published episodes instead, when no aired episodes
 			// are listed in the schedule
 			boolean noScheduledEpisodes = true;
-			try {
+			try 
+			{
 				nextEpisode.getAirDate();
 				noScheduledEpisodes = false;
-			} catch (AirDateUnknownException e) {
+			} 
+			catch (AirDateUnknownException e) 
+			{
 				noScheduledEpisodes = true;
 			}
+			
+			if (this.subscribeOptionsPanel != null)
+			{				
+				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
+				this.subscribeOptionsPanel.setActivityStatus(false);
+			}
+			else
+			{
+				this.episodeChooserPanel.setActivityStatus(false);
+			}
+			
+			// Do this at the end. This way we save some time loading the
+			// episodes in the custom episode list.
 			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes(noScheduledEpisodes);	
 			
 			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
@@ -96,12 +112,6 @@ public class EpisodeParserThread extends Thread
 			if (this.subscribeOptionsPanel != null)
 			{
 				this.subscribeOptionsPanel.setAiredSeasonEpisodes(publishedEpisodes);
-				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
-				this.subscribeOptionsPanel.setActivityStatus(false);
-			}
-			else
-			{
-				this.episodeChooserPanel.setActivityStatus(false);
 			}
 			
 			// free vector for garbage collection

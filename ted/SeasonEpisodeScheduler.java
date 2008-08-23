@@ -84,21 +84,37 @@ public class SeasonEpisodeScheduler implements Serializable
 	{
 		StandardStructure result = null;
 		
+		// Keep track of the latest episode in the schedule which has 
+		// an air date. With this episode the next episode in the list
+		// can be found easily without using the getPublishedAndAired 
+		// function.
+		StandardStructure latestInScheduleWithDate = null;
+		
+		// If the schedule is known (if so, update).
 		if (this.updateEpisodeSchedule())
 		{
-
 			// nothing found while searching through the episodes with airdates
 			// run through episodes
 			// get first episode after all aired episodes, with presumable no airdate
 			StandardStructure current;
+
 			// system date
 	       	Date systemDate = new Date();
 	       	// first find last aired episode in list
 			for (int i = 0 ; i < this.scheduledEpisodes.size(); i++)
 			{
 				current = this.scheduledEpisodes.elementAt(i);
+								
 				try 
 				{
+					// If there is no episode found with an air date set it.
+					// Do this only for the latest episode in the list (with a date).
+					if (   latestInScheduleWithDate == null 
+						&& current.getAirDate()     != null)
+					{
+						latestInScheduleWithDate = current;
+					}
+					
 					if (current.getAirDate().after(systemDate))
 					{
 						result = current;
@@ -109,30 +125,24 @@ public class SeasonEpisodeScheduler implements Serializable
 					}
 				} 
 				catch (AirDateUnknownException e) 
-				{
+				{					
 					continue;
 				}
 			}			
 		}
 
-		// nothing found based on schedule, just guess what the next episode is
-		if (result == null)
-		{
-			Vector<StandardStructure> publishedEps = this.getPubishedAndAiredEpisodes(true);
-			if (publishedEps.size() > 0)
+		// Nothing found based on schedule, find one after the latest
+		// one with an air date.
+		if (result == null && latestInScheduleWithDate != null)
+		{			
+			try 
 			{
-				// get the last aired episode from the episode list
-				StandardStructure temp = publishedEps.elementAt(0);
-				// try to see if one is scheduled after last aired episode
-				try 
-				{
-					result = this.getNextEpisode(temp);
-				} 
-				catch (NoEpisodeFoundException e) 
-				{
-					// no scheduled episode found, generate a next epsidoe
-					result = temp.nextEpisode();
-				}
+				result = getNextEpisode(latestInScheduleWithDate);
+			} 
+			catch (NoEpisodeFoundException e1) 
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 		
@@ -149,7 +159,6 @@ public class SeasonEpisodeScheduler implements Serializable
 				result = new SeasonEpisode(1, 1);
 			}
 		}
-
 		
 		return result;
 	}

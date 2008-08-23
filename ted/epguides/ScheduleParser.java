@@ -477,8 +477,9 @@ public class ScheduleParser
         return getEpisodes(serie, past, yearFromNow.getTime());   
     }
 
-	private Vector<StandardStructure> getEpisodes(TedSerie serie, Date from,
-			Date to) 
+	private Vector<StandardStructure> getEpisodes(TedSerie serie, 
+												  Date from,
+												  Date to) 
 	{
 		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily());
         Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getEpguidesName(), from, to, serie.isDaily());
