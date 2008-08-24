@@ -603,8 +603,8 @@ public class SeasonEpisodeScheduler implements Serializable
 			} 
 			catch (AirDateUnknownException e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// TODO: do something when date is unknown?
+				continue;
 			}
 		}
 		

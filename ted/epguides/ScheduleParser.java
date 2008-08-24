@@ -54,7 +54,7 @@ public class ScheduleParser
 		//         640.   7-28       7028     22 Aug 02   <a target="_blank" href="http://www.tv.com/the-daily-show/matthew-perry/episode/992799/summary.html">Matthew Perry</a>
 
 	    String regex       = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
-	    String regexNoDate = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)";//(\\s)(\\.*)(\\s)";
+	    String regexNoDate = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)";
 	    String regexName   = "(>)(.+)(</a>)(\\s*)$";
 	    
         Date parsedAirDate=null;
@@ -271,12 +271,17 @@ public class ScheduleParser
 								try
 			                    {
 									String date = parser.getTextValue(episodeInfo, "airdate");
-			                        parsedAirDate = sdf.parse(date);
-			                         
-			                         if (parsedAirDate.after(from) && parsedAirDate.before(to))
-			                         {
-			                             airdate = parsedAirDate;                                                                
-			                         }
+									
+									// Sanity check on invalid months or days.
+									if (!date.contains("-00"))
+									{									
+				                        parsedAirDate = sdf.parse(date);
+				                         
+				                        if (parsedAirDate.after(from) && parsedAirDate.before(to))
+				                        {
+				                            airdate = parsedAirDate;                                                                
+				                        }
+									}
 			                    }
 			                    catch (java.text.ParseException pe) 
 			                    {
