@@ -217,7 +217,8 @@ public class TedIO
 			fw.append("logtofile=" + TedConfig.isLogToFile() + "\n"); //$NON-NLS-1$
 			fw.append("oddrowcolor=" +  TedConfig.getOddRowColor().getRGB() + "\n");
 			fw.append("evenrowcolor=" + TedConfig.getEvenRowColor().getRGB() + "\n");
-			fw.append("timezoneoffset=" + TedConfig.getTimeZoneOffset());
+			fw.append("timezoneoffset=" + TedConfig.getTimeZoneOffset() + "\n");
+			fw.append("autschedule=" + TedConfig.isUseAutoSchedule());			
 			
 			fw.close();
 		}
@@ -406,6 +407,10 @@ public class TedIO
 				else if(token.equals("timezoneoffset"))
 				{
 					TedConfig.setTimeZoneOffset(Integer.parseInt(tokenizer.nextToken()));
+				}
+				else if(token.equals("autoschedule"))
+				{
+					TedConfig.setUseAutoSchedule(Boolean.parseBoolean(tokenizer.nextToken()));
 				}
 			}
 			

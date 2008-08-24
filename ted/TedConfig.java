@@ -59,6 +59,7 @@ public class TedConfig //implements Serializable
 	private static boolean allowLogging = true;
 	private static boolean logToFile = true;
 	private static int timeZoneOffset = -1;
+	private static boolean useAutoSchedule = true;
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
 	private static final Color defaultOddRowColor  = new Color(236,243,254);
@@ -604,5 +605,15 @@ public class TedConfig //implements Serializable
 	public static int getTimeZoneOffset()
 	{
 		return TedConfig.timeZoneOffset;
+	}
+
+	public static boolean isUseAutoSchedule() 
+	{
+		return useAutoSchedule;
+	}
+
+	public static void setUseAutoSchedule(boolean useAutoSchedule) 
+	{
+		TedConfig.useAutoSchedule = useAutoSchedule;
 	}
 }

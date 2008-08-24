@@ -44,6 +44,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private JSeparator jSeparator2;
 	private JRadioButton radioTorrentSettings2;
 	private JLabel labelTorrentSettings;
+	private JCheckBox useAutoScheduleCheckBox;
+	private JSeparator jSeparator3;
 	private JLabel labelTimeOutInSecs;
 	private ButtonGroup seederSettingGroup;
 	private JCheckBox checkNotDownloadCompressed = null;
@@ -61,9 +63,10 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		//advancedPanel.setPreferredSize(new Dimension(width, height));
 		this.add(advancedPanel);
 		FormLayout advancedPanelLayout = new FormLayout(
-			"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)",
-			"max(p;5dlu), max(p;5dlu), 15dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu)");
+				"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
+				"max(p;5dlu), max(p;5dlu), 15dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 		advancedPanel.setLayout(advancedPanelLayout);
+		advancedPanel.setPreferredSize(new java.awt.Dimension(275, 270));
 
 		labelTimeOut = new JLabel();
 		advancedPanel.add(labelTimeOut, new CellConstraints("2, 2, 5, 1, default, default"));
@@ -117,7 +120,16 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		filterExtensions.setBounds(15, 257, 371, 21);
 		filterExtensions.setText("zip, rar, r01");
 		advancedPanel.add(filterExtensions, new CellConstraints("3, 10, 3, 1, default, default"));
-		
+		{
+			jSeparator3 = new JSeparator();
+			advancedPanel.add(jSeparator3, new CellConstraints("2, 11, 5, 1, default, default"));
+		}
+		{
+			useAutoScheduleCheckBox = new JCheckBox();
+			advancedPanel.add(getUseAutoScheduleCheckBox(), new CellConstraints("2, 12, 5, 1, default, default"));
+			useAutoScheduleCheckBox.setText("Use auto schedule");
+		}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,9 +143,11 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		// get values
 		textTimeOutSecs.setText(TedConfig.getTimeOutInSecs()+"");
 		this.setSelectedButton(seederSettingGroup, TedConfig.getSeederSetting());
+		this.setPreferredSize(new java.awt.Dimension(285, 284));
 		checkNotDownloadCompressed.setSelected(TedConfig.getDoNotDownloadCompressed());
 		filterExtensions.setText(TedConfig.getFilterExtensions());
 		filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
+		useAutoScheduleCheckBox.setSelected(TedConfig.isUseAutoSchedule());
 	}
 	
 	/**
@@ -169,7 +183,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		TedConfig.setSeederSetting(seederSetting);
 		TedConfig.setDoNotDownloadCompressed(checkNotDownloadCompressed.isSelected());
 		TedConfig.setFilterExtensions(filterExtensions.getText());
-		
+		TedConfig.setUseAutoSchedule(useAutoScheduleCheckBox.isSelected());
 	}
 	
 	/**
@@ -235,5 +249,9 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
 		}
 		
+	}
+	
+	public JCheckBox getUseAutoScheduleCheckBox() {
+		return useAutoScheduleCheckBox;
 	}
 }
