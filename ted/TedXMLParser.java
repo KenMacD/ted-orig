@@ -162,6 +162,10 @@ public class TedXMLParser
 					if(!tempS.equals(""))
 						serie.setTVcom(tempS);
 					
+					tempS = getTextValue(show, "epguides");
+					if(!tempS.equals(""))
+						serie.setEpguidesName(tempS);
+					
 					temp = getIntValue(show, "seeders");
 					if(temp!=-1)
 						serie.setMinNumOfSeeders(temp);
