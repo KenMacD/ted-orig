@@ -1206,6 +1206,16 @@ public class TedSerie implements Serializable
 	public void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
 		this.useAutoSchedule = useAutoSchedule;
+		
+		if (useAutoSchedule)
+		{
+			this.setStatus(STATUS_HIATUS);
+		}
+		else
+		{
+			this.setStatus(STATUS_CHECK);
+		}
+		
 		this.updateShowStatus();
 	}
 
@@ -1281,10 +1291,9 @@ public class TedSerie implements Serializable
 	 */
 	public void checkIfCurrentEpisodeIsScheduled() 
 	{
-		SeasonEpisode temp = new SeasonEpisode(currentSeason, currentEpisode);
 		try 
 		{
-			scheduler.getEpisode(new SeasonEpisode(currentSeason, currentEpisode));
+			StandardStructure result = scheduler.getEpisode(new SeasonEpisode(currentSeason, currentEpisode));
 		} 
 		catch (NoEpisodeFoundException e) 
 		{
