@@ -180,7 +180,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * Updates the episode schedule every 2 days.
 	 * @return Whether the schedule is filled (!= null and larger than 0 items)
 	 */
-	private boolean updateEpisodeSchedule()
+	public boolean updateEpisodeSchedule()
 	{
 		// system date
        	Date systemDate = new Date();
@@ -310,7 +310,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * @return a vector with season/episodes that have been aired plus
 	 * one next episode that is scheduled to air
 	 */
-	Vector<StandardStructure> getPubishedAndAiredEpisodes(boolean noScheduledEpisodes) 
+	Vector<StandardStructure> getPubishedAndAiredEpisodes() 
 	{
 		Vector<StandardStructure> publishedEpisodes = this.getPublishedEpisodes();
 		Vector<StandardStructure> airedEpisodes     = this.getAiredEpisodes();
@@ -371,10 +371,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		else
 		{
 			// if there are no scheduled episodes, return the published episodes as result
-			if (noScheduledEpisodes)
-			{
-				results = publishedEpisodes;
-			}
+			results = publishedEpisodes;
 		}
 		
 		// free references for garbage collection

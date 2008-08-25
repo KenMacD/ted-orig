@@ -73,41 +73,58 @@ public class EpisodeParserThread extends Thread
 		{
 			this.episodeChooserPanel.setActivityStatus(true);
 		}
-		if(selectedSerie!=null)
-		{		
-			// add vector to chooser panel
-			StandardStructure nextEpisode = selectedSerie.getNextEpisode();
-			
-			// check if next episode has airdate. otherwise no scheduled episode was found
-			// and the scheduler can use the published episodes instead, when no aired episodes
-			// are listed in the schedule
-			boolean noScheduledEpisodes = true;
-			try 
+		
+		if (selectedSerie!=null)
+		{	
+			StandardStructure nextEpisode = null;
+			boolean scheduleAvailable = true;
+			boolean isSubscribeOptionsPanel = (this.subscribeOptionsPanel != null);
+			// check if schedule is available
+			if (selectedSerie.isEpisodeScheduleAvailable())
 			{
-				nextEpisode.getAirDate();
-				noScheduledEpisodes = false;
-			} 
-			catch (AirDateUnknownException e) 
+				// get next to air episode
+				nextEpisode = selectedSerie.getNextEpisode();
+				
+				if (isSubscribeOptionsPanel)
+				{		
+					this.subscribeOptionsPanel.setGlobalActivityStatus(false);
+					this.subscribeOptionsPanel.setCustomActivityStatus(true);
+					this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
+					this.subscribeOptionsPanel.setLastAiredEpisode(selectedSerie.getLastAiredEpisode());	
+				}
+			}
+			else
 			{
-				noScheduledEpisodes = true;
+				// no schedule, extra work is needed to 'guess' the last aired and next to air episode
+				// based on the episodes retrieved from the torrent websites
+				scheduleAvailable = false;
 			}
 			
-			if (this.subscribeOptionsPanel != null)
-			{				
+			// Retrieve published torrents from the torrent websites.
+			// Do this at the end. This way we save some time loading the
+			// episodes in the custom episode list.
+			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes();	
+			
+			// if no schedule, also fill the subscribeoptionspanel with info from the torrent sites
+			if (!scheduleAvailable && publishedEpisodes.size() > 0 && isSubscribeOptionsPanel)
+			{
+				StandardStructure lastAiredGuess = publishedEpisodes.elementAt(0);
+				this.subscribeOptionsPanel.setLastAiredEpisode(lastAiredGuess);
+				nextEpisode = lastAiredGuess.guessNextEpisode();	
 				this.subscribeOptionsPanel.setNextEpisode(nextEpisode);
-				this.subscribeOptionsPanel.setLastAiredEpisode(selectedSerie.getScheduler().getLastAiredEpisode());
 				this.subscribeOptionsPanel.setGlobalActivityStatus(false);
 				this.subscribeOptionsPanel.setCustomActivityStatus(true);
 			}
 			
-			// Do this at the end. This way we save some time loading the
-			// episodes in the custom episode list.
-			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes(noScheduledEpisodes);	
-			
+			// add episodes to episodechooserpanel
 			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
-			this.episodeChooserPanel.setNextEpisode(nextEpisode);
 			
-			if (this.subscribeOptionsPanel != null)
+			if (nextEpisode != null)
+			{
+				this.episodeChooserPanel.setNextEpisode(nextEpisode);
+			}
+			
+			if (isSubscribeOptionsPanel)
 			{
 				this.subscribeOptionsPanel.enableCustomEpisodes();
 				this.subscribeOptionsPanel.setCustomActivityStatus(false);

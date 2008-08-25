@@ -109,7 +109,7 @@ public class SubscribeOptionsPanel extends JPanel
 		
 		FormLayout thisLayout = new FormLayout(
 				"max(p;10dlu), max(p;5dlu):grow, max(p;5dlu)", 
-				"max(p;16dlu), max(p;0dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), max(p;0px)");
+				"max(p;16dlu), max(p;0dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;0dlu), max(p;0dlu), 5dlu, max(p;16dlu), max(p;16px), max(p;16px)");
 		this.setLayout(thisLayout);
 		
 		futureEpisodeLabel = new JLabel();
@@ -181,7 +181,7 @@ public class SubscribeOptionsPanel extends JPanel
 			
 			if (this.customStructure == null)
 			{
-				this.customEpisodeLabel.setText(Lang.getString("AddShowDialog.SubscribeOptions.CustomEpisodeSelect"));
+				getCustomEpisodeTitleLabel().setText(Lang.getString("AddShowDialog.SubscribeOptions.CustomEpisodeSelect"));
 			}
 		}
 		
@@ -206,6 +206,7 @@ public class SubscribeOptionsPanel extends JPanel
 		customSelectRadio.setEnabled(false);
 		this.customEpisodeLabel.setText("");
 		this.getCustomEpisodeTitleLabel().setText("");
+		this.getCustomEpisodeTitleLabel().setVisible(false);
 		
 		lastAiredRadio.setVisible(false);
 		this.airedEpisodeLabel.setVisible(false);
@@ -276,6 +277,7 @@ public class SubscribeOptionsPanel extends JPanel
 		this.futureEpisodeLabel.setVisible(true);
 		customSelectRadio.setVisible(true);
 		this.customEpisodeLabel.setVisible(true);
+		this.getCustomEpisodeTitleLabel().setVisible(true);
 		
 		// enable/disable
 		if (this.nextEpisode != null)

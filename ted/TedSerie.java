@@ -1162,6 +1162,9 @@ public class TedSerie implements Serializable
 		this.getScheduler().checkAirDate();	
 	}
 	
+	/**
+	 * @return The scheduler for this serie
+	 */
 	public SeasonEpisodeScheduler getScheduler()
 	{
 		// scheduler can be null if this serie is from an older ted version
@@ -1176,9 +1179,9 @@ public class TedSerie implements Serializable
 	/**
 	 * @return All aired and published episodes for this show
 	 */
-	public Vector<StandardStructure> getPubishedAndAiredEpisodes(boolean noScheduledEpisodes) 
+	public Vector<StandardStructure> getPubishedAndAiredEpisodes() 
 	{
-		return this.getScheduler().getPubishedAndAiredEpisodes(noScheduledEpisodes);
+		return this.getScheduler().getPubishedAndAiredEpisodes();
 	}
 
 	public int getLastDayChecked() 
@@ -1236,6 +1239,15 @@ public class TedSerie implements Serializable
 	public StandardStructure getNextEpisode() 
 	{
 		return this.getScheduler().getNextToAirEpisode();
+	}
+	
+	/**
+	 * @return Whether episode schedule is available for this show. Note: this can
+	 * take a while since it can trigger a schedule update.
+	 */
+	public Boolean isEpisodeScheduleAvailable()
+	{
+		return this.getScheduler().updateEpisodeSchedule();
 	}
 	
 	public void setTimeZone(int timeZone)
@@ -1321,5 +1333,10 @@ public class TedSerie implements Serializable
 	public void setScheduler(SeasonEpisodeScheduler scheduler2) 
 	{
 		this.scheduler = scheduler2;		
+	}
+
+	public StandardStructure getLastAiredEpisode() 
+	{
+		return this.getScheduler().getLastAiredEpisode();
 	}
 }
