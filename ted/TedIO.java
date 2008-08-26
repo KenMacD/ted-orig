@@ -218,7 +218,7 @@ public class TedIO
 			fw.append("oddrowcolor=" +  TedConfig.getOddRowColor().getRGB() + "\n");
 			fw.append("evenrowcolor=" + TedConfig.getEvenRowColor().getRGB() + "\n");
 			fw.append("timezoneoffset=" + TedConfig.getTimeZoneOffset() + "\n");
-			fw.append("autschedule=" + TedConfig.isUseAutoSchedule());			
+			fw.append("autoschedule=" + TedConfig.isUseAutoSchedule());			
 			
 			fw.close();
 		}

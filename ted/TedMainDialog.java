@@ -1109,4 +1109,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	{
 		return this.serieTable;
 	}
+	
+	public TedTablePopupMenu getPopupMenu()
+	{
+		return this.ttPopupMenu;
+	}
 }

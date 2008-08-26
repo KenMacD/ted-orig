@@ -82,8 +82,17 @@ public class TedTable extends JTable
 			public void mouseClicked(MouseEvent evt) {
 				serieTableMouseClicked(evt);
 			}
-		});
-					
+		});				
+	}
+	
+	public void updateStatusAllSeries()
+	{
+		Vector<TedSerie> series = this.getSeries();
+		
+		for(int i = 0; i < series.size(); ++i)
+		{
+			series.get(i).updateShowStatus();
+		}		
 	}
 		
 	/**
@@ -107,13 +116,12 @@ public class TedTable extends JTable
 			// or did the user click right?
 			else if (SwingUtilities.isRightMouseButton(evt))
 			{
-				Component henk = evt.getComponent();
 				// show context menu
 				int selectedrow = this.rowAtPoint(evt.getPoint());
 				ListSelectionModel selectionModel = this.getSelectionModel();
 				selectionModel.setSelectionInterval(selectedrow, selectedrow);
 				
-				ttPopupMenu.CheckAutoSchedule(selectedserie.isUseAutoSchedule());
+				ttPopupMenu.checkAutoSchedule(selectedserie.isUseAutoSchedule());
 				
 				ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
 			}
@@ -141,7 +149,7 @@ public class TedTable extends JTable
 	 * Set shows in the table
 	 * @param vector containing the shows
 	 */
-	public void setSeries(Vector vector)
+	public void setSeries(Vector<TedSerie> vector)
 	{
 		serieTableModel.setSeries(vector);		
 	}
@@ -205,7 +213,7 @@ public class TedTable extends JTable
 	/**
 	 * @return All the shows in the table
 	 */
-	public Vector getSeries()
+	public Vector<TedSerie> getSeries()
 	{
 		return serieTableModel.getSeries();
 	}

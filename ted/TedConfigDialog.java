@@ -233,6 +233,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 			}
 			
 			this.main.saveConfig(resetTime);
+			this.main.getSerieTable().updateStatusAllSeries();
 			this.setVisible(false);
 			this.dispose();
 		}
@@ -247,5 +248,4 @@ public class TedConfigDialog extends javax.swing.JDialog
 		CardLayout cl = (CardLayout)(this.jConfigTabs.getLayout());
 	    cl.show(this.jConfigTabs, command);
 	}
-
 }

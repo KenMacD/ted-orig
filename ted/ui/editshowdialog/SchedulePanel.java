@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import ted.BrowserLauncher;
 import ted.Lang;
 import ted.TedSerie;
+import ted.TedConfig;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -75,6 +76,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 				checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
 				checkAutoSchedule.setActionCommand("autoupdate");
 				checkAutoSchedule.addActionListener(this);
+				checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
 			}
 			{
 				this.add(bPanel, new CellConstraints("3, 5, 5, 1, default, default"));

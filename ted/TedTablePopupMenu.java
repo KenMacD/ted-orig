@@ -155,9 +155,10 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.menuDelete.setEnabled(true);
 	}
 
-	public void CheckAutoSchedule(boolean b)
-	{
+	public void checkAutoSchedule(boolean b)
+	{		
 		this.checkAutoSchedule.setState(b);
+		this.checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
 		this.menuStatus.setEnabled(!b);
 	}
 }

@@ -31,7 +31,7 @@ public class TedTableModel extends AbstractTableModel
 	 * GLOBAL VARIABLES
 	 ****************************************************/
 	private static final long serialVersionUID = -7286125312855308470L;
-	private Vector tableData = new Vector();
+	private Vector<TedSerie> tableData = new Vector<TedSerie>();
 	private String [] tableColumns ={""};
 
 	/****************************************************
@@ -104,7 +104,7 @@ public class TedTableModel extends AbstractTableModel
 	/**
 	 * @return Everything in the table
 	 */
-	public Vector getSeries() 
+	public Vector<TedSerie> getSeries() 
 	{
 		return tableData;
 	}
@@ -113,7 +113,7 @@ public class TedTableModel extends AbstractTableModel
 	 * Set the series to the table
 	 * @param vector Series
 	 */
-	public void setSeries(Vector vector) 
+	public void setSeries(Vector<TedSerie> vector) 
 	{
 		tableData.clear();
 		tableData.addAll(vector);

@@ -486,7 +486,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			boolean dayToCheck = false;
 						
 			// check the airdate for the selected season/episode
-			if (serie.isUseAutoSchedule())
+			if (serie.isSerieAndGlobalUseAutoSchedule())
 			{
 				this.checkAirDate();
 			}

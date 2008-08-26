@@ -1205,6 +1205,11 @@ public class TedSerie implements Serializable
 	{
 		return useAutoSchedule;
 	}
+	
+	public boolean isSerieAndGlobalUseAutoSchedule()
+	{
+		return useAutoSchedule && TedConfig.isUseAutoSchedule();
+	}
 
 	public void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
