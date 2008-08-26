@@ -433,6 +433,7 @@
 			<maximumsize>1000</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>35850</tv_com>
+			<epguides>DancingwiththeStars</epguides>
 		</show>
 		<show>
 		<name>Dirty Sexy Money</name>
@@ -1073,6 +1074,7 @@
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22343</tv_com>
+			<epguides>office_us</epguides>
 		</show>
 		<show>
 			<name>One Tree Hill</name>
