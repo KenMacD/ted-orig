@@ -1068,13 +1068,14 @@
 			<tv_com>25043</tv_com>
 		</show>
 		<show>
-			<name>The Office US</name>
+			<name>The Office USA</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22343</tv_com>
 			<epguides>office_us</epguides>
+			<searchname>the office us</searchname>
 		</show>
 		<show>
 			<name>One Tree Hill</name>
