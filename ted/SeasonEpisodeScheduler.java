@@ -484,6 +484,16 @@ public class SeasonEpisodeScheduler implements Serializable
 		{
 			Calendar date =  new GregorianCalendar();
 			boolean dayToCheck = false;
+			
+			// if the show is on hiatus, check if there is already some
+			// episode planning for the next episode available
+			if (serie.isHiatus())
+			{
+				// only do this when current season / episode is not known in schedule
+				// when the current episode is not known in the schedule,
+				// get the next episode from the planning                       
+				serie.checkIfCurrentEpisodeIsScheduled();
+			}
 						
 			// check the airdate for the selected season/episode
 			if (serie.isSerieAndGlobalUseAutoSchedule())
