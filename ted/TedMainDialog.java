@@ -1114,4 +1114,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	{
 		return this.ttPopupMenu;
 	}
+
+
+	public void updateStatusAllSeries() 
+	{
+		// update status of all series if table is available
+		if (this.getSerieTable() != null)
+		{
+			this.getSerieTable().updateStatusAllSeries();
+		}		
+	}
 }

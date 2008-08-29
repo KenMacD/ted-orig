@@ -233,7 +233,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 			}
 			
 			this.main.saveConfig(resetTime);
-			this.main.getSerieTable().updateStatusAllSeries();
+			this.main.updateStatusAllSeries();
 			this.setVisible(false);
 			this.dispose();
 		}
