@@ -210,24 +210,34 @@ public class TedExampleFileFilter extends FileFilter {
      * @see isExtensionListInDescription
      * @see FileFilter#getDescription
      */
-    public String getDescription() {
-	if(fullDescription == null) {
-	    if(description == null || isExtensionListInDescription()) {
- 		fullDescription = description==null ? "(" : description + " (";
-		// build the description from the extension list
-		Enumeration extensions = filters.keys();
-		if(extensions != null) {
-		    fullDescription += "." + (String) extensions.nextElement();
-		    while (extensions.hasMoreElements()) {
-			fullDescription += ", ." + (String) extensions.nextElement();
+    public String getDescription() 
+    {    	
+		if(fullDescription == null) 
+		{
+		    if(description == null || isExtensionListInDescription()) 
+		    {
+		    	fullDescription = description==null ? "(" : description + " (";
+		    	//build the description from the extension list
+		    	Enumeration extensions = filters.keys();
+		    	
+		    	if(extensions != null) 
+		    	{
+		    		fullDescription += "." + (String) extensions.nextElement();
+		    		while (extensions.hasMoreElements()) 
+		    		{
+		    			fullDescription += ", ." + (String) extensions.nextElement();
+		    		}
+		    	}
+		    	
+		    	fullDescription += ")";
+		    } 
+		    else 
+		    {
+		    	fullDescription = description;
 		    }
 		}
-		fullDescription += ")";
-	    } else {
-		fullDescription = description;
-	    }
-	}
-	return fullDescription;
+		
+		return fullDescription;
     }
 
     /**

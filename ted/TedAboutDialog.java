@@ -93,11 +93,11 @@ public class TedAboutDialog extends javax.swing.JDialog implements KeyListener
 	
 		g.setColor(Color.WHITE);
 		g.drawString("ted v" + version, 10, 170);
-		g.drawString("Created by Roel and Joost", 10, 190);
+		g.drawString(Lang.getString("TedAbout.Created"), 10, 190);
 		g.drawString(Lang.getString("Lang.TranslatorCredits"), 10, 210);
-		String s1 = "The authors of this software can't be held";
-		String s2 = "responsible for any damage or illegal usage";
-		String s3 = "you may experience";
+		String s1 = Lang.getString("TedAbout.Disclaimer1");
+		String s2 = Lang.getString("TedAbout.Disclaimer2");
+		String s3 = Lang.getString("TedAbout.Disclaimer3");
 		g.drawString(s1, 10, 250);
 		g.drawString(s2, 10, 265);
 		g.drawString(s3, 10, 280);

@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
+
+import ted.Lang;
  
 /**
  * A message dialog that closes after a timeout.
@@ -142,7 +144,7 @@ public class TimedOptionPane {
 	static class Message extends JPanel 
 	{
  
-		private final static String RS = "Auto-close in ";
+		private final static String RS = Lang.getString("TimedOptionPane.AutoClose");
 		JLabel remaining;
 		private long timeout;
 		private long ellapsed = 0;
@@ -186,7 +188,7 @@ public class TimedOptionPane {
  
 		private String formatRemainingSeconds(long ms) 
 		{
-			return RS + (ms / 1000) + "s.";
+			return RS + " " + (ms / 1000) + "s.";
 		}
  
 		/**

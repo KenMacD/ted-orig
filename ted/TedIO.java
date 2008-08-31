@@ -475,7 +475,7 @@ public class TedIO
 	{
 		try
 		{
-			TedLog.debug("Checking for new version of show definitions XML"); //$NON-NLS-1$
+			TedLog.debug(Lang.getString("TedIO.Checking")); //$NON-NLS-1$
 			URL url = new URL(versionUrl); //$NON-NLS-1$
 		    String line;
 		    StringTokenizer tokenizer;
@@ -497,7 +497,7 @@ public class TedIO
 		}
 		catch (Exception e)
 		{
-			TedLog.error(e, "Error checking the version of show xml"); //$NON-NLS-1$
+			TedLog.error(e, Lang.getString("TedIO.ErrorChecking")); //$NON-NLS-1$
 		}
 		return -1;
 	}
@@ -587,7 +587,7 @@ public class TedIO
 		    chooser.setFileFilter(filter);
 		    chooser.setSelectedFile(standardFile);
 		    chooser.setCurrentDirectory(standardFile);
-		    chooser.setDialogTitle("Choose file to synchronize with..."); //$NON-NLS-1$
+		    chooser.setDialogTitle(Lang.getString("TedIO.ChooseSync")); //$NON-NLS-1$
 		    
 		    returnVal = chooser.showOpenDialog(chooser);
 		    
@@ -655,7 +655,7 @@ public class TedIO
 	{
 		try
 		{
-			TedLog.debug("Translating feed torrent URL: " + uri); //$NON-NLS-1$
+			TedLog.debug(Lang.getString("TedIO.TranslatingUrl") + uri); //$NON-NLS-1$
 			URL url = new URL("http://ted.sourceforge.net/urltranslator.php?url=" + uri + "&sTitle=" + URLEncoder.encode(title, "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		    String line;
 		      
@@ -666,12 +666,12 @@ public class TedIO
 	    		String torrentUrl = line;
 	    		if (torrentUrl.equals("null")) //$NON-NLS-1$
 	    		{
-	    			TedLog.debug("Unable to translate url, no known torrent url format"); //$NON-NLS-1$
+	    			TedLog.debug(Lang.getString("TedIO.UnableTranslate")); //$NON-NLS-1$
 	    			return null;
 	    		}
 	    		else
 	    		{
-	    			TedLog.debug("Url translated. Torrent URL: " + torrentUrl); //$NON-NLS-1$
+	    			TedLog.debug(Lang.getString("TedIO.UrlTranslated") + torrentUrl); //$NON-NLS-1$
 	    			return torrentUrl;
 		    	}
 			}
@@ -680,7 +680,7 @@ public class TedIO
 		}
 		catch (Exception e)
 		{
-            TedLog.error(e, "Error translating url"); //$NON-NLS-1$
+            TedLog.error(e, Lang.getString("TedIO.TranslateError")); //$NON-NLS-1$
 			return null;
 		}
 		return null;
@@ -744,7 +744,7 @@ public class TedIO
 		try
 		{
 			// remove strange tokens from name string so torrent can be opened by client
-    		TedLog.debug("Downloading best torrent. URL: " + url + " Name: " + name); //$NON-NLS-1$ //$NON-NLS-2$
+    		TedLog.debug(Lang.getString("TedIO.DownloadingTorrent") + url + Lang.getString("TedIO.Name") + name); //$NON-NLS-1$ //$NON-NLS-2$
     		// remove weird characters and spaces that can cause problems while
 			// opening the torrent
 			name = name.replaceAll("[/:&*?|\"\\\\]", "");
@@ -794,7 +794,7 @@ public class TedIO
            // open the torrent by default program
             if (TedConfig.isOpenTorrent())
 			{
-        		TedLog.debug("Opening torrent in default torrentclient.."); //$NON-NLS-1$
+        		TedLog.debug(Lang.getString("TedIO.OpenningTorrent")); //$NON-NLS-1$
         		this.openFile(loc);
     		}
 		}

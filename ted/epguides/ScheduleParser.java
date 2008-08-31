@@ -14,6 +14,7 @@ import java.net.URL;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 
+import ted.Lang;
 import ted.TedLog;
 import ted.TedSerie;
 import ted.TedXMLParser;
@@ -68,7 +69,7 @@ public class ScheduleParser
         
         Vector<StandardStructure> episodes = new Vector<StandardStructure>();
         
-		TedLog.debug("Parsing epguides for episode info");
+		TedLog.debug(Lang.getString("TedScheduleParser.GetInfo"));
         try 
         {
             URL epguides = new URL("http://www.epguides.com/" + seriesName + "/");
@@ -147,7 +148,7 @@ public class ScheduleParser
         // sort the seasons and episodes in ascending order
         Collections.sort(episodes);
         
-		TedLog.debug("Done parsing epguides");
+		TedLog.debug(Lang.getString("TedScheduleParser.Done"));
         return episodes;
         
     }
@@ -182,7 +183,7 @@ public class ScheduleParser
 	{
         Vector<StandardStructure> episodes = new Vector<StandardStructure>();
         
-		TedLog.debug("Searching tvRage for shows");
+		TedLog.debug(Lang.getString("TedScheduleParser.GetTvRage"));
         // First we want to detect the id of this show on tvrage. For this we need
         // to parse the search results on the name of the show.
     	String url = "http://www.tvrage.com/feeds/search.php?show=" + showName;
@@ -220,7 +221,9 @@ public class ScheduleParser
 		// If we've found the show id
 		if (showId != -1)
 		{
-			TedLog.debug("Found tvRage showID: " + showId + ". Retrieving episode info.");
+			TedLog.debug(Lang.getString("TedScheduleParser.TvRageShowId") + ": " + 
+					showId + ". " + Lang.getString("TedScheduleParser.TvRageRetrieving"));
+			
 			// The date format tvrage uses
 			Date parsedAirDate=null;
 	        String DATE_FORMAT = "yy-MM-dd";        

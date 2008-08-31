@@ -1061,13 +1061,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			{
 				// error launching ted website
 				// TODO: add error message
-				System.out.println("Error opening amazon.com website"); //$NON-NLS-1$
+				System.out.println(Lang.getString("TedLog.AmazonError")); //$NON-NLS-1$
 				ep.printStackTrace();
 			}	
 		}
 		else
 		{
-			TedLog.error("shows_clean.xml file is corrupt");
+			TedLog.error(Lang.getString("TedLog.ShowListCorrupt"));
 		}
 		
 	}

@@ -208,13 +208,14 @@ public class TedParser extends Thread
 	        catch (NullPointerException e)
 	        {
 	        	// no items in the feed
-	        	String message = "ted could not find any items in the feed of " + serie.getName() + "\nFeed: " + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog.displayError("ted Error!", message, ""); //$NON-NLS-1$ //$NON-NLS-2$
+	        	String message = Lang.getString("TedParser.NoFeedItems1") + serie.getName() + 
+	        		"\n" + Lang.getString("TedParser.NoFeedItems1") + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 				feedsData[i] = null;
 	        }
 	        catch (Exception e)
 	        {
-	        	TedLog.error(e, "Unkown exception while parsing RSS feed ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
+	        	TedLog.error(e, Lang.getString("TedParser.UnknownException") + " ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
 	        	feedsData[i] = null;
 	        }
 		}
@@ -801,7 +802,7 @@ public class TedParser extends Thread
 		//the size of the file(s) is zero. Not useful and probably not even a torrent
 		if(sizeMB == 0)
 		{
-			TedLog.debug("File size is too small (" + sizeMB + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+			TedLog.debug(Lang.getString("TedParser.FileSizeSmall") + " (" + sizeMB + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 			FileSizeException e = new FileSizeException();
 			e.size = 0;
 			throw e;
@@ -813,11 +814,11 @@ public class TedParser extends Thread
 			// print error
 			if (sizeMB > maxSize)
 			{
-				TedLog.debug("File size is too large (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
+				TedLog.debug(Lang.getString("TedParser.FileSizeLarge") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			else if (sizeMB < minSize)
 			{
-				TedLog.debug("File size is too small (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
+				TedLog.debug(Lang.getString("TedParser.FileSizeSmall") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			// throw exception
 			FileSizeException e = new FileSizeException();
@@ -826,7 +827,7 @@ public class TedParser extends Thread
 		}
 		else
 		{
-			TedLog.debug("File size is ok! (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
+			TedLog.debug(Lang.getString("TedParser.FileSizeOK") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
 			return true;
 		}	
 	}
@@ -1176,14 +1177,13 @@ public class TedParser extends Thread
 	        catch (NullPointerException e)
 	        {
 	        	// no items in the feed
-	        	String message = "ted could not find any items in the feed of " + serie.getName() + "\nFeed: " + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog.displayError("ted Error!", message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
+	        	String message = Lang.getString("TedParser.NoFeedItems1") + serie.getName() + 
+	        		"\n" + Lang.getString("TedParser.NoFeedItems1") + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
 	        catch (Exception e)
 	        {
-	        	TedLog.error(e, "Unkown exception while parsing RSS feed ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
-	        	//return;
+	        	TedLog.error(e, Lang.getString("TedParser.UnknownException") + " ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
 		}
 		
@@ -1404,14 +1404,13 @@ public class TedParser extends Thread
 	        catch (NullPointerException e)
 	        {
 	        	// no items in the feed
-	        	String message = "ted could not find any items in the feed of " + serie.getName() + "\nFeed: " + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				//tMainDialog.displayError("ted Error!", message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
+	        	String message = Lang.getString("TedParser.NoFeedItems1") + serie.getName() + 
+	        		"\n" + Lang.getString("TedParser.NoFeedItems1") + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
+				//tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
 	        catch (Exception e)
 	        {
-	        	TedLog.error(e, "Unkown exception while parsing RSS feed ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
-	        	//return;
+	        	//TedLog.error(e, Lang.getString("TedParser.UnknownException") + " ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
 	   
 	       
@@ -1638,7 +1637,9 @@ public class TedParser extends Thread
 			}
 			catch (Exception e)
 			{
-                TedLog.error(e, "Error parsing season (" + splitSeason[1] +") or episode (" + splitEpisode[1]+ ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				TedLog.error(e, Lang.getString("TedParser.ErrorParsing1") + 
+                		" (" + splitSeason[1] + ") " + Lang.getString("TedParser.ErrorParsing2") + 
+                		" (" + splitEpisode[1]+ ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return null;
 			}
 		}
@@ -1655,7 +1656,9 @@ public class TedParser extends Thread
 			}
 			catch (Exception e)
 			{
-                TedLog.error(e, "Error parsing season (" + splitX[0] +") or episode (" + splitX[2]+ ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                TedLog.error(e, Lang.getString("TedParser.ErrorParsing1") + 
+                		" (" + splitX[0] + ") " + Lang.getString("TedParser.ErrorParsing2") + 
+                		" (" + splitX[2]+ ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return null;
 			}
 		}
