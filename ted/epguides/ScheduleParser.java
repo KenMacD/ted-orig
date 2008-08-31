@@ -48,7 +48,7 @@ public class ScheduleParser
 
 	}
 
-	private Vector<StandardStructure> parseEpguides (String seriesName, Date from, Date to, boolean isDaily)
+	private Vector<StandardStructure> parseEpguides (String showName, String epguidesName, Date from, Date to, boolean isDaily)
     {
 		// The general pattern that epguides follows for their show lists
 	    // Format:   1.   1- 1        100     22 Sep 04   <a target="_blank" href="http://www.tv.com/lost/pilot-1/episode/334467/summary.html">Pilot (1)</a>
@@ -69,10 +69,10 @@ public class ScheduleParser
         
         Vector<StandardStructure> episodes = new Vector<StandardStructure>();
         
-		TedLog.debug(Lang.getString("TedScheduleParser.GetInfo"));
         try 
         {
-            URL epguides = new URL("http://www.epguides.com/" + seriesName + "/");
+            URL epguides = new URL("http://www.epguides.com/" + epguidesName + "/");
+            TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.EpguidesGetInfo") + ": " + epguides.toString());
             BufferedReader in = new BufferedReader( new InputStreamReader(epguides.openStream())); 
                 
             String inputLine;
@@ -148,7 +148,7 @@ public class ScheduleParser
         // sort the seasons and episodes in ascending order
         Collections.sort(episodes);
         
-		TedLog.debug(Lang.getString("TedScheduleParser.Done"));
+		TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.EpguidesDone"));
         return episodes;
         
     }
@@ -183,7 +183,7 @@ public class ScheduleParser
 	{
         Vector<StandardStructure> episodes = new Vector<StandardStructure>();
         
-		TedLog.debug(Lang.getString("TedScheduleParser.GetTvRage"));
+		TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageGetInfo"));
         // First we want to detect the id of this show on tvrage. For this we need
         // to parse the search results on the name of the show.
     	String url = "http://www.tvrage.com/feeds/search.php?show=" + showName;
@@ -221,7 +221,7 @@ public class ScheduleParser
 		// If we've found the show id
 		if (showId != -1)
 		{
-			TedLog.debug(Lang.getString("TedScheduleParser.TvRageShowId") + ": " + 
+			TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageShowId") + ": " + 
 					showId + ". " + Lang.getString("TedScheduleParser.TvRageRetrieving"));
 			
 			// The date format tvrage uses
@@ -236,6 +236,7 @@ public class ScheduleParser
 			// No information available
 	 	 	if (foundShowElement == null)
 	 	 	{
+	 	 		TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageNotAvailable"));
 	 	 		return episodes;
 	 	 	}
 			
@@ -310,7 +311,7 @@ public class ScheduleParser
         // sort the seasons and episodes in ascending order
         Collections.sort(episodes);
         
-		TedLog.debug("Done parsing tvRage.");
+		TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageDone"));
         return episodes;	
 	}    
 	
@@ -487,7 +488,7 @@ public class ScheduleParser
 												  Date to) 
 	{
 		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily());
-        Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getEpguidesName(), from, to, serie.isDaily());
+        Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getName(), serie.getEpguidesName(), from, to, serie.isDaily());
         Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
         detectDoubleEpisodes(episodes);
         
