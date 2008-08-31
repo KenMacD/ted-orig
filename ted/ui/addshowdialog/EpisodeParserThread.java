@@ -80,7 +80,7 @@ public class EpisodeParserThread extends Thread
 			boolean scheduleAvailable = true;
 			boolean isSubscribeOptionsPanel = (this.subscribeOptionsPanel != null);
 			// check if schedule is available
-			if (selectedSerie.isEpisodeScheduleAvailable())
+			if (selectedSerie.isEpisodeScheduleAvailableWithUpdate())
 			{
 				// get next to air episode
 				nextEpisode = selectedSerie.getNextEpisode();

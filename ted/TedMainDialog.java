@@ -531,14 +531,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			{
 				TedSerie serie = serieTable.getSerieAt(i);
 				
-				// if it is the day to start checking the serie again
-				serie.updateShowStatus();
-				
-				// if the serie is not paused
-				if(serie.isCheck())
-				{
-					tParseHandler.addParseThread(serie);
-				}
+				tParseHandler.addParseThread(serie);
 			}
 	
 			tParseHandler.start();

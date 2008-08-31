@@ -143,6 +143,9 @@ public class TedParseHandler extends Thread
 	 */
 	public void addParseThread(TedSerie serie)
 	{
+		// if it is the day to start checking the serie again
+		serie.updateShowStatus();
+		
 		TedParser tp = new TedParser(serie, mainDialog);
 		runningThreads.add(tp);
 	}

@@ -247,9 +247,10 @@ public class TedDailySerie extends TedSerie
 		{
 			episode = (DailyDate)dd;
 		}
+		this.currentEpisodeSS = episode;
 		setLatestDownloadDate(episode.getDate().getTimeInMillis());
 		
-		try 
+		/*try 
 		{
 			this.currentEpisodeAirDate = episode.getAirDate();
 		} 
@@ -257,22 +258,24 @@ public class TedDailySerie extends TedSerie
 		{
 			this.currentEpisodeAirDate = null;
 		}
-		this.currentEpisodeSearchString = episode.getTitle();
+		this.currentEpisodeSearchString = episode.getTitle();*/
 	}
 	
 	public StandardStructure getCurrentStandardStructure()
 	{
-		StandardStructure temp = new DailyDate(this.latestDownloadDate);
-		StandardStructure result;
-		try
+		if (this.currentEpisodeSS == null)
 		{
-			result = scheduler.getEpisode(temp);
+			StandardStructure temp = new DailyDate(this.latestDownloadDate);
+			try
+			{
+				this.currentEpisodeSS = scheduler.getEpisode(temp);
+			}
+			catch (NoEpisodeFoundException e) 
+			{
+				this.currentEpisodeSS  = temp;
+			}
 		}
-		catch (NoEpisodeFoundException e) 
-		{
-			result = temp;
-		}	
 		
-		return result;
+		return this.currentEpisodeSS;
 	}
 }

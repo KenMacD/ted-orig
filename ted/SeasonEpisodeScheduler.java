@@ -32,8 +32,6 @@ public class SeasonEpisodeScheduler implements Serializable
 	// Vector containing the scheduled episodes. Sorted on airdate. First item is with highest airdate
 	private Vector<StandardStructure> scheduledEpisodes;
 	private Date checkEpisodeSchedule;
-	// update interval
-	private int updateIntervalInDays = 2;
 	
 	public SeasonEpisodeScheduler (TedSerie serie)
 	{
@@ -47,7 +45,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	{	
 		Vector<StandardStructure> results = new Vector<StandardStructure>();
 		
-		if (this.updateEpisodeSchedule())
+		if (this.isEpisodeScheduleAvailable())
 		{
 			// system date
 	       	Date systemDate = new Date();
@@ -91,7 +89,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		StandardStructure latestInScheduleWithDate = null;
 		
 		// If the schedule is known (if so, update).
-		if (this.updateEpisodeSchedule())
+		if (this.isEpisodeScheduleAvailable())
 		{
 			// nothing found while searching through the episodes with airdates
 			// run through episodes
@@ -177,16 +175,16 @@ public class SeasonEpisodeScheduler implements Serializable
 	}
 	
 	/**
-	 * Updates the episode schedule every 2 days.
-	 * @return Whether the schedule is filled (!= null and larger than 0 items)
+	 * @return Whether the schedule is filled. Will trigger an episode schedule update when needed.
+	 * (once every 2 days)
 	 */
-	public boolean updateEpisodeSchedule()
+	public boolean isEpisodeScheduleAvailableWithUpdate()
 	{
+		// how often should the schedule be updated (in days)?
+		int updateIntervalInDays = 7;
 		// system date
        	Date systemDate = new Date();
-       	
-       	boolean result = true;
-       	
+       	       	
 		// check date
 		if ( serie.isUseAutoSchedule() && 
 				( 	this.scheduledEpisodes == null || 
@@ -194,7 +192,7 @@ public class SeasonEpisodeScheduler implements Serializable
 					systemDate.after(this.checkEpisodeSchedule))
 				)
 		{	
-			serie.setStatusString("Refreshing episode schedule");
+			serie.setStatusString(Lang.getString("TedTableModel.EpisodeScheduleUpdate"));
 			// parse epguides
 			// New instance of the parser
 			ScheduleParser tedEP = new ScheduleParser();
@@ -208,9 +206,30 @@ public class SeasonEpisodeScheduler implements Serializable
 	        
 	        adjustAirDatesForTimeZone(scheduledEpisodes);
 	        
+	        // update serie with scheduled episode
+			try 
+			{
+				StandardStructure current = this.getEpisode(serie.getCurrentStandardStructure());
+				serie.setCurrentEpisode(current);
+			} 
+			catch (NoEpisodeFoundException e) 
+			{
+				// do nothing
+			}
+	        
 	        serie.resetStatus(true);
 		}   
 		
+		return this.isEpisodeScheduleAvailable();
+	}
+	
+	/**
+	 * @return Is there schedule information available. This method won't trigger a schedule
+	 * update.
+	 */
+	public boolean isEpisodeScheduleAvailable()
+	{
+		boolean result;
 		if (this.scheduledEpisodes != null && this.scheduledEpisodes.size() > 0)
 		{
 			result = true;
@@ -234,7 +253,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		StandardStructure result = null;
 		
 		// check schedule for updates
-		if (this.updateEpisodeSchedule())
+		if (this.isEpisodeScheduleAvailable())
 		{
 			// search for season, episode in vector
 			for (int i = 0; i < this.scheduledEpisodes.size(); i++)
@@ -272,7 +291,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		StandardStructure result = null;
 			
 		// check schedule for updates
-		if (this.updateEpisodeSchedule())
+		if (this.isEpisodeScheduleAvailable())
 		{
 			StandardStructure tempResult = null;
 			// search for season, episode in vector
@@ -420,58 +439,43 @@ public class SeasonEpisodeScheduler implements Serializable
 	 */
 	public void checkAirDate() 
 	{		
-		this.updateEpisodeSchedule();
+		this.isEpisodeScheduleAvailable();
 		// get airdate for current season / episode
-		StandardStructure currentSE;
+		StandardStructure currentSE = serie.getCurrentStandardStructure();
+		Date airDate;
 		try 
 		{
-			if (!serie.isDaily)
+			airDate = currentSE.getAirDate();
+			Date currentDate = new Date();
+			
+			if (currentDate.before(airDate))
 			{
-				currentSE = this.getEpisode(new SeasonEpisode(serie.currentSeason, serie.currentEpisode));
+				// put serie on hold if airdate is after today
+				serie.setBreakUntil(airDate.getTime());
+				serie.setUseBreakSchedule(true);
+				serie.setStatus(TedSerie.STATUS_HOLD);
 			}
 			else
 			{
-				TedDailySerie temp = ((TedDailySerie)serie);
-				Date currentDate = new Date (temp.getLatestDownloadDateInMillis());
-				currentSE = this.getEpisode(new DailyDate(currentDate));
-			}
-			Date airDate;
-			try 
-			{
-				airDate = currentSE.getAirDate();
-				Date currentDate = new Date();
-				
-				if (currentDate.before(airDate))
-				{
-					// put serie on hold if airdate is after today
-					serie.setBreakUntil(airDate.getTime());
-					serie.setUseBreakSchedule(true);
-					serie.setStatus(TedSerie.STATUS_HOLD);
-				}
-				else
-				{
-					// put show on check
-					serie.setStatus(TedSerie.STATUS_CHECK);
-				}
-			} 
-			catch (AirDateUnknownException e) 
-			{
-				if (this.updateEpisodeSchedule())
-				{
-					// if schedule is available, wait until airdate becomes known
-					serie.setStatus(TedSerie.STATUS_HIATUS);
-				}
-				else
-				{
-					// if schedule is not available, just put the show on check
-					serie.setStatus(TedSerie.STATUS_CHECK);
-				}		
+				// put show on check
+				serie.setStatus(TedSerie.STATUS_CHECK);
 			}
 		} 
-		catch (NoEpisodeFoundException e1) 
+		catch (AirDateUnknownException e) 
 		{
-			serie.setStatus(TedSerie.STATUS_HIATUS);
+			if (this.isEpisodeScheduleAvailable())
+			{
+				// if schedule is available, wait until airdate becomes known
+				serie.setStatus(TedSerie.STATUS_HIATUS);
+				serie.checkIfCurrentEpisodeIsScheduled();
+			}
+			else
+			{
+				// if schedule is not available, just put the show on check
+				serie.setStatus(TedSerie.STATUS_CHECK);
+			}		
 		}
+
 	}
 	
 	/**
@@ -647,7 +651,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	{
 		// set update date to today
 		this.checkEpisodeSchedule = new Date();
-		this.updateEpisodeSchedule();
+		this.isEpisodeScheduleAvailableWithUpdate();
 	}
 
 }

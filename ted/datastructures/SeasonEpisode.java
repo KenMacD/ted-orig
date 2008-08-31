@@ -3,6 +3,7 @@ package ted.datastructures;
 import java.util.Date;
 
 import ted.Lang;
+import ted.datastructures.StandardStructure.AirDateUnknownException;
 
 public class SeasonEpisode extends StandardStructure
 {
@@ -28,9 +29,25 @@ public class SeasonEpisode extends StandardStructure
 		this.episode = episode2;
 	}
 	
-	public SeasonEpisode() {
-		// TODO Auto-generated constructor stub
+	public SeasonEpisode(SeasonEpisode se) 
+	{
+		this.season = se.getSeason();
+		this.episode = se.getEpisode();
+		try 
+		{
+			this.airDate = se.getAirDate();
+		} 
+		catch (AirDateUnknownException e) 
+		{
+			// do nothing
+		}
+		this.title = se.getTitle();
+		this.quality = se.getQuality();
 	}	
+
+	public SeasonEpisode() 
+	{
+	}
 
 	public SeasonEpisode guessNextEpisode()
 	{

@@ -105,18 +105,24 @@ public class TedParser extends Thread
 	
 	public void run()
 	{
-		this.currentSerie.setActivity(TedSerie.IS_PARSING);
-		// load xml feeds into memory
-		this.loadFeeds(currentSerie, tMainDialog);
-		// parse the feeds for new episodes
-		this.parseFeeds(currentSerie, tMainDialog);
-		this.currentSerie.setActivity(TedSerie.IS_IDLE);
+		// check if episode schedule needs an update
+		this.currentSerie.isEpisodeScheduleAvailableWithUpdate();
 		
-		// clear memory
-		this.feedsData = null;
-		this.parseLogInfo = null;
-		// call garbage collector to cleanup dirt
-		Runtime.getRuntime().gc(); 	
+		if (this.currentSerie.isCheck())
+		{
+			this.currentSerie.setActivity(TedSerie.IS_PARSING);
+			// load xml feeds into memory
+			this.loadFeeds(currentSerie, tMainDialog);
+			// parse the feeds for new episodes
+			this.parseFeeds(currentSerie, tMainDialog);
+			this.currentSerie.setActivity(TedSerie.IS_IDLE);
+			
+			// clear memory
+			this.feedsData = null;
+			this.parseLogInfo = null;
+			// call garbage collector to cleanup dirt
+			Runtime.getRuntime().gc();
+		}
 	}
 	
 
@@ -1033,7 +1039,7 @@ public class TedParser extends Thread
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			
 			// increase the season/episode based on the schedule
-			serie.goToNextEpisode(season, episode);
+			serie.goToNextEpisode();
 			// check the status of the show
 			//serie.updateStatus(episode);
 						
