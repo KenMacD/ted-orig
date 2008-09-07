@@ -1163,9 +1163,7 @@ public class TedSerie implements Serializable
 
 	public void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
-		this.useAutoSchedule = useAutoSchedule;
-		
-		if (useAutoSchedule)
+		if (this.isSerieAndGlobalUseAutoSchedule())
 		{
 			this.setStatus(STATUS_HIATUS);
 		}

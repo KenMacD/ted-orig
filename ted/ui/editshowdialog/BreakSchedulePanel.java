@@ -207,9 +207,13 @@ public class BreakSchedulePanel extends JPanel implements ActionListener
 			if(!(currentSerie.isUseBreakScheduleEpisode() || currentSerie.isUseBreakScheduleFrom()))
 			{
 				if(currentSerie.isUseBreakSchedule() && (currentSerie.isCheck()))
+				{
 					currentSerie.setStatus(TedSerie.STATUS_HOLD);
+				}
 				else if(this.wasUseBreakSchedule && !currentSerie.isUseBreakSchedule())
+				{
 					currentSerie.setStatus(TedSerie.STATUS_CHECK);
+				}
 			}
 		}
 	}
