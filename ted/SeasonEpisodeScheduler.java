@@ -39,6 +39,25 @@ public class SeasonEpisodeScheduler implements Serializable
 	}
 	
 	/**
+	 * Copy constructor
+	 * @param scheduler2
+	 */
+	public SeasonEpisodeScheduler (SeasonEpisodeScheduler scheduler2) 
+	{
+		if (this.scheduledEpisodes != null)
+		{
+			this.scheduledEpisodes.clear();
+		}
+		else
+		{
+			this.scheduledEpisodes = new Vector<StandardStructure>();
+		}
+		this.scheduledEpisodes.addAll(scheduler2.getScheduledEpisodes());
+		this.checkEpisodeSchedule = scheduler2.checkEpisodeSchedule;
+		this.serie = scheduler2.serie;
+	}
+	
+	/**
 	 * @return A vector of episodes that are currently aired (from epguides info)
 	 */
 	private Vector<StandardStructure> getAiredEpisodes()
@@ -655,4 +674,23 @@ public class SeasonEpisodeScheduler implements Serializable
 		this.isEpisodeScheduleAvailableWithUpdate();
 	}
 
+	/**
+	 * Clears the current schedule and schedules an update
+	 * @param tedSerie 
+	 */
+	public void clear(TedSerie tedSerie) 
+	{
+		if (this.scheduledEpisodes != null)
+		{
+			this.scheduledEpisodes.clear();
+			this.scheduledEpisodes = null;
+		}
+		this.checkEpisodeSchedule = new Date();
+		this.serie = tedSerie;
+	}
+
+	private Vector<StandardStructure> getScheduledEpisodes() 
+	{
+		return this.scheduledEpisodes;
+	}
 }

@@ -1256,11 +1256,17 @@ public class TedSerie implements Serializable
 
 	public void setScheduler(SeasonEpisodeScheduler scheduler2) 
 	{
-		this.scheduler = scheduler2;		
+		this.scheduler = new SeasonEpisodeScheduler(scheduler2);
 	}
 
 	public StandardStructure getLastAiredEpisode() 
 	{
 		return this.getScheduler().getLastAiredEpisode();
+	}
+
+
+	public void clearScheduler() 
+	{
+		this.getScheduler().clear(this);
 	}
 }
