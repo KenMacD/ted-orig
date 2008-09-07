@@ -163,13 +163,13 @@ public class SchedulePanel extends JPanel implements ActionListener
 	private void updatePanels()
 	{
 		boolean isAutoSchedule = checkAutoSchedule.isSelected();
-		boolean autoScheduleGloballyDisabled = TedConfig.isUseAutoSchedule();
+		boolean autoScheduleGloballyEnabled = TedConfig.isUseAutoSchedule();
 		
-		this.labelEpGuides.setEnabled(isAutoSchedule);
-		this.textEpguidesID.setEnabled(isAutoSchedule);
-		this.jOpenButton.setEnabled(isAutoSchedule);
+		this.labelEpGuides.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
+		this.textEpguidesID.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
+		this.jOpenButton.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
 		
-		wPanel.setContentsEnabled(!isAutoSchedule || !autoScheduleGloballyDisabled);
-		bPanel.setContentsEnabled(!isAutoSchedule || !autoScheduleGloballyDisabled);
+		wPanel.setContentsEnabled(!isAutoSchedule || !autoScheduleGloballyEnabled);
+		bPanel.setContentsEnabled(!isAutoSchedule || !autoScheduleGloballyEnabled);
 	}
 }

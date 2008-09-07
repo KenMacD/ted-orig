@@ -176,7 +176,8 @@ public class SeasonEpisodeScheduler implements Serializable
 	
 	/**
 	 * @return Whether the schedule is filled. Will trigger an episode schedule update when needed.
-	 * (once every 2 days)
+	 * (once every 7 days)
+	 * Will also update the current set episode in the show when an update is done.
 	 */
 	public boolean isEpisodeScheduleAvailableWithUpdate()
 	{
@@ -192,7 +193,7 @@ public class SeasonEpisodeScheduler implements Serializable
 					systemDate.after(this.checkEpisodeSchedule))
 				)
 		{	
-			serie.setStatusString(Lang.getString("TedTableModel.EpisodeScheduleUpdate"));
+			serie.setStatusString(Lang.getString("TedSerie.EpisodeScheduleUpdate"));
 			// parse epguides
 			// New instance of the parser
 			ScheduleParser tedEP = new ScheduleParser();
@@ -627,21 +628,21 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * Check what the status has to be after a certain episode has been found
 	 * @param episode
 	 */
-	public void updateStatus(int episode) 
-	{
-		// check airdate
-		this.checkAirDate();
-		
-		// if the episode was a break episode, put the show on hold
-		if (serie.checkBreakEpisode(episode) && !serie.isHiatus())
+	public void updateManualSchedulerStatus(int episode) 
+	{	
+		if (!serie.isSerieAndGlobalUseAutoSchedule())
 		{
-			serie.setStatus(TedSerie.STATUS_HOLD);
+			// if the episode was a break episode, put the show on hold
+			if (serie.checkBreakEpisode(episode) && !serie.isHiatus())
+			{
+				serie.setStatus(TedSerie.STATUS_HOLD);
+			}
+			// if we use the episode schedule, put the show on pause
+			else if (serie.isUseEpisodeSchedule() && serie.isCheck())
+			{
+				serie.setStatus(TedSerie.STATUS_PAUSE);
+			}	
 		}
-		// if we use the episode schedule, put the show on pause
-		else if (serie.isUseEpisodeSchedule() && serie.isCheck())
-		{
-			serie.setStatus(TedSerie.STATUS_PAUSE);
-		}		
 	}
 
 	/**

@@ -3,7 +3,6 @@
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -12,7 +11,6 @@ import org.w3c.dom.Element;
 import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
-import ted.datastructures.StandardStructure.AirDateUnknownException;
 import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
@@ -1064,6 +1062,8 @@ public class TedSerie implements Serializable
 				this.setCurrentEpisode(nextSE);
 			}
 		}
+		
+		updateStatus(getCurrentEpisode());
 	}
 	
 	public boolean isDoubleEpisode()
@@ -1076,7 +1076,7 @@ public class TedSerie implements Serializable
 	 */
 	public void updateStatus(int episode) 
 	{
-		this.getScheduler().updateStatus(episode);		
+		this.getScheduler().updateManualSchedulerStatus(episode);		
 	}
 
 	/**
@@ -1163,15 +1163,7 @@ public class TedSerie implements Serializable
 
 	public void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
-		if (this.isSerieAndGlobalUseAutoSchedule())
-		{
-			this.setStatus(STATUS_HIATUS);
-		}
-		else
-		{
-			this.setStatus(STATUS_CHECK);
-		}
-		
+		this.useAutoSchedule = useAutoSchedule;	
 		this.updateShowStatus();
 	}
 
