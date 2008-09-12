@@ -531,7 +531,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			{
 				TedSerie serie = serieTable.getSerieAt(i);
 				
-				tParseHandler.addParseThread(serie);
+				tParseHandler.addParseThread(serie, false);
 			}
 	
 			tParseHandler.start();
@@ -632,7 +632,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			if (pos >= 0)
 			{
 				TedSerie selectedserie = serieTable.getSerieAt(pos);
-				TedParseHandler handler = new TedParseHandler(selectedserie, this);
+				TedParseHandler handler = new TedParseHandler(selectedserie, this, true);
 				handler.start();
 			}
 			

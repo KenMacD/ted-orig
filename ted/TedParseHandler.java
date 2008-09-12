@@ -49,7 +49,7 @@ public class TedParseHandler extends Thread
 	{
 		runningThreads = new Vector<TedParser>();
 		this.mainDialog = mainDialog;
-		this.addParseThread(serie);
+		this.addParseThread(serie, false);
 	}
 	
 	public TedParseHandler(TedParser thread, TedMainDialog mainDialog)
@@ -66,6 +66,15 @@ public class TedParseHandler extends Thread
 		this.mainDialog = mainDialog;
 	}
 	
+	public TedParseHandler(TedSerie serie, TedMainDialog tedMainDialog,
+			boolean forceParse) 
+	{
+		runningThreads = new Vector<TedParser>();
+		this.mainDialog = tedMainDialog;
+		this.addParseThread(serie, forceParse);
+	}
+
+
 	public void start() 
 	{
 		parseThread = new Thread(this);
@@ -140,13 +149,13 @@ public class TedParseHandler extends Thread
 	
 	/*
 	 * Add a show which has to be parsed
-	 */
-	public void addParseThread(TedSerie serie)
+	 */	
+	public void addParseThread(TedSerie serie, boolean forceParse) 
 	{
 		// if it is the day to start checking the serie again
 		serie.updateShowStatus();
 		
-		TedParser tp = new TedParser(serie, mainDialog);
-		runningThreads.add(tp);
+		TedParser tp = new TedParser(serie, mainDialog, forceParse);
+		runningThreads.add(tp);		
 	}
 }

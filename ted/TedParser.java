@@ -69,6 +69,7 @@ public class TedParser extends Thread
 	private int bestItemNr = 0;
 	
 	private String[][] parseLogInfo;
+	private boolean forceParce = false;
 	
   	/****************************************************
 	 * CONSTRUCTORS
@@ -101,12 +102,32 @@ public class TedParser extends Thread
 		
 	}
 	
+	public TedParser(TedSerie serie, TedMainDialog mainDialog,
+			boolean forceParse) 
+	{
+		this.tMainDialog  = mainDialog;
+		this.currentSerie = serie;
+		
+		// reset globals
+		foundTorrent = false;
+		
+		this.bestTorrent = null;
+		this.bestTorrentInfo = null;
+		this.bestTorrentUrl = null;
+		this.feedsData = null;
+		totalNumberOfFeedItems = 0;
+		bestTorrentSeeders = 0;
+		
+		this.dailyItems = new Vector();	
+		this.forceParce  = forceParse;
+	}
+
 	public void run()
 	{
 		// check if episode schedule needs an update
 		this.currentSerie.isEpisodeScheduleAvailableWithUpdate();
 		
-		if (this.currentSerie.isCheck())
+		if (this.currentSerie.isCheck() || this.forceParce)
 		{
 			this.currentSerie.setActivity(TedSerie.IS_PARSING);
 			// load xml feeds into memory
