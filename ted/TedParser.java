@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +21,6 @@ import net.sf.torrentsniffer.torrent.TorrentInfo;
 import net.sf.torrentsniffer.torrent.TorrentState;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
-import ted.datastructures.StandardStructure;
 
 import com.sun.cnpi.rss.elements.Channel;
 import com.sun.cnpi.rss.elements.Item;
@@ -56,7 +54,6 @@ public class TedParser extends Thread
 	private TedParserKeywordChecker tPKeyChecker = new TedParserKeywordChecker();
 	private TedParserDateChecker tPDateChecker = new TedParserDateChecker();
 	private TorrentImpl bestTorrent;
-	private TorrentState bestTorrentState;
 	private TorrentInfo bestTorrentInfo;
 	private URL bestTorrentUrl = null;
 	private Vector<DailyDate> dailyItems;
@@ -66,6 +63,7 @@ public class TedParser extends Thread
 	
 	private int checkedTorrents = 0;
 	private int foundTorrents = 0;
+	private int bestTorrentSeeders = 0;
 	
 	private int itemNr = 0;
 	private int bestItemNr = 0;
@@ -90,10 +88,10 @@ public class TedParser extends Thread
 		
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
-		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
 		this.feedsData = null;
 		totalNumberOfFeedItems = 0;
+		bestTorrentSeeders = 0;
 		
 		this.dailyItems = new Vector();	
 	}
@@ -240,8 +238,8 @@ public class TedParser extends Thread
 		
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
-		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
+		bestTorrentSeeders = 0;
 		this.itemNr = 0;
 		this.bestItemNr = 0;
 		
@@ -524,7 +522,6 @@ public class TedParser extends Thread
 		
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
-		this.bestTorrentState = null;
 		this.bestTorrentUrl = null;
 				
 		// check seeders, size and keyword filters
@@ -538,7 +535,7 @@ public class TedParser extends Thread
 		if(this.bestTorrentUrl!=null)
 		{
 			DailyDate dd = getDailyDateFromItem(item);
-			dd.setSeeders(bestTorrentState.getComplete());
+			dd.setSeeders(bestTorrentSeeders);
 			dd.setUrl(bestTorrentUrl);
 			
 			checkIfBestDaily(dd);
@@ -669,23 +666,28 @@ public class TedParser extends Thread
 			// get torrent state (for seeders)	
 			try
 			{
-				// get torrent state (containing seeders/leechers
-				torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
-				
-				int torrentSeeders = torrentState.getComplete();
-				
+				int torrentSeeders = 0;
+				// only get the torrent state when minimum seeders > 0
+				if (serie.getMinNumOfSeeders() > 0 || TedConfig.getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
+				{
+					// get torrent state (containing seeders/leechers
+					torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+					
+					torrentSeeders = torrentState.getComplete();
+				}
+					
 				//	compare with best	
 				// if more seeders than best and more seeders than min seeders
 				if (   (  this.bestTorrentUrl == null 
-					|| (   torrentSeeders > this.bestTorrentState.getComplete()) ) 
+					|| (   torrentSeeders > this.bestTorrentSeeders) ) 
 						&& torrentSeeders >= serie.getMinNumOfSeeders())
 				{
 					// print seeders
-					TedLog.debug("Found new best torrent! (" + torrentState.getComplete()+ " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
+					TedLog.debug("Found new best torrent! (" + torrentSeeders + " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
 					// current is best
 					this.bestTorrentUrl = url;
 					this.bestTorrentInfo = torrentInfo;
-					this.bestTorrentState = torrentState;
+					this.bestTorrentSeeders = torrentSeeders;
 					this.bestTorrent = torrent;
 					
 					if(!serie.isDaily)
