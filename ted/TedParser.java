@@ -544,6 +544,7 @@ public class TedParser extends Thread
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
 		this.bestTorrentUrl = null;
+		this.bestTorrentSeeders = 0;
 				
 		// check seeders, size and keyword filters
 		checkIfBest(torrentUrl, serie);
