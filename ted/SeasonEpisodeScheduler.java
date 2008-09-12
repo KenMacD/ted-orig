@@ -52,7 +52,10 @@ public class SeasonEpisodeScheduler implements Serializable
 		{
 			this.scheduledEpisodes = new Vector<StandardStructure>();
 		}
-		this.scheduledEpisodes.addAll(scheduler2.getScheduledEpisodes());
+		if (scheduler2.getScheduledEpisodes() != null)
+		{
+			this.scheduledEpisodes.addAll(scheduler2.getScheduledEpisodes());
+		}
 		this.checkEpisodeSchedule = scheduler2.checkEpisodeSchedule;
 		this.serie = scheduler2.serie;
 	}

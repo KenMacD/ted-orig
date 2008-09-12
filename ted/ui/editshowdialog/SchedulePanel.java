@@ -122,9 +122,9 @@ public class SchedulePanel extends JPanel implements ActionListener
 		bPanel.setValues(serie);
 		
 		this.checkAutoSchedule.setSelected(serie.isUseAutoSchedule());
-		this.updatePanels();
-		
 		this.textEpguidesID.setText(serie.getEpguidesName());
+		
+		this.updatePanels();
 	}
 	
 	public boolean checkValues()

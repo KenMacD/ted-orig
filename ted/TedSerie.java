@@ -1256,7 +1256,14 @@ public class TedSerie implements Serializable
 
 	public void setScheduler(SeasonEpisodeScheduler scheduler2) 
 	{
-		this.scheduler = new SeasonEpisodeScheduler(scheduler2);
+		if (scheduler2 != null)
+		{
+			this.scheduler = new SeasonEpisodeScheduler(scheduler2);
+		}
+		else
+		{
+			this.scheduler = new SeasonEpisodeScheduler(this);
+		}
 	}
 
 	public StandardStructure getLastAiredEpisode() 

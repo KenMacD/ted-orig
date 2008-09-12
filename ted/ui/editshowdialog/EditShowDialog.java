@@ -46,7 +46,6 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private int width = 500;
 	private int height = 500;
 	private int tabsHeight = 350;
-	//private int bottomButtonLocationY = height - 60;
 
 	/**
 	 * 
@@ -332,35 +331,34 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		{
 			// save schedule info
 			this.schedulePanel.saveValues(show);
-			this.generalPanel.saveValues(show);			
+			this.generalPanel.saveValues(show);	
+			
+			boolean updateFeedsAndSchedule = false;
 			
 			if (!currentName.equals(show.getName()) && !currentName.equals(""))
 			{
-				int action = JOptionPane.showConfirmDialog(null, Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") 
-						 + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"));
-				
-				// 0 means generate feeds, is done below
-				// 1 means do nothing
-				// 2 = Cancel the save operation, indicated by user.
-				if (action == 2)
+				// ask user if he wants to generate feeds causet he name has changed
+				int answer = JOptionPane.showOptionDialog(null, 
+						Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") + " " + 
+						Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"),
+						Lang.getString("TedEpisodeDialog.NoFeedsHeader"),
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null, Lang.getYesNoCancelLocale(), Lang.getYesNoLocale()[0]);
+		
+				if (answer == JOptionPane.CANCEL_OPTION)
 				{
 					return false;
 				}
-				else if (action == 0)
+				else if (answer == JOptionPane.OK_OPTION)
 				{
-					show.setSearchName("");
-					show.generateFeedLocations();
-					schedulePanel.setValues(show);
-					feedsPanel.setValues(show);
-					this.feedsPanel.saveValues(show);
-					this.schedulePanel.saveValues(show);
-					show.clearScheduler();
+					updateFeedsAndSchedule = true;
 				}
 			}
 		
 			if (!this.feedsPanel.checkValues())
 			{
-				//JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogFeedCount")); //$NON-NLS-1$
+				// ask the user if he wants to generate feeds cause there are no feeds
 				int answer = JOptionPane.showOptionDialog(null, 
 						Lang.getString("TedEpisodeDialog.NoFeedsQuestion") + " " + Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"),
 						Lang.getString("TedEpisodeDialog.NoFeedsHeader"),
@@ -369,13 +367,29 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				
 				if (answer == JOptionPane.YES_OPTION)
 				{
-					// auto generate feed locations	
-					show.removeAllFeeds();
-					show.generateFeedLocations();
-					
-					this.feedsPanel.setValues(show);
-					this.feedsPanel.saveValues(show);
+					updateFeedsAndSchedule = true;
 				}
+				if (answer == JOptionPane.NO_OPTION)
+				{
+					return false;
+				}
+			}
+			
+			if (updateFeedsAndSchedule)
+			{
+				// reset name
+				show.setSearchName("");
+				show.setEpguidesName("");
+				// auto generate feed locations	
+				show.generateFeedLocations();
+				
+				// set new values and save them
+				schedulePanel.setValues(show);
+				feedsPanel.setValues(show);
+				this.feedsPanel.saveValues(show);
+				this.schedulePanel.saveValues(show);
+				// force schedule update
+				show.clearScheduler();	
 			}
 			
 			if (this.feedsPanel.checkValues())
