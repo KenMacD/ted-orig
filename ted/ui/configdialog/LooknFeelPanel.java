@@ -75,19 +75,13 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 	{
 		try 
 		{
-			{
-				this.setPreferredSize(new java.awt.Dimension(400, 400));
-			}
-			//this.setPreferredSize(new Dimension(width, height));
 
 		lookFeelPanel = new JPanel();
 		this.add(lookFeelPanel);
-		//lookFeelPanel.setPreferredSize(new Dimension(width, height));
 		FormLayout lookFeelPanelLayout = new FormLayout(
 				"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)", 
 				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 		lookFeelPanel.setLayout(lookFeelPanelLayout);
-		lookFeelPanel.setPreferredSize(new java.awt.Dimension(400, 400));
 
 		labelLanguage = new JLabel();
 		lookFeelPanel.add(labelLanguage, new CellConstraints("2, 13, 2, 1, default, default"));
@@ -105,7 +99,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		lookFeelPanel.add(checkAlertNewTorrent, new CellConstraints("2, 5, 2, 1, default, default"));
 		checkAlertNewTorrent.setText(Lang
 			.getString("TedConfigDialog.CheckAlertNewTorrent"));
-		checkAlertNewTorrent.setBounds(14, 236, 371, 21);
+		//checkAlertNewTorrent.setBounds(14, 236, 371, 21);
 
 		checkAlertErrors = new JCheckBox();
 		lookFeelPanel.add(checkAlertErrors, new CellConstraints("2, 6, 2, 1, default, default"));

@@ -66,8 +66,8 @@ public class TedConfigDialog extends javax.swing.JDialog
 	private AdvancedPanel advancedPanel;
 	private UpdatesPanel updatesPanel;
 	private int width = 500;
-	private int height = 500;
-	private int tabsHeight = 350;
+	private int height = 550;
+	private int tabsHeight = 400;
 	
 	/****************************************************
 	 * CONSTRUCTOR

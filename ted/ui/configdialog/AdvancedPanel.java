@@ -2,6 +2,7 @@ package ted.ui.configdialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.Hashtable;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -10,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import ted.Lang;
@@ -37,6 +39,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel advancedPanel;
+	private JLabel labelTimeOutSeconds;
 	private JLabel labelTimeOut;
 	private JTextField textTimeOutSecs;
 	private JRadioButton radioTorrentSettings1;
@@ -50,87 +53,99 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private ButtonGroup seederSettingGroup;
 	private JCheckBox checkNotDownloadCompressed = null;
 	private JTextField filterExtensions;
+	private JSlider timeoutInSecondsSlider;
+	private final int MINTIMEOUT = 1;
+	private final int MAXTIMEOUT = 20;
 	
 	public AdvancedPanel()
 	{
 		this.initGUI();
 	}
 	
-	private void initGUI() {
-		try {
-
-		advancedPanel = new JPanel();
-		//advancedPanel.setPreferredSize(new Dimension(width, height));
-		this.add(advancedPanel);
-		FormLayout advancedPanelLayout = new FormLayout(
-				"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
-				"max(p;5dlu), max(p;5dlu), 15dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-		advancedPanel.setLayout(advancedPanelLayout);
-		advancedPanel.setPreferredSize(new java.awt.Dimension(275, 270));
-
-		labelTimeOut = new JLabel();
-		advancedPanel.add(labelTimeOut, new CellConstraints("2, 2, 5, 1, default, default"));
-		labelTimeOut.setText(Lang.getString("TedConfigDialog.LabelTimeout"));
-		labelTimeOut.setBounds(14, 381, 371, 28);
-
-		textTimeOutSecs = new JTextField();
-		advancedPanel.add(textTimeOutSecs, new CellConstraints("2, 3, 2, 1, default, default"));
-		textTimeOutSecs.setBounds(14, 407, 63, 28);
-
-		labelTimeOutInSecs = new JLabel();
-		advancedPanel.add(labelTimeOutInSecs, new CellConstraints("5, 3, 2, 1, default, default"));
-		labelTimeOutInSecs.setText(Lang.getString("TedConfigDialog.Seconds"));
-		labelTimeOutInSecs.setBounds(84, 406, 245, 28);
-
-		labelTorrentSettings = new JLabel();
-		advancedPanel.add(labelTorrentSettings, new CellConstraints("2, 5, 5, 1, default, default"));
-		labelTorrentSettings.setText(Lang.getString("TedConfigDialog.LabelSeeders"));
-		labelTorrentSettings.setBounds(14, 439, 350, 28);
-
-		radioTorrentSettings1 = new JRadioButton();
-		advancedPanel.add(radioTorrentSettings1, new CellConstraints("2, 6, 5, 1, default, default"));
-		radioTorrentSettings1.setText(Lang
-			.getString("TedConfigDialog.RadioMinimumSeeders"));
-		radioTorrentSettings1.setBounds(7, 459, 364, 28);
-
-		radioTorrentSettings2 = new JRadioButton();
-		advancedPanel.add(radioTorrentSettings2, new CellConstraints("2, 7, 5, 1, default, default"));
-		radioTorrentSettings2.setText(Lang
-			.getString("TedConfigDialog.RadioMostSeeders"));
-		radioTorrentSettings2.setBounds(7, 483, 364, 28);
-		
-		seederSettingGroup = new ButtonGroup();
-		seederSettingGroup.add(radioTorrentSettings1);
-		seederSettingGroup.add(radioTorrentSettings2);
-
-		jSeparator1 = new JSeparator();
-		advancedPanel.add(jSeparator1, new CellConstraints("2, 4, 5, 1, default, default"));
-
-		jSeparator2 = new JSeparator();
-		advancedPanel.add(jSeparator2, new CellConstraints("2, 8, 5, 1, default, default"));
-		
-		checkNotDownloadCompressed = new JCheckBox();
-		checkNotDownloadCompressed.setBounds(14, 257, 371, 21);
-		checkNotDownloadCompressed.setText(Lang.getString("TedConfigDialog.GetCompressed"));
-		advancedPanel.add(checkNotDownloadCompressed, new CellConstraints("2, 9, 5, 1, default, default"));
-		checkNotDownloadCompressed.addActionListener(this);
-		checkNotDownloadCompressed.setActionCommand("compressed");
-		
-		filterExtensions = new JTextField();
-		filterExtensions.setBounds(15, 257, 371, 21);
-		filterExtensions.setText("zip, rar, r01");
-		advancedPanel.add(filterExtensions, new CellConstraints("3, 10, 3, 1, default, default"));
+	private void initGUI() 
+	{
+		try 
 		{
-			jSeparator3 = new JSeparator();
-			advancedPanel.add(jSeparator3, new CellConstraints("2, 11, 5, 1, default, default"));
-		}
-		{
-			useAutoScheduleCheckBox = new JCheckBox();
-			advancedPanel.add(getUseAutoScheduleCheckBox(), new CellConstraints("2, 12, 5, 1, default, default"));
-			useAutoScheduleCheckBox.setText("Use auto schedule");
-		}
+			this.setSize(400, 400);
+			advancedPanel = new JPanel();
+			this.add(advancedPanel);
+			FormLayout advancedPanelLayout = new FormLayout(
+					"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
+			"max(p;5dlu), max(p;5dlu), 30dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
+			advancedPanel.setLayout(advancedPanelLayout);
 
-		} catch (Exception e) {
+			labelTimeOut = new JLabel();
+			advancedPanel.add(labelTimeOut, new CellConstraints("2, 2, 5, 1, default, default"));
+			labelTimeOut.setText(Lang.getString("TedConfigDialog.LabelTimeout"));
+			labelTimeOut.setBounds(14, 381, 371, 28);
+
+			timeoutInSecondsSlider = new JSlider(JSlider.HORIZONTAL,
+					MINTIMEOUT, MAXTIMEOUT, 10);
+			timeoutInSecondsSlider.setMajorTickSpacing(19);
+			timeoutInSecondsSlider.setMinorTickSpacing(1);
+			//Create the label table
+			Hashtable labelTable = new Hashtable();
+			labelTable.put( new Integer( MINTIMEOUT ), new JLabel(MINTIMEOUT+"") );
+			labelTable.put( new Integer( MAXTIMEOUT/2 ), new JLabel(Lang.getString("TedConfigDialog.Seconds")) );
+			labelTable.put( new Integer( MAXTIMEOUT ), new JLabel(MAXTIMEOUT+"") );
+			timeoutInSecondsSlider.setLabelTable( labelTable );
+
+			timeoutInSecondsSlider.setPaintTicks(true);
+			timeoutInSecondsSlider.setPaintLabels(true);
+			timeoutInSecondsSlider.setPaintTrack(true);
+			timeoutInSecondsSlider.setSnapToTicks(true);
+
+			advancedPanel.add(timeoutInSecondsSlider, new CellConstraints("2, 3, 5, 1, fill, fill"));
+
+			labelTorrentSettings = new JLabel();
+			advancedPanel.add(labelTorrentSettings, new CellConstraints("2, 5, 5, 1, default, default"));
+			labelTorrentSettings.setText(Lang.getString("TedConfigDialog.LabelSeeders"));
+			labelTorrentSettings.setBounds(14, 439, 350, 28);
+
+			radioTorrentSettings1 = new JRadioButton();
+			advancedPanel.add(radioTorrentSettings1, new CellConstraints("2, 6, 5, 1, default, default"));
+			radioTorrentSettings1.setText(Lang
+					.getString("TedConfigDialog.RadioMinimumSeeders"));
+			radioTorrentSettings1.setBounds(7, 459, 364, 28);
+
+			radioTorrentSettings2 = new JRadioButton();
+			advancedPanel.add(radioTorrentSettings2, new CellConstraints("2, 7, 5, 1, default, default"));
+			radioTorrentSettings2.setText(Lang
+					.getString("TedConfigDialog.RadioMostSeeders"));
+			radioTorrentSettings2.setBounds(7, 483, 364, 28);
+
+			seederSettingGroup = new ButtonGroup();
+			seederSettingGroup.add(radioTorrentSettings1);
+			seederSettingGroup.add(radioTorrentSettings2);
+
+			jSeparator1 = new JSeparator();
+			advancedPanel.add(jSeparator1, new CellConstraints("2, 4, 5, 1, default, default"));
+
+			jSeparator2 = new JSeparator();
+			advancedPanel.add(jSeparator2, new CellConstraints("2, 8, 5, 1, default, default"));
+
+			checkNotDownloadCompressed = new JCheckBox();
+			checkNotDownloadCompressed.setBounds(14, 257, 371, 21);
+			checkNotDownloadCompressed.setText(Lang.getString("TedConfigDialog.GetCompressed"));
+			advancedPanel.add(checkNotDownloadCompressed, new CellConstraints("2, 9, 5, 1, default, default"));
+			checkNotDownloadCompressed.addActionListener(this);
+			checkNotDownloadCompressed.setActionCommand("compressed");
+
+			filterExtensions = new JTextField();
+			filterExtensions.setBounds(15, 257, 371, 21);
+			filterExtensions.setText("zip, rar, r01");
+			advancedPanel.add(filterExtensions, new CellConstraints("3, 10, 3, 1, default, default"));
+			{
+				jSeparator3 = new JSeparator();
+				advancedPanel.add(jSeparator3, new CellConstraints("2, 11, 5, 1, default, default"));
+			}
+			{
+				useAutoScheduleCheckBox = new JCheckBox();
+				advancedPanel.add(getUseAutoScheduleCheckBox(), new CellConstraints("2, 12, 5, 1, default, default"));
+				useAutoScheduleCheckBox.setText(Lang.getString("TedConfigDialog.AutomaticSchedule"));
+			}
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -141,9 +156,20 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	public void setValues()
 	{
 		// get values
-		textTimeOutSecs.setText(TedConfig.getTimeOutInSecs()+"");
+		int timeOut = TedConfig.getTimeOutInSecs();
+		if (timeOut < MINTIMEOUT)
+		{
+			timeOut = MINTIMEOUT;
+		}
+		else if (timeOut > MAXTIMEOUT)
+		{
+			timeOut = MAXTIMEOUT;
+		}
+		timeoutInSecondsSlider.setValue(timeOut);
+		
+		
 		this.setSelectedButton(seederSettingGroup, TedConfig.getSeederSetting());
-		this.setPreferredSize(new java.awt.Dimension(285, 284));
+		this.setPreferredSize(new java.awt.Dimension(400, 400));
 		checkNotDownloadCompressed.setSelected(TedConfig.getDoNotDownloadCompressed());
 		filterExtensions.setText(TedConfig.getFilterExtensions());
 		filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
@@ -155,16 +181,6 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	 */
 	public boolean checkValues()
 	{
-		try
-		{
-			Integer.parseInt(textTimeOutSecs.getText());
-		}
-		catch (NumberFormatException e)
-		{
-			JOptionPane.showMessageDialog(null, textTimeOutSecs.getText() + " " + Lang.getString("TedConfigDialog.DialogNoValidTimeOutTime")); //$NON-NLS-1$
-			return false;
-		}
-		
 		return true;
 	}
 	
@@ -176,7 +192,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	{
 		// get values
 
-		int newTime = Integer.parseInt(textTimeOutSecs.getText());
+		int newTime = timeoutInSecondsSlider.getValue();
 		int seederSetting = this.getSelectedButton(seederSettingGroup);
 		
 		TedConfig.setTimeOutInSecs(newTime);
