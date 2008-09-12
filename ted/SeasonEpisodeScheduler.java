@@ -14,7 +14,9 @@ import ted.epguides.ScheduleParser;
 
 public class SeasonEpisodeScheduler implements Serializable
 {
-
+	// The time zone which was used for this scheduler to set the dates.
+	int timeZone = -100; // dummy value, no such zone exists
+	
 	public class NoEpisodeFoundException extends Exception {
 
 		/**
@@ -422,11 +424,25 @@ public class SeasonEpisodeScheduler implements Serializable
 		
 		return results;
 	}
+	
+	public void adjustAirDatesForTimeZoneAllSerie()
+	{
+		this.adjustAirDatesForTimeZone(scheduledEpisodes);
+	}
 
 	// Adjust the air date of the episodes based on the time zone of 
 	// the user and the time zone in which the show was aired.
-	private void adjustAirDatesForTimeZone(Vector<StandardStructure> episodes)
+	public void adjustAirDatesForTimeZone(Vector<StandardStructure> episodes)
 	{
+		// If the time zone didn't change no need to update.
+		if (TedConfig.getTimeZoneOffset() == timeZone)
+		{
+			return;
+		}
+			
+		int previousTimeZone = timeZone;
+		timeZone = TedConfig.getTimeZoneOffset();		
+		
 		for (int episode = 0; episode < episodes.size(); episode++)
 		{
 			StandardStructure ss = episodes.elementAt(episode);
@@ -441,17 +457,28 @@ public class SeasonEpisodeScheduler implements Serializable
 				continue;
 			}
 			
-	        // If you're not living in the USA
-	 		if (TedConfig.getTimeZoneOffset() >= 0)
-	 		{
-	 			if (serie.getTimeZone() < 0)
-	 			{
-		 			// Add one day to the schedule
-		 			long time = airdate.getTime();
-		 			time += 86400000;
-		 			airdate.setTime(time);
-	 			}
-	 		}
+			// Only update the US shows
+			if (serie.getTimeZone() < 0)
+ 			{
+				int oneDay = 86400000;
+				long time = airdate.getTime();
+			
+		        // If you go to a non US time zone.
+				// The default -100 is kind of a fake US time zone.
+		 		if (   timeZone >= 0
+		 			&& previousTimeZone < 0)
+		 		{	 			
+			 		// Add one day to the schedule
+			 		airdate.setTime(time + oneDay);
+		 		}
+		 		// You go one zone back.
+		 		else if (   timeZone < 0
+		 			     && previousTimeZone >= 0)
+		 		{
+		 			// Remove one day
+		 			airdate.setTime(time - oneDay);
+		 		}
+ 			}
  		}
 	}
 

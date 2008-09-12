@@ -421,13 +421,24 @@ public class TedParser extends Thread
 		
 		// translate the url from the feed to a download url
 		String torrentUrl = item.getLink().toString();
-			
-		if ((season == serie.getCurrentSeason() && episode == serie.getCurrentEpisode()) 
-				|| serie.isDownloadAll())
-		{	
+		
+		// Do we have found the correct episode?
+		boolean foundCorrectEpisode = (   season  == serie.getCurrentSeason() 
+		 							   && episode == serie.getCurrentEpisode());
+		
+		// Some extra check for double episode. Make sure that the next episode
+		// number is also in the string of the torrent file.
+		if (foundCorrectEpisode && serie.currentEpisodeSS.isDouble())
+		{
+			foundCorrectEpisode = sTitle.contains("" + (episode + 1));
+		}
+		
+		if ( foundCorrectEpisode 
+		  || serie.isDownloadAll())
+		{			
 			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getTimeOutInSecs());
 			
-			TedLog.debug("check: " + sTitle); //$NON-NLS-1$
+			TedLog.debug(Lang.getString("TedSerie.Checking") + " " + sTitle); //$NON-NLS-1$
 			serie.setStatusString(Lang.getString("TedSerie.Checking") + " " + sTitle, tMainDialog); //$NON-NLS-1$
 			tMainDialog.repaint();
 				
@@ -1058,7 +1069,7 @@ public class TedParser extends Thread
 				message += " & " + (episode+1) + " ";
 			}
 			
-			message +=				Lang.getString("TedParser.BalloonFoundTorrent3") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			message += Lang.getString("TedParser.BalloonFoundTorrent3") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 			

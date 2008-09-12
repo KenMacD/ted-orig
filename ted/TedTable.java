@@ -85,15 +85,19 @@ public class TedTable extends JTable
 		});				
 	}
 	
-	public void updateStatusAllSeries()
+	public void updateAllSeries()
 	{
 		Vector<TedSerie> series = this.getSeries();
 		
+		TedSerie serie;
 		for(int i = 0; i < series.size(); ++i)
 		{
-			series.get(i).updateShowStatus();
+			serie = series.get(i);
+			serie.updateShowStatus();
+			serie.updateTimeZoneInfo();
 		}		
 	}
+	
 		
 	/**
 	 * Handles clicks on the table in the mainwindow ted
