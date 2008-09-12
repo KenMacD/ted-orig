@@ -317,6 +317,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		{
 			// create an edit show dialog with an empty show and hide add show dialog		
 			TedSerie temp = new TedSerie();
+			// assume user wants to add the show he searched for
+			temp.setName(jSearchField.getText());
 			this.close();
 			new EditShowDialog(tedMain, temp, true);
 		}
@@ -325,10 +327,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.searchShows(jSearchField.getText());
 		}
 		else if (command.equals("switch"))
-		{
-			//this.setSubscribeOption();			
+		{			
 			episodeChooserPanel.setVisible(!episodeChooserPanel.isVisible());
-			//subscribeOptionsPanel.setVisible(!subscribeOptionsPanel.isVisible());
 		}
 	}
 
