@@ -967,17 +967,16 @@ public class TedParser extends Thread
 		TedDailySerie dailySerie = (TedDailySerie) serie;
 		
 		// if 0 is selected download everything, otherwise the given number
-		int maxDailyDownloads = dailySerie.getMaxDownloads();
-		int maxDownloads;
-		if(maxDailyDownloads==0)
+		int maxDownloads = Math.min(dailyItems.size(), dailySerie.getMaxDownloads());
+		if(maxDownloads == 0)
+		{
 			maxDownloads = dailyItems.size();
-		else
-			maxDownloads = Math.min(dailyItems.size(), maxDailyDownloads);
+		}
 		
+		// For correctly updating to the new date.
+		boolean firstDownload = true;
 		
 		DailyDate dd;
-		long oldDate = dailySerie.getLatestDownloadDateInMillis();
-		long newDate = 0;
 		for(int i=0; i<dailyItems.size(); i++)
 		{
 			// get the current daily date
@@ -999,19 +998,16 @@ public class TedParser extends Thread
 					e.printStackTrace();
 				}
 				
-				// add one day, to search for next episode
-				//dd.setDay(dd.getDay()+1);
-				//newDate = dd.getDate().getTimeInMillis();
-				dailySerie.goToNextEpisode(dd);
-				newDate = dailySerie.getLatestDownloadDateInMillis();
-				
-				// when the new date is larger than the lastdownload date
-				/*if(newDate>oldDate)
+				// Add one day, to search for next episode
+				// Do this only for the first download. As the shows are sorted
+				// the first download is the one with the latest date. You want
+				// the show to be put on the date after the downloaded episode
+				// with the latest date.
+				if (firstDownload)
 				{
-					// update olddate
-					oldDate=newDate;
-					((TedDailySerie)serie).setLatestDownloadDate(oldDate);
-				}*/
+					dailySerie.goToNextEpisode(dd);
+					firstDownload = false;
+				}			
 			}
 			else
 			{
@@ -1132,7 +1128,7 @@ public class TedParser extends Thread
 			// everything went okay, notify user and save the changes
 			String message;
 			
-			message = Lang.getString("TedParser.BalloonFoundDailyTorrent1") + " " + dd.toString() + " "
+			message = Lang.getString("TedParser.BalloonFoundDailyTorrent1") + " " + dd.getFormattedEpisodeDate() + " "
 			+ Lang.getString("TedParser.BalloonFoundDailyTorrent2") + " "+ serie.getName(); //$NON-NLS-1$
 			
 			tMainDialog.displayHurray(Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
