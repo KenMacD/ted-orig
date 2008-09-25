@@ -250,7 +250,7 @@ public class ScheduleParser
 				
 				// Which has multiple seasons
 				NodeList seasonEpisodes = episodeList.getElementsByTagName("Season");// + seasonNumber);
-				int nrSeasons = seasonEpisodes.getLength();
+				
 				if (seasonEpisodes != null && seasonEpisodes.getLength() > 0)
 				{
 					for (int i = 0; i < seasonEpisodes.getLength(); ++i)
@@ -490,7 +490,9 @@ public class ScheduleParser
 		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily());
         Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getName(), serie.getEpguidesName(), from, to, serie.isDaily());
         Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
-        detectDoubleEpisodes(episodes);
+        
+        // Disabled for now!
+        //detectDoubleEpisodes(episodes);
         
         // reset vectors for garbage collection
         episodes1 = null;
