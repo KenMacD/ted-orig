@@ -1,6 +1,5 @@
 package ted.ui.addshowdialog;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -10,11 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -35,15 +30,12 @@ import org.w3c.dom.Element;
 
 import ted.BrowserLauncher;
 import ted.Lang;
-import ted.TedDailySerie;
 import ted.TedIO;
 import ted.TedLog;
 import ted.TedMainDialog;
 import ted.TedSerie;
 import ted.TedSystemInfo;
 import ted.TedXMLParser;
-import ted.datastructures.DailyDate;
-import ted.datastructures.SeasonEpisode;
 import ted.datastructures.SimpleTedSerie;
 import ted.datastructures.StandardStructure;
 import ted.interfaces.EpisodeChooserListener;
@@ -82,7 +74,6 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private TedSerie selectedSerie;
 	private TedMainDialog tedMain;
 	private JTextPane showInfoPane;
-	private JButton switchButton;
 	private JTextField jSearchField;
 	private JLabel showNameLabel;
 	private JLabel selectShowLabel;
@@ -158,8 +149,6 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 					showsTableSelectionChanged();
 					
 				}});		
-			
-			jSearchField.addKeyListener(this);
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -289,9 +278,9 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return cancelButton;
 	}
 
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent event)
 	{
-		String command = arg0.getActionCommand();
+		String command = event.getActionCommand();
 		
 		if (command.equals("OK"))
 		{
@@ -318,17 +307,28 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			// create an edit show dialog with an empty show and hide add show dialog		
 			TedSerie temp = new TedSerie();
 			// assume user wants to add the show he searched for
-			temp.setName(jSearchField.getText());
+			temp.setName(getJSearchField().getText());
 			this.close();
 			new EditShowDialog(tedMain, temp, true);
 		}
 		else if (command.equals("search"))
 		{
-			this.searchShows(jSearchField.getText());
+			this.searchShows(getJSearchField().getText());
 		}
 		else if (command.equals("switch"))
 		{			
 			episodeChooserPanel.setVisible(!episodeChooserPanel.isVisible());
+		}
+		else if (command.equals(""))
+		{
+			// possible a reset on the search box
+			// check (even though this is a little ugly, i dont know a better
+			// way to do this)
+			if (event.getSource().toString().contains("cancel"))
+			{
+				this.getJSearchField().setText("");
+				this.searchShows(getJSearchField().getText());
+			}
 		}
 	}
 
@@ -513,6 +513,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JTextField getJSearchField() {
 		if(jSearchField == null) {
 			jSearchField = new SearchTextField();
+			jSearchField.addKeyListener(this);
+			jSearchField.putClientProperty("JTextField.Search.CancelAction", this);
 		}
 		return jSearchField;
 	}

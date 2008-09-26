@@ -35,5 +35,4 @@ public class SearchTextField extends JTextField
 			searchIcon.paintIcon(this, g, this.getWidth()-22,6);
 		}
 	}
-
 }
