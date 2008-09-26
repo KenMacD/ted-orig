@@ -1,7 +1,7 @@
 <?
 
 /**
- * TED: Torrent Episode Downloader (2005 - 2006)
+ * TED: Torrent Episode Downloader (2005 - 2008)
  * 
  * The urltranslater translates urls from the rss items to actual download urls
  * where ted can download the torrent from
@@ -24,6 +24,7 @@
 	*/
 
 $torrentUrl = $_GET["url"];
+$url = $torrentUrl;
 
 if(		strpos($url, "bt-chat.com") !== false ||
 		strpos($url, "thepiratebay.org") !== false || 
@@ -127,9 +128,10 @@ else if(strpos($url, "newtorrents.info") !== false)
 }
 else if(strpos($url, "xtvi.com") !== false)
 {
-	// url in rss: http://www.xtvi.com/index.php?torrent=18990&amp;.torrent
-	// has to be: http://www.xtvi.com/main.php?mode=gettorrent&id=18969
-	$torrentUrl = str_replace("index.php?torrent=", "main.php?mode=gettorrent&id=", $torrentUrl);	
+	$xtviID = $_GET["id"];
+	// url in rss: http://www.xtvi.com/torrents.php?mode=details&id=54933&.torrent
+	// has to be: http://www.xtvi.com/torrents.php?mode=gettorrent&id=54933
+	$torrentUrl = str_replace("details", "gettorrent&id=$xtviID", $torrentUrl);	
 }
 else if (strpos($url, "torrentportal.com") !== false)
 {
@@ -152,6 +154,19 @@ else if (strpos($url, "fenopy.com") !== false)
 	// has to be: http://fenopy.com/torrent/Lost_S04E01_HDTV_XViD_Caph__eztv_/MTA3MjQ4Mw==/download.torrent
 	// get name parameter from url
 	$torrentUrl = str_replace("index.html", "download.torrent", $torrentUrl);
+}
+else if (strpos($url, "tvtorrents.com") !== false)
+{
+	// url in rss: http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=dd8eff61c6ea264e62b88f108caeba0cbd5a90a7&digest=d1f1b176c32c8c6773d83f1a454ce1c57b4cab60&hash=687c5427b7674bbf3db5c1388d1aa6f2e40812a1
+	// do nothing, but we have to get the hashes and paste them back after the url
+	$digest = $_GET["digest"];
+	$hash = $_GET["hash"];
+	$torrentUrl = "$torrentUrl&digest=$digest&hash=$hash";
+
+}
+else if (substr( $url, strlen( $url ) - strlen( ".torrent" ) ) === ".torrent")
+{
+	// do nothing, string ends on ".torrent", we assume that is a correct torrent file
 }
 else
 {
