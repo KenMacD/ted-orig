@@ -48,7 +48,12 @@ public class ScheduleParser
 
 	}
 
-	private Vector<StandardStructure> parseEpguides (String showName, String epguidesName, Date from, Date to, boolean isDaily)
+	private Vector<StandardStructure> parseEpguides (String showName, 
+													 String epguidesName, 
+													 Date from, 
+													 Date to, 
+													 boolean isDaily,
+													 int timeZone)
     {
 		// The general pattern that epguides follows for their show lists
 	    // Format:   1.   1- 1        100     22 Sep 04   <a target="_blank" href="http://www.tv.com/lost/pilot-1/episode/334467/summary.html">Pilot (1)</a>
@@ -126,7 +131,7 @@ public class ScheduleParser
                 {
                 	try 
                 	{
-						episodes.add(constructEpisode(isDaily, season, episode, title, airdate));
+						episodes.add(constructEpisode(isDaily, season, episode, title, airdate, timeZone));
 					} 
                 	catch (CouldNotConstructEpisodeException e) 
 					{
@@ -153,19 +158,24 @@ public class ScheduleParser
         
     }
 	
-	private StandardStructure constructEpisode(boolean isDaily, int season, int episode, String title, Date airdate) throws CouldNotConstructEpisodeException
+	private StandardStructure constructEpisode(boolean isDaily, 
+											   int 	   season, 
+											   int     episode, 
+											   String  title, 
+											   Date    airdate,
+											   int     timeZone) throws CouldNotConstructEpisodeException
 	{
 		StandardStructure result = null;
 		if (isDaily)
     	{
     		if (airdate != null)
     		{           			
-    			result = new DailyDate(airdate, title);
+    			result = new DailyDate(airdate, title, timeZone);
     		}
     	}
 		else
 		{
-			result = new SeasonEpisode(season, episode, airdate, title);	
+			result = new SeasonEpisode(season, episode, airdate, title, timeZone);	
 		}
 		
 		if (result == null)
@@ -179,7 +189,7 @@ public class ScheduleParser
 		}
 	}
 	
-	private Vector<StandardStructure> parseTvRage(String showName, Date from, Date to, boolean isDaily)
+	private Vector<StandardStructure> parseTvRage(String showName, Date from, Date to, boolean isDaily, int timeZone)
 	{
         Vector<StandardStructure> episodes = new Vector<StandardStructure>();
         
@@ -294,7 +304,9 @@ public class ScheduleParser
 								
 			                	try 
 			                	{
-			                		StandardStructure standardEpisode = constructEpisode(isDaily, i+1, episode, title, airdate);
+			                		StandardStructure standardEpisode = 
+			                			constructEpisode(isDaily, i+1, episode, title, airdate, timeZone);
+			                		
 									episodes.add(standardEpisode);
 								} 
 			                	catch (CouldNotConstructEpisodeException e) 
@@ -487,8 +499,8 @@ public class ScheduleParser
 												  Date from,
 												  Date to) 
 	{
-		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily());
-        Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getName(), serie.getEpguidesName(), from, to, serie.isDaily());
+		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily(), serie.getTimeZone());
+        Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getName(), serie.getEpguidesName(), from, to, serie.isDaily(), serie.getTimeZone());
         Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
         
         // Disabled for now!

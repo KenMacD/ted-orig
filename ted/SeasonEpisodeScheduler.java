@@ -13,10 +13,7 @@ import ted.datastructures.StandardStructure.AirDateUnknownException;
 import ted.epguides.ScheduleParser;
 
 public class SeasonEpisodeScheduler implements Serializable
-{
-	// The time zone which was used for this scheduler to set the dates.
-	int timeZone = -100; // dummy value, no such zone exists
-	
+{	
 	public class NoEpisodeFoundException extends Exception {
 
 		/**
@@ -228,9 +225,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	        Calendar future = Calendar.getInstance();
 	        future.add(Calendar.DAY_OF_YEAR, updateIntervalInDays);
 	        this.checkEpisodeSchedule = future.getTime();
-	        
-	        adjustAirDatesForTimeZone(scheduledEpisodes);
-	        
+	        	        
 	        // update serie with scheduled episode
 			try 
 			{
@@ -425,63 +420,6 @@ public class SeasonEpisodeScheduler implements Serializable
 		return results;
 	}
 	
-	public void adjustAirDatesForTimeZoneAllSerie()
-	{
-		this.adjustAirDatesForTimeZone(scheduledEpisodes);
-	}
-
-	// Adjust the air date of the episodes based on the time zone of 
-	// the user and the time zone in which the show was aired.
-	public void adjustAirDatesForTimeZone(Vector<StandardStructure> episodes)
-	{
-		// If the time zone didn't change no need to update.
-		if (TedConfig.getTimeZoneOffset() == timeZone)
-		{
-			return;
-		}
-			
-		int previousTimeZone = timeZone;
-		timeZone = TedConfig.getTimeZoneOffset();		
-		
-		for (int episode = 0; episode < episodes.size(); episode++)
-		{
-			StandardStructure ss = episodes.elementAt(episode);
-			
-			Date airdate;
-			try 
-			{
-				airdate = ss.getAirDate();
-			} 
-			catch (AirDateUnknownException e) 
-			{			
-				continue;
-			}
-			
-			// Only update the US shows
-			if (serie.getTimeZone() < 0)
- 			{
-				int oneDay = 86400000;
-				long time = airdate.getTime();
-			
-		        // If you go to a non US time zone.
-				// The default -100 is kind of a fake US time zone.
-		 		if (   timeZone >= 0
-		 			&& previousTimeZone < 0)
-		 		{	 			
-			 		// Add one day to the schedule
-			 		airdate.setTime(time + oneDay);
-		 		}
-		 		// You go one zone back.
-		 		else if (   timeZone < 0
-		 			     && previousTimeZone >= 0)
-		 		{
-		 			// Remove one day
-		 			airdate.setTime(time - oneDay);
-		 		}
- 			}
- 		}
-	}
-
 	/**
 	 * Checks the airdate for the current season/episode of the show.
 	 * Puts the show on hold if the airdate is in the future

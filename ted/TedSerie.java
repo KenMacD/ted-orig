@@ -1087,11 +1087,6 @@ public class TedSerie implements Serializable
 		this.getScheduler().updateShowStatus();	
 	}
 	
-	public void updateTimeZoneInfo()
-	{
-		this.getScheduler().adjustAirDatesForTimeZoneAllSerie();
-	}
-
 	/**
 	 * @return The scheduler for this serie
 	 */

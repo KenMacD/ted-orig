@@ -9,16 +9,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ted.Lang;
+import ted.TedConfig;
 
 public class StandardStructure implements Serializable, Comparable<StandardStructure>
 {
-	public class AirDateUnknownException extends Exception {
-
+	public class AirDateUnknownException extends Exception 
+	{
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -3174854029126884504L;
-
 	}
 
 	/**
@@ -26,13 +26,22 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	 */
 	private static final long serialVersionUID = 6353477437638502291L;
 	
-	          int     quality      = 0;
-	protected Date    publishDate  = null; // date torrent was published online
-	protected Date    airDate      = null; // date episode was aired on tv
-	protected String  title        = "";   // episode title
-	protected String  summaryURL   = "";
-	protected boolean isDouble     = false;
+	          int     quality      	  = 0;
+	protected Date    publishDate  	  = null; // date torrent was published online
+	protected Date    airDate      	  = null; // date episode was aired on tv
+	protected String  title     	  = "";   // episode title
+	protected String  summaryURL   	  = "";
+	protected boolean isDouble   	  = false;
+	protected int     publishTimeZone = -1;
 	
+	public int getPublishTimeZone() 
+	{
+		return publishTimeZone;
+	}
+	public void setPublishTimeZone(int publishTimeZone) 
+	{
+		this.publishTimeZone = publishTimeZone;
+	}
 	public boolean isDouble() 
 	{
 		return isDouble;
@@ -117,7 +126,21 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	{
 		if (this.airDate != null)
 		{
-			return this.airDate;
+			long dateTime = this.airDate.getTime();
+			int  offset   = TedConfig.getTimeZoneOffset();
+						
+			// shows in the us are aired one day later in the
+			// rest of the world. So for every country right
+			// of the median one day should be added to a
+			// us show.			
+			if (offset >= 0
+			 && this.publishTimeZone < 0)
+			{
+				dateTime += 86400000; 
+			}
+			
+			Date returnDate = new Date(dateTime);
+			return returnDate;
 		}
 		else
 		{
@@ -143,15 +166,17 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	public String getFormattedAirDate() 
 	{
 		String result;
-		if (this.airDate != null)
+		try 
 		{
+			Date tempAirDate = this.getAirDate();
 			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-			result = df.format(this.airDate);
-		}
-		else
+			result = df.format(tempAirDate);
+		} 
+		catch (AirDateUnknownException e)
 		{
 			result = Lang.getString("StandardStructure.UnknownAirdate");
 		}
+		
 		return result;
 	}
 	

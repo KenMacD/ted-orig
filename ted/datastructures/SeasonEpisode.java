@@ -3,7 +3,6 @@ package ted.datastructures;
 import java.util.Date;
 
 import ted.Lang;
-import ted.datastructures.StandardStructure.AirDateUnknownException;
 
 public class SeasonEpisode extends StandardStructure
 {
@@ -14,13 +13,14 @@ public class SeasonEpisode extends StandardStructure
 	private int season = 0;
 	private int episode = 0;
 	
-	public SeasonEpisode(int season2, int episode2, Date airdate2, String title2) 
+	public SeasonEpisode(int season2, int episode2, Date airdate2, String title2, int timeZone2) 
 	{
 		this.season  = season2;
 		this.episode = episode2;
 		this.airDate = airdate2;
 		this.title   = title2;
 		this.quality = 0;
+		this.publishTimeZone = timeZone2;
 	}
 	
 	public SeasonEpisode(int season2, int episode2)
@@ -35,7 +35,7 @@ public class SeasonEpisode extends StandardStructure
 		this.episode = se.getEpisode();
 		try 
 		{
-			this.airDate = se.getAirDate();
+			this.setAirDate(se.getAirDate());
 		} 
 		catch (AirDateUnknownException e) 
 		{
@@ -43,6 +43,7 @@ public class SeasonEpisode extends StandardStructure
 		}
 		this.title = se.getTitle();
 		this.quality = se.getQuality();
+		this.publishTimeZone = se.getPublishTimeZone();
 	}	
 
 	public SeasonEpisode() 

@@ -40,7 +40,7 @@ public class DailyDate  extends StandardStructure
 	/**
 	 * This method creates a DailyDate with a set date
 	 */
-	public DailyDate(Date airdate, String title)
+	public DailyDate(Date airdate, String title, int timeZone)
 	{		
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(airdate);
@@ -50,6 +50,7 @@ public class DailyDate  extends StandardStructure
 		this.setYear(cal.get(Calendar.YEAR));
 		this.airDate = airdate;
 		this.title   = title;
+		this.publishTimeZone = timeZone;
 	}
 	
 	/**
@@ -245,7 +246,7 @@ public class DailyDate  extends StandardStructure
 	public DailyDate guessNextEpisode()
 	{
 		Date date = new Date(this.airDate.getTime() + 86400000);
-		return new DailyDate(date, "");
+		return new DailyDate(date, "", this.getPublishTimeZone());
 	}
 	
 	/**

@@ -94,7 +94,6 @@ public class TedTable extends JTable
 		{
 			serie = series.get(i);
 			serie.updateShowStatus();
-			serie.updateTimeZoneInfo();
 		}		
 	}
 	
