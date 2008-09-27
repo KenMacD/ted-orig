@@ -1071,13 +1071,14 @@ public class TedParser extends Thread
 			
 			// increase the season/episode based on the schedule
 			serie.goToNextEpisode();
-			// check the status of the show
-			//serie.updateStatus(episode);
 						
 			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 			
 			// save the shows
 			tMainDialog.saveShows();
+			
+			// Write log message
+			TedLog.simpleLog(generateLogMessage());
 			
 			if (serie.isCheck() || serie.isPaused())
 			{
