@@ -77,7 +77,7 @@ public class TedSerie implements Serializable
 	private String tvCom;
 	protected boolean isDaily = false;
 	private String searchName = "";
-	protected SeasonEpisodeScheduler scheduler;
+	protected SeasonEpisodeScheduler scheduler = null;
 	private String epguidesName;
 	private int timeZone = -1;
 	protected StandardStructure currentEpisodeSS;
@@ -1258,7 +1258,7 @@ public class TedSerie implements Serializable
 	{
 		if (scheduler2 != null)
 		{
-			this.scheduler = new SeasonEpisodeScheduler(scheduler2);
+			this.scheduler = new SeasonEpisodeScheduler(scheduler2, this);
 		}
 		else
 		{

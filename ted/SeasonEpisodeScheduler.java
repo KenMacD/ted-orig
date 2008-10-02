@@ -41,7 +41,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * Copy constructor
 	 * @param scheduler2
 	 */
-	public SeasonEpisodeScheduler (SeasonEpisodeScheduler scheduler2) 
+	public SeasonEpisodeScheduler (SeasonEpisodeScheduler scheduler2, TedSerie serie) 
 	{
 		if (this.scheduledEpisodes != null)
 		{
@@ -56,7 +56,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			this.scheduledEpisodes.addAll(scheduler2.getScheduledEpisodes());
 		}
 		this.checkEpisodeSchedule = scheduler2.checkEpisodeSchedule;
-		this.serie = scheduler2.serie;
+		this.serie = serie;
 	}
 	
 	/**

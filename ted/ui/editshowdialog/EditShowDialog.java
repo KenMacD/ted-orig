@@ -386,8 +386,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				// set new values and save them
 				schedulePanel.setValues(show);
 				feedsPanel.setValues(show);
-				this.feedsPanel.saveValues(show);
-				this.schedulePanel.saveValues(show);
+
 				// force schedule update
 				show.clearScheduler();	
 			}
@@ -395,6 +394,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			if (this.feedsPanel.checkValues())
 			{
 				this.feedsPanel.saveValues(show);		
+				
 				if (this.filterPanel.checkValues() && this.schedulePanel.checkValues())
 				{		
 					this.filterPanel.saveValues(show);

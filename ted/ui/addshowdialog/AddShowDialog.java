@@ -105,7 +105,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		{
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
-					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 5dlu:grow, max(p;15dlu), 5dlu, 85dlu, max(p;5dlu)", 
+					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 250px, max(p;100px), 5dlu, 150px, max(p;5dlu)", 
 					"max(p;5dlu), max(p;15dlu), 5dlu, 50dlu:grow, 5dlu, max(p;15dlu), 5dlu, bottom:130dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
@@ -154,7 +154,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		    Dimension screenSize = toolkit.getScreenSize();
 		    
-		    this.setSize((int)(screenSize.width*0.75), (int)(screenSize.height*0.75));
+		    this.setSize((int)(screenSize.width*0.75), screenSize.height);
 
 		    //Calculate the frame location
 		    int x = (screenSize.width - this.getWidth()) / 2;
@@ -381,7 +381,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			showInfoPane = new JTextPane();
 			showInfoPane.setContentType( "text/html" );
 			showInfoPane.setEditable( false );
-			//showInfoPane.setPreferredSize(new java.awt.Dimension(325, 128));
+			
+			showInfoPane.setPreferredSize(new java.awt.Dimension(475, 128));
 			//showInfoPane.setText("jTextPane1");
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks
@@ -440,7 +441,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JLabel getShowNameLabel() {
 		if (showNameLabel == null) {
 			showNameLabel = new JLabel();
-			showNameLabel.setFont(new java.awt.Font("Dialog",1,18));
+			showNameLabel.setFont(new java.awt.Font("Dialog",1,25));
 
 		}
 		return showNameLabel;
