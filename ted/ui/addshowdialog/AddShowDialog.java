@@ -543,6 +543,16 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				}
 				// Update the table
 				showsTableModel.setSeries(tempShows);	
+				
+				if (tempShows.size() == 1)
+				{
+					// if only a single show is left: select it
+					ListSelectionModel selectionModel = 
+						  showsTable.getSelectionModel();
+					selectionModel.setSelectionInterval(0, 0);
+					
+
+				}
 			}
 			else
 			{
