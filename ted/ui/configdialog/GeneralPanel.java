@@ -178,7 +178,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 			{
 				timeZoneLabel = new JLabel();
 				generalPanel.add(timeZoneLabel, new CellConstraints("2, 11, 5, 1, default, default"));
-				timeZoneLabel.setText("Select time zone");
+				timeZoneLabel.setText(Lang.getString("TedConfigDialog.SelectTimeZone"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

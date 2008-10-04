@@ -68,7 +68,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 ****************************************************/
 	private static final long serialVersionUID = 3722636937353936684L;
 
-	private static final double tedVersion = 0.92;
+	private static final double tedVersion = 0.95;
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$

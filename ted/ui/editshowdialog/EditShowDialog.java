@@ -44,8 +44,8 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 {
 	
 	private int width = 500;
-	private int height = 500;
-	private int tabsHeight = 350;
+	private int height = 520;
+	private int tabsHeight = 370;
 
 	/**
 	 * 
@@ -162,7 +162,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			getContentPane().add(jButton1);
 			jButton1.setActionCommand("cancel");
 			jButton1.setText(Lang.getString("TedGeneral.ButtonCancel"));
-			jButton1.setBounds(bottomButtonCancelX, bottomButtonLocationY, 98, 28);
+			jButton1.setBounds(bottomButtonCancelX, bottomButtonLocationY, 100, 28);
 			jButton1.addActionListener(this);
 		}
 		{

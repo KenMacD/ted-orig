@@ -151,7 +151,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 				this.Annuleer_Button = new JButton();
 				this.getContentPane().add(Annuleer_Button);
 				this.Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
-				this.Annuleer_Button.setBounds(bottomButtonCancelX, bottomButtonLocationY, 98, 28);
+				this.Annuleer_Button.setBounds(bottomButtonCancelX, bottomButtonLocationY, 100, 28);
 				this.Annuleer_Button.addActionListener(TCListener);
 				this.Annuleer_Button.setActionCommand("Cancel");
 			}
