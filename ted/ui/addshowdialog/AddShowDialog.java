@@ -368,10 +368,13 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		
 	}
 	
-	private JScrollPane getShowInfoScrollPane() {
-		if (showInfoScrollPane == null) {
+	private JScrollPane getShowInfoScrollPane() 
+	{
+		if (showInfoScrollPane == null) 
+		{
 			showInfoScrollPane = new JScrollPane();
 			showInfoScrollPane.setViewportView(getShowInfoPane());
+			showInfoScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		}
 		return showInfoScrollPane;
 	}
@@ -383,8 +386,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			showInfoPane.setContentType( "text/html" );
 			showInfoPane.setEditable( false );
 			
-			showInfoPane.setPreferredSize(new java.awt.Dimension(480, 128));
-			//showInfoPane.setText("jTextPane1");
+			showInfoPane.setPreferredSize(new java.awt.Dimension(475, 128));
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks
 		    showInfoPane.addHyperlinkListener(new HyperlinkListener() 
