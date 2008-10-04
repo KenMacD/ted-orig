@@ -154,7 +154,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		    Dimension screenSize = toolkit.getScreenSize();
 		    
-		    this.setSize((int)(screenSize.width*0.75), screenSize.height);
+		    this.setSize((int)(screenSize.width*0.75), (int)(screenSize.height*0.90));
 
 		    //Calculate the frame location
 		    int x = (screenSize.width - this.getWidth()) / 2;
@@ -377,26 +377,30 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	}
 	
 	private JTextPane getShowInfoPane() {
-		if (showInfoPane == null) {
+		if (showInfoPane == null) 
+		{
 			showInfoPane = new JTextPane();
 			showInfoPane.setContentType( "text/html" );
 			showInfoPane.setEditable( false );
 			
-			showInfoPane.setPreferredSize(new java.awt.Dimension(475, 128));
+			showInfoPane.setPreferredSize(new java.awt.Dimension(480, 128));
 			//showInfoPane.setText("jTextPane1");
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks
-		    showInfoPane.addHyperlinkListener(new HyperlinkListener() {
-		      public void hyperlinkUpdate(HyperlinkEvent e) {
-			// Handle clicks; ignore mouseovers and other link-related events
-			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			  // Get the HREF of the link and display it.
-				try {
-					BrowserLauncher.openURL(e.getDescription());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+		    showInfoPane.addHyperlinkListener(new HyperlinkListener() 
+		    {
+		      public void hyperlinkUpdate(HyperlinkEvent e) 
+		      {
+				// Handle clicks; ignore mouseovers and other link-related events
+				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) 
+				{
+				  // Get the HREF of the link and display it.
+					try {
+						BrowserLauncher.openURL(e.getDescription());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+					}
 				}
-			}
 		      }
 		    });
 			

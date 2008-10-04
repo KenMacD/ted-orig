@@ -1,4 +1,6 @@
 package ted.ui.editshowdialog;
+import java.util.GregorianCalendar;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -124,6 +126,9 @@ public class DailyPanel extends JPanel
 	
 	public StandardStructure getStandardStructure()
 	{
+		GregorianCalendar d = new GregorianCalendar();
+		d.setTimeInMillis(this.datePanel.getDateInMillis());
+		this.currentDate.setDate(d);
 		return this.currentDate;
 	}
 	
