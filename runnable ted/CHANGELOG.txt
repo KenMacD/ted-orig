@@ -1,3 +1,23 @@
+v0.95
+New features:
+- Episode scheduler; determine release date by using information from:
+	- Epguides
+	- tvRage
+- Option to set your time zone
+- Changed Add Show dialog look and feel adjusted for scheduler
+- Choose your own table colors
+- Pop-up dailogs close after x seconds
+- When no tray icon other way to inform the user are implemented
+- Growl enabled for Mac	
+- More show information displayed in main dialog
+
+Bug fixes:
+- Improved memory consumption (on MacOs)
+- Check for new version every x parsing rounds
+- Speed up retrieving show information
+- Added missing log messages
+- Fix for add show search box on Leopard
+
 v0.92
 Improvements:
 - New design main table
