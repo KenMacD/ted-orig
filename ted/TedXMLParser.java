@@ -92,15 +92,15 @@ public class TedXMLParser
 		} 
 		catch (SAXException e1) 
 		{
-			TedLog.error(e1, "XML parsing error, shows.xml couldn't be found");
+			TedLog.error(e1, Lang.getString("TedXmlParser.GeneralError") + ", " + Lang.getString("TedXmlParser.NotFound"));
 		} 
 		catch (IOException e1) 
 		{
-			TedLog.error(e1, "XML parsing error, shows.xml couldn't be read");
+			TedLog.error(e1, Lang.getString("TedXmlParser.GeneralError") + ", " + Lang.getString("TedXmlParser.NoRead"));
 		} 
 		catch (ParserConfigurationException e1) 
 		{
-			TedLog.error(e1, "XML parser error");
+			TedLog.error(e1, Lang.getString("TedXmlParser.GeneralError"));
 		}
 		
 		// if file not exists return null
