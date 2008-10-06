@@ -607,7 +607,7 @@ public class TedIO
 	    	int rows = mainTable.getRowCount();
 	
 			TedXMLParser parser = new TedXMLParser();
-			Element el = parser.readXMLFromURL(location);
+			Element el = parser.readXMLFromFile(location);
 			
 			
 			for(int i=0; i<rows; i++)
