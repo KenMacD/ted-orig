@@ -17,8 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -817,9 +815,8 @@ public class TedIO
 			}
 			else if (TedSystemInfo.osIsMac()) 
 			{
-	    		Class fileMgr = Class.forName("com.apple.eio.FileManager"); //$NON-NLS-1$
-	    		Method openURL = fileMgr.getDeclaredMethod("openURL", new Class[]{String.class});  //$NON-NLS-1$
-	        	openURL.invoke(null, new Object[] {"file://" + loc}); //$NON-NLS-1$
+				String[] args = new String[] { "open", loc};
+				Runtime.getRuntime().exec(args);
 			}
 			else if (TedSystemInfo.osIsLinux())
 			{
@@ -830,7 +827,8 @@ public class TedIO
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) 
+		} 
+		/*catch (ClassNotFoundException e) 
 		{
 			
 			// TODO Auto-generated catch block
@@ -855,7 +853,7 @@ public class TedIO
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public boolean checkForShowsXML()

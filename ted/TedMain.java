@@ -13,7 +13,6 @@ public class TedMain {
 			try
 			{
 				System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "ted" );
-				//System.setProperty( "com.apple.macos.useScreenMenuBar", "true" );
 			    System.setProperty( "apple.laf.useScreenMenuBar", "true" ); // for older versions of Java
 			    System.setProperty( "com.apple.mrj.application.growbox.intrudes ", "true");
 			    System.setProperty( "com.apple.mrj.application.live-resize", "true");
