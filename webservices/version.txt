@@ -1,2 +1,2 @@
-version=0.92
+version=0.95
 show_xml_version=33

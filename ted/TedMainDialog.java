@@ -363,10 +363,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		
 		// Check if the file is now actually present on the user's system.
-		if(tio.checkForShowsXML())
-		{
-			tio.UpdateShow(this, true, this.serieTable);
-		}
+		tio.checkForShowsXML();
 		
 		// start the counter
 		tCounter.start();
