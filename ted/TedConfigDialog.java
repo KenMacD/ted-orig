@@ -214,7 +214,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 	 */
 	public void saveConfig()
 	{
-		int currentTime = TedConfig.getTimeOutInSecs();
+		int currentTime = TedConfig.getRefreshTime();
 		boolean resetTime = false;
 		
 		if (this.generalPanel.checkValues() && this.looknfeelPanel.checkValues() && this.advancedPanel.checkValues() && this.updatesPanel.checkValues())
@@ -225,7 +225,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 			this.updatesPanel.saveValues();
 			
 			
-			int newTime = TedConfig.getTimeOutInSecs();
+			int newTime = TedConfig.getRefreshTime();
 			
 			if (currentTime != newTime)
 			{
