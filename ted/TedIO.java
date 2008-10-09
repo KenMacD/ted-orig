@@ -712,7 +712,7 @@ public class TedIO
 			{
 				// get the version of the XML file
 				TedXMLParser parser = new TedXMLParser();
-				Element el = parser.readXMLFromURL(XML_SHOWS_FILE);
+				Element el = parser.readXMLFromFile(XML_SHOWS_FILE);
 				onlineVersion = parser.getVersion(el);
 			}
 			
