@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project type="0">
-  <Product Id="9A49468E-228E-4150-8275-2479742A5A1F" Name="Torrent Episode Downloader" Version="0.96" Manufacturer="ted" UpgradeCode="26B707F3-0163-45B6-9024-F1340FE6A555">
-    <Package Id="9A49468E-228E-4150-8275-2479742A5A1F" Comments="mail to: support@ted.nu" Keywords="Ted Torrent Episode Downloader">
+  <Product Id="5EA8EDD7-A933-4C21-8547-AF33ADD66671" Name="Torrent Episode Downloader" Version="0.96" Manufacturer="ted" UpgradeCode="26B707F3-0163-45B6-9024-F1340FE6A555">
+    <Package Id="5EA8EDD7-A933-4C21-8547-AF33ADD66671" Comments="mail to: support@ted.nu" Keywords="Ted Torrent Episode Downloader">
       <property name="productURL">http://www.ted.nu/</property>
       <property name="supportURL">http://www.ted.nu/wiki/</property>
       <property name="contactPerson">Roel van der Kraan</property>
