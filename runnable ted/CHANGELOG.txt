@@ -1,3 +1,10 @@
+v0.96
+Bug fixes:
+- Parse shows at start of ted on Windows OS
+- Open torrent files in torrent client when torrent path contains spaces on MacOS
+- Update status bar count down when adjusting time between parse rounds
+- Details of shows are not overwritten at the start of ted
+
 v0.95
 New features:
 - Automatic Episode scheduler; determines airdate and episode titles by using information from:

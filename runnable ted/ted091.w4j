@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project type="0">
-  <Product Id="1D319C1D-C857-4AD1-9F37-7F9A33726683" Name="Torrent Episode Downloader" Version="0.91" Manufacturer="ted" UpgradeCode="26B707F3-0163-45B6-9024-F1340FE6A555">
-    <Package Id="1D319C1D-C857-4AD1-9F37-7F9A33726683" Comments="mail to: support@ted.nu" Keywords="Ted Torrent Episode Downloader">
+  <Product Id="9A49468E-228E-4150-8275-2479742A5A1F" Name="Torrent Episode Downloader" Version="0.96" Manufacturer="ted" UpgradeCode="26B707F3-0163-45B6-9024-F1340FE6A555">
+    <Package Id="9A49468E-228E-4150-8275-2479742A5A1F" Comments="mail to: support@ted.nu" Keywords="Ted Torrent Episode Downloader">
       <property name="productURL">http://www.ted.nu/</property>
       <property name="supportURL">http://www.ted.nu/wiki/</property>
       <property name="contactPerson">Roel van der Kraan</property>
@@ -11,38 +11,84 @@
       <property name="createUninstall">false</property>
       <property name="uninstallShortcutName">Uninstall [ProductName]</property>
     </Settings>
-    <UI Id="UI">
-      <property name="customTopImage">false</property>
-      <property name="pathTopImage">D:\Program Files\Eclipse\eclipse\workspace\ted sourceforge\runnable ted\installer banner.bmp</property>
-      <property name="customLeftImage">false</property>
-      <property name="pathLeftImage">D:\Program Files\Eclipse\eclipse\workspace\ted sourceforge\runnable ted\installer window.bmp</property>
-    </UI>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name=".">
         <Directory Id="APPDIR" Name="[ProductName]">
           <Component Id="CHANGELOG.txt" Guid="5B95CD71-491A-48B3-98B5-C4074C974F00">
-            <Launcher Id="ted.exe" Name="ted.exe" EmbeddedJar="false" JarPath="" ClassName="ted.TedMain" ClassPath="ted.jar; jdic.jar; rssutils.jar" IconPath="D:\Program Files\Eclipse\eclipse\workspace\ted sourceforge\icon-ted2.png">
+            <Launcher Id="ted.exe" Name="ted.exe" EmbeddedJar="false" JarPath="" ClassName="ted.TedMain" ClassPath="ted.jar; jdic.jar; rssutils.jar" IconPath="C:\Program Files\Eclipse Workspace\ted-trunk\icons\icon-ted2.png">
               <property name="parameters" />
               <property name="vmparameters" />
               <Shortcut Id="ted.exe" Name="ted" Directory="APPMENUDIR" />
             </Launcher>
-            <File Id="forms1.1.0.jar" Name="forms-~1.jar" LongName="forms-1.1.0.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\forms-1.1.0.jar" />
-            <File Id="jdic.jar" Name="jdic.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\jdic.jar" />
-            <File Id="rssutils.jar" Name="rssutils.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\rssutils.jar" />
-            <File Id="ted.jar" Name="ted.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted releases\tedv091\091\ted.jar" />
-            <File Id="CHANGELOG.txt" Name="CHANGE~1.txt" LongName="CHANGELOG.txt" src="D:\Program Files\Eclipse\eclipse\workspace\ted releases\tedv091\091\CHANGELOG.txt" />
-            <File Id="README.txt" Name="README.txt" src="D:\Program Files\Eclipse\eclipse\workspace\ted releases\tedv091\091\README.txt" />
+            <File Id="README.txt" Name="README.txt" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\README.txt" />
+            <File Id="forms1.1.0.jar" Name="forms-~1.jar" LongName="forms-1.1.0.jar" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\forms-1.1.0.jar" />
+            <File Id="jdic.jar" Name="jdic.jar" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\jdic.jar" />
+            <File Id="rssutils.jar" Name="rssutils.jar" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\rssutils.jar" />
+            <File Id="CHANGELOG.txt" Name="CHANGE~1.txt" LongName="CHANGELOG.txt" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\CHANGELOG.txt" />
+            <File Id="ted.jar" Name="ted.jar" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\ted.jar" />
           </Component>
           <Directory Id="windows" Name="windows">
-            <Component Id="jdic_stub.jar" Guid="280DF0DE-5FD2-47C3-B93A-F34795A02977">
-              <File Id="jdic_stub.jar" Name="jdic_s~1.jar" LongName="jdic_stub.jar" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\jdic_stub.jar" />
+            <Directory Id="svn" Name=".svn">
+              <Component Id="allwcprops" Guid="F79902DF-12AF-4BA5-9A83-11D791F59A5B">
+                <File Id="allwcprops" Name="all-wc~1" LongName="all-wcprops" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\.svn\all-wcprops" />
+                <File Id="entries" Name="entries" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\.svn\entries" />
+                <File Id="format" Name="format" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\.svn\format" />
+              </Component>
+              <Directory Id="propbase" Name="prop-b~1" LongName="prop-base">
+                <Component Id="jdic_stub.jar.svnbase" Guid="BB5B8C4B-937E-42FA-820B-67434C70AFDC">
+                  <File Id="jdic_stub.jar.svnbase" Name="jdic_s~1.svn" LongName="jdic_stub.jar.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\.svn\prop-base\jdic_stub.jar.svn-base" />
+                </Component>
+              </Directory>
+              <Directory Id="props" Name="props" />
+              <Directory Id="textbase" Name="text-b~1" LongName="text-base">
+                <Component Id="jdic_stub.jar.svnbase1" Guid="AB3803B9-68D6-4125-A6DC-B64D580A4029">
+                  <File Id="jdic_stub.jar.svn-base1" Name="jdic_s~1.svn" LongName="jdic_stub.jar.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\.svn\text-base\jdic_stub.jar.svn-base" />
+                </Component>
+              </Directory>
+              <Directory Id="tmp" Name="tmp">
+                <Directory Id="prop-base1" Name="prop-b~1" LongName="prop-base" />
+                <Directory Id="props1" Name="props" />
+                <Directory Id="text-base1" Name="text-b~1" LongName="text-base" />
+              </Directory>
+            </Directory>
+            <Component Id="jdic_stub.jar" Guid="D08EB3F3-3374-44C3-A98E-9A44A452224B">
+              <File Id="jdic_stub.jar" Name="jdic_s~1.jar" LongName="jdic_stub.jar" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\jdic_stub.jar" />
             </Component>
             <Directory Id="x86" Name="x86">
-              <Component Id="IeEmbed.exe" Guid="3EBF6C4F-A28F-46DE-9CCE-70D496F4A44C">
-                <File Id="IeEmbed.exe" Name="IeEmbed.exe" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\IeEmbed.exe" />
-                <File Id="jdic.dll" Name="jdic.dll" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\jdic.dll" />
-                <File Id="MozEmbed.exe" Name="MozEmbed.exe" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\MozEmbed.exe" />
-                <File Id="tray.dll" Name="tray.dll" src="D:\Program Files\Eclipse\eclipse\workspace\ted\releases\tedv090\tedv090\windows\x86\tray.dll" />
+              <Directory Id=".svn1" Name=".svn">
+                <Component Id="allwcprops1" Guid="B0A77BB9-ABAF-4FE4-BEAD-470CC63D37C0">
+                  <File Id="all-wcprops1" Name="all-wc~1" LongName="all-wcprops" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\all-wcprops" />
+                  <File Id="entries1" Name="entries" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\entries" />
+                  <File Id="format1" Name="format" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\format" />
+                </Component>
+                <Directory Id="prop-base2" Name="prop-b~1" LongName="prop-base">
+                  <Component Id="IeEmbed.exe.svnbase" Guid="42FA1DBF-48B1-4EC0-A56C-9F95B71635E1">
+                    <File Id="IeEmbed.exe.svnbase" Name="IeEmbe~1.svn" LongName="IeEmbed.exe.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\prop-base\IeEmbed.exe.svn-base" />
+                    <File Id="jdic.dll.svnbase" Name="jdicdl~1.svn" LongName="jdic.dll.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\prop-base\jdic.dll.svn-base" />
+                    <File Id="MozEmbed.exe.svnbase" Name="MozEmb~1.svn" LongName="MozEmbed.exe.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\prop-base\MozEmbed.exe.svn-base" />
+                    <File Id="tray.dll.svnbase" Name="traydl~1.svn" LongName="tray.dll.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\prop-base\tray.dll.svn-base" />
+                  </Component>
+                </Directory>
+                <Directory Id="props2" Name="props" />
+                <Directory Id="text-base2" Name="text-b~1" LongName="text-base">
+                  <Component Id="IeEmbed.exe.svnbase1" Guid="0BD88C03-F3BE-44E4-ADDE-A4FAAC776392">
+                    <File Id="IeEmbed.exe.svn-base1" Name="IeEmbe~1.svn" LongName="IeEmbed.exe.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\text-base\IeEmbed.exe.svn-base" />
+                    <File Id="jdic.dll.svn-base1" Name="jdicdl~1.svn" LongName="jdic.dll.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\text-base\jdic.dll.svn-base" />
+                    <File Id="MozEmbed.exe.svn-base1" Name="MozEmb~1.svn" LongName="MozEmbed.exe.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\text-base\MozEmbed.exe.svn-base" />
+                    <File Id="tray.dll.svn-base1" Name="traydl~1.svn" LongName="tray.dll.svn-base" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\.svn\text-base\tray.dll.svn-base" />
+                  </Component>
+                </Directory>
+                <Directory Id="tmp1" Name="tmp">
+                  <Directory Id="prop-base3" Name="prop-b~1" LongName="prop-base" />
+                  <Directory Id="props3" Name="props" />
+                  <Directory Id="text-base3" Name="text-b~1" LongName="text-base" />
+                </Directory>
+              </Directory>
+              <Component Id="IeEmbed.exe" Guid="8D74A9A9-22BD-44B3-929E-A441E6891307">
+                <File Id="IeEmbed.exe" Name="IeEmbed.exe" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\IeEmbed.exe" />
+                <File Id="jdic.dll" Name="jdic.dll" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\jdic.dll" />
+                <File Id="MozEmbed.exe" Name="MozEmbed.exe" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\MozEmbed.exe" />
+                <File Id="tray.dll" Name="tray.dll" src="C:\Program Files\Eclipse Workspace\ted-trunk\runnable ted\windows\x86\tray.dll" />
               </Component>
             </Directory>
           </Directory>
@@ -53,28 +99,34 @@
       </Directory>
       <Directory Id="ProgramMenuFolder" Name=".">
         <Directory Id="APPMENUDIR" Name="[ProductName]">
-          <Component Id="Help.url" Guid="C3D6DA53-EBC5-4BA5-B52F-5D717C0045D2">
-            <File Id="Help.url" Name="Help~1.url" LongName="Help.url" src="D:\Program Files\Eclipse\eclipse\workspace\torrent episode downloader\tedRunnable\0.60\Help.url" />
-            <File Id="SupportForum.url" Name="Suppor~2.url" LongName="Support Forum.url" src="D:\Program Files\Eclipse\eclipse\workspace\torrent episode downloader\tedRunnable\0.60\Support Forum.url" />
+          <Component Id="SupportForum.url" Guid="C272AB68-F579-4310-8F8E-30AE8F9F2CDE">
+            <File Id="SupportForum.url" Name="Suppor~1.url" LongName="Support Forum.url" src="C:\Program Files\Eclipse Workspace\ted-trunk\Support Forum.url" />
+            <File Id="Help.url" Name="Help.url" src="C:\Program Files\Eclipse Workspace\ted-trunk\Help.url" />
           </Component>
         </Directory>
       </Directory>
     </Directory>
     <Feature Id="MainFeature" Title="Ted Main Program" Description="All the things you need to run ted" Level="3" Display="expand">
-      <ComponentRef Id="Help.url" />
       <ComponentRef Id="CHANGELOG.txt" />
+      <ComponentRef Id="allwcprops" />
+      <ComponentRef Id="jdic_stub.jar.svnbase" />
+      <ComponentRef Id="jdic_stub.jar.svnbase1" />
       <ComponentRef Id="jdic_stub.jar" />
+      <ComponentRef Id="allwcprops1" />
+      <ComponentRef Id="IeEmbed.exe.svnbase" />
+      <ComponentRef Id="IeEmbed.exe.svnbase1" />
       <ComponentRef Id="IeEmbed.exe" />
+      <ComponentRef Id="SupportForum.url" />
     </Feature>
   </Product>
   <Build name="Build Info">
     <property name="outputFolder">.</property>
     <property name="outputFilename">setup.msi</property>
-    <property name="executableFilename">tedv090.exe</property>
+    <property name="executableFilename">tedv096.exe</property>
     <property name="selfextracted">true</property>
     <property name="includeMSIRuntime">false</property>
     <property name="includeJRE">false</property>
-    <property name="JREMergeModule">jre150_04.msm</property>
+    <property name="JREMergeModule" />
   </Build>
 </project>
 
