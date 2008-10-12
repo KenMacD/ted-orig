@@ -107,6 +107,15 @@ public class TedTable extends JTable
 		// the user clicked on a serie in the table
 		int row = this.getSelectedRow();
 		
+		// If no row in the table is selected (first time click in the table)
+		// and the user would click with the right mouse button on a show
+		// nothing would happen if not for this extra check.
+		if (row == -1 
+		 && SwingUtilities.isRightMouseButton(evt))
+		{ 
+			row = this.rowAtPoint(evt.getPoint());
+		}
+		
 		if (row >= 0)
 		{
 			TedSerie selectedserie = serieTableModel.getSerieAt(row);
