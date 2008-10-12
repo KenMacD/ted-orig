@@ -63,7 +63,7 @@ public class TedLogDialog extends JDialog implements ActionListener
 	private JPanel panel;
 	private JTextField lines;
 	private JButton clear;
-	private JButton file;
+	private JButton switchLog;
 	private JButton save;
 	private int maxLines;
 	private boolean isClosed;
@@ -132,15 +132,15 @@ public class TedLogDialog extends JDialog implements ActionListener
 				panel.add(clear);
 				
 				//not used at the moment
-				file = new JButton("Change");
-				file.addActionListener(this);
-				file.setActionCommand("file");
-				panel.add(file);
+				switchLog = new JButton(Lang.getString("TedLog.DetailedLog"));
+				switchLog.addActionListener(this);
+				switchLog.setActionCommand("switch");
+				panel.add(switchLog);
 				
 								
 				this.getContentPane().add(panel, BorderLayout.SOUTH);
 				
-				this.setTitle("Log");
+				this.setTitle(Lang.getString("TedLog.Name"));
 				this.setSize(700, 400);
 				
 				this.addWindowListener(new WindowAdapter() 
@@ -249,17 +249,19 @@ public class TedLogDialog extends JDialog implements ActionListener
 			log_all.setText("");
 			log_simple.setText("");
 		}
-		else if(arg0.getActionCommand().equals("file"))
+		else if(arg0.getActionCommand().equals("switch"))
 		{
 			this.getContentPane().remove(scroll);
 			
 			if(logAll)
 			{
+				switchLog.setText(Lang.getString("TedLog.DetailedLog"));
 				scroll = new JScrollPane(log_simple);
 				logAll = false;
 			}
 			else
 			{
+				switchLog.setText(Lang.getString("TedLog.SummaryLog"));
 				scroll = new JScrollPane(log_all);
 				logAll = true;
 			}
