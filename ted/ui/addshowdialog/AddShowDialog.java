@@ -103,6 +103,9 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private void initGUI() {
 		try 
 		{
+			// Set the name of the dialog
+			this.setTitle(Lang.getString("TedAddShowDialog.Title"));
+			
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 250px, max(p;100px), 5dlu, 150px, max(p;5dlu)", 
