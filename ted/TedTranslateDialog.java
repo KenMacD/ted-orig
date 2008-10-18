@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -63,6 +64,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private JTextField textSearch;
 	private JButton buttonHelp;
 	private JButton downloadPropertiesFile;
+	private JButton downloadTranslationsFile;
 
 	public TedTranslateDialog()
 	{
@@ -83,14 +85,14 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				{
 					buttonOpen = new JButton();
 					buttonPanel.add(buttonOpen);
-					buttonOpen.setText("Open");
+					buttonOpen.setText("Open Translation");
 					buttonOpen.addActionListener(this);
 					buttonOpen.setActionCommand("open");
 				}
 				{
 					buttonSave = new JButton();
 					buttonPanel.add(buttonSave);
-					buttonSave.setText("Save");
+					buttonSave.setText("Save Translation");
 					buttonSave.addActionListener(this);
 					buttonSave.setActionCommand("save");
 				}
@@ -104,9 +106,16 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				{
 					downloadPropertiesFile = new JButton();
 					buttonPanel.add(downloadPropertiesFile);
-					downloadPropertiesFile.setText("Download");
+					downloadPropertiesFile.setText("Download Latest Original");
 					downloadPropertiesFile.addActionListener(this);
-					downloadPropertiesFile.setActionCommand("download");
+					downloadPropertiesFile.setActionCommand("properties");
+				}
+				{
+					downloadTranslationsFile = new JButton();
+					buttonPanel.add(downloadTranslationsFile);
+					downloadTranslationsFile.setText("Download Latest Translations");
+					downloadTranslationsFile.addActionListener(this);
+					downloadTranslationsFile.setActionCommand("translations");
 				}
 			}
 			{
@@ -224,7 +233,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		{
 			// If the file isn't present try to download the version
 			// from the repository.
-			downloadPropertiesFile();
+			downloadPropertiesFile("");
 			
 			if(propertiesFile.exists())
 			{
@@ -254,6 +263,9 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		try
 		{
 		    JFileChooser chooser = new JFileChooser();
+		    
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter("Properties Files", "properties");
+		    chooser.setFileFilter(filter);
 		    
 		    // Set the current directory
 		    File f = new File(new File(".").getCanonicalPath());
@@ -365,11 +377,16 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		{
 			findNextInTable();
 		}
-		else if(action.equals("download"))
+		else if(action.equals("properties"))
 		{
-			downloadPropertiesFile();
+			// the original properties name has no country code.
+			downloadPropertiesFile("");
 			readOriginal();
 			initGUI();
+		}
+		else if(action.equals("translations"))
+		{
+			downloadTranslations();
 		}
 	}
 	
@@ -410,12 +427,47 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		}
 	}
 	
-	private void downloadPropertiesFile()
+	private void downloadTranslations()
 	{
+		// The location of the file we want to download.
+		URL url;
+		try 
+		{
+			url = new URL("http://ted.svn.sourceforge.net/viewvc/ted/trunk/ted/translations/translations.txt");
+		
+			// Open a connection to the file.
+			URLConnection conn = url.openConnection();
+		    conn.setConnectTimeout(10000);
+		     
+		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+					
+			String line;	
+			while((line = br.readLine()) != null)
+			{
+				downloadPropertiesFile(line);
+			}
+			br.close();	
+		} 
+		catch (MalformedURLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void downloadPropertiesFile(String countryName)
+	{
+		String fileName = "tedLang" + countryName + ".properties";
+		
 		try 
 		{
 			// The location of the file we want to download.
-			URL url = new URL("http://ted.svn.sourceforge.net/viewvc/ted/trunk/ted/translations/tedLang.properties");
+			URL url = new URL("http://ted.svn.sourceforge.net/viewvc/ted/trunk/ted/translations/" + fileName);
 			
 			// Open a connection to the file.
 			URLConnection conn = url.openConnection();
@@ -424,7 +476,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			
 			// Write the properties file
-			FileWriter fw  = new FileWriter("tedLang.properties");
+			FileWriter fw  = new FileWriter(fileName);
 			
 			String line;	
 			while((line = br.readLine()) != null)
