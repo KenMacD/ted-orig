@@ -13,7 +13,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
@@ -186,10 +191,11 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    Enumeration<?> keys = properties.keys();
 		    
 		    // Put keys in a vector so they can be added to the table
-		    Vector<String> items = new Vector<String>();
+		    Set<String> items = new TreeSet<String>();
 		    while(keys.hasMoreElements())
 		    {
-		    	items.add((String)keys.nextElement());
+		    	String key = (String)keys.nextElement();
+		    	items.add(key);
 		    }
 		    
 		    // Add keys and values to their own table
@@ -198,32 +204,22 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    // Language and Credits at top of table
 		    data[0][0] = "Lang.Name"; data[0][1] = "(add language name)";
 		    data[1][0] = "Lang.TranslatorCredits"; data[1][1] = "(add your name)";
-		    String key;
-		    int offset = 2;
-		    int row;
-		    for(int i=0; i<items.size(); i++)
+		    
+		    int row = 2;
+		    Iterator<String> originalIterator = items.iterator();
+		    while(originalIterator.hasNext())
 		    {
-		    	key = items.get(i);
+		    	String key = originalIterator.next();
 		    	
-		    	// Compensate for name and credits at top of table
-		    	if(key.equals("Lang.Name"))
+		    	if (key.equals("Lang.Name")
+		    	 || key.equals("Lang.TranslatorCredits"))
 		    	{
-		    		row = 0;
-		    		offset--;
+		    		continue;
 		    	}
-		    	else if(key.equals("Lang.TranslatorCredits"))
-		    	{
-		    		row = 1;
-		    		offset--;
-		    	}
-		    	else
-		    	{
-		    		row = i+offset;
 		    	
-			    	// Add data
-			    	data[row][0] = key;
-			    	data[row][1] = properties.getProperty(key);
-		    	}
+		    	data[row][0] = key;
+		    	data[row][1] = properties.getProperty(key);
+		    	row++;
 		    }
 
 		    tm.setDataVector(data, headers);
@@ -281,19 +277,26 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			    try 
 			    {
 			    	workingProperties.load(new FileInputStream(workingCopyLocation));
-			    	
-			    	// Get the information from the properties file
-				    // And put it in the table
-				    String key = "";
-				    for(int i=0; i<tableKeys.getRowCount(); i++)
+			    					    
+				    Vector<String> translationKeys = new Vector<String>();
+				    for(int row = 0; row < tableKeys.getRowCount(); row++)
 				    {
-				    	key = (String)tableKeys.getValueAt(i, 0);
-				    	tableKeys.setValueAt(workingProperties.getProperty(key), i, 2);
+				    	translationKeys.add((String)tableKeys.getValueAt(row, 0));
+				    }
+				    
+				    // And walk over the ordered keys and put the values it in the table.
+			        for(int rowNr = 0; rowNr < translationKeys.size(); rowNr++)
+				    {
+			        	String key   = translationKeys.elementAt(rowNr);			        		        	
+			        	String value = workingProperties.getProperty(key);
+			        	
+				    	tableKeys.setValueAt(value, rowNr, 2);
 				    }
 			    }
 			    catch (IOException e) 
 			    {
-			    
+			    	int henk = 0;
+			    	henk++;
 			    }
 		    } 
 		}
