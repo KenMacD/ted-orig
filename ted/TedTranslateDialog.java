@@ -2,10 +2,16 @@ package ted;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
@@ -56,6 +62,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private JLabel labelSearch;
 	private JTextField textSearch;
 	private JButton buttonHelp;
+	private JButton downloadPropertiesFile;
 
 	public TedTranslateDialog()
 	{
@@ -93,6 +100,13 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 					buttonHelp.setText("Help");
 					buttonHelp.addActionListener(this);
 					buttonHelp.setActionCommand("help");
+				}
+				{
+					downloadPropertiesFile = new JButton();
+					buttonPanel.add(downloadPropertiesFile);
+					downloadPropertiesFile.setText("Download");
+					downloadPropertiesFile.addActionListener(this);
+					downloadPropertiesFile.setActionCommand("download");
 				}
 			}
 			{
@@ -140,13 +154,13 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	
 	private void readOriginal()
 	{
-		File f = new File("tedLang.properties");
+		File propertiesFile = new File("tedLang.properties");
 		
 		// Init tables
 	    MyTableModel tm = new MyTableModel();
 	    String [][] data;
 	    
-		if(f.exists())
+		if(propertiesFile.exists())
 		{
 			// Read properties file.
 		    Properties properties = new Properties();
@@ -156,7 +170,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    } 
 		    catch (IOException e) 
 		    {
-		    
+		    	
 		    }
 		    	  
 		    // Get keys from properties
@@ -202,19 +216,37 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			    	data[row][1] = properties.getProperty(key);
 		    	}
 		    }
+
+		    tm.setDataVector(data, headers);
+		    tableKeys = new JTable(tm);
 		}
 		else
 		{
-			// Add keys and values to their own table
-		    data = new String[2][3];
-		    
-		    // Language and Credits at top of table
-		    data[0][0] = "Can't find the tedLang.properties file";
-		    data[1][0] = "Check 'help' to get the translator to function";	
-		}
+			// If the file isn't present try to download the version
+			// from the repository.
+			downloadPropertiesFile();
+			
+			if(propertiesFile.exists())
+			{
+				// If we now have the file, call this function again.
+				readOriginal();
+			}
+			else
+			{
+				// The file can't be downloaded. Alert the user and offer him
+				// help on the Wiki.
+				
+				// Add keys and values to their own table
+			    data = new String[2][3];
+			    
+			    // Language and Credits at top of table
+			    data[0][0] = "Can't find and download the tedLang.properties file";
+			    data[1][0] = "Check 'help' to get the translator to function";
 
-	    tm.setDataVector(data, headers);
-	    tableKeys = new JTable(tm);
+			    tm.setDataVector(data, headers);
+			    tableKeys = new JTable(tm);
+			}
+		}
 	}
 
 	private void readWorkingCopy() 
@@ -331,11 +363,17 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		}
 		else if(action.equals("next"))
 		{
-			FindNextInTable();
+			findNextInTable();
+		}
+		else if(action.equals("download"))
+		{
+			downloadPropertiesFile();
+			readOriginal();
+			initGUI();
 		}
 	}
 	
-	private void FindNextInTable()
+	private void findNextInTable()
 	{
 		int searchColumn = comboColumn.getSelectedIndex();
 		int selectedRow  = Math.max(0, tableKeys.getSelectedRow());
@@ -369,6 +407,41 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				
 				break;
 			}			
+		}
+	}
+	
+	private void downloadPropertiesFile()
+	{
+		try 
+		{
+			// The location of the file we want to download.
+			URL url = new URL("http://ted.svn.sourceforge.net/viewvc/ted/trunk/ted/translations/tedLang.properties");
+			
+			// Open a connection to the file.
+			URLConnection conn = url.openConnection();
+		    conn.setConnectTimeout(10000);
+		     
+		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			
+			// Write the properties file
+			FileWriter fw  = new FileWriter("tedLang.properties");
+			
+			String line;	
+			while((line = br.readLine()) != null)
+			{
+				fw.write(line + "\n");
+			}
+			fw.close();
+			br.close();			
+		} 
+		catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
