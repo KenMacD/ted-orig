@@ -13,9 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -308,8 +306,9 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	
 	private void saveWorkingCopy()
 	{
-		
 		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Properties Files", "properties");
+	    chooser.setFileFilter(filter);
 	    
 		try 
 		{
