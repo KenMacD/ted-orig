@@ -1,5 +1,7 @@
 package ted;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -15,13 +17,12 @@ import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -32,6 +33,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -56,7 +59,6 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private JButton buttonOpen;
 	private JPanel buttonPanel;
 	private JTable tableKeys;
-	private Properties workingProperties;
 	private String workingCopyLocation = "";
 	private String [] headers = {"ID", "Original", "Translation"};
 	private JPanel searchPanel;
@@ -68,20 +70,51 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private JButton buttonHelp;
 	private JButton downloadPropertiesFile;
 	private JButton downloadTranslationsFile;
-
+	private JCheckBox hideTranslatedRows;
+	private TreeSet<String> stringIds;
+	private Properties originalText;
+	private Properties translatedText;
+	private MyTableModel tableModel;
+	private MyColorRenderModel colorModel;
+	
 	public TedTranslateDialog()
-	{
-		readOriginal();
+	{		
 		initGUI();
+		
+		originalText   = new Properties();
+		translatedText = new Properties();
+		stringIds      = new TreeSet<String>();
+
+		tableModel = new MyTableModel();	
+		
+		readOriginal();
+		fillTable();
+		
+		tableKeys = new JTable(tableModel);
+
+		colorModel = new MyColorRenderModel();
+		TableColumn column0 = tableKeys.getColumnModel().getColumn(0);
+	    TableColumn column1 = tableKeys.getColumnModel().getColumn(1);
+	    TableColumn column2 = tableKeys.getColumnModel().getColumn(2);
+	    column0.setCellRenderer(colorModel);
+	    column1.setCellRenderer(colorModel);
+	    column2.setCellRenderer(colorModel);
+
+		updateTable();	
+	}
+	
+	private void updateTable()
+	{
+		scrollPane = new JScrollPane(tableKeys);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 	}
 	
 	private void initGUI() 
 	{
 		try {
-			{
 				scrollPane = new JScrollPane(tableKeys);
 				getContentPane().add(scrollPane, BorderLayout.CENTER);
-			}
+			
 			{
 				buttonPanel = new JPanel();
 				getContentPane().add(buttonPanel, BorderLayout.NORTH);
@@ -119,6 +152,13 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 					downloadTranslationsFile.setText("Download Latest Translations");
 					downloadTranslationsFile.addActionListener(this);
 					downloadTranslationsFile.setActionCommand("translations");
+				}
+				{
+					hideTranslatedRows = new JCheckBox();
+					buttonPanel.add(hideTranslatedRows);
+					hideTranslatedRows.setText("Hide!");
+					hideTranslatedRows.addActionListener(this);
+					hideTranslatedRows.setActionCommand("hide");
 				}
 			}
 			{
@@ -164,21 +204,67 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		}
 	}
 	
+	private void fillTable()
+	{
+		String data[][] = new String[stringIds.size()][3];
+				
+		// If there is no data, alert the user.
+		if (stringIds.size() == 0)
+		{
+			// Add keys and values to their own table
+		    data = new String[2][3];
+		    
+		    // Language and Credits at top of table
+		    data[0][0] = "Can't find and download the tedLang.properties file";
+		    data[1][0] = "Check 'help' to get the translator to function";
+		}
+		else
+		{
+			// Otherwise read the data and fill the table.
+			int row = 0;
+			Iterator<String> keyIterator = stringIds.iterator();
+			while (keyIterator.hasNext())
+			{
+				String key        = keyIterator.next();
+				String original   = originalText  .getProperty(key);
+				String translated = translatedText.getProperty(key);
+				
+				if (hideTranslatedRows.isSelected()
+				 && translated != null)
+				{
+					// Only show lines that aren't translated yet.
+					continue;
+				}
+				
+				data[row][0] = key;
+				
+				if(original != null)
+				{
+					data[row][1] = original;
+				}
+				if(translated != null)
+				{
+					data[row][2] = translated;
+				}
+				row++;
+			}
+		}
+		
+		tableModel.setDataVector(data, headers);    
+	}
+	
 	private void readOriginal()
 	{
-		File propertiesFile = new File("tedLang.properties");
+		stringIds = new TreeSet<String>();
 		
-		// Init tables
-	    MyTableModel tm = new MyTableModel();
-	    String [][] data;
-	    
+		File propertiesFile = new File("tedLang.properties");	    	    
 		if(propertiesFile.exists())
 		{
 			// Read properties file.
-		    Properties properties = new Properties();
+		    originalText = new Properties();
 		    try 
 		    {
-		        properties.load(new FileInputStream("tedLang.properties"));
+		        originalText.load(new FileInputStream("tedLang.properties"));
 		    } 
 		    catch (IOException e) 
 		    {
@@ -186,42 +272,14 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    }
 		    	  
 		    // Get keys from properties
-		    Enumeration<?> keys = properties.keys();
+		    Enumeration<?> keys = originalText.keys();
 		    
 		    // Put keys in a vector so they can be added to the table
-		    Set<String> items = new TreeSet<String>();
 		    while(keys.hasMoreElements())
 		    {
 		    	String key = (String)keys.nextElement();
-		    	items.add(key);
+		    	stringIds.add(key);
 		    }
-		    
-		    // Add keys and values to their own table
-		    data = new String[items.size()][3];
-		    
-		    // Language and Credits at top of table
-		    data[0][0] = "Lang.Name"; data[0][1] = "(add language name)";
-		    data[1][0] = "Lang.TranslatorCredits"; data[1][1] = "(add your name)";
-		    
-		    int row = 2;
-		    Iterator<String> originalIterator = items.iterator();
-		    while(originalIterator.hasNext())
-		    {
-		    	String key = originalIterator.next();
-		    	
-		    	if (key.equals("Lang.Name")
-		    	 || key.equals("Lang.TranslatorCredits"))
-		    	{
-		    		continue;
-		    	}
-		    	
-		    	data[row][0] = key;
-		    	data[row][1] = properties.getProperty(key);
-		    	row++;
-		    }
-
-		    tm.setDataVector(data, headers);
-		    tableKeys = new JTable(tm);
 		}
 		else
 		{
@@ -237,17 +295,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			else
 			{
 				// The file can't be downloaded. Alert the user and offer him
-				// help on the Wiki.
-				
-				// Add keys and values to their own table
-			    data = new String[2][3];
-			    
-			    // Language and Credits at top of table
-			    data[0][0] = "Can't find and download the tedLang.properties file";
-			    data[1][0] = "Check 'help' to get the translator to function";
-
-			    tm.setDataVector(data, headers);
-			    tableKeys = new JTable(tm);
+				// help on the Wiki.				
 			}
 		}
 	}
@@ -271,30 +319,14 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    	workingCopyLocation = chooser.getSelectedFile().getAbsolutePath();
 			    			    
 				// Read properties file.
-			    workingProperties = new Properties();
+			    translatedText = new Properties();
 			    try 
 			    {
-			    	workingProperties.load(new FileInputStream(workingCopyLocation));
-			    					    
-				    Vector<String> translationKeys = new Vector<String>();
-				    for(int row = 0; row < tableKeys.getRowCount(); row++)
-				    {
-				    	translationKeys.add((String)tableKeys.getValueAt(row, 0));
-				    }
-				    
-				    // And walk over the ordered keys and put the values it in the table.
-			        for(int rowNr = 0; rowNr < translationKeys.size(); rowNr++)
-				    {
-			        	String key   = translationKeys.elementAt(rowNr);			        		        	
-			        	String value = workingProperties.getProperty(key);
-			        	
-				    	tableKeys.setValueAt(value, rowNr, 2);
-				    }
+			    	translatedText.load(new FileInputStream(workingCopyLocation));			    					 
 			    }
 			    catch (IOException e) 
 			    {
-			    	int henk = 0;
-			    	henk++;
+			    	
 			    }
 		    } 
 		}
@@ -320,22 +352,10 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    
 	        int returnVal = chooser.showSaveDialog(this);
 		    if(returnVal == JFileChooser.APPROVE_OPTION)
-		    {
-				Properties saveProperty = new Properties();
-				String key="";
-				String value="";
-				
-				for(int i=0; i<tableKeys.getRowCount(); i++)
-			    {
-					key = (String)tableKeys.getValueAt(i, 0);
-					value = (String)tableKeys.getValueAt(i, 2);
-					if(!(value==null))
-						saveProperty.setProperty(key, value);
-			    }
-				
+		    {				
 				try 
 				{
-			        saveProperty.store(new FileOutputStream(chooser.getSelectedFile().getCanonicalPath()), null);
+			        translatedText.store(new FileOutputStream(chooser.getSelectedFile().getCanonicalPath()), null);
 			    } 
 				catch (IOException e) 
 				{	
@@ -355,6 +375,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		if(action.equals("open"))
 		{
 			readWorkingCopy();
+			fillTable();
 		}
 		else if(action.equals("save"))
 		{
@@ -384,11 +405,15 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			// the original properties name has no country code.
 			downloadPropertiesFile("");
 			readOriginal();
-			initGUI();
+			fillTable();
 		}
 		else if(action.equals("translations"))
 		{
 			downloadTranslations();
+		}
+		else if(action.equals("hide"))
+		{
+			fillTable();
 		}
 	}
 	
@@ -506,7 +531,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		 */
 		private static final long serialVersionUID = -3815927013633221088L;
 		private String[] columnNames;
-	    private Object[][] data;
+	    private String[][] data;
 
 	    public int getColumnCount() 
 	    {
@@ -533,9 +558,13 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	        //Note that the data/cell address is constant,
 	        //no matter where the cell appears onscreen.
 	        if (col < 2) 
+	        {
 	        	return false;
-	        else 
+	        }
+	        else
+	        {
 	            return true;
+	        }
 	    }
 
 	    /*
@@ -544,14 +573,65 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	     */
 	    public void setValueAt(Object value, int row, int col) 
 	    {
-	        data[row][col] = value;
-	        fireTableCellUpdated(row, col);
+	    	String valueString = (String)value; 
+	        data[row][col] = valueString;
+	        
+	        // Get the key from the table. This key can't change so
+	        // it's safe to ask it.
+	        String key = (String)data[row][0]; 
+	        
+	        translatedText.setProperty(key, valueString);
+	        
+	        this.fireTableRowsUpdated(row, row);
 	    }
 	    
 	    public void setDataVector(String[][] data, String[] names)
 	    {
 	    	columnNames = names;
 	    	this.data = data;
+	    	
+	    	this.fireTableDataChanged();
 	    }
+	}
+	
+	final class MyColorRenderModel extends DefaultTableCellRenderer 
+	{
+		  
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		MyColorRenderModel () {}
+		  
+		public Component getTableCellRendererComponent(JTable aTable, 
+													   Object aNumberValue, 
+													   boolean aIsSelected, 
+													   boolean aHasFocus, 
+													   int aRow, 
+													   int aColumn) 
+		{      
+			Component renderer = super.getTableCellRendererComponent
+		    (
+		    	aTable, aNumberValue, aIsSelected, aHasFocus, aRow, aColumn
+		    );
+    
+    
+		    String value = (String)aTable.getValueAt(aRow, 2);
+		    
+		    if(value == null)
+		    {
+		    	renderer.setBackground(Color.red);
+		    }
+		    else if(value.equals("")) 
+		    {		    	
+		    	renderer.setBackground(Color.red);
+		    }
+		    else 
+		    {
+		    	renderer.setBackground(Color.green);
+		    }
+		    return this;
+		  }
 	}
 }
