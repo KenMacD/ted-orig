@@ -105,6 +105,14 @@
 			<tv_com>75487</tv_com>
 		</show>		
 		<show>
+			<name>According to Jim</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>3449</tv_com>
+		</show> 
+		<show>
 			<name>Age of Love</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -221,6 +229,14 @@
 			<tv_com>23557</tv_com>
 		</show>
 		<show>
+			<name>Ben 10: Alien Force</name>
+			<daily>False</daily>
+			<minimumsize>100</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>74606</tv_com>
+		</show> 
+		<show>
 			<name>The Big Bang Theory</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>300</maximumsize>
@@ -303,6 +319,13 @@
 			<tv_com>68749</tv_com>
 		</show>
 		<show>
+			<name>Charlie Brooker's Screenwipe</name>
+			<daily>False</daily>
+			<minimumsize>225</minimumsize>
+			<maximumsize>350</maximumsize>
+			<tv_com>75995</tv_com>
+		</show> 
+		<show>
 			<name>Chasers war on everything</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
@@ -352,6 +375,22 @@
 			<seeders>50</seeders>
 			<tv_com>33484</tv_com>
 		</show>
+		<show>
+			<name>Criss Angel: Mindfreak</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>39507</tv_com>
+		</show> 
+		<show>
+			<name>Crusoe</name>
+			<daily>False</daily>
+			<minimumsize>250</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75335</tv_com>
+		</show> 
 		<show>
 			<name>CSI</name>
 			<daily>False</daily>
@@ -403,6 +442,13 @@
 			<seeders>10</seeders>
 			<tv_com>35850</tv_com>
 			<epguides>DancingwiththeStars</epguides>
+		</show>
+		<show>
+			<name>Dirty Jobs</name>
+			<daily>False</daily>
+			<minimumsize>250</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>39657</tv_com>
 		</show>
 		<show>
 		<name>Dirty Sexy Money</name>
@@ -811,6 +857,14 @@
 			<tv_com>21583</tv_com>
    		</show>
 		<show>
+			<name>King of the Hill</name>
+			<daily>False</daily>
+			<minimumsize>100</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>250</tv_com>
+		</show> 
+		<show>
 			<name>Kitchen Nightmares</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -818,7 +872,7 @@
 			<tv_com>68715</tv_com>
 		</show>		
 		<show>
-			<name>Knight Rider</name>
+			<name>Knight Rider 2008</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
@@ -968,6 +1022,22 @@
 			<tv_com>75200</tv_com>
 		</show>
 		<show>
+			<name>Merlin</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75429</tv_com>
+		</show> 
+		<show>
+			<name>Metalocalypse</name>
+			<daily>False</daily>
+			<minimumsize>50</minimumsize>
+			<maximumsize>250</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>62049</tv_com>
+		</show> 
+		<show>
 			<name>Mind of mencia</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>250</maximumsize>
@@ -996,6 +1066,13 @@
 			<tv_com>57746</tv_com>
 		</show>
 		<show>
+			<name>My Family</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<tv_com>2687</tv_com>
+		</show>
+		<show>
 			<name>My Name is Earl</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -1003,6 +1080,14 @@
 			<seeders>50</seeders>
 			<tv_com>31988</tv_com>
 		</show>
+		<show>
+			<name>My Own Worst Enemy</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75339</tv_com>
+		</show> 
 		<show>
 			<name>Mythbusters</name>
 			<minimumsize>300</minimumsize>
@@ -1065,6 +1150,14 @@
 			<tv_com>16942</tv_com>
 		</show>	
 		<show>
+			<name>Paranormal State</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>72412</tv_com>
+		</show> 
+		<show>
 		<name>Penn and Teller Bullshit</name>
 			<minimumsize>200</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1078,6 +1171,14 @@
 			<seeders>50</seeders>
 			<tv_com>74631</tv_com>
 		</show>
+		<show>
+			<name>Primeval</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>68346</tv_com>
+		</show> 
 		<show>
 			<name>Prison Break</name>
 			<daily>False</daily>
@@ -1190,11 +1291,19 @@
 		</show>		
 		<show>
 			<name>Sanctuary</name>
-			<minimumsize>300</minimumsize>
+			<minimumsize>250</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22115</tv_com>
 		</show>
+		<show>
+			<name>The Sarah Jane Adventures</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>67522</tv_com>
+		</show> 
 		<show>
 			<name>The Sarah Silverman Program</name>
 			<minimumsize>150</minimumsize>
@@ -1303,18 +1412,18 @@
 			<tv_com>60618</tv_com>
 		</show>
 		<show>
-			<name>Storm Chasers</name>
-			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
-			<seeders>10</seeders>
-		</show>
-		<show>
 			<name>South Park</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>344</tv_com>
+		</show>
+		<show>
+			<name>Storm Chasers</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>10</seeders>
 		</show>
 		<show>
 			<name>Spooks</name>
@@ -1363,6 +1472,14 @@
 			<tv_com>4742</tv_com>
 		</show>
 		<show>
+			<name>Tapout</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>750</maximumsize>
+			<seeders>0</seeders>
+			<tv_com>74665</tv_com>
+		</show> 
+		<show>
 			<name>Tell Me You Love Me</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1377,6 +1494,14 @@
 			<seeders>50</seeders>
 			<tv_com>68708</tv_com>
 		</show>		
+		<show>
+			<name>Testees</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>750</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75927</tv_com>
+		</show> 
 		<show>
 			<name>The Life and Times of Tim</name>
 			<minimumsize>150</minimumsize>
@@ -1449,6 +1574,14 @@
 			<tv_com>58486</tv_com>
 		</show>
 		<show>
+			<name>The Ultimate Fighter</name>
+			<daily>False</daily>
+			<minimumsize>250</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>31862</tv_com>
+		</show> 
+		<show>
 			<name>Unhitched</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -1472,6 +1605,22 @@
 			<seeders>50</seeders>
 			<tv_com>73410</tv_com>
 		</show>	
+		<show>
+			<name>Valentine</name>
+			<daily>False</daily>
+			<minimumsize>250</minimumsize>
+			<maximumsize>750</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75700</tv_com>
+		</show>
+		<show>
+			<name>The Venture Brothers</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>17591</tv_com>
+		</show> 
 		<show>
 			<name>Without a Trace</name>
 			<minimumsize>300</minimumsize>
