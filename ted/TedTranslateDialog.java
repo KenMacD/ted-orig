@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -76,6 +76,9 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private Properties translatedText;
 	private MyTableModel tableModel;
 	private MyColorRenderModel colorModel;
+	private static final String propertiesExtension  = ".properties";
+	private static final String originalTextName 	 = "tedLang" 	   + propertiesExtension;
+	private static final String dummyTranslationName = "tedLang_xx_XX" + propertiesExtension;
 	
 	public TedTranslateDialog()
 	{		
@@ -229,7 +232,13 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				String original   = originalText  .getProperty(key);
 				String translated = translatedText.getProperty(key);
 				
-				if (hideTranslatedRows.isSelected()
+				// Skip comments in original file.
+				if(key.startsWith("//"))
+				{
+					continue;
+				}
+				
+				if(hideTranslatedRows.isSelected()
 				 && translated != null)
 				{
 					// Only show lines that aren't translated yet.
@@ -257,14 +266,18 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	{
 		stringIds = new TreeSet<String>();
 		
-		File propertiesFile = new File("tedLang.properties");	    	    
+		File propertiesFile = new File(originalTextName);	    	    
 		if(propertiesFile.exists())
 		{
 			// Read properties file.
 		    originalText = new Properties();
 		    try 
 		    {
-		        originalText.load(new FileInputStream("tedLang.properties"));
+		        originalText.load(new FileInputStream(originalTextName));
+		        
+		        // Set this as the working location for translations. Can be overwritten
+		        // while reading in a translation file.
+		        workingCopyLocation = propertiesFile.getCanonicalPath();
 		    } 
 		    catch (IOException e) 
 		    {
@@ -306,8 +319,8 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		{
 		    JFileChooser chooser = new JFileChooser();
 		    
-		    FileNameExtensionFilter filter = new FileNameExtensionFilter("Properties Files", "properties");
-		    chooser.setFileFilter(filter);
+		    PropertiesFileFilter fileFilter = new PropertiesFileFilter();
+		    chooser.setFileFilter(fileFilter);
 		    
 		    // Set the current directory
 		    File f = new File(new File(".").getCanonicalPath());
@@ -339,33 +352,39 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private void saveWorkingCopy()
 	{
 		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Properties Files", "properties");
+		PropertiesFileFilter filter = new PropertiesFileFilter();
 	    chooser.setFileFilter(filter);
 	    
-		try 
-		{
-			//Set the current directory
-			File f = new File(new File(workingCopyLocation).getCanonicalPath());
-		
-	        chooser.setCurrentDirectory(f);
-	        chooser.setSelectedFile(f);
-		    
-	        int returnVal = chooser.showSaveDialog(this);
-		    if(returnVal == JFileChooser.APPROVE_OPTION)
-		    {				
-				try 
-				{
-			        translatedText.store(new FileOutputStream(chooser.getSelectedFile().getCanonicalPath()), null);
-			    } 
-				catch (IOException e) 
-				{	
-			    }
-		    }
-		}
-	    catch (IOException e1) 
+		//Set the current directory
+	    if(workingCopyLocation.endsWith(originalTextName))
 	    {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	    	// Don't replace the original file.
+	    	workingCopyLocation = workingCopyLocation.replace(originalTextName, dummyTranslationName);
+	    }
+	    
+		File f = new File(workingCopyLocation);
+
+		chooser.setCurrentDirectory(f);
+		chooser.setSelectedFile(f);
+		
+		int returnVal = chooser.showSaveDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{				
+			try 
+			{
+				String file = chooser.getSelectedFile().getCanonicalPath();
+				
+				// Files should always have the .properties extension.
+				if(!file.endsWith(propertiesExtension))
+				{
+					file.concat(propertiesExtension);
+				}
+				
+		        translatedText.store(new FileOutputStream(file), null);
+		    } 
+			catch (IOException e) 
+			{	
+		    }
 		}
 	}
 	
@@ -632,6 +651,20 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    	renderer.setBackground(Color.green);
 		    }
 		    return this;
-		  }
+		}
+	}
+	
+	class PropertiesFileFilter extends FileFilter
+	{
+		public boolean accept(File f) 
+		{
+			return f.toString().toLowerCase().endsWith(propertiesExtension);
+		}
+
+		public String getDescription() 
+		{
+			return "translation files";
+		}
+		
 	}
 }
