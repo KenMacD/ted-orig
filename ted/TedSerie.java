@@ -30,7 +30,7 @@ import ted.ui.editshowdialog.FeedPopupItem;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedSerie implements Serializable
+public class TedSerie implements Serializable, Comparable
 {
 	/****************************************************
 	 * GLOBAL VARIABLES
@@ -1275,5 +1275,48 @@ public class TedSerie implements Serializable
 	public void clearScheduler() 
 	{
 		this.getScheduler().clear(this);
+	}
+
+	public int compareTo(Object o) 
+	{
+		TedSerie second = (TedSerie)o;
+		int result = 0;
+		
+		// sort on name
+		if (TedConfig.getSortType() == TedConfig.SORT_NAME)
+		{
+			result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
+		}
+		// sort on status and airdate
+		else if (TedConfig.getSortType() == TedConfig.SORT_STATUS)
+		{
+			// sort on status
+			if (this.status != second.status)
+			{
+				if (this.status > second.status)
+				{
+					result = 1;
+				}
+				else 
+				{
+					result = -1;
+				}
+			}
+			else if (this.status == TedSerie.STATUS_HOLD && second.status == TedSerie.STATUS_HOLD)
+			{
+				// if status is hold for both shows, sort on airdate
+				StandardStructure thisSStructure = this.getCurrentStandardStructure();
+				StandardStructure secondSStructure = second.getCurrentStandardStructure();
+				
+				result = thisSStructure.compareDateTo(secondSStructure);			
+			}
+			else
+			{
+				// sort on name
+				result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
+			}
+		}
+		
+		return result;
 	}
 }

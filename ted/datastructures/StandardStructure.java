@@ -227,39 +227,7 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	
 	public int compareTo(StandardStructure arg0)
 	{
-		StandardStructure ss = arg0;
-		
-		long thisSeconds = 0;
-		long ssSeconds   = 0;
-		
-		if (this.airDate != null)
-		{
-			thisSeconds = this.airDate.getTime();
-		}
-		else
-		{
-			thisSeconds = this.publishDate.getTime();
-		}
-		
-		if (ss.airDate != null)
-		{
-			ssSeconds   = ss.airDate.getTime();;
-		}
-		else
-		{
-			ssSeconds   = ss.publishDate.getTime();
-		}
-		
-		if (thisSeconds < ssSeconds)
-		{
-			return -1;
-		}
-		else if (thisSeconds > ssSeconds)
-		{
-			return 1;
-		}
-		
-		return 0;
+		return this.compareDateTo(arg0);
 	}
 		
 	public StandardStructure guessNextEpisode() 
@@ -274,5 +242,41 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	public String getSubscribtionOptionsTitle()
 	{
 		return this.getTitle();
+	}
+	public int compareDateTo(StandardStructure secondSStructure) 
+	{
+		int result = 0;
+		
+		Date thisDate;
+		Date secondDate;
+		
+		if (this.airDate != null)
+		{
+			thisDate = this.airDate;
+		}
+		else
+		{
+			thisDate = this.publishDate;
+		}
+		
+		if (secondSStructure.airDate != null)
+		{
+			secondDate   = secondSStructure.airDate;
+		}
+		else
+		{
+			secondDate   = secondSStructure.publishDate;
+		}
+		
+		if (thisDate.before(secondDate))
+		{
+			result = -1;
+		}
+		else if (thisDate.after(secondDate))
+		{
+			result = 1;
+		}
+		
+		return result;
 	}
 }

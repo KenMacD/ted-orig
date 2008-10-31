@@ -56,12 +56,8 @@ public class TedTable extends JTable
 		this.setBackground(Color.WHITE);
 		this.setModel(serieTableModel);
 		
-		//TableRowSorter sorter = new TableRowSorter(this.getModel());
-		//this.setRowSorter(sorter);
-		
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		this.setEditingRow(0);
-		this.setDragEnabled(true);
 		
 		//	disable horizontal lines in table
 		setShowHorizontalLines(false);
@@ -94,7 +90,9 @@ public class TedTable extends JTable
 		{
 			serie = series.get(i);
 			serie.updateShowStatus();
-		}		
+		}
+		
+		this.sort();
 	}
 	
 		
@@ -163,7 +161,8 @@ public class TedTable extends JTable
 	 */
 	public void setSeries(Vector<TedSerie> vector)
 	{
-		serieTableModel.setSeries(vector);		
+		serieTableModel.setSeries(vector);
+		this.sort();
 	}
 	
 	/**
@@ -172,12 +171,14 @@ public class TedTable extends JTable
 	 */
 	public void setSelectedStatus(int status) 
 	{
-			TedSerie selectedserie = this.getSelectedShow();
-			if (selectedserie != null)
-			{
-				selectedserie.setStatus(status);
-				selectedserie.setLastDatesToToday();	
-			}
+		TedSerie selectedserie = this.getSelectedShow();
+		if (selectedserie != null)
+		{
+			selectedserie.setStatus(status);
+			selectedserie.setLastDatesToToday();	
+		}
+		
+		this.sort();
 	}
 
 	/**
@@ -220,6 +221,7 @@ public class TedTable extends JTable
 	public void addSerie(TedSerie newSerie)
 	{
 		serieTableModel.addSerie(newSerie);
+		this.sort();
 	}
 
 	/**
@@ -321,4 +323,12 @@ public class TedTable extends JTable
         }
         return false;
     }
+
+	public void sort() 
+	{
+		if (TedConfig.getSortType() != TedConfig.SORT_OFF)
+		{
+			this.serieTableModel.sortTable();
+		}
+	}
 }

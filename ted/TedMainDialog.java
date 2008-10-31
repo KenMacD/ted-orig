@@ -832,6 +832,30 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 				selectedSerie.setUseAutoSchedule(!selectedSerie.isUseAutoSchedule());
 			}
 		}
+		else if (action.equals("sort_name"))
+		{
+			TedConfig.setSortType(TedConfig.SORT_NAME);
+			this.tMenuBar.updateSortMenu();
+			this.serieTable.sort();
+		}
+		else if (action.equals("sort_status"))
+		{
+			TedConfig.setSortType(TedConfig.SORT_STATUS);
+			this.tMenuBar.updateSortMenu();
+			this.serieTable.sort();
+		}
+		else if (action.equals("sort_ascending"))
+		{
+			TedConfig.setSortDirection(TedConfig.SORT_ASCENDING);
+			this.tMenuBar.updateSortMenu();
+			this.serieTable.sort();
+		}
+		else if (action.equals("sort_descending"))
+		{
+			TedConfig.setSortDirection(TedConfig.SORT_DESCENDING);
+			this.tMenuBar.updateSortMenu();
+			this.serieTable.sort();
+		}
 	}
 	
 	public void showAboutDialog() 
@@ -858,6 +882,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	public void saveShows() 
 	{
 		TedIO tcio = new TedIO();
+		serieTable.sort();
 		tcio.SaveShows(serieTable.getSeries());	
 		this.repaint();
 	}
@@ -957,7 +982,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 				serie.resetStatus(true);
 			}
 		}
-		this.repaint();		
+		serieTable.sort();
+		this.repaint();	
 	}
 	
 		

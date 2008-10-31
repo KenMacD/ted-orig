@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.table.AbstractTableModel;
 
+import ted.tools.Sorter;
+
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -66,7 +68,7 @@ public class TedTableModel extends AbstractTableModel
 	{
 		if (row > -1)
 		{
-			return (TedSerie)tableData.get(row);
+			return tableData.get(row);
 		}
 		else
 			return null;
@@ -150,5 +152,12 @@ public class TedTableModel extends AbstractTableModel
 		tableColumns = new String[] {" ", Lang.getString("TedTableModel.Name"),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	            Lang.getString("TedTableModel.Searching"), Lang.getString("TedTableModel.Progress"), Lang.getString("TedTableModel.Status")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		
+	}
+	
+	public void sortTable()
+	{
+		Sorter sorter = new Sorter();
+		sorter.sortTable(this.tableData);
+		this.tableUpdate();
 	}
 }

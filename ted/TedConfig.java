@@ -31,6 +31,11 @@ public class TedConfig //implements Serializable
 	public static final int ALWAYS = 2;
 	public static final int DOWNLOADMINIMUMSEEDERS = 0;
 	public static final int DOWNLOADMOSTSEEDERS = 1;
+	public static final int SORT_OFF = 0;
+	public static final int SORT_NAME = 1;
+	public static final int SORT_STATUS = 2;
+	public static final int SORT_ASCENDING = 0;
+	public static final int SORT_DESCENDING = 1;
 	
 	// create some default settings
 	private static int RefreshTime = 3600;
@@ -60,6 +65,8 @@ public class TedConfig //implements Serializable
 	private static boolean logToFile = true;
 	private static int timeZoneOffset = -1;
 	private static boolean useAutoSchedule = true;
+	private static int sortType = SORT_NAME;
+	private static int sortDirection = SORT_ASCENDING;
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
 	private static final Color defaultOddRowColor  = new Color(236,243,254);
@@ -615,5 +622,39 @@ public class TedConfig //implements Serializable
 	public static void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
 		TedConfig.useAutoSchedule = useAutoSchedule;
+	}
+	
+	/**
+	 * @return The type of field the maintable should be sorted on.
+	 * 0 = no sort, 1 = on name, 2 = on status and airdate
+	 */
+	public static int getSortType()
+	{
+		return sortType;
+	}
+	
+	/**
+	 * @param sortType Type of sort that should be applied to the maintable
+	 */
+	public static void setSortType(int sortType)
+	{
+		TedConfig.sortType = sortType;
+	}
+	
+	/**
+	 * @return The direction of sorting for the maintable
+	 * 0 = ascensing, 1 = descending
+	 */
+	public static int getSortDirection()
+	{
+		return sortDirection;
+	}
+	
+	/**
+	 * @param direction Direction of sort for the maintable
+	 */
+	public static void setSortDirection (int direction)
+	{
+		TedConfig.sortDirection = direction;
 	}
 }

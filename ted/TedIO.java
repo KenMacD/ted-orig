@@ -216,7 +216,9 @@ public class TedIO
 			fw.append("oddrowcolor=" +  TedConfig.getOddRowColor().getRGB() + "\n");
 			fw.append("evenrowcolor=" + TedConfig.getEvenRowColor().getRGB() + "\n");
 			fw.append("timezoneoffset=" + TedConfig.getTimeZoneOffset() + "\n");
-			fw.append("autoschedule=" + TedConfig.isUseAutoSchedule());			
+			fw.append("sorttype=" + TedConfig.getSortType() + "\n");
+			fw.append("sortdirection=" + TedConfig.getSortDirection() + "\n");
+			fw.append("autoschedule=" + TedConfig.isUseAutoSchedule());	
 			
 			fw.close();
 		}
@@ -409,6 +411,14 @@ public class TedIO
 				else if(token.equals("autoschedule"))
 				{
 					TedConfig.setUseAutoSchedule(Boolean.parseBoolean(tokenizer.nextToken()));
+				}
+				else if(token.equals("sorttype"))
+				{
+					TedConfig.setSortType(Integer.parseInt(tokenizer.nextToken()));
+				}
+				else if(token.equals("sortdirection"))
+				{
+					TedConfig.setSortDirection(Integer.parseInt(tokenizer.nextToken()));
 				}
 			}
 			

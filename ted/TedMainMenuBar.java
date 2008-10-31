@@ -1,14 +1,29 @@
 package ted;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
 
 
 
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 /**
  * @author roel
  * Main menu bar for Ted
@@ -49,6 +64,13 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem languageItem;
 	
 	private JMenu subUpdateMenu;
+	private JCheckBoxMenuItem sortDescendingRadioItem;
+	private JCheckBoxMenuItem sortAscendingRadioItem;
+	private JSeparator jSeparator3;
+	private JCheckBoxMenuItem sortOnStatusItem;
+	private JCheckBoxMenuItem sortOnNameItem;
+	private JMenu sortMenuItem;
+	private JSeparator jSeparator2;
 	private JMenu subLangMenu;
 	
 	private TedMainDialog tMain;
@@ -116,6 +138,8 @@ public class TedMainMenuBar extends JMenuBar
 			
 			deleteMenuItem.setActionCommand("Delete");
 			deleteMenuItem.addActionListener(tMain);
+			
+			
 			// set status
 			/*TODO: Duplicated code: same as TedTablePopupMenu*/
 			{
@@ -153,6 +177,45 @@ public class TedMainMenuBar extends JMenuBar
 				menuStatus.add(statusDisabled);
 				jMenu4.add(menuStatus);
 			}
+			{
+				jSeparator2 = new JSeparator();
+				jMenu4.add(jSeparator2);
+				sortMenuItem = new JMenu();
+				jMenu4.add(sortMenuItem);
+				sortMenuItem.setText("Sort shows");
+				{
+					sortOnStatusItem = new JCheckBoxMenuItem();
+					sortMenuItem.add(sortOnStatusItem);
+					sortOnStatusItem.setText("Sort on status and airdate");
+					sortOnStatusItem.addActionListener(tMain);
+					sortOnStatusItem.setActionCommand("sort_status");
+				}
+				{
+					sortOnNameItem = new JCheckBoxMenuItem();
+					sortMenuItem.add(sortOnNameItem);
+					sortOnNameItem.setText("Sort on name");
+					sortOnNameItem.addActionListener(tMain);
+					sortOnNameItem.setActionCommand("sort_name");
+				}
+				{
+					jSeparator3 = new JSeparator();
+					sortMenuItem.add(jSeparator3);
+				}
+				{
+					sortAscendingRadioItem = new JCheckBoxMenuItem();
+					sortMenuItem.add(sortAscendingRadioItem);
+					sortAscendingRadioItem.setText("Sort ascending");
+					sortAscendingRadioItem.addActionListener(tMain);
+					sortAscendingRadioItem.setActionCommand("sort_ascending");
+				}
+				{
+					sortDescendingRadioItem = new JCheckBoxMenuItem();
+					sortMenuItem.add(sortDescendingRadioItem);
+					sortDescendingRadioItem.setText("Sort descending");
+					sortDescendingRadioItem.addActionListener(tMain);
+					sortDescendingRadioItem.setActionCommand("sort_descending");
+				}
+			}
 			
 			// seperator
 			jSeparator1 = new JSeparator();
@@ -176,7 +239,9 @@ public class TedMainMenuBar extends JMenuBar
 				cutMenuItem.addActionListener(tMain);
 			}
 		}
-		
+		{
+		}
+
 		// support menu
 		supportMenu = new JMenu();
 		this.add(supportMenu);
@@ -258,6 +323,7 @@ public class TedMainMenuBar extends JMenuBar
 			}
 		}
 		this.updateText();
+		this.updateSortMenu();
 	}
 	
 	public void updateText()
@@ -283,6 +349,12 @@ public class TedMainMenuBar extends JMenuBar
 		statusPause.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Pause")); //$NON-NLS-1$
 		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
 		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
+		
+		sortMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort"));	
+		sortOnStatusItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort.OnStatus"));
+		sortOnNameItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort.OnName"));
+		sortAscendingRadioItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort.Ascending"));
+		sortDescendingRadioItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort.Descending"));
 		
 		logMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.ShowLog")); //$NON-NLS-1$
 		
@@ -346,5 +418,23 @@ public class TedMainMenuBar extends JMenuBar
 		this.deleteMenuItem.setEnabled(true);
 		this.editMenuItem.setEnabled(true);
 		this.menuStatus.setEnabled(true);
+	}
+	
+	public void updateSortMenu()
+	{
+		// update sort type menu
+		boolean isSortOnName = (TedConfig.getSortType() == TedConfig.SORT_NAME);
+		boolean isSortOnStatus = (TedConfig.getSortType() == TedConfig.SORT_STATUS);
+		
+		this.sortOnNameItem.setSelected(isSortOnName);
+		this.sortOnStatusItem.setSelected(isSortOnStatus);
+		
+		// update sort direction menu
+		boolean isSortAscending = (TedConfig.getSortDirection() == TedConfig.SORT_ASCENDING);
+		boolean isSortDescending = (TedConfig.getSortDirection() == TedConfig.SORT_DESCENDING);
+		
+		this.sortAscendingRadioItem.setSelected(isSortAscending);
+		this.sortDescendingRadioItem.setSelected(isSortDescending);
+		
 	}
 }
