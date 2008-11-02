@@ -36,6 +36,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -102,7 +103,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	    column0.setCellRenderer(colorModel);
 	    column1.setCellRenderer(colorModel);
 	    column2.setCellRenderer(colorModel);
-
+	    	    
 		updateTable();	
 	}
 	
@@ -111,7 +112,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		scrollPane = new JScrollPane(tableKeys);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 	}
-	
+	 
 	private void initGUI() 
 	{
 		try {

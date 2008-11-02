@@ -279,146 +279,155 @@ public class TedIO
 			String tempCountry = ""; //$NON-NLS-1$
 			
 			String line = null;
-			StringTokenizer tokenizer;
-			String token;
 			while((line=br.readLine()) != null)
 			{
-				tokenizer = new StringTokenizer(line, "="); //$NON-NLS-1$
-				token = tokenizer.nextToken();
+				int seperatorIndex = line.indexOf('=');
+				
+				// Get the name of this config item.
+				String configItem = line.substring(0, seperatorIndex);
+				
+				// Get the value for the item. Just retrieve the rest of the
+				// string (available tokens) so also values with an '=' in 
+				// them are correctly used.
+				String configItemValue = line.substring(seperatorIndex + 1);
 
-				if(token.equals("refresh")) //$NON-NLS-1$
+				if(configItem.equals("refresh")) //$NON-NLS-1$
 				{
-					TedConfig.setRefreshTime(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setRefreshTime(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("directory")) //$NON-NLS-1$
+				else if(configItem.equals("directory")) //$NON-NLS-1$
 				{
-					String s = tokenizer.nextToken();
+					String s = configItemValue;
 					File f = new File(s);
 					
 					if(f.isDirectory())
+					{
 						TedConfig.setDirectory(s);
+					}
 					else
+					{
 						JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
+					}
 				}
-				else if(token.equals("opentorrent")) //$NON-NLS-1$
+				else if(configItem.equals("opentorrent")) //$NON-NLS-1$
 				{
-					TedConfig.setOpenTorrent(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setOpenTorrent(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("checkversion")) //$NON-NLS-1$
+				else if(configItem.equals("checkversion")) //$NON-NLS-1$
 				{
-					TedConfig.setCheckVersion(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setCheckVersion(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("showerrors")) //$NON-NLS-1$
+				else if(configItem.equals("showerrors")) //$NON-NLS-1$
 				{
-					TedConfig.setShowErrors(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setShowErrors(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("showhurray")) //$NON-NLS-1$
+				else if(configItem.equals("showhurray")) //$NON-NLS-1$
 				{
-					TedConfig.setShowHurray(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setShowHurray(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("windowwidth")) //$NON-NLS-1$
+				else if(configItem.equals("windowwidth")) //$NON-NLS-1$
 				{
-					TedConfig.setWidth(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setWidth(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("windowheight")) //$NON-NLS-1$
+				else if(configItem.equals("windowheight")) //$NON-NLS-1$
 				{
-					TedConfig.setHeight(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setHeight(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("windowx")) //$NON-NLS-1$
+				else if(configItem.equals("windowx")) //$NON-NLS-1$
 				{
-					TedConfig.setX(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setX(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("windowy")) //$NON-NLS-1$
+				else if(configItem.equals("windowy")) //$NON-NLS-1$
 				{
-					TedConfig.setY(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setY(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("startminimized")) //$NON-NLS-1$
+				else if(configItem.equals("startminimized")) //$NON-NLS-1$
 				{
-					TedConfig.setStartMinimized(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setStartMinimized(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("rssversion")) //$NON-NLS-1$
+				else if(configItem.equals("rssversion")) //$NON-NLS-1$
 				{
-					TedConfig.setRSSVersion(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setRSSVersion(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("rssupdate")) //$NON-NLS-1$
+				else if(configItem.equals("rssupdate")) //$NON-NLS-1$
 				{
-					TedConfig.setAutoUpdateFeedList(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setAutoUpdateFeedList(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("rssadjust")) //$NON-NLS-1$
+				else if(configItem.equals("rssadjust")) //$NON-NLS-1$
 				{
-					TedConfig.setAutoAdjustFeeds(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setAutoAdjustFeeds(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("timeoutsecs")) //$NON-NLS-1$
+				else if(configItem.equals("timeoutsecs")) //$NON-NLS-1$
 				{
-					TedConfig.setTimeOutInSecs(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setTimeOutInSecs(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("seedersetting")) //$NON-NLS-1$
+				else if(configItem.equals("seedersetting")) //$NON-NLS-1$
 				{
-					TedConfig.setSeederSetting(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setSeederSetting(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("locale_language")) //$NON-NLS-1$
+				else if(configItem.equals("locale_language")) //$NON-NLS-1$
 				{
-					tempLanguage = tokenizer.nextToken();
+					tempLanguage = configItemValue;
 				}
-				else if(token.equals("locale_country")) //$NON-NLS-1$
+				else if(configItem.equals("locale_country")) //$NON-NLS-1$
 				{
-					tempCountry = tokenizer.nextToken();
+					tempCountry = configItemValue;
 				}
-				else if(token.equals("parse_at_start")) //$NON-NLS-1$
+				else if(configItem.equals("parse_at_start")) //$NON-NLS-1$
 				{
-					TedConfig.setParseAtStart(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setParseAtStart(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("add_tray")) //$NON-NLS-1$
+				else if(configItem.equals("add_tray")) //$NON-NLS-1$
 				{
-					TedConfig.setAddSysTray(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setAddSysTray(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("downloadcompressed")) //$NON-NLS-1$
+				else if(configItem.equals("downloadcompressed")) //$NON-NLS-1$
 				{
-					TedConfig.setDoNotDownloadCompressed(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setDoNotDownloadCompressed(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("filterextensions")) //$NON-NLS-1$
+				else if(configItem.equals("filterextensions")) //$NON-NLS-1$
 				{
-					TedConfig.setFilterExtensions(tokenizer.nextToken());
+					TedConfig.setFilterExtensions(configItemValue);
 				}	
-				else if(token.equals("loglines")) //$NON-NLS-1$
+				else if(configItem.equals("loglines")) //$NON-NLS-1$
 				{
 					TedLogDialog t = TedLogDialog.getInstance();
-					t.setMaxLines(Integer.parseInt(tokenizer.nextToken()));
+					t.setMaxLines(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("allowlogging")) //$NON-NLS-1$
+				else if(configItem.equals("allowlogging")) //$NON-NLS-1$
 				{
-					TedConfig.setAllowLogging(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setAllowLogging(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("logtofile")) //$NON-NLS-1$
+				else if(configItem.equals("logtofile")) //$NON-NLS-1$
 				{
-					TedConfig.setLogToFile(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setLogToFile(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("oddrowcolor"))
+				else if(configItem.equals("oddrowcolor"))
 				{
-					String s = tokenizer.nextToken();
+					String s = configItemValue;
 					Color color = new Color(Integer.parseInt(s));
 					TedConfig.setOddRowColor(color);
 				}
-				else if(token.equals("evenrowcolor"))
+				else if(configItem.equals("evenrowcolor"))
 				{
-					Color color = new Color(Integer.parseInt(tokenizer.nextToken()));
+					Color color = new Color(Integer.parseInt(configItemValue));
 					TedConfig.setEvenRowColor(color);
 				}
-				else if(token.equals("timezoneoffset"))
+				else if(configItem.equals("timezoneoffset"))
 				{
-					TedConfig.setTimeZoneOffset(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setTimeZoneOffset(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("autoschedule"))
+				else if(configItem.equals("autoschedule"))
 				{
-					TedConfig.setUseAutoSchedule(Boolean.parseBoolean(tokenizer.nextToken()));
+					TedConfig.setUseAutoSchedule(Boolean.parseBoolean(configItemValue));
 				}
-				else if(token.equals("sorttype"))
+				else if(configItem.equals("sorttype"))
 				{
-					TedConfig.setSortType(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setSortType(Integer.parseInt(configItemValue));
 				}
-				else if(token.equals("sortdirection"))
+				else if(configItem.equals("sortdirection"))
 				{
-					TedConfig.setSortDirection(Integer.parseInt(tokenizer.nextToken()));
+					TedConfig.setSortDirection(Integer.parseInt(configItemValue));
 				}
 			}
 			
