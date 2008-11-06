@@ -1292,14 +1292,14 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			// sort on status
 			if (this.status != second.status)
 			{
-				/*if (this.status > second.status)
+				if (this.status > second.status)
 				{
 					result = 1;
 				}
 				else 
 				{
 					result = -1;
-				}*/
+				}
 			}
 			else if (this.status == TedSerie.STATUS_HOLD && second.status == TedSerie.STATUS_HOLD)
 			{
@@ -1312,7 +1312,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			else
 			{
 				// sort on name
-				//result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
+				result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
 			}
 		}
 		
