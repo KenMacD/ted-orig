@@ -236,12 +236,21 @@ public class GeneralPanel extends JPanel implements ActionListener
 			return false;
 		}
 		
-		File f = new File(directory_nieuw);
-		if (directory_nieuw.equals("") || !f.isDirectory()) //$NON-NLS-1$
+		if (directory_nieuw.equals(""))
 		{
 			JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
 			directory_Field.setBackground(new java.awt.Color(255,100,100));
 			return false;
+		}
+		else
+		{
+			File f = new File(directory_nieuw);
+			if (!f.isDirectory()) //$NON-NLS-1$
+			{
+				JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
+				directory_Field.setBackground(new java.awt.Color(255,100,100));
+				return false;
+			}
 		}
 		
 		

@@ -3,6 +3,8 @@ package ted;
 import java.awt.Color;
 import java.util.Locale;
 
+import javax.swing.JFileChooser;
+
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -19,7 +21,7 @@ import java.util.Locale;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedConfig //implements Serializable 
+public class TedConfig
 
 {
 	/****************************************************
@@ -39,7 +41,7 @@ public class TedConfig //implements Serializable
 	
 	// create some default settings
 	private static int RefreshTime = 3600;
-	private static String Directory = System.getProperty("user.dir");
+	private static String Directory = new JFileChooser().getFileSystemView().getDefaultDirectory().getAbsolutePath();
 	private static boolean ShowErrors = false;
 	private static boolean ShowHurray = true;
 	private static boolean OpenTorrent = true;
@@ -47,7 +49,7 @@ public class TedConfig //implements Serializable
 	private static boolean CheckVersion = true;
 	private static boolean downloadNewSeason = true;
 	private static boolean parseAtStart = true;
-	private static int autoUpdateFeedList = ASK;
+	private static int autoUpdateFeedList = ALWAYS;
 	private static int autoAdjustFeeds = ASK;
 	private static int width = 550;
 	private static int height = 400;
