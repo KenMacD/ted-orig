@@ -250,24 +250,24 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		Date thisDate;
 		Date secondDate;
 		
-		if (this.airDate != null)
+		try 
 		{
-			thisDate = this.airDate;
-		}
-		else
+			thisDate = this.getAirDate();
+		} 
+		catch (AirDateUnknownException e) 
 		{
-			thisDate = this.publishDate;
-		}
-		
-		if (secondSStructure.airDate != null)
-		{
-			secondDate   = secondSStructure.airDate;
-		}
-		else
-		{
-			secondDate   = secondSStructure.publishDate;
+			thisDate = this.getPublishDate();
 		}
 		
+		try 
+		{
+			secondDate = secondSStructure.getAirDate();
+		} 
+		catch (AirDateUnknownException e) 
+		{
+			secondDate = secondSStructure.getPublishDate();
+		}
+	
 		if (thisDate.before(secondDate))
 		{
 			result = -1;

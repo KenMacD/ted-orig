@@ -34,7 +34,8 @@ public class Sorter
     {
         int i = left - 1;
         int j = right;
-        while (true) {
+        while (true) 
+        {
             while (isSmaller(tableData, ++i, right))      // find item on left to swap
                 if (i == right) break;                              // a[right] acts as sentinel
             while (isSmaller(tableData, right, --j))     // find item on right to swap
@@ -57,7 +58,7 @@ public class Sorter
 		TedSerie serieA = tableData.elementAt(a);
 		TedSerie serieB = tableData.elementAt(b);
 		
-		boolean smaller = (serieA.compareTo(serieB) <= 0);
+		boolean smaller = (serieA.compareTo(serieB) < 0);
 		
 		// when sorting descending, invert the result
 		if (TedConfig.getSortDirection() == TedConfig.SORT_DESCENDING)
