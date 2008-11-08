@@ -24,9 +24,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -69,7 +71,6 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private JLabel labelSearch;
 	private JTextField textSearch;
 	private JButton buttonHelp;
-	private JButton downloadPropertiesFile;
 	private JButton downloadTranslationsFile;
 	private JCheckBox hideTranslatedRows;
 	private TreeSet<String> stringIds;
@@ -144,13 +145,6 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 					buttonHelp.setActionCommand("help");
 				}
 				{
-					downloadPropertiesFile = new JButton();
-					buttonPanel.add(downloadPropertiesFile);
-					downloadPropertiesFile.setText("Download Latest Original");
-					downloadPropertiesFile.addActionListener(this);
-					downloadPropertiesFile.setActionCommand("properties");
-				}
-				{
 					downloadTranslationsFile = new JButton();
 					buttonPanel.add(downloadTranslationsFile);
 					downloadTranslationsFile.setText("Download Latest Translations");
@@ -199,7 +193,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			}
 			{
 				this.setSize(1024, 350);
-				this.setTitle("ted translator v0.1 beta");
+				this.setTitle("ted translator v0.2 beta");
 			}
 		} 
 		catch (Exception e) 
@@ -420,13 +414,6 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		{
 			findNextInTable();
 		}
-		else if(action.equals("properties"))
-		{
-			// the original properties name has no country code.
-			downloadPropertiesFile("");
-			readOriginal();
-			fillTable();
-		}
 		else if(action.equals("translations"))
 		{
 			downloadTranslations();
@@ -476,6 +463,20 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	
 	private void downloadTranslations()
 	{
+		Object[] options = {"Ok", "Cancel"};
+		int answer = JOptionPane.showOptionDialog(null, 
+								 "By downloading the latest translation files all existing translations" +
+								 " will be overwritten. \nAll modifications to those files will be lost." +
+								 "\nAre you sure you want to continue", 
+								 "Warning",
+								 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+								 null, options, options[0]);
+	
+		if (answer == 1)
+		{
+			return;
+		}
+		
 		// The location of the file we want to download.
 		URL url;
 		try 
