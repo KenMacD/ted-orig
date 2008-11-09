@@ -29,6 +29,7 @@ import org.w3c.dom.Element;
 
 import ted.ui.TimedOptionPane;
 import ted.ui.addshowdialog.AddShowDialog;
+import ted.ui.configdialog.ConfigDialog;
 import ted.ui.editshowdialog.EditShowDialog;
 import ted.ui.messaging.MessengerCenter;
 
@@ -174,7 +175,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		    //Set the new frame location
 		    this.setLocation(x, y);
 			
-			new TedConfigDialog(this, false, true);
+			new ConfigDialog(this, false, true);
 		}
 		
 		Lang.setLanguage(TedConfig.getLocale());
@@ -589,7 +590,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if(action.equals("Preferences...")) //$NON-NLS-1$
 		{
-			new TedConfigDialog(this, true, true);
+			new ConfigDialog(this, true, true);
 		}
 		else if(action.equals("Log")) //$NON-NLS-1$
 		{
@@ -865,7 +866,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	public void showPreferencesDialog()
 	{
-		new TedConfigDialog(this, true,true);
+		new ConfigDialog(this, true,true);
 	}
 	
 	public void quit()

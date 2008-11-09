@@ -43,21 +43,21 @@ public class EditShowToolBar extends JToolBar implements ActionListener
 	{
 		ButtonGroup toolBarButtons = new ButtonGroup();
 
-	    generalButton = new ToolBarButton("general", this, "EditShowDialog");
+	    generalButton = new ToolBarButton(editDialog.GENERALCOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(generalButton);
 	    this.add(generalButton);
 	    generalButton.setSelected(true);
 		
 
-	    feedsButton = new ToolBarButton("feeds", this, "EditShowDialog");
+	    feedsButton = new ToolBarButton(editDialog.FEEDSCOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(feedsButton);
 	    this.add(feedsButton);
 	    
-	    filterButton = new ToolBarButton("filter", this, "EditShowDialog");
+	    filterButton = new ToolBarButton(editDialog.FILTERCOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(filterButton);
 	    this.add(filterButton);
 	    
-	    scheduleButton = new ToolBarButton("schedule", this, "EditShowDialog");
+	    scheduleButton = new ToolBarButton(editDialog.SCHEDULECOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(scheduleButton);
 	    this.add(scheduleButton);	
 	}

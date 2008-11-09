@@ -1,4 +1,4 @@
-package ted;
+package ted.ui.configdialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +8,7 @@ import javax.swing.JToolBar;
 
 import ted.ui.ToolBarButton;
 
-public class TedConfigDialogToolBar extends JToolBar implements ActionListener  
+public class ConfigDialogToolBar extends JToolBar implements ActionListener  
 {
 	
 	/**
@@ -19,20 +19,20 @@ public class TedConfigDialogToolBar extends JToolBar implements ActionListener
 	private ToolBarButton looknfeelButton;
 	private ToolBarButton advancedButton;
 	private ToolBarButton updatesButton;
-	private TedConfigDialog tedConfigDialog;
+	private ConfigDialog tedConfigDialog;
 
 	/**
 	 * ConfigDialog toolbar
 	 * @param tcd
 	 */
-	public TedConfigDialogToolBar(TedConfigDialog tcd)
+	public ConfigDialogToolBar(ConfigDialog tcd)
 	{
 		this.setFloatable(false);
 		this.tedConfigDialog = tcd;
 		this.makeToolBar();
 	}
 	
-	public TedConfigDialogToolBar()
+	public ConfigDialogToolBar()
 	{
 		this.makeToolBar();
 	}
@@ -44,21 +44,21 @@ public class TedConfigDialogToolBar extends JToolBar implements ActionListener
 	{
 		ButtonGroup toolBarButtons = new ButtonGroup();
 
-	    generalButton = new ToolBarButton("general", this, "TedConfigDialog");
+	    generalButton = new ToolBarButton(this.tedConfigDialog.COMMANDGENERAL, this, "TedConfigDialog");
 	    toolBarButtons.add(generalButton);
 	    this.add(generalButton);
 	    generalButton.setSelected(true);
 		
 
-	    looknfeelButton = new ToolBarButton("looknfeel", this, "TedConfigDialog");
+	    looknfeelButton = new ToolBarButton(this.tedConfigDialog.COMMANDLOOKNFEEL, this, "TedConfigDialog");
 	    toolBarButtons.add(looknfeelButton);
 	    this.add(looknfeelButton);
 	    
-	    advancedButton = new ToolBarButton("advanced", this, "TedConfigDialog");
+	    advancedButton = new ToolBarButton(this.tedConfigDialog.COMMANDADVANCED, this, "TedConfigDialog");
 	    toolBarButtons.add(advancedButton);
 	    this.add(advancedButton);
 	    
-	    updatesButton = new ToolBarButton("updates", this, "TedConfigDialog");
+	    updatesButton = new ToolBarButton(this.tedConfigDialog.COMMANDUPDATES, this, "TedConfigDialog");
 	    toolBarButtons.add(updatesButton);
 	    this.add(updatesButton);	
 	}

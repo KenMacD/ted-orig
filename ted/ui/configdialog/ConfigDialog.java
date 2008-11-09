@@ -1,4 +1,4 @@
-package ted;
+package ted.ui.configdialog;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -11,10 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
-import ted.ui.configdialog.AdvancedPanel;
-import ted.ui.configdialog.GeneralPanel;
-import ted.ui.configdialog.LooknFeelPanel;
-import ted.ui.configdialog.UpdatesPanel;
+import ted.Lang;
+import ted.TedConfig;
+import ted.TedMainDialog;
+import ted.TedSystemInfo;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -43,7 +43,7 @@ import ted.ui.configdialog.UpdatesPanel;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedConfigDialog extends javax.swing.JDialog
+public class ConfigDialog extends javax.swing.JDialog
 {
 
 	/****************************************************
@@ -56,7 +56,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 	private JButton Annuleer_Button;
 	private TedMainDialog main;
 	private boolean show_cancel_btn;
-	TedConfigListener TCListener = new TedConfigListener(this);
+	ConfigDialogListener TCListener = new ConfigDialogListener(this);
 	JToggleButton generalButton;
     JToggleButton looknfeelButton;
     JToggleButton advancedButton;
@@ -68,6 +68,12 @@ public class TedConfigDialog extends javax.swing.JDialog
 	private int width = 500;
 	private int height = 550;
 	private int tabsHeight = 400;
+	public final String COMMANDGENERAL 	= "general";
+	public final String COMMANDLOOKNFEEL 	= "looknfeel";
+	public final String COMMANDADVANCED 	= "advanced";
+	public final String COMMANDUPDATES 	= "updates";
+	private String currentTab = COMMANDGENERAL;
+	
 	
 	/****************************************************
 	 * CONSTRUCTOR
@@ -78,7 +84,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 	 * @param tc Current TedConfig
 	 * @param showcancelbutton Show a cancel button in the config dialog?
 	 */
-	public TedConfigDialog(TedMainDialog frame, boolean showcancelbutton,
+	public ConfigDialog(TedMainDialog frame, boolean showcancelbutton,
 							boolean showDialog) 
 	{
 		this.setModal(true);
@@ -169,7 +175,7 @@ public class TedConfigDialog extends javax.swing.JDialog
 		getContentPane().add(this.jConfigTabs);
 		this.jConfigTabs.setBounds(0, 75, this.width, this.tabsHeight);
 		
-		TedConfigDialogToolBar toolBarPanel = new TedConfigDialogToolBar(this);
+		ConfigDialogToolBar toolBarPanel = new ConfigDialogToolBar(this);
 		getContentPane().add(toolBarPanel);
 		toolBarPanel.setBounds(0, 0, this.width, 70);
 		
@@ -188,19 +194,19 @@ public class TedConfigDialog extends javax.swing.JDialog
 		jHelpButton.putClientProperty("JButton.buttonType", "help");
 		
 		this.generalPanel = new GeneralPanel();
-		this.jConfigTabs.add("general", this.generalPanel);
+		this.jConfigTabs.add(this.COMMANDGENERAL, this.generalPanel);
 		this.generalPanel.setValues();
 		
 		this.looknfeelPanel = new LooknFeelPanel(this.main);
-		this.jConfigTabs.add("looknfeel", this.looknfeelPanel);
+		this.jConfigTabs.add(this.COMMANDLOOKNFEEL, this.looknfeelPanel);
 		this.looknfeelPanel.setValues();
 		
 		this.advancedPanel = new AdvancedPanel();
-		this.jConfigTabs.add("advanced", this.advancedPanel);
+		this.jConfigTabs.add(this.COMMANDADVANCED, this.advancedPanel);
 		this.advancedPanel.setValues();
 		
 		this.updatesPanel = new UpdatesPanel(this.main);
-		this.jConfigTabs.add("updates", this.updatesPanel);
+		this.jConfigTabs.add(this.COMMANDUPDATES, this.updatesPanel);
 		this.updatesPanel.setValues();
 	}
 
@@ -247,5 +253,11 @@ public class TedConfigDialog extends javax.swing.JDialog
 	{
 		CardLayout cl = (CardLayout)(this.jConfigTabs.getLayout());
 	    cl.show(this.jConfigTabs, command);
+	    this.currentTab = command;
+	}
+
+	public String getCurrentTab() 
+	{
+		return this.currentTab;
 	}
 }

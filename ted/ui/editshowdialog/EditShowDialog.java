@@ -63,6 +63,11 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private FilterPanel filterPanel;
 	private SchedulePanel schedulePanel;
 	private String currentSerieName;
+	public final String GENERALCOMMAND = "general";
+	public final String FEEDSCOMMAND = "feeds";
+	public final String FILTERCOMMAND = "filter";
+	public final String SCHEDULECOMMAND = "schedule";
+	private String currentTab = this.GENERALCOMMAND;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -183,22 +188,22 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		}
 		
 		generalPanel = new GeneralPanel(this);
-		jShowTabs.add("general", generalPanel);
+		jShowTabs.add(this.GENERALCOMMAND, generalPanel);
 		generalPanel.setValues(this.currentSerie, newSerie);
 		generalPanel.setSize(this.width, this.tabsHeight);
 		
 		feedsPanel = new FeedsPanel(this.initPopupMenu());
-		jShowTabs.add("feeds", feedsPanel);
+		jShowTabs.add(this.FEEDSCOMMAND, feedsPanel);
 		feedsPanel.setValues(this.currentSerie);
 		feedsPanel.setSize(this.width, this.tabsHeight);
 		
 		filterPanel = new FilterPanel();
-		jShowTabs.add("filter", filterPanel);
+		jShowTabs.add(this.FILTERCOMMAND, filterPanel);
 		filterPanel.setValues(this.currentSerie);
 		filterPanel.setSize(this.width, this.tabsHeight);
 		
 		schedulePanel = new SchedulePanel();
-		jShowTabs.add("schedule", schedulePanel);
+		jShowTabs.add(this.SCHEDULECOMMAND, schedulePanel);
 		schedulePanel.setValues(this.currentSerie);
 		schedulePanel.setSize(this.width, this.tabsHeight);
 		
@@ -225,6 +230,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	{
 		CardLayout cl = (CardLayout)(jShowTabs.getLayout());
 	    cl.show(jShowTabs, command);		
+	    this.currentTab = command;
 	}
 
 	public void actionPerformed(ActionEvent arg0) 
@@ -257,10 +263,28 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		}
 		else if (action.equals("Help"))
 		{
+			String wikiUrl = "http://www.ted.nu/wiki/index.php/";
+						
+			if (this.currentTab.equals(this.GENERALCOMMAND))
+			{
+				wikiUrl += "General";
+			}
+			else if (this.currentTab.equals(this.FEEDSCOMMAND))
+			{
+				wikiUrl += "Feeds";
+			}
+			else if (this.currentTab.equals(this.FILTERCOMMAND))
+			{
+				wikiUrl += "Filters";
+			}
+			else if (this.currentTab.equals(this.SCHEDULECOMMAND))
+			{
+				wikiUrl += "Schedulers";
+			}
 			// launch documentation website
 			try 
 			{
-				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Edit_show"); //$NON-NLS-1$
+				BrowserLauncher.openURL(wikiUrl); //$NON-NLS-1$
 			} 
 			catch (Exception err)
 			{

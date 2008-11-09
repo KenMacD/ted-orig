@@ -1,10 +1,12 @@
-package ted;
+package ted.ui.configdialog;
 
 /****************************************************
  * IMPORTS
  ****************************************************/
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import ted.BrowserLauncher;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -20,12 +22,12 @@ import java.awt.event.ActionListener;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedConfigListener implements ActionListener 
+public class ConfigDialogListener implements ActionListener 
 {
 	/****************************************************
 	 * GLOBAL VARIABLES
 	 ****************************************************/
-	private TedConfigDialog TedCD;
+	private ConfigDialog TedCD;
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -34,7 +36,7 @@ public class TedConfigListener implements ActionListener
 	 * Create a new ConfigListener
 	 * @param dialog The dialog to listen to
 	 */
-	public TedConfigListener(TedConfigDialog dialog) 
+	public ConfigDialogListener(ConfigDialog dialog) 
 	{
 		TedCD = dialog;
 	}
@@ -57,9 +59,28 @@ public class TedConfigListener implements ActionListener
 		}
 		else if(action.equals("Help"))
 		{
+			String wikiUrl = "http://www.ted.nu/wiki/index.php/";
+			
+			if (TedCD.getCurrentTab().equals(TedCD.COMMANDGENERAL))
+			{
+				wikiUrl += "Config_General";
+			}
+			else if (TedCD.getCurrentTab().equals(TedCD.COMMANDLOOKNFEEL))
+			{
+				wikiUrl += "Config_Look_And_Feel";
+			}
+			else if (TedCD.getCurrentTab().equals(TedCD.COMMANDADVANCED))
+			{
+				wikiUrl += "Config_Advanced";
+			}
+			else if (TedCD.getCurrentTab().equals(TedCD.COMMANDUPDATES))
+			{
+				wikiUrl += "Config_Software_Updates";
+			}
+			// launch documentation website
 			try 
 			{
-				BrowserLauncher.openURL("http://www.ted.nu/wiki/index.php/Config_General"); //$NON-NLS-1$
+				BrowserLauncher.openURL(wikiUrl); //$NON-NLS-1$
 			} 
 			catch (Exception err)
 			{
