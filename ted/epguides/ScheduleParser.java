@@ -189,12 +189,9 @@ public class ScheduleParser
 		}
 	}
 	
-	private Vector<StandardStructure> parseTvRage(String showName, Date from, Date to, boolean isDaily, int timeZone)
+	public String getTVRageID(String showName)
 	{
-        Vector<StandardStructure> episodes = new Vector<StandardStructure>();
-        
-		TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageGetInfo"));
-        // First we want to detect the id of this show on tvrage. For this we need
+		// First we want to detect the id of this show on tvrage. For this we need
         // to parse the search results on the name of the show.
     	String url = "http://www.tvrage.com/feeds/search.php?show=" + showName;
 		TedXMLParser parser = new TedXMLParser();
@@ -203,7 +200,7 @@ public class ScheduleParser
 		NodeList foundShowsList = foundShowsElement.getElementsByTagName("show");
 		
 		// Only continue if we've found at least one show with this name.
-		int showId = -1;
+		String showId = "";
 		if(foundShowsList != null && foundShowsList.getLength() > 0)
 		{
 			// For every show...
@@ -221,16 +218,27 @@ public class ScheduleParser
 				}
 				
 				// Otherwise we've found the show id
-				showId = parser.getIntValue(show, "showid");
+				showId = parser.getTextValue(show, "showid");
 				
 				// No need to search further
 				break;
 			}
 		}
-
+		
+		return showId;
+	}
+	
+	private Vector<StandardStructure> parseTvRage(String showName, Date from, Date to, boolean isDaily, int timeZone, String showId)
+	{
+        Vector<StandardStructure> episodes = new Vector<StandardStructure>();
+        
+		TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageGetInfo"));
+				
 		// If we've found the show id
-		if (showId != -1)
+		if (!showId.equals(""))
 		{
+			TedXMLParser parser = new TedXMLParser();
+			
 			TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.TvRageShowId") + ": " + 
 					showId + ". " + Lang.getString("TedScheduleParser.TvRageRetrieving"));
 			
@@ -240,7 +248,7 @@ public class ScheduleParser
 	       
 	        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
 	        
-	        url = "http://www.tvrage.com/feeds/episode_list.php?sid=" + showId;	
+	        String url = "http://www.tvrage.com/feeds/episode_list.php?sid=" + showId;	
 			Element foundShowElement = parser.readXMLFromURL(url);
 			
 			// No information available
@@ -499,7 +507,7 @@ public class ScheduleParser
 												  Date from,
 												  Date to) 
 	{
-		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily(), serie.getTimeZone());
+		Vector<StandardStructure> episodes1 = this.parseTvRage(serie.getName(), from, to, serie.isDaily(), serie.getTimeZone(), serie.getTVRageID());
         Vector<StandardStructure> episodes2 = this.parseEpguides(serie.getName(), serie.getEpguidesName(), from, to, serie.isDaily(), serie.getTimeZone());
         Vector<StandardStructure> episodes  = this.combineLists(episodes1, episodes2);
         

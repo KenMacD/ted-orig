@@ -3,6 +3,7 @@
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -81,6 +82,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	private String epguidesName;
 	private int timeZone = -1;
 	protected StandardStructure currentEpisodeSS;
+	private String tvRageID;
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -1173,7 +1175,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		{
 			this.epguidesName = text;
 			// update scheduler
-			this.getScheduler().forceScheduleUpdate();
+			this.refreshSchedule();
 		}	
 	}
 
@@ -1192,7 +1194,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	 */
 	public Boolean isEpisodeScheduleAvailableWithUpdate()
 	{
-		return this.getScheduler().isEpisodeScheduleAvailableWithUpdate();
+		return this.getScheduler().isEpisodeScheduleAvailableWithUpdate(false);
 	}
 	
 	/**
@@ -1317,5 +1319,44 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		}
 		
 		return result;
+	}
+
+
+	public String getTVRageID() 
+	{	
+		if ((this.tvRageID == null))
+		{
+			// try to find TVRageID
+			this.tvRageID = this.scheduler.getTVRageID(this);
+		}
+		
+		return this.tvRageID;
+	}
+	
+	public void setTVRageID(String tvRageID) 
+	{
+		if (!tvRageID.equals(this.getEpguidesName()))
+		{
+			this.tvRageID = tvRageID;
+			// update scheduler
+			// TODO: this is also done when epguides ID is changed.. maybe
+			// executed twice?
+			this.refreshSchedule();
+		}	
+	}
+	
+	public Date getScheduleLastUpdateDate()
+	{
+		return this.getScheduler().getLastUpdateDate();
+	}
+	
+	public Date getScheduleNextUpdateDate()
+	{
+		return this.getScheduler().getNextUpdateDate();
+	}
+	
+	public void refreshSchedule()
+	{
+		this.getScheduler().forceScheduleUpdate();
 	}
 }

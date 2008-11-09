@@ -31,6 +31,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	// Vector containing the scheduled episodes. Sorted on airdate. First item is with highest airdate
 	private Vector<StandardStructure> scheduledEpisodes;
 	private Date checkEpisodeSchedule;
+	private int updateIntervalInDays;
 	
 	public SeasonEpisodeScheduler (TedSerie serie)
 	{
@@ -200,10 +201,8 @@ public class SeasonEpisodeScheduler implements Serializable
 	 * (once every 7 days)
 	 * Will also update the current set episode in the show when an update is done.
 	 */
-	public boolean isEpisodeScheduleAvailableWithUpdate()
+	public boolean isEpisodeScheduleAvailableWithUpdate(boolean forceUpdate)
 	{
-		// how often should the schedule be updated (in days)?
-		int updateIntervalInDays = 7;
 		// system date
        	Date systemDate = new Date();
        	       	
@@ -211,7 +210,8 @@ public class SeasonEpisodeScheduler implements Serializable
 		if ( serie.isUseAutoSchedule() && 
 				( 	this.scheduledEpisodes == null || 
 					this.checkEpisodeSchedule == null || 
-					systemDate.after(this.checkEpisodeSchedule))
+					systemDate.after(this.checkEpisodeSchedule) ||
+					forceUpdate)
 				)
 		{	
 			serie.setStatusString(Lang.getString("TedSerie.EpisodeScheduleUpdate"));
@@ -223,7 +223,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	        
 	        // one week from now
 	        Calendar future = Calendar.getInstance();
-	        future.add(Calendar.DAY_OF_YEAR, updateIntervalInDays);
+	        future.add(Calendar.DAY_OF_YEAR, this.getIntervalInDays());
 	        this.checkEpisodeSchedule = future.getTime();
 	        	        
 	        // update serie with scheduled episode
@@ -639,7 +639,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	{
 		// set update date to today
 		this.checkEpisodeSchedule = new Date();
-		this.isEpisodeScheduleAvailableWithUpdate();
+		this.isEpisodeScheduleAvailableWithUpdate(true);
 	}
 
 	/**
@@ -660,5 +660,38 @@ public class SeasonEpisodeScheduler implements Serializable
 	private Vector<StandardStructure> getScheduledEpisodes() 
 	{
 		return this.scheduledEpisodes;
+	}
+	
+	public String getTVRageID(TedSerie serie)
+	{
+		ScheduleParser tedEP = new ScheduleParser();
+        
+        return tedEP.getTVRageID(serie.getName());
+	}
+
+	public Date getLastUpdateDate() 
+	{
+		// subtract the interval from the next update date
+		Date temp = new Date();
+		temp.setTime(this.checkEpisodeSchedule.getTime());
+        Calendar weekback = Calendar.getInstance();
+        weekback.setTime(temp);
+        weekback.add(Calendar.DAY_OF_YEAR, -(this.getIntervalInDays()));
+        return weekback.getTime();
+	}
+
+	private int getIntervalInDays() 
+	{
+		if (this.updateIntervalInDays == 0)
+		{
+			this.updateIntervalInDays = 6;
+		}
+		
+		return this.updateIntervalInDays;
+	}
+
+	public Date getNextUpdateDate() 
+	{
+		return this.checkEpisodeSchedule;
 	}
 }
