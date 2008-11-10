@@ -225,6 +225,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 	 */
 	public boolean checkValues()
 	{
+		boolean result = true;
 		int newTime = 0;
 		try
 		{
@@ -238,23 +239,25 @@ public class GeneralPanel extends JPanel implements ActionListener
 		
 		if (directory_nieuw.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
-			directory_Field.setBackground(new java.awt.Color(255,100,100));
-			return false;
+			
+			result = false;
 		}
 		else
 		{
 			File f = new File(directory_nieuw);
 			if (!f.isDirectory()) //$NON-NLS-1$
 			{
-				JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
-				directory_Field.setBackground(new java.awt.Color(255,100,100));
-				return false;
+				// dir does not exist. try to create it.
+				result = f.mkdir();
 			}
 		}
+		if (result == false)
+		{
+			JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
+			directory_Field.setBackground(new java.awt.Color(255,100,100));
+		}
 		
-		
-		return true;
+		return result;
 	}
 	
 	/**

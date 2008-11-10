@@ -41,7 +41,7 @@ public class TedConfig
 	
 	// create some default settings
 	private static int RefreshTime = 3600;
-	private static String Directory = new JFileChooser().getFileSystemView().getDefaultDirectory().getAbsolutePath();
+	private static String Directory = "";
 	private static boolean ShowErrors = false;
 	private static boolean ShowHurray = true;
 	private static boolean OpenTorrent = true;
@@ -67,7 +67,7 @@ public class TedConfig
 	private static boolean logToFile = true;
 	private static int timeZoneOffset = -1;
 	private static boolean useAutoSchedule = true;
-	private static int sortType = SORT_NAME;
+	private static int sortType = SORT_STATUS;
 	private static int sortDirection = SORT_ASCENDING;
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
@@ -98,6 +98,13 @@ public class TedConfig
 	 */
 	public static String getDirectory() 
 	{
+		if (Directory.equals(""))
+		{
+			// init object
+			Directory = new JFileChooser().getFileSystemView().getDefaultDirectory().getAbsolutePath();
+			String seperator = System.getProperty("file.separator");
+			Directory += seperator + "ted";
+		}
 		return Directory;
 	}
 	/**
