@@ -155,32 +155,22 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			tcio.GetConfig();
 		} 
 		catch (FileNotFoundException e) 
-		{
-			// if no config: generate one and show config dialog
-			Lang.setLanguage(TedConfig.getLocale());
-			// config file is not found, ask user to input preferences
-			JOptionPane.showMessageDialog(null, Lang.getString("TedMainDialog.DialogStartup1") + "\n" + //$NON-NLS-1$
-					Lang.getString("TedMainDialog.DialogStartup2") + "\n" +  //$NON-NLS-1$
-					Lang.getString("TedMainDialog.DialogStartup3")); //$NON-NLS-1$
+		{		
+			// initialize size and position of ted
 			
-			// set initial size of maindialog
-			this.setSize(350, 500);
-			
-			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		    Dimension screenSize = toolkit.getScreenSize();
+		    TedConfig.setHeight((int) Math.round(screenSize.height * 0.8));
+		    
+		    this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
+		    
 			int x = (screenSize.width - this.getWidth()) / 2;
 		    int y = (screenSize.height - this.getHeight()) / 2;
-
-		    //Set the new frame location
-		    this.setLocation(x, y);
-			
-			new ConfigDialog(this, false, true);
+		    TedConfig.setX(x);
+		    TedConfig.setY(y);
 		}
 		
-		Lang.setLanguage(TedConfig.getLocale());
-			
-		
+		Lang.setLanguage(TedConfig.getLocale());	
 		
 		try 
 		{
@@ -590,7 +580,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if(action.equals("Preferences...")) //$NON-NLS-1$
 		{
-			new ConfigDialog(this, true, true);
+			new ConfigDialog(this);
 		}
 		else if(action.equals("Log")) //$NON-NLS-1$
 		{
@@ -866,7 +856,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	
 	public void showPreferencesDialog()
 	{
-		new ConfigDialog(this, true,true);
+		new ConfigDialog(this);
 	}
 	
 	public void quit()

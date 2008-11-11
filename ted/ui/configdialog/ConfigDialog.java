@@ -55,7 +55,6 @@ public class ConfigDialog extends javax.swing.JDialog
 	private JButton Save_Button;
 	private JButton Annuleer_Button;
 	private TedMainDialog main;
-	private boolean show_cancel_btn;
 	ConfigDialogListener TCListener = new ConfigDialogListener(this);
 	JToggleButton generalButton;
     JToggleButton looknfeelButton;
@@ -84,15 +83,13 @@ public class ConfigDialog extends javax.swing.JDialog
 	 * @param tc Current TedConfig
 	 * @param showcancelbutton Show a cancel button in the config dialog?
 	 */
-	public ConfigDialog(TedMainDialog frame, boolean showcancelbutton,
-							boolean showDialog) 
+	public ConfigDialog(TedMainDialog frame) 
 	{
 		this.setModal(true);
 		this.setResizable(false);
 		this.main = frame;
-		this.show_cancel_btn = showcancelbutton;
 		initGUI();
-		this.setVisible(showDialog);
+		this.setVisible(true);
 	}
 	
 	/****************************************************
@@ -114,12 +111,6 @@ public class ConfigDialog extends javax.swing.JDialog
 
 		    //Set the new frame location
 		    this.setLocation(x, y);
-
-			// prevent the dialog from being closed other then the cancel/save buttons
-			if (!this.show_cancel_btn)
-			{
-				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			}
 
 			loadConfig();
 		} 
@@ -152,15 +143,12 @@ public class ConfigDialog extends javax.swing.JDialog
 		this.setTitle(Lang.getString("TedConfigDialog.WindowTitle")); //$NON-NLS-1$
 
 		{
-			if (this.show_cancel_btn)
-			{
 				this.Annuleer_Button = new JButton();
 				this.getContentPane().add(Annuleer_Button);
 				this.Annuleer_Button.setText(Lang.getString("TedConfigDialog.ButtonCancel")); //$NON-NLS-1$
 				this.Annuleer_Button.setBounds(bottomButtonCancelX, bottomButtonLocationY, 100, 28);
 				this.Annuleer_Button.addActionListener(TCListener);
 				this.Annuleer_Button.setActionCommand("Cancel");
-			}
 		}
 		{
 			this.Save_Button = new JButton();

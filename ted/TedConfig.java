@@ -51,8 +51,8 @@ public class TedConfig
 	private static boolean parseAtStart = true;
 	private static int autoUpdateFeedList = ALWAYS;
 	private static int autoAdjustFeeds = ASK;
-	private static int width = 550;
-	private static int height = 400;
+	private static int width = 400;
+	private static int height = 550;
 	private static int x = 0;
 	private static int y = 0;
 	private static int RSSVersion = 0;
@@ -69,6 +69,7 @@ public class TedConfig
 	private static boolean useAutoSchedule = true;
 	private static int sortType = SORT_STATUS;
 	private static int sortDirection = SORT_ASCENDING;
+	
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
 	private static final Color defaultOddRowColor  = new Color(236,243,254);
