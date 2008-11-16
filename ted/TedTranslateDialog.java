@@ -518,7 +518,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	
 	private void showErrorDialog(Exception exception, String info)
 	{
-		info += "\nCheck the log for more details.";
+		info += "\nCheck the log for more details.\n";
 		
 		TedLog.error(exception, info);
 		
