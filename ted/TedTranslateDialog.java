@@ -24,7 +24,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,6 +72,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	private JButton buttonHelp;
 	private JButton downloadTranslationsFile;
 	private JCheckBox hideTranslatedRows;
+	private JCheckBox colorTranslatedRows;
 	private TreeSet<String> stringIds;
 	private Properties originalText;
 	private Properties translatedText;
@@ -97,13 +97,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		
 		tableKeys = new JTable(tableModel);
 
-		colorModel = new MyColorRenderModel();
-		TableColumn column0 = tableKeys.getColumnModel().getColumn(0);
-	    TableColumn column1 = tableKeys.getColumnModel().getColumn(1);
-	    TableColumn column2 = tableKeys.getColumnModel().getColumn(2);
-	    column0.setCellRenderer(colorModel);
-	    column1.setCellRenderer(colorModel);
-	    column2.setCellRenderer(colorModel);
+		setColorModel();
 	    	    
 		updateTable();	
 	}
@@ -154,9 +148,16 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				{
 					hideTranslatedRows = new JCheckBox();
 					buttonPanel.add(hideTranslatedRows);
-					hideTranslatedRows.setText("Hide!");
+					hideTranslatedRows.setText("Hide translated lines");
 					hideTranslatedRows.addActionListener(this);
 					hideTranslatedRows.setActionCommand("hide");
+				}
+				{
+					colorTranslatedRows = new JCheckBox();
+					buttonPanel.add(colorTranslatedRows);
+					colorTranslatedRows.setText("Color lines");
+					colorTranslatedRows.addActionListener(this);
+					colorTranslatedRows.setActionCommand("color");
 				}
 			}
 			{
@@ -422,6 +423,10 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		{
 			fillTable();
 		}
+		else if (action.equals("color"))
+		{
+			setColorModel();
+		}
 	}
 	
 	private void findNextInTable()
@@ -466,8 +471,8 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		Object[] options = {"Ok", "Cancel"};
 		int answer = JOptionPane.showOptionDialog(null, 
 								 "By downloading the latest translation files all existing translations" +
-								 " will be overwritten. \nAll modifications to those files will be lost." +
-								 "\nAre you sure you want to continue", 
+								 " will be overwritten. \nAll modifications to those files will be lost!" +
+								 "\nAre you sure you want to continue?", 
 								 "Warning",
 								 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 								 null, options, options[0]);
@@ -495,17 +500,32 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				downloadPropertiesFile(line);
 			}
 			br.close();	
+			
+			JOptionPane.showInternalMessageDialog(null, 
+								"Translations have succesfully been downloaded.", 
+								"Succes",
+								JOptionPane.INFORMATION_MESSAGE);
 		} 
 		catch (MalformedURLException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			showErrorDialog(e, "Downloading of the translations has failed because of a malformed URL");
 		} 
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			showErrorDialog(e, "Downloading of the translations has failed because of an read/write error");
 		}
+	}
+	
+	private void showErrorDialog(Exception exception, String info)
+	{
+		info += "\nCheck the log for more details.";
+		
+		TedLog.error(exception, info);
+		
+		JOptionPane.showMessageDialog(this, 
+									  info, 
+									  "Error",
+									  JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	private void downloadPropertiesFile(String countryName)
@@ -615,6 +635,19 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 	    }
 	}
 	
+	private void setColorModel()
+	{
+		colorModel = new MyColorRenderModel();
+		TableColumn column0 = tableKeys.getColumnModel().getColumn(0);
+	    TableColumn column1 = tableKeys.getColumnModel().getColumn(1);
+	    TableColumn column2 = tableKeys.getColumnModel().getColumn(2);
+	    column0.setCellRenderer(colorModel);
+	    column1.setCellRenderer(colorModel);
+	    column2.setCellRenderer(colorModel);
+	    
+	    tableKeys.updateUI();
+	}
+	
 	final class MyColorRenderModel extends DefaultTableCellRenderer 
 	{
 		  
@@ -638,20 +671,24 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		    );
     
     
-		    String value = (String)aTable.getValueAt(aRow, 2);
-		    
-		    if(value == null)
-		    {
-		    	renderer.setBackground(Color.red);
-		    }
-		    else if(value.equals("")) 
-		    {		    	
-		    	renderer.setBackground(Color.red);
-		    }
-		    else 
-		    {
-		    	renderer.setBackground(Color.green);
-		    }
+			if (colorTranslatedRows.isSelected())
+			{
+			    String value = (String)aTable.getValueAt(aRow, 2);
+			    
+			    if(value == null)
+			    {
+			    	renderer.setBackground(Color.red);
+			    }
+			    else if(value.equals("")) 
+			    {		    	
+			    	renderer.setBackground(Color.red);
+			    }
+			    else 
+			    {
+			    	renderer.setBackground(Color.green);
+			    }
+			}
+			
 		    return this;
 		}
 	}
