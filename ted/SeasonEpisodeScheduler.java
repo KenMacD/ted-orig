@@ -494,6 +494,14 @@ public class SeasonEpisodeScheduler implements Serializable
 			}
 			else
 			{
+				// If the auto scheduler isn't set put the show to check. 
+				serie.setStatus(TedSerie.STATUS_CHECK);
+			}
+			
+			// For now I don't want to remove the code below so this weird construct.
+			if (true)
+				return; 
+			
 				// if show is hiatus: put on check, cause with auto schedule enabled
 				// shows cannot be on hiatus anymore.
 				if (serie.isHiatus())
@@ -554,7 +562,7 @@ public class SeasonEpisodeScheduler implements Serializable
 						}
 					}	
 				}	
-				if(serie.isUseBreakSchedule())
+				if(serie.isUseBreakSchedule() && false)
 				{
 					// get date of today
 					date =  new GregorianCalendar();
@@ -579,7 +587,7 @@ public class SeasonEpisodeScheduler implements Serializable
 					}
 				}
 			}
-		}	
+		//}	
 	}
 	
 	public StandardStructure getLastAiredEpisode()
