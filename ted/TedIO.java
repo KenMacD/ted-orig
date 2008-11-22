@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 
 import org.w3c.dom.Element;
 
+import ted.TedTranslateDialog.PropertiesFileFilter;
 import ted.ui.TimedOptionPane;
 import ted.ui.editshowdialog.FeedPopupItem;
 import ted.ui.messaging.GrowlMessenger;
@@ -55,7 +56,7 @@ public class TedIO
 	private String versionUrl = "http://ted.sourceforge.net/version.txt";
 	
 	private static String CONFIG_FILE = TedSystemInfo.getUserDirectory()+"config.ted"; //$NON-NLS-1$
-	private static String SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows.ted"; //$NON-NLS-1$
+	public static String SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows.ted"; //$NON-NLS-1$
 	public static String XML_SHOWS_FILE = TedSystemInfo.getUserDirectory()+"shows_clean.xml"; //$NON-NLS-1$
 	
 	/****************************************************
@@ -908,6 +909,7 @@ public class TedIO
 	    	return true;
 	    }
 	}
+	
 	
 	/****************************************************
 	 * PRIVATE METHODS

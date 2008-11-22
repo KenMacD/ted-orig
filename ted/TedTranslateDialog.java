@@ -703,7 +703,6 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		public String getDescription() 
 		{
 			return "translation files";
-		}
-		
+		}		
 	}
 }

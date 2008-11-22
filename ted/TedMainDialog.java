@@ -11,22 +11,29 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.channels.FileChannel;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Element;
 
+import ted.TedTranslateDialog.PropertiesFileFilter;
 import ted.ui.TimedOptionPane;
 import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.configdialog.ConfigDialog;
@@ -796,8 +803,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Export")) //$NON-NLS-1$
 		{
-			Vector series = serieTable.getSeries();
-			new TedXMLWriter(series);
+			this.saveShows();
+			this.ExportShows();
+		}
+		else if (action.equals("Import"))
+		{
+			this.ImportShows();
+			TedIO tio = new TedIO();
+			serieTable.setSeries(tio.GetShows());
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
 		{
@@ -1130,6 +1143,99 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			this.getSerieTable().updateAllSeries();
 			this.updateGUI();
+		}		
+	}
+	
+	public void ExportShows()
+	{
+		JFileChooser chooser = new JFileChooser();
+		TedFileFilter filter = new TedFileFilter();
+	    chooser.setFileFilter(filter);
+				
+		int returnVal = chooser.showSaveDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{				
+			try 
+			{
+				String fileOut = chooser.getSelectedFile().getCanonicalPath();
+				
+				// Files should always have the .properties extension.
+				if(!fileOut.endsWith(".ted"))
+				{
+					fileOut.concat(".ted");
+				}
+				
+				FileChannel inChannel  = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
+		        FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
+		        
+		        try 
+		        {
+		            inChannel.transferTo(0, inChannel.size(), outChannel);
+		        } 
+		        catch (IOException e) 
+		        {
+		            throw e;
+		        }
+		        finally 
+		        {
+		            if (inChannel != null) inChannel.close();
+		            if (outChannel != null) outChannel.close();
+		        }
+		    } 
+			catch (IOException e) 
+			{
+				TedLog.error(e.toString());
+		    }
+		}
+	}
+	
+	public void ImportShows()
+	{
+		JFileChooser chooser = new JFileChooser();
+		TedFileFilter filter = new TedFileFilter();
+	    chooser.setFileFilter(filter);
+				
+		int returnVal = chooser.showSaveDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{				
+			try 
+			{
+				String fileIn = chooser.getSelectedFile().getCanonicalPath();
+								
+				FileChannel inChannel  = new FileInputStream(fileIn).getChannel();
+		        FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
+		        
+		        try 
+		        {
+		            inChannel.transferTo(0, inChannel.size(), outChannel);
+		        } 
+		        catch (IOException e) 
+		        {
+		            throw e;
+		        }
+		        finally 
+		        {
+		            if (inChannel != null) inChannel.close();
+		            if (outChannel != null) outChannel.close();
+		        }
+		    } 
+			catch (IOException e) 
+			{
+				TedLog.error(e.toString());
+		    }
+		}
+	}
+	
+	class TedFileFilter extends FileFilter
+	{
+		public boolean accept(File f) 
+		{
+			return f.toString().toLowerCase().endsWith(".ted");
+		}
+
+		public String getDescription() 
+		{
+			return "translation files";
 		}		
 	}
 }

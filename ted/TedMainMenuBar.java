@@ -47,6 +47,7 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem newFileMenuItem;
 	private JMenu jMenu3;
 	private JMenuItem exportMenuItem;
+	private JMenuItem importMenuItem;
 	private JMenu menuStatus;
 	private JMenuItem statusCheck;
 	private JMenuItem statusHold;
@@ -95,19 +96,26 @@ public class TedMainMenuBar extends JMenuBar
 		{
 			newFileMenuItem = new JMenuItem();
 			exportMenuItem	= new JMenuItem();
+			importMenuItem  = new JMenuItem();
+			
 			// add show
 			jMenu3.add(newFileMenuItem);
 			
 			newFileMenuItem.addActionListener(tMain);
 			newFileMenuItem.setActionCommand("New"); //$NON-NLS-1$
 			
-			// Disabled this menu item because it's rather useless at
-			// the moment. Left it in the code because maybe we want
-			// to use it again some day.
-			//jMenu3.add(exportMenuItem);
+			// separate
+			jSeparator1 = new JSeparator();
+			jMenu3.add(jSeparator1);
 			
+			jMenu3.add(importMenuItem);
+			importMenuItem.setActionCommand("Import");
+			importMenuItem.addActionListener(tMain);
+			
+			jMenu3.add(exportMenuItem);			
 			exportMenuItem.setActionCommand("Export"); //$NON-NLS-1$
 			exportMenuItem.addActionListener(tMain);
+						
 			if (!TedSystemInfo.osIsMac())
 			{
 				// seperate
@@ -330,7 +338,8 @@ public class TedMainMenuBar extends JMenuBar
 	{
 		jMenu3.setText(Lang.getString("TedMainMenuBar.File")); //$NON-NLS-1$
 		newFileMenuItem.setText(Lang.getString("TedMainMenuBar.File.NewShow")); //$NON-NLS-1$
-		exportMenuItem.setText(Lang.getString("TedMainMenuBar.File.ExportToXML")); //$NON-NLS-1$
+		exportMenuItem.setText(Lang.getString("TedMainMenuBar.File.ExportShows")); //$NON-NLS-1$
+		importMenuItem.setText(Lang.getString("TedMainMenuBar.File.ImportShows")); //$NON-NLS-1$
 		if (!TedSystemInfo.osIsMac())
 		{
 			exitMenuItem.setText(Lang.getString("TedMainMenuBar.File.Exit")); //$NON-NLS-1$
