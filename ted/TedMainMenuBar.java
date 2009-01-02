@@ -36,16 +36,16 @@ public class TedMainMenuBar extends JMenuBar
 	private static final long serialVersionUID = -8573600372750247532L;
 	// menu items
 	private JMenuItem helpMenuItem;
-	private JMenu jMenu5;
+	private JMenu menuHelp;
 	private JMenuItem deleteMenuItem;
 	private JMenuItem editMenuItem;
 	private JSeparator jSeparator1;
-	private JMenuItem cutMenuItem;
+	private JMenuItem preferencesMenuItem;
 	private JMenuItem logMenuItem;
-	private JMenu jMenu4;
+	private JMenu menuEdit;
 	private JMenuItem exitMenuItem;
 	private JMenuItem newFileMenuItem;
-	private JMenu jMenu3;
+	private JMenu menuFile;
 	private JMenuItem exportMenuItem;
 	private JMenuItem importMenuItem;
 	private JMenu menuStatus;
@@ -63,6 +63,7 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem buyDVDItem;
 	private JMenuItem translateItem;
 	private JMenuItem languageItem;
+	private JMenu extraMenu;
 	
 	private JMenu subUpdateMenu;
 	private JCheckBoxMenuItem sortDescendingRadioItem;
@@ -90,8 +91,8 @@ public class TedMainMenuBar extends JMenuBar
 	public void initMenu()
 	{
 //		 File Menu
-		jMenu3 = new JMenu();
-		this.add(jMenu3);
+		menuFile = new JMenu();
+		this.add(menuFile);
 		
 		{
 			newFileMenuItem = new JMenuItem();
@@ -99,20 +100,20 @@ public class TedMainMenuBar extends JMenuBar
 			importMenuItem  = new JMenuItem();
 			
 			// add show
-			jMenu3.add(newFileMenuItem);
+			menuFile.add(newFileMenuItem);
 			
 			newFileMenuItem.addActionListener(tMain);
 			newFileMenuItem.setActionCommand("New"); //$NON-NLS-1$
 			
 			// separate
 			jSeparator1 = new JSeparator();
-			jMenu3.add(jSeparator1);
+			menuFile.add(jSeparator1);
 			
-			jMenu3.add(importMenuItem);
+			menuFile.add(importMenuItem);
 			importMenuItem.setActionCommand("Import");
 			importMenuItem.addActionListener(tMain);
 			
-			jMenu3.add(exportMenuItem);			
+			menuFile.add(exportMenuItem);			
 			exportMenuItem.setActionCommand("Export"); //$NON-NLS-1$
 			exportMenuItem.addActionListener(tMain);
 						
@@ -120,29 +121,29 @@ public class TedMainMenuBar extends JMenuBar
 			{
 				// seperate
 				jSeparator1 = new JSeparator();
-				jMenu3.add(jSeparator1);
+				menuFile.add(jSeparator1);
 				// exit
 				exitMenuItem = new JMenuItem();
-				jMenu3.add(exitMenuItem);
+				menuFile.add(exitMenuItem);
 				
 				exitMenuItem.setActionCommand("Exit");
 				exitMenuItem.addActionListener(tMain);
 			}
 		}
 		// Edit Menu
-		jMenu4 = new JMenu();
-		this.add(jMenu4);
+		menuEdit = new JMenu();
+		this.add(menuEdit);
 		
 		{
 			// edit..
 			editMenuItem = new JMenuItem();
-			jMenu4.add(editMenuItem);
+			menuEdit.add(editMenuItem);
 			
 			editMenuItem.setActionCommand("Edit"); //$NON-NLS-1$
 			editMenuItem.addActionListener(tMain);
 			// delete
 			deleteMenuItem = new JMenuItem();
-			jMenu4.add(deleteMenuItem);
+			menuEdit.add(deleteMenuItem);
 			
 			deleteMenuItem.setActionCommand("Delete");
 			deleteMenuItem.addActionListener(tMain);
@@ -183,71 +184,75 @@ public class TedMainMenuBar extends JMenuBar
 				menuStatus.add(statusPause);
 				menuStatus.add(statusHold);
 				menuStatus.add(statusDisabled);
-				jMenu4.add(menuStatus);
-			}
-			{
-				jSeparator2 = new JSeparator();
-				jMenu4.add(jSeparator2);
-				sortMenuItem = new JMenu();
-				jMenu4.add(sortMenuItem);
-				sortMenuItem.setText("Sort shows");
-				{
-					sortOnStatusItem = new JCheckBoxMenuItem();
-					sortMenuItem.add(sortOnStatusItem);
-					sortOnStatusItem.setText("Sort on status and airdate");
-					sortOnStatusItem.addActionListener(tMain);
-					sortOnStatusItem.setActionCommand("sort_status");
-				}
-				{
-					sortOnNameItem = new JCheckBoxMenuItem();
-					sortMenuItem.add(sortOnNameItem);
-					sortOnNameItem.setText("Sort on name");
-					sortOnNameItem.addActionListener(tMain);
-					sortOnNameItem.setActionCommand("sort_name");
-				}
-				{
-					jSeparator3 = new JSeparator();
-					sortMenuItem.add(jSeparator3);
-				}
-				{
-					sortAscendingRadioItem = new JCheckBoxMenuItem();
-					sortMenuItem.add(sortAscendingRadioItem);
-					sortAscendingRadioItem.setText("Sort ascending");
-					sortAscendingRadioItem.addActionListener(tMain);
-					sortAscendingRadioItem.setActionCommand("sort_ascending");
-				}
-				{
-					sortDescendingRadioItem = new JCheckBoxMenuItem();
-					sortMenuItem.add(sortDescendingRadioItem);
-					sortDescendingRadioItem.setText("Sort descending");
-					sortDescendingRadioItem.addActionListener(tMain);
-					sortDescendingRadioItem.setActionCommand("sort_descending");
-				}
+				menuEdit.add(menuStatus);
 			}
 			
-			// seperator
-			jSeparator1 = new JSeparator();
-			jMenu4.add(jSeparator1);
-			// show log	
-			logMenuItem = new JMenuItem();
-			jMenu4.add(logMenuItem);
-			logMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.ShowLog")); //$NON-NLS-1$
-			logMenuItem.setActionCommand("Log"); //$NON-NLS-1$
-			logMenuItem.addActionListener(tMain);
 			
-			if (!TedSystemInfo.osIsMac())
-			{
-				jSeparator1 = new JSeparator();
-				jMenu4.add(jSeparator1);
-				// preferences
-				cutMenuItem = new JMenuItem();
-				jMenu4.add(cutMenuItem);
-				cutMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Preferences")); //$NON-NLS-1$
-				cutMenuItem.setActionCommand("Preferences...");
-				cutMenuItem.addActionListener(tMain);
-			}
 		}
 		{
+		}
+		
+		// Extra menu
+		extraMenu = new JMenu();
+		this.add(extraMenu);
+		{
+			
+			sortMenuItem = new JMenu();
+			extraMenu.add(sortMenuItem);
+			sortMenuItem.setText("Sort shows");
+			{
+				sortOnStatusItem = new JCheckBoxMenuItem();
+				sortMenuItem.add(sortOnStatusItem);
+				sortOnStatusItem.setText("Sort on status and airdate");
+				sortOnStatusItem.addActionListener(tMain);
+				sortOnStatusItem.setActionCommand("sort_status");
+			}
+			{
+				sortOnNameItem = new JCheckBoxMenuItem();
+				sortMenuItem.add(sortOnNameItem);
+				sortOnNameItem.setText("Sort on name");
+				sortOnNameItem.addActionListener(tMain);
+				sortOnNameItem.setActionCommand("sort_name");
+			}
+			{
+				jSeparator3 = new JSeparator();
+				sortMenuItem.add(jSeparator3);
+			}
+			{
+				sortAscendingRadioItem = new JCheckBoxMenuItem();
+				sortMenuItem.add(sortAscendingRadioItem);
+				sortAscendingRadioItem.setText("Sort ascending");
+				sortAscendingRadioItem.addActionListener(tMain);
+				sortAscendingRadioItem.setActionCommand("sort_ascending");
+			}
+			{
+				sortDescendingRadioItem = new JCheckBoxMenuItem();
+				sortMenuItem.add(sortDescendingRadioItem);
+				sortDescendingRadioItem.setText("Sort descending");
+				sortDescendingRadioItem.addActionListener(tMain);
+				sortDescendingRadioItem.setActionCommand("sort_descending");
+				
+				jSeparator2 = new JSeparator();
+				extraMenu.add(jSeparator2);
+			}
+		}
+		// show log	
+		logMenuItem = new JMenuItem();
+		extraMenu.add(logMenuItem);
+		logMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.ShowLog")); //$NON-NLS-1$
+		logMenuItem.setActionCommand("Log"); //$NON-NLS-1$
+		logMenuItem.addActionListener(tMain);
+		
+		if (!TedSystemInfo.osIsMac())
+		{
+			jSeparator1 = new JSeparator();
+			extraMenu.add(jSeparator1);
+			// preferences
+			preferencesMenuItem = new JMenuItem();
+			extraMenu.add(preferencesMenuItem);
+			preferencesMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Preferences")); //$NON-NLS-1$
+			preferencesMenuItem.setActionCommand("Preferences...");
+			preferencesMenuItem.addActionListener(tMain);
 		}
 
 		// support menu
@@ -267,23 +272,23 @@ public class TedMainMenuBar extends JMenuBar
 		donateItem.addActionListener(tMain);
 		
 		// Help Menu
-		jMenu5 = new JMenu();
-		this.add(jMenu5);
+		menuHelp = new JMenu();
+		this.add(menuHelp);
 		{
 			helpMenuItem = new JMenuItem();
 			// help
-			jMenu5.add(helpMenuItem);
+			menuHelp.add(helpMenuItem);
 			helpMenuItem.addActionListener(tMain);
 			helpMenuItem.setActionCommand("help"); //$NON-NLS-1$
-			jMenu5.add(helpMenuItem);
+			menuHelp.add(helpMenuItem);
 			// Seperator
 			jSeparator1 = new JSeparator();
-			jMenu5.add(jSeparator1);
+			menuHelp.add(jSeparator1);
 			// update submenus
 			subUpdateMenu = new JMenu();
 			subLangMenu = new JMenu();
-			jMenu5.add(subUpdateMenu);
-			jMenu5.add(subLangMenu);
+			menuHelp.add(subUpdateMenu);
+			menuHelp.add(subLangMenu);
 			// Check for updated
 			versionItem = new JMenuItem();
 			subUpdateMenu.add(versionItem);
@@ -311,44 +316,45 @@ public class TedMainMenuBar extends JMenuBar
 			languageItem.setActionCommand("language");
 			// seperate
 			jSeparator1 = new JSeparator();
-			jMenu5.add(jSeparator1);
+			menuHelp.add(jSeparator1);
 			// open ted website
 			webItem = new JMenuItem();
 			webItem.setActionCommand("opensite"); //$NON-NLS-1$
 			webItem.addActionListener(tMain);
-			jMenu5.add(webItem);
+			menuHelp.add(webItem);
 			if (!TedSystemInfo.osIsMac())
 			{
 				// sperate
 				jSeparator1 = new JSeparator();
-				jMenu5.add(jSeparator1);
+				menuHelp.add(jSeparator1);
 				// about ted
 				aboutItem = new JMenuItem();
-				jMenu5.add(aboutItem);
+				menuHelp.add(aboutItem);
 				aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
 				aboutItem.setActionCommand("About ted"); //$NON-NLS-1$
 				aboutItem.addActionListener(tMain);
 			}
 		}
+		
 		this.updateText();
 		this.updateSortMenu();
 	}
 	
 	public void updateText()
 	{
-		jMenu3.setText(Lang.getString("TedMainMenuBar.File")); //$NON-NLS-1$
+		menuFile.setText(Lang.getString("TedMainMenuBar.File")); //$NON-NLS-1$
 		newFileMenuItem.setText(Lang.getString("TedMainMenuBar.File.NewShow")); //$NON-NLS-1$
 		exportMenuItem.setText(Lang.getString("TedMainMenuBar.File.ExportShows")); //$NON-NLS-1$
 		importMenuItem.setText(Lang.getString("TedMainMenuBar.File.ImportShows")); //$NON-NLS-1$
 		if (!TedSystemInfo.osIsMac())
 		{
 			exitMenuItem.setText(Lang.getString("TedMainMenuBar.File.Exit")); //$NON-NLS-1$
-			cutMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Preferences")); //$NON-NLS-1$
+			preferencesMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Preferences")); //$NON-NLS-1$
 			aboutItem.setText(Lang.getString("TedMainMenuBar.Help.AboutTed")); //$NON-NLS-1$
 		}
 		
 		// edit menu
-		jMenu4.setText(Lang.getString("TedMainMenuBar.Edit")); //$NON-NLS-1$
+		menuEdit.setText(Lang.getString("TedMainMenuBar.Edit")); //$NON-NLS-1$
 		editMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Edit")); //$NON-NLS-1$
 		deleteMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Delete")); //$NON-NLS-1$
 		
@@ -372,7 +378,7 @@ public class TedMainMenuBar extends JMenuBar
 		buyDVDItem.setText(Lang.getString("TedMainMenuBar.Support.BuyDVDs"));
 		
 		// help menu
-		jMenu5.setText(Lang.getString("TedMainMenuBar.Help")); //$NON-NLS-1$
+		menuHelp.setText(Lang.getString("TedMainMenuBar.Help")); //$NON-NLS-1$
 		helpMenuItem.setText(Lang.getString("TedMainMenuBar.Help.Help")); //$NON-NLS-1$
 	
 		versionItem.setText(Lang.getString("TedMainMenuBar.Help.CheckForUpdates")); //$NON-NLS-1$
@@ -393,6 +399,8 @@ public class TedMainMenuBar extends JMenuBar
 		subLangMenu.setText(Lang.getString("TedMainMenuBar.Help.SubTranslate"));
 		
 		languageItem.setText(Lang.getString("TedMainMenuBar.Help.LanguageUpdate"));
+		
+		extraMenu.setText(Lang.getString("TedMainMenuBar.Extra"));
 	}
 	
 	/**
