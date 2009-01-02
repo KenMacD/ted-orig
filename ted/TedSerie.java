@@ -1359,4 +1359,19 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	{
 		this.getScheduler().forceScheduleUpdate();
 	}
+
+
+	public void toggleDisabled() 
+	{
+		if (this.isDisabled())
+		{
+			this.setStatus(STATUS_CHECK);
+			this.updateShowStatus();
+		}
+		else
+		{
+			this.setStatus(STATUS_DISABLED);
+		}
+		
+	}
 }

@@ -34,20 +34,13 @@ public class TedTablePopupMenu extends JPopupMenu
 	 ****************************************************/
 	private static final long serialVersionUID = 6924907434718003055L;
 	private TedMainDialog mainDialog;
-	private ImageIcon showPaused   = new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
-	private ImageIcon showPlay	   = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
-	private ImageIcon showStopped  = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
-	private ImageIcon showDisabled = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
 	private JMenuItem menuDelete;
 	private JMenuItem menuEdit;
 	private JMenuItem buyDVD;
 	private JMenuItem menuParse;
-	private JMenu menuStatus;
-	private JMenuItem statusCheck;
-	private JMenuItem statusPause;
-	private JMenuItem statusHold;
-	private JMenuItem statusDisabled;
+	private JMenuItem menuDisableEnable;
 	private JCheckBoxMenuItem checkAutoSchedule;
+	private boolean disabledShow = false;
 
 	/****************************************************
 	 * CONSTRUCTORS
@@ -73,27 +66,9 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuParse.setActionCommand("parse selected"); //$NON-NLS-1$
 		
 		
-		menuStatus = new JMenu(); //$NON-NLS-1$
-		
-		statusCheck = new JMenuItem (); //$NON-NLS-1$
-		statusCheck.addActionListener(mainDialog);
-		statusCheck.setActionCommand("setstatuscheck"); //$NON-NLS-1$
-		statusCheck.setIcon(showPlay);
-		
-		statusPause = new JMenuItem (); //$NON-NLS-1$
-		statusPause.addActionListener(mainDialog);
-		statusPause.setActionCommand("setstatuspause"); //$NON-NLS-1$
-		statusPause.setIcon(showPaused);
-		
-		statusHold = new JMenuItem (); //$NON-NLS-1$
-		statusHold.addActionListener(mainDialog);
-		statusHold.setActionCommand("setstatushold"); //$NON-NLS-1$
-		statusHold.setIcon(showStopped);
-		
-		statusDisabled = new JMenuItem (); //$NON-NLS-1$
-		statusDisabled.addActionListener(mainDialog);
-		statusDisabled.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
-		statusDisabled.setIcon(showDisabled);
+		menuDisableEnable = new JMenuItem (); //$NON-NLS-1$
+		menuDisableEnable.addActionListener(mainDialog);
+		menuDisableEnable.setActionCommand("togglestatusdisabled"); //$NON-NLS-1$
 		
 		buyDVD = new JMenuItem ();
 		buyDVD.addActionListener(mainDialog);
@@ -111,14 +86,9 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.add( menuParse );
 		this.add(separator);
 		this.add(checkAutoSchedule);
-		this.add( menuStatus );
+		this.add(menuDisableEnable);
 		this.add(separator2);
 		this.add( buyDVD);
-		
-		menuStatus.add(statusCheck);
-		menuStatus.add(statusPause);
-		menuStatus.add(statusHold);
-		menuStatus.add(statusDisabled);
 		
 		this.updateText();
 	}
@@ -131,13 +101,10 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuEdit.setText(Lang.getString("TedMainMenuBar.Edit.Edit")); //$NON-NLS-1$
 		menuDelete.setText( Lang.getString("TedMainMenuBar.Edit.Delete") ); //$NON-NLS-1$
 		menuParse.setText( Lang.getString("TedTablePopupMenu.CheckShow") ); //$NON-NLS-1$
-		menuStatus.setText( Lang.getString("TedMainMenuBar.Edit.SetStatus") ); //$NON-NLS-1$
-		statusCheck.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Check")); //$NON-NLS-1$
-		statusPause.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Pause")); //$NON-NLS-1$
-		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
-		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
 		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));	
 		checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
+		
+		this.updateDisabledText();
 	}
 	
 	/**
@@ -159,6 +126,23 @@ public class TedTablePopupMenu extends JPopupMenu
 	{		
 		this.checkAutoSchedule.setState(b);
 		this.checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
-		this.menuStatus.setEnabled(!b);
+	}
+
+	public void checkDisabled(boolean disabled) 
+	{
+		this.disabledShow  = disabled;
+		this.updateDisabledText();
+	}
+	
+	private void updateDisabledText()
+	{
+		if (this.disabledShow)
+		{
+			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
+		}
+		else
+		{
+			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
+		}
 	}
 }

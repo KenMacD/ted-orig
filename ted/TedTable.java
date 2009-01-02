@@ -132,6 +132,7 @@ public class TedTable extends JTable
 				selectionModel.setSelectionInterval(selectedrow, selectedrow);
 				
 				ttPopupMenu.checkAutoSchedule(selectedserie.isUseAutoSchedule());
+				ttPopupMenu.checkDisabled(selectedserie.isDisabled());
 				
 				ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
 			}

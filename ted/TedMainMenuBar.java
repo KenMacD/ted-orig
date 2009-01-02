@@ -48,11 +48,8 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenu menuFile;
 	private JMenuItem exportMenuItem;
 	private JMenuItem importMenuItem;
-	private JMenu menuStatus;
-	private JMenuItem statusCheck;
-	private JMenuItem statusHold;
-	private JMenuItem statusPause;
-	private JMenuItem statusDisabled;
+	private JMenuItem menuParse;
+	private JMenuItem menuDisableEnable;
 	private JMenuItem versionItem;
 	private JMenuItem donateItem;
 	private JMenuItem webItem;
@@ -73,9 +70,11 @@ public class TedMainMenuBar extends JMenuBar
 	private JCheckBoxMenuItem sortOnNameItem;
 	private JMenu sortMenuItem;
 	private JSeparator jSeparator2;
+	private JSeparator jSeparator6;
 	private JMenu subLangMenu;
 	
 	private TedMainDialog tMain;
+	private boolean disabledShow = false;
 	
 	/**
 	 * Main menubar for ted
@@ -148,44 +147,18 @@ public class TedMainMenuBar extends JMenuBar
 			deleteMenuItem.setActionCommand("Delete");
 			deleteMenuItem.addActionListener(tMain);
 			
+			menuParse = new JMenuItem(); //$NON-NLS-1$
+			menuParse.addActionListener(tMain);
+			menuParse.setActionCommand("parse selected"); //$NON-NLS-1$
+			menuEdit.add(menuParse);
 			
-			// set status
-			/*TODO: Duplicated code: same as TedTablePopupMenu*/
-			{
-				ImageIcon showPaused 	= new ImageIcon(getClass().getClassLoader().getResource("icons/pause.png")); //$NON-NLS-1$
-				ImageIcon showPlay		 = new ImageIcon(getClass().getClassLoader().getResource("icons/play.png")); //$NON-NLS-1$
-				ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
-				ImageIcon showDisabled    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
-				
-				menuStatus = new JMenu(  ); //$NON-NLS-1$
-				
-				
-				statusCheck = new JMenuItem (); //$NON-NLS-1$
-				statusCheck.addActionListener(tMain);
-				statusCheck.setActionCommand("setstatuscheck"); //$NON-NLS-1$
-				statusCheck.setIcon(showPlay);
-				
-				statusPause = new JMenuItem (); //$NON-NLS-1$
-				statusPause.addActionListener(tMain);
-				statusPause.setActionCommand("setstatuspause"); //$NON-NLS-1$
-				statusPause.setIcon(showPaused);
-				
-				statusHold = new JMenuItem (); //$NON-NLS-1$
-				statusHold.addActionListener(tMain);
-				statusHold.setActionCommand("setstatushold"); //$NON-NLS-1$
-				statusHold.setIcon(showStopped);
-				
-				statusDisabled = new JMenuItem (); //$NON-NLS-1$
-				statusDisabled.addActionListener(tMain);
-				statusDisabled.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
-				statusDisabled.setIcon(showDisabled);
-				
-				menuStatus.add(statusCheck);
-				menuStatus.add(statusPause);
-				menuStatus.add(statusHold);
-				menuStatus.add(statusDisabled);
-				menuEdit.add(menuStatus);
-			}
+			jSeparator6 = new JSeparator();
+			menuEdit.add(jSeparator6);
+			
+			menuDisableEnable = new JMenuItem (); //$NON-NLS-1$
+			menuDisableEnable.addActionListener(tMain);
+			menuDisableEnable.setActionCommand("togglestatusdisabled"); //$NON-NLS-1$
+			menuEdit.add(menuDisableEnable);
 			
 			
 		}
@@ -357,13 +330,7 @@ public class TedMainMenuBar extends JMenuBar
 		menuEdit.setText(Lang.getString("TedMainMenuBar.Edit")); //$NON-NLS-1$
 		editMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Edit")); //$NON-NLS-1$
 		deleteMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Delete")); //$NON-NLS-1$
-		
-		menuStatus.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus"));
-		
-		statusCheck.setText (Lang.getString("TedMainMenuBar.Edit.SetStatus.Check")); //$NON-NLS-1$		
-		statusPause.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Pause")); //$NON-NLS-1$
-		statusHold.setText(Lang.getString("TedMainMenuBar.Edit.SetSTatus.Hold")); //$NON-NLS-1$
-		statusDisabled.setText(Lang.getString("TedMainMenuBar.Edit.SetStatus.Disabled"));
+		menuParse.setText( Lang.getString("TedTablePopupMenu.CheckShow") ); //$NON-NLS-1$
 		
 		sortMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort"));	
 		sortOnStatusItem.setText(Lang.getString("TedMainMenuBar.Edit.Sort.OnStatus"));
@@ -401,6 +368,8 @@ public class TedMainMenuBar extends JMenuBar
 		languageItem.setText(Lang.getString("TedMainMenuBar.Help.LanguageUpdate"));
 		
 		extraMenu.setText(Lang.getString("TedMainMenuBar.Extra"));
+		
+		this.updateDisabledText();
 	}
 	
 	/**
@@ -418,23 +387,17 @@ public class TedMainMenuBar extends JMenuBar
 		this.deleteMenuItem.setEnabled(true);
 	}
 
-	/**
-	 * Disable all menuitems that can't be used while nothing is selected in the table
-	 */
-	public void setNothingSelected()
-	{
-		this.deleteMenuItem.setEnabled(false);
-		this.editMenuItem.setEnabled(false);
-		this.menuStatus.setEnabled(false);
-	}
+	
 	/**
 	 * Enable all menuitems that can be used while something is selected.
+	 * @param b 
 	 */
-	public void setSomethingSelected()
+	public void setSomethingSelected(boolean b)
 	{
-		this.deleteMenuItem.setEnabled(true);
-		this.editMenuItem.setEnabled(true);
-		this.menuStatus.setEnabled(true);
+		this.deleteMenuItem.setEnabled(b);
+		this.editMenuItem.setEnabled(b);
+		this.menuDisableEnable.setEnabled(b);
+		this.menuParse.setEnabled(b);
 	}
 	
 	public void updateSortMenu()
@@ -453,5 +416,23 @@ public class TedMainMenuBar extends JMenuBar
 		this.sortAscendingRadioItem.setSelected(isSortAscending);
 		this.sortDescendingRadioItem.setSelected(isSortDescending);
 		
+	}
+
+	public void setDisabledShow(boolean disabled) 
+	{
+		this.disabledShow = disabled;
+		this.updateDisabledText();
+	}
+	
+	private void updateDisabledText()
+	{
+		if (this.disabledShow)
+		{
+			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
+		}
+		else
+		{
+			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
+		}
 	}
 }

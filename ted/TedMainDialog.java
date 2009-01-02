@@ -418,13 +418,15 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			statusDelete = false;
 			statusEdit = false;
-			this.tMenuBar.setNothingSelected();
+			this.tMenuBar.setSomethingSelected(false);
 		}
 		else if (!this.isParsing)
 		{
 			statusEdit = true;
 			statusDelete = true;
-			this.tMenuBar.setSomethingSelected();
+			this.tMenuBar.setSomethingSelected(true);
+			TedSerie selectedShow = this.serieTable.getSelectedShow();
+			this.tMenuBar.setDisabledShow(selectedShow.isDisabled());
 		}
 		else
 		{
@@ -632,25 +634,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			}
 			
 		}
-		else if (action.equals("setstatuscheck")) //$NON-NLS-1$
+		else if (action.equals("togglestatusdisabled"))
 		{
-			serieTable.setSelectedStatus(TedSerie.STATUS_CHECK);
-			this.saveShows();
-		}
-		else if (action.equals("setstatuspause")) //$NON-NLS-1$
-		{
-			serieTable.setSelectedStatus(TedSerie.STATUS_PAUSE);
-			this.saveShows();
-		}
-		else if (action.equals("setstatushold")) //$NON-NLS-1$
-		{
-			serieTable.setSelectedStatus(TedSerie.STATUS_HOLD);
-			this.saveShows();
-		}
-		else if (action.equals("setstatusdisabled"))
-		{
-			serieTable.setSelectedStatus(TedSerie.STATUS_DISABLED);
-			this.saveShows();
+			TedSerie selectedShow = serieTable.getSelectedShow();
+			if (selectedShow != null)
+			{
+				selectedShow.toggleDisabled();
+				this.saveShows();
+			}
 		}
 		else if (action.equals("checkupdates")) //$NON-NLS-1$
 		{
