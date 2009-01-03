@@ -373,7 +373,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				// Files should always have the .properties extension.
 				if(!file.endsWith(propertiesExtension))
 				{
-					file.concat(propertiesExtension);
+					file += propertiesExtension;
 				}
 				
 		        translatedText.store(new FileOutputStream(file), null);

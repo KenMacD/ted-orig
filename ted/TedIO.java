@@ -17,15 +17,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.channels.FileChannel;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Element;
 
@@ -910,6 +913,86 @@ public class TedIO
 	    }
 	}
 	
+
+	public void ExportShows(TedMainDialog main)
+	{
+		JFileChooser chooser = new JFileChooser();
+		TedFileFilter filter = new TedFileFilter();
+	    chooser.setFileFilter(filter);
+				
+		int returnVal = chooser.showSaveDialog(main);
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{				
+			try 
+			{
+				String fileOut = chooser.getSelectedFile().getCanonicalPath();
+				
+				// Files should always have the .properties extension.
+				if(!fileOut.endsWith(".ted"))
+				{
+					fileOut += ".ted";
+				}
+				
+				FileChannel inChannel  = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
+		        FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
+		        
+		        try 
+		        {
+		            inChannel.transferTo(0, inChannel.size(), outChannel);
+		        } 
+		        catch (IOException e) 
+		        {
+		            throw e;
+		        }
+		        finally 
+		        {
+		            if (inChannel != null) inChannel.close();
+		            if (outChannel != null) outChannel.close();
+		        }
+		    } 
+			catch (IOException e) 
+			{
+				TedLog.error(e.toString());
+		    }
+		}
+	}
+	
+	public void ImportShows(TedMainDialog main)
+	{
+		JFileChooser chooser = new JFileChooser();
+		TedFileFilter filter = new TedFileFilter();
+	    chooser.setFileFilter(filter);
+				
+		int returnVal = chooser.showOpenDialog(main);
+		if(returnVal == JFileChooser.APPROVE_OPTION)
+		{				
+			try 
+			{
+				String fileIn = chooser.getSelectedFile().getCanonicalPath();
+								
+				FileChannel inChannel  = new FileInputStream(fileIn).getChannel();
+		        FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
+		        
+		        try 
+		        {
+		            inChannel.transferTo(0, inChannel.size(), outChannel);
+		        } 
+		        catch (IOException e) 
+		        {
+		            throw e;
+		        }
+		        finally 
+		        {
+		            if (inChannel != null) inChannel.close();
+		            if (outChannel != null) outChannel.close();
+		        }
+		    } 
+			catch (IOException e) 
+			{
+				TedLog.error(e.toString());
+		    }
+		}
+	}
 	
 	/****************************************************
 	 * PRIVATE METHODS
@@ -938,7 +1021,18 @@ public class TedIO
 	    BufferedReader br = new BufferedReader(new InputStreamReader(
 	    		  		conn.getInputStream()));
 	    return br;
-		
 	}
+	
+	class TedFileFilter extends FileFilter
+	{
+		public boolean accept(File f) 
+		{
+			return f.toString().toLowerCase().endsWith(".ted");
+		}
 
+		public String getDescription() 
+		{
+			return "show definitions";
+		}		
+	}
 }

@@ -794,13 +794,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Export")) //$NON-NLS-1$
 		{
+			TedIO tio = new TedIO();
 			this.saveShows();
-			this.ExportShows();
+			tio.ExportShows(this);
 		}
 		else if (action.equals("Import"))
 		{
-			this.ImportShows();
 			TedIO tio = new TedIO();
+			tio.ImportShows(this);
 			serieTable.setSeries(tio.GetShows());
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
@@ -1134,99 +1135,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			this.getSerieTable().updateAllSeries();
 			this.updateGUI();
-		}		
-	}
-	
-	public void ExportShows()
-	{
-		JFileChooser chooser = new JFileChooser();
-		TedFileFilter filter = new TedFileFilter();
-	    chooser.setFileFilter(filter);
-				
-		int returnVal = chooser.showSaveDialog(this);
-		if(returnVal == JFileChooser.APPROVE_OPTION)
-		{				
-			try 
-			{
-				String fileOut = chooser.getSelectedFile().getCanonicalPath();
-				
-				// Files should always have the .properties extension.
-				if(!fileOut.endsWith(".ted"))
-				{
-					fileOut.concat(".ted");
-				}
-				
-				FileChannel inChannel  = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
-		        FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
-		        
-		        try 
-		        {
-		            inChannel.transferTo(0, inChannel.size(), outChannel);
-		        } 
-		        catch (IOException e) 
-		        {
-		            throw e;
-		        }
-		        finally 
-		        {
-		            if (inChannel != null) inChannel.close();
-		            if (outChannel != null) outChannel.close();
-		        }
-		    } 
-			catch (IOException e) 
-			{
-				TedLog.error(e.toString());
-		    }
-		}
-	}
-	
-	public void ImportShows()
-	{
-		JFileChooser chooser = new JFileChooser();
-		TedFileFilter filter = new TedFileFilter();
-	    chooser.setFileFilter(filter);
-				
-		int returnVal = chooser.showSaveDialog(this);
-		if(returnVal == JFileChooser.APPROVE_OPTION)
-		{				
-			try 
-			{
-				String fileIn = chooser.getSelectedFile().getCanonicalPath();
-								
-				FileChannel inChannel  = new FileInputStream(fileIn).getChannel();
-		        FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
-		        
-		        try 
-		        {
-		            inChannel.transferTo(0, inChannel.size(), outChannel);
-		        } 
-		        catch (IOException e) 
-		        {
-		            throw e;
-		        }
-		        finally 
-		        {
-		            if (inChannel != null) inChannel.close();
-		            if (outChannel != null) outChannel.close();
-		        }
-		    } 
-			catch (IOException e) 
-			{
-				TedLog.error(e.toString());
-		    }
-		}
-	}
-	
-	class TedFileFilter extends FileFilter
-	{
-		public boolean accept(File f) 
-		{
-			return f.toString().toLowerCase().endsWith(".ted");
-		}
-
-		public String getDescription() 
-		{
-			return "translation files";
 		}		
 	}
 }
