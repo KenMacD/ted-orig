@@ -118,6 +118,13 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 				buttonPanel = new JPanel();
 				getContentPane().add(buttonPanel, BorderLayout.NORTH);
 				{
+					buttonHelp = new JButton();
+					buttonPanel.add(buttonHelp);
+					buttonHelp.setText("Read Me");
+					buttonHelp.addActionListener(this);
+					buttonHelp.setActionCommand("help");
+				}
+				{
 					buttonOpen = new JButton();
 					buttonPanel.add(buttonOpen);
 					buttonOpen.setText("Open Translation");
@@ -130,13 +137,6 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 					buttonSave.setText("Save Translation");
 					buttonSave.addActionListener(this);
 					buttonSave.setActionCommand("save");
-				}
-				{
-					buttonHelp = new JButton();
-					buttonPanel.add(buttonHelp);
-					buttonHelp.setText("Help");
-					buttonHelp.addActionListener(this);
-					buttonHelp.setActionCommand("help");
 				}
 				{
 					downloadTranslationsFile = new JButton();
