@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>34</version>
+	<version>35</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -81,6 +81,14 @@
 	</weblocations>
 	<shows>
 		<show>
+			<name>13: Fear Is Real</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75972</tv_com>
+		</show>
+		<show>
 			<name>24</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -134,6 +142,15 @@
 			<maximumsize>800</maximumsize>
 			<daily>False</daily>
 			<tv_com>58710</tv_com>
+		</show>
+		<show>
+			<name>America's Most Wanted</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>2939</tv_com>
+			<epguides>AmericasMostWanted</epguides>
 		</show>
 		<show>
 			<name>America's Next Top Model</name>
@@ -221,6 +238,21 @@
 			<tv_com>28841</tv_com>
 		</show>
 		<show>
+			<name>The Bachelor</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>11490</tv_com>
+		</show>
+		<show>
+			<name>Batman: The Brave and the Bold</name>
+			<minimumsize>100</minimumsize>
+			<maximumsize>250</maximumsize>
+			<seeders>30</seeders>
+			<tv_com>75449</tv_com>
+			<epguides>BatmanTheBraveandtheBold</epguides>
+		</show> 
+		<show>
 			<name>Battlestar Galactica</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -260,11 +292,18 @@
 			<tv_com>25834</tv_com>
 		</show>
 		<show>
-		<name>Big Shots</name>
+			<name>Big Shots</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>500</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>68650</tv_com>
+		</show>
+		<show>
+			<name>The Biggest Loser</name>
+			<minimumsize>500</minimumsize>
+			<maximumsize>1500</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>30690</tv_com>
 		</show>
 		<show>
 			<name>Bones</name>
@@ -319,11 +358,20 @@
 			<tv_com>68749</tv_com>
 		</show>
 		<show>
+			<name>Castle</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>76394</tv_com>
+		</show>
+		<show>
 			<name>Charlie Brooker's Screenwipe</name>
 			<daily>False</daily>
 			<minimumsize>225</minimumsize>
 			<maximumsize>350</maximumsize>
 			<tv_com>75995</tv_com>
+			<epguides>charliebrookersscreenwipe</epguides>
+			<searchname>Charlie Brooker</searchname>
 		</show> 
 		<show>
 			<name>Chasers war on everything</name>
@@ -337,6 +385,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>68724</tv_com>
+		</show>
+		<show>
+			<name>Cities Of The Underworld</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>72001</tv_com>
 		</show>
 		<show>
 			<name>The Cleaner</name>
@@ -366,6 +421,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>16989</tv_com>
+		</show>
+		<show>
+			<name>Cops</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>28229</tv_com>
 		</show>
 		<show>
 			<name>Criminal Minds</name>
@@ -416,6 +478,13 @@
 			<tv_com>24125</tv_com>
 		</show>
 		<show>
+			<name>Cupid</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75261</tv_com>
+		</show>
+		<show>
 			<name>Curb Your Enthusiasm</name>
 			<minimumsize>100</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -442,20 +511,6 @@
 			<seeders>10</seeders>
 			<tv_com>35850</tv_com>
 			<epguides>DancingwiththeStars</epguides>
-		</show>
-		<show>
-			<name>Dirty Jobs</name>
-			<daily>False</daily>
-			<minimumsize>250</minimumsize>
-			<maximumsize>800</maximumsize>
-			<tv_com>39657</tv_com>
-		</show>
-		<show>
-		<name>Dirty Sexy Money</name>
-			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
-			<seeders>10</seeders>
-			<tv_com>68659</tv_com>
 		</show>
 		<show>
 			<name>Desperate Housewives</name>
@@ -488,6 +543,20 @@
 			<tv_com>60202</tv_com>
 		</show>
 		<show>
+			<name>Dirty Jobs</name>
+			<daily>False</daily>
+			<minimumsize>250</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>39657</tv_com>
+		</show>
+		<show>
+		<name>Dirty Sexy Money</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>68659</tv_com>
+		</show>
+		<show>
 			<name>Do Not Disturb</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -508,6 +577,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>34421</tv_com>
+		</show>
+		<show>
+			<name>Dollhouse</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75224</tv_com>
 		</show>
 		<show>
 			<name>Eleventh Hour US</name>
@@ -723,6 +799,18 @@
 			<tv_com>24440</tv_com>
 		</show>
 		<show>
+			<name>Hannah Montana</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<tv_com>48004</tv_com>
+		</show>
+		<show>
+			<name>Harper's Island</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>75276</tv_com>
+		</show>
+		<show>
 			<name>Heartland</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -767,6 +855,13 @@
 			<maximumsize>250</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>33700</tv_com>
+		</show>
+		<show>
+			<name>Howie Do It</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75550</tv_com>
 		</show>
 		<show>
 			<name>Human Weapon</name>
@@ -850,6 +945,13 @@
 			<tv_com>75508</tv_com>
 		</show>
 		<show>
+			<name>Jon and Kate Plus 8</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>72745</tv_com>
+		</show>
+		<show>
       		<name>Kenny vs. Spenny</name>
       		<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
@@ -863,6 +965,14 @@
 			<maximumsize>400</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>250</tv_com>
+		</show> 
+		<show>
+			<name>Kings</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75338</tv_com>
 		</show> 
 		<show>
 			<name>Kitchen Nightmares</name>
@@ -896,12 +1006,25 @@
 			<tv_com>18662</tv_com>
 		</show>
 		<show>
+			<name>LA Ink</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>74609</tv_com>
+		</show>
+		<show>
 			<name>Last Comic Standing</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<daily>False</daily>
 			<tv_com>19647</tv_com>
+		</show>
+		<show>
+		<name>Last of The Summer Wine</name>
+			<minimumsize>220</minimumsize>
+			<maximumsize>400</maximumsize>
+			<tv_com>7397</tv_com>
 		</show>
 		<show>
 			<name>Late Night with Conan O'Brien</name>
@@ -930,8 +1053,24 @@
 			<name>Law and Order: Special Victims Unit</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<keywords>suv</keywords>
+			<keywords>svu</keywords>
 			<tv_com>334</tv_com>
+			<epguides>LawandOrderSVU</epguides>
+		</show>
+		<show>
+			<name>Legend of the Seeker</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75118</tv_com>
+		</show> 
+		<show>
+			<name>Lie To Me</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75671</tv_com>
 		</show>
 		<show>
 			<name>Life</name>
@@ -956,6 +1095,18 @@
 			<epguides>LifeonMars_US</epguides>
 		</show>		
 		<show>
+			<name>Life With Derek</name>
+			<minimumsize>100</minimumsize>
+			<maximumsize>400</maximumsize>
+			<tv_com>30823</tv_com>
+		</show>		
+		<show>
+			<name>Lipstick Jungle</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>58145</tv_com>
+		</show>			
+		<show>
 			<name>Little Britain USA</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
@@ -968,6 +1119,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>10</seeders>
 			<tv_com>67584</tv_com>
+		</show>
+		<show>
+			<name>Little People, Big World</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<tv_com>61776</tv_com>
+			<epguides>LittlePeopleBigWorld</epguides>
 		</show>
 		<show>
 			<name>Lost</name>
@@ -1037,6 +1195,13 @@
 			<seeders>5</seeders>
 			<tv_com>62049</tv_com>
 		</show> 
+		<show>
+			<name>Miami Ink</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>37627</tv_com>
+		</show>
 		<show>
 			<name>Mind of mencia</name>
 			<minimumsize>150</minimumsize>
@@ -1125,6 +1290,13 @@
 			<tv_com>17095</tv_com>
 		</show>
 		<show>
+			<name>No Heroics</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>350</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>76112</tv_com>
+		</show> 
+		<show>
 		<name>Numb3rs</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1156,9 +1328,9 @@
 			<maximumsize>500</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>72412</tv_com>
-		</show> 
+		</show>
 		<show>
-		<name>Penn and Teller Bullshit</name>
+			<name>Penn and Teller Bullshit</name>
 			<minimumsize>200</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
@@ -1203,7 +1375,14 @@
 			<tv_com>59369</tv_com>
 		</show>
 		<show>
-		<name>QI</name>
+			<name>Pushing Daisies</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>68663</tv_com>
+		</show>
+		<show>
+			<name>QI</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
 			<seeders>5</seeders>
@@ -1217,11 +1396,11 @@
 			<tv_com>75153</tv_com>
 		</show>
 		<show>
-			<name>Pushing Daisies</name>
+			<name>Raising The Bar</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<seeders>50</seeders>
-			<tv_com>68663</tv_com>
+			<seeders>10</seeders>
+			<tv_com>75090</tv_com>
 		</show>
 		<show>
 			<name>Reno 911</name>
@@ -1282,6 +1461,13 @@
 			<tv_com>58087</tv_com>
 		</show>
 		<show>
+			<name>Rush</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>76108</tv_com>
+		</show>
+		<show>
 			<name>Samantha Who?</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -1339,6 +1525,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>5</seeders>
 			<tv_com>67638</tv_com>
+		</show>
+		<show>
+			<name>Secret Diary of a Call Girl</name>
+			<daily>False</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>74826</tv_com>
 		</show>
 		<show>
 			<name>The Secret Life of the American Teenager</name>
@@ -1420,17 +1614,23 @@
 			<tv_com>344</tv_com>
 		</show>
 		<show>
-			<name>Storm Chasers</name>
-			<minimumsize>300</minimumsize>
-			<maximumsize>500</maximumsize>
-			<seeders>10</seeders>
-		</show>
-		<show>
 			<name>Spooks</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>700</maximumsize>
 			<seeders>15</seeders>
 			<tv_com>10812</tv_com>
+		</show>
+		<show>
+			<name>The Starter Wife</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>67805</tv_com>
+		</show>
+		<show>
+			<name>Storm Chasers</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>500</maximumsize>
+			<seeders>10</seeders>
 		</show>
 		<show>
 			<name>Stargate</name>
@@ -1457,6 +1657,14 @@
 			<epguides>StarWarsTheCloneWars</epguides>
 		</show>
 		<show>
+			<name>The Suite Life of Zack and Cody</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>28842</tv_com>
+			<epguides>SuiteLifeofZackandCody</epguides>
+		</show>
+		<show>
 			<name>Supernatural</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -1466,8 +1674,8 @@
 		</show>
 		<show>
 			<name>Survivor</name>
-			<minimumsize>200</minimumsize>
-			<maximumsize>500</maximumsize>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>4742</tv_com>
 		</show>
@@ -1542,6 +1750,22 @@
 			<timezone>0</timezone>
 		</show>
 		<show>
+			<name>Top Gear Australia</name>
+			<daily>False</daily>
+			<minimumsize>500</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75776</tv_com>
+		</show>
+		<show>
+			<name>Top Gear US</name>
+			<daily>False</daily>
+			<minimumsize>500</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75331</tv_com>
+		</show>
+		<show>
 			<name>Torchwood</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -1565,6 +1789,13 @@
 			<seeders>50</seeders>
 			<tv_com>17206</tv_com>
 		</show>
+		<show>
+			<name>UFO Hunters</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>750</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>75125</tv_com>
+		</show> 
 		<show>
 			<name>Ugly Betty</name>
 			<daily>False</daily>
@@ -1606,6 +1837,14 @@
 			<tv_com>73410</tv_com>
 		</show>	
 		<show>
+			<name>The Unusuals</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75393</tv_com>
+		</show>	
+		<show>
 			<name>Valentine</name>
 			<daily>False</daily>
 			<minimumsize>250</minimumsize>
@@ -1622,6 +1861,14 @@
 			<tv_com>17591</tv_com>
 		</show> 
 		<show>
+			<name>Vice Squad</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>76535</tv_com>
+		</show> 
+		<show>
 			<name>Without a Trace</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1635,6 +1882,20 @@
 			<seeders>50</seeders>
 			<tv_com>28829</tv_com>
 		</show>
+		<show>
+			<name>Wolverine and the X-Men</name>
+			<minimumsize>100</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>75839</tv_com>
+		</show> 		
+		<show>
+			<name>Worst Week</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>75274</tv_com>
+		</show> 
 		<show>
 			<name>WWE</name>
 			<daily>False</daily>
