@@ -64,7 +64,7 @@ public class TedTable extends JTable
         setShowVerticalLines(false);
         
 		this.setRowHeight(55);
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		ttrr = new TedTableRowRenderer();
 		this.setDefaultRenderer(TedSerie.class, ttrr);
@@ -112,6 +112,8 @@ public class TedTable extends JTable
 		 && SwingUtilities.isRightMouseButton(evt))
 		{ 
 			row = this.rowAtPoint(evt.getPoint());
+			ListSelectionModel selectionModel = this.getSelectionModel();
+			selectionModel.setSelectionInterval(row, row);
 		}
 		
 		if (row >= 0)
@@ -126,13 +128,25 @@ public class TedTable extends JTable
 			// or did the user click right?
 			else if (SwingUtilities.isRightMouseButton(evt))
 			{
-				// show context menu
-				int selectedrow = this.rowAtPoint(evt.getPoint());
-				ListSelectionModel selectionModel = this.getSelectionModel();
-				selectionModel.setSelectionInterval(selectedrow, selectedrow);
+				boolean showBothOptions = false;
+				boolean firstShowDisabled = selectedserie.isDisabled();
+				// if multiple selected: check if the setting for one show is different, then show both options for enable/disable
+				if (this.getSelectedRowCount() > 1)
+				{
+					TedSerie[] selectedShows = this.getSelectedShows();
+					for (int i = 0; i < this.getSelectedRowCount(); i++)
+					{
+						if (selectedShows[i].isDisabled() != firstShowDisabled)
+						{
+							showBothOptions = true;
+							break;
+						}
+					}		
+				}
 				
 				ttPopupMenu.checkAutoSchedule(selectedserie.isUseAutoSchedule());
-				ttPopupMenu.checkDisabled(selectedserie.isDisabled());
+				ttPopupMenu.checkDisabled(firstShowDisabled, showBothOptions);
+				tedMain.checkDisabled(firstShowDisabled, showBothOptions);
 				
 				ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
 			}
@@ -151,7 +165,7 @@ public class TedTable extends JTable
 		int keyCode = evt.getKeyCode();
 		if (keyCode == KeyEvent.VK_DELETE)
 		{
-			this.DeleteSelectedShow();
+			this.DeleteSelectedShows();
 		}
 	}
 	
@@ -163,22 +177,6 @@ public class TedTable extends JTable
 	public void setSeries(Vector<TedSerie> vector)
 	{
 		serieTableModel.setSeries(vector);
-		this.sort();
-	}
-	
-	/**
-	 * Set status of the selected row in the table
-	 * @param status New status
-	 */
-	public void setSelectedStatus(int status) 
-	{
-		TedSerie selectedserie = this.getSelectedShow();
-		if (selectedserie != null)
-		{
-			selectedserie.setStatus(status);
-			selectedserie.setLastDatesToToday();	
-		}
-		
 		this.sort();
 	}
 
@@ -244,23 +242,53 @@ public class TedTable extends JTable
 	/**
 	 * Delete the selected show from ted
 	 */
-	public void DeleteSelectedShow()
-	{
-		if (this.getSelectedRow() >= 0)
+	public void DeleteSelectedShows()
+	{	
+		int numSelectedShows = this.getSelectedRowCount();
+		if (numSelectedShows > 0)
 		{
-			// ask the user if he really wants to delete the show
-			int answer = JOptionPane.showOptionDialog(null,
-	                Lang.getString("TedMainDialog.DialogConfirmDeleteBegin") + " " + serieTableModel.getSerieAt(this.getSelectedRow()).getName() + Lang.getString("TedMainDialog.DialogConfirmDeleteEnd"), //$NON-NLS-1$ //$NON-NLS-2$
-	                "ted", //$NON-NLS-1$
-	                JOptionPane.YES_NO_OPTION,
-	                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+			TedSerie[] selectedShows = this.getSelectedShows();
+			int answer;
+			if (numSelectedShows == 1)
+			{
+				// ask the user if he really wants to delete a singleshow
+				answer = JOptionPane.showOptionDialog(null,
+		                Lang.getString("TedMainDialog.DialogConfirmDeleteBegin") + " " + selectedShows[0].getName() + Lang.getString("TedMainDialog.DialogConfirmDeleteEnd"), //$NON-NLS-1$ //$NON-NLS-2$
+		                "ted", //$NON-NLS-1$
+		                JOptionPane.YES_NO_OPTION,
+		                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+			}
+			else
+			{
+				// ask the user if he really wants to delete a singleshow
+				answer = JOptionPane.showOptionDialog(null,
+		                "Are you sure you want to delete" + " " + numSelectedShows + " " + "shows?", //$NON-NLS-1$ //$NON-NLS-2$
+		                "ted", //$NON-NLS-1$
+		                JOptionPane.YES_NO_OPTION,
+		                JOptionPane.QUESTION_MESSAGE, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+			
+			}
 			
 			if (answer == JOptionPane.YES_OPTION)
 			{
-				serieTableModel.removeSerieAt(this.getSelectedRow());
+				this.serieTableModel.removeShows(selectedShows);
 				tedMain.saveShows();
 			}
 		}
+	}
+
+	TedSerie[] getSelectedShows() 
+	{
+		TedSerie[] selectedShows = new TedSerie[this.getSelectedRowCount()];
+		int [] selectedRows = this.getSelectedRows();
+		
+		for (int i = 0; i < this.getSelectedRowCount(); i++)
+		{
+			TedSerie currentShow = this.getSerieAt(selectedRows[i]);
+			selectedShows[i] = currentShow;
+		}
+		
+		return selectedShows;
 	}
 
 	/**

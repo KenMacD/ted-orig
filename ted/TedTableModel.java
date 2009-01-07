@@ -3,6 +3,7 @@ package ted;
 /****************************************************
  * IMPORTS
  ****************************************************/
+import java.util.Collection;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -82,6 +83,14 @@ public class TedTableModel extends AbstractTableModel
 	{
 		tableData.remove(row);
 		fireTableRowsDeleted(row,row);
+	}
+	
+	public void removeShows(TedSerie[] selectedShows)
+	{
+		for (int i = 0; i < selectedShows.length; i++)
+		{
+			this.tableData.removeElement(selectedShows[i]);
+		}
 	}
 	
 	/**

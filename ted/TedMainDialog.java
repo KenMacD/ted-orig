@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.channels.FileChannel;
 import java.util.Vector;
@@ -425,8 +426,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			statusEdit = true;
 			statusDelete = true;
 			this.tMenuBar.setSomethingSelected(true);
-			TedSerie selectedShow = this.serieTable.getSelectedShow();
-			this.tMenuBar.setDisabledShow(selectedShow.isDisabled());
 		}
 		else
 		{
@@ -601,7 +600,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Delete")) //$NON-NLS-1$
 		{
-			serieTable.DeleteSelectedShow();
+			serieTable.DeleteSelectedShows();
 		}
 		else if(action.equals("New")) //$NON-NLS-1$
 		{
@@ -624,24 +623,37 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		else if (action.equals("parse selected")) //$NON-NLS-1$
 		{			
 			// parse only the selected show, regardles of the status it has
-			int pos = serieTable.getSelectedRow();
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
 			
-			if (pos >= 0)
+			for (int i = 0; i < selectedShows.length; i++)
 			{
-				TedSerie selectedserie = serieTable.getSerieAt(pos);
-				TedParseHandler handler = new TedParseHandler(selectedserie, this, true);
+				TedParseHandler handler = new TedParseHandler(selectedShows[i], this, true);
 				handler.start();
 			}
 			
 		}
-		else if (action.equals("togglestatusdisabled"))
+		else if (action.equals("setstatusenabled"))
 		{
-			TedSerie selectedShow = serieTable.getSelectedShow();
-			if (selectedShow != null)
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
+			
+			for (int i = 0; i < selectedShows.length; i++)
 			{
-				selectedShow.toggleDisabled();
-				this.saveShows();
+				selectedShows[i].setStatus(TedSerie.STATUS_CHECK);
+				selectedShows[i].updateShowStatus();
 			}
+			
+			this.saveShows();
+		}
+		else if (action.equals("setstatusdisabled"))
+		{
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
+			
+			for (int i = 0; i < selectedShows.length; i++)
+			{
+				selectedShows[i].setStatus(TedSerie.STATUS_DISABLED);
+			}
+			
+			this.saveShows();
 		}
 		else if (action.equals("checkupdates")) //$NON-NLS-1$
 		{
@@ -698,66 +710,64 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if (action.equals("buydvd")) //$NON-NLS-1$
 		{
-			TedXMLParser parser = new TedXMLParser();
-			Element nl = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE);
-			Vector locations = parser.getAmazonURLs(nl);
+			int rows = serieTable.getRowCount();
+
+			// loop through all the shows and put names in address
 			
-			if(locations.size()==3)
+			String names = "";
+			for (int i = 0; i < rows ; i++)
 			{
-				// try to open the amazon.com website
+				String spacer = "|";
+				if (i == rows-1)
+				{
+					spacer = "";
+				}
+				TedSerie serie = serieTable.getSerieAt(i);
+				String name;
 				try 
 				{
-					int rows = serieTable.getRowCount();
-					if (rows > 0)
-					{
-						// loop through all the shows and put names in address
-						
-						String names = "";
-						for (int i = 0; i < rows ; i++)
-						{
-							String spacer = "|";
-							if (i == rows-1)
-							{
-								spacer = "";
-							}
-							TedSerie serie = serieTable.getSerieAt(i);
-							String name = URLEncoder.encode("\""+serie.getName()+"\""+spacer, "UTF-8");
-							names += name;
-						}
-						
-						BrowserLauncher.openURL(locations.get(0)+names+locations.get(1)); //$NON-NLS-1$
-						
-					}
-					else
-					{
-						BrowserLauncher.openURL((String)locations.get(2)); //$NON-NLS-1$
-					}
+					name = URLEncoder.encode("\""+serie.getName()+"\""+spacer, "UTF-8");
+					names += name;
 				} 
-				catch (IOException ep) 
+				catch (UnsupportedEncodingException e1) 
 				{
-					// error launching ted website
-					// TODO: add error message
-					System.out.println("Error opening amazon.com website"); //$NON-NLS-1$
-					ep.printStackTrace();
-				}			
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
 			}
-			else
-			{
-				TedLog.error("shows_clean.xml file is corrupt");
-			}
+			
+			this.openBuyLink(names);
 		}
 		else if (action.equals("buyDVDselectedshow"))
 		{
 			// try to open the amazon.com website
 			
 			// get selected showname
-			TedSerie selectedSerie = serieTable.getSelectedShow();
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
 			
-			if (selectedSerie != null)
+			String names = "";
+			String spacer = "|";
+			String name;
+			
+			for (int i = 0; i < selectedShows.length; i++)
 			{
-				String name = selectedSerie.getName();
-				this.openBuyLink(name);	
+				if (i == selectedShows.length-1)
+				{
+					spacer = "";
+				}
+				try 
+				{
+					name = URLEncoder.encode("\""+selectedShows[i].getName()+"\""+spacer, "UTF-8");
+					names += name;
+				} 
+				catch (UnsupportedEncodingException e1) 
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+			
+			this.openBuyLink(names);
 		}
 		
 		
@@ -1064,9 +1074,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			try 
 			{
-				// open search for dvds
-				name = URLEncoder.encode(name, "UTF-8");
-				
+				// open search for dvds			
 				BrowserLauncher.openURL(locations.get(0)+name+locations.get(1)); //$NON-NLS-1$
 			} 
 			catch (Exception ep) 
@@ -1136,5 +1144,17 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.getSerieTable().updateAllSeries();
 			this.updateGUI();
 		}		
+	}
+
+
+	/**
+	 * Method to forward the disabled status of the selected shows to the 
+	 * main menu bar
+	 * @param firstShowDisabled
+	 * @param showBothOptions
+	 */
+	public void checkDisabled(boolean firstShowDisabled, boolean showBothOptions) 
+	{
+		this.tMenuBar.checkDisabled(firstShowDisabled, showBothOptions);
 	}
 }

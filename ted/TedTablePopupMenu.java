@@ -38,7 +38,8 @@ public class TedTablePopupMenu extends JPopupMenu
 	private JMenuItem menuEdit;
 	private JMenuItem buyDVD;
 	private JMenuItem menuParse;
-	private JMenuItem menuDisableEnable;
+	private JMenuItem menuEnable;
+	private JMenuItem menuDisable;
 	private JCheckBoxMenuItem checkAutoSchedule;
 	private boolean disabledShow = false;
 
@@ -66,9 +67,13 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuParse.setActionCommand("parse selected"); //$NON-NLS-1$
 		
 		
-		menuDisableEnable = new JMenuItem (); //$NON-NLS-1$
-		menuDisableEnable.addActionListener(mainDialog);
-		menuDisableEnable.setActionCommand("togglestatusdisabled"); //$NON-NLS-1$
+		menuEnable = new JMenuItem (); //$NON-NLS-1$
+		menuEnable.addActionListener(mainDialog);
+		menuEnable.setActionCommand("setstatusenabled"); //$NON-NLS-1$
+		
+		menuDisable = new JMenuItem (); //$NON-NLS-1$
+		menuDisable.addActionListener(mainDialog);
+		menuDisable.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
 		
 		buyDVD = new JMenuItem ();
 		buyDVD.addActionListener(mainDialog);
@@ -86,7 +91,8 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.add( menuParse );
 		this.add(separator);
 		this.add(checkAutoSchedule);
-		this.add(menuDisableEnable);
+		this.add(menuEnable);
+		this.add(menuDisable);
 		this.add(separator2);
 		this.add( buyDVD);
 		
@@ -103,8 +109,8 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuParse.setText( Lang.getString("TedTablePopupMenu.CheckShow") ); //$NON-NLS-1$
 		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));	
 		checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
-		
-		this.updateDisabledText();
+		menuEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
+		menuDisable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
 	}
 	
 	/**
@@ -128,21 +134,9 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
 	}
 
-	public void checkDisabled(boolean disabled) 
+	public void checkDisabled(boolean disabled, boolean showBoth) 
 	{
-		this.disabledShow  = disabled;
-		this.updateDisabledText();
-	}
-	
-	private void updateDisabledText()
-	{
-		if (this.disabledShow)
-		{
-			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
-		}
-		else
-		{
-			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
-		}
+		this.menuDisable.setVisible(!disabled || showBoth);
+		this.menuEnable.setVisible(disabled || showBoth);
 	}
 }

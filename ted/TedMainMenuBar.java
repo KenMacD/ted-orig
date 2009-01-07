@@ -49,7 +49,8 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenuItem exportMenuItem;
 	private JMenuItem importMenuItem;
 	private JMenuItem menuParse;
-	private JMenuItem menuDisableEnable;
+	private JMenuItem menuEnable;
+	private JMenuItem menuDisable;
 	private JMenuItem versionItem;
 	private JMenuItem donateItem;
 	private JMenuItem webItem;
@@ -74,7 +75,6 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenu subLangMenu;
 	
 	private TedMainDialog tMain;
-	private boolean disabledShow = false;
 	
 	/**
 	 * Main menubar for ted
@@ -155,11 +155,15 @@ public class TedMainMenuBar extends JMenuBar
 			jSeparator6 = new JSeparator();
 			menuEdit.add(jSeparator6);
 			
-			menuDisableEnable = new JMenuItem (); //$NON-NLS-1$
-			menuDisableEnable.addActionListener(tMain);
-			menuDisableEnable.setActionCommand("togglestatusdisabled"); //$NON-NLS-1$
-			menuEdit.add(menuDisableEnable);
+			menuEnable = new JMenuItem (); //$NON-NLS-1$
+			menuEnable.addActionListener(tMain);
+			menuEnable.setActionCommand("setstatusenabled"); //$NON-NLS-1$
+			menuEdit.add(menuEnable);
 			
+			menuDisable = new JMenuItem (); //$NON-NLS-1$
+			menuDisable.addActionListener(tMain);
+			menuDisable.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
+			menuEdit.add(menuDisable);
 			
 		}
 		{
@@ -368,8 +372,8 @@ public class TedMainMenuBar extends JMenuBar
 		languageItem.setText(Lang.getString("TedMainMenuBar.Help.LanguageUpdate"));
 		
 		extraMenu.setText(Lang.getString("TedMainMenuBar.Extra"));
-		
-		this.updateDisabledText();
+		menuEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
+		menuDisable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
 	}
 	
 	/**
@@ -396,7 +400,8 @@ public class TedMainMenuBar extends JMenuBar
 	{
 		this.deleteMenuItem.setEnabled(b);
 		this.editMenuItem.setEnabled(b);
-		this.menuDisableEnable.setEnabled(b);
+		this.menuEnable.setEnabled(b);
+		this.menuDisable.setEnabled(b);
 		this.menuParse.setEnabled(b);
 	}
 	
@@ -418,21 +423,9 @@ public class TedMainMenuBar extends JMenuBar
 		
 	}
 
-	public void setDisabledShow(boolean disabled) 
+	public void checkDisabled(boolean disabled, boolean showBoth) 
 	{
-		this.disabledShow = disabled;
-		this.updateDisabledText();
-	}
-	
-	private void updateDisabledText()
-	{
-		if (this.disabledShow)
-		{
-			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
-		}
-		else
-		{
-			menuDisableEnable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
-		}
+		this.menuDisable.setVisible(!disabled || showBoth);
+		this.menuEnable.setVisible(disabled || showBoth);
 	}
 }
