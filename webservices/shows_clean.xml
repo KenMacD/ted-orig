@@ -513,6 +513,14 @@
 			<epguides>DancingwiththeStars</epguides>
 		</show>
 		<show>
+			<name>Demons</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>76510</tv_com>
+		</show>
+		<show>
 			<name>Desperate Housewives</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -1335,6 +1343,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>17579</tv_com>
+		</show>
+		<show>
+			<name>Peep Show</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>14561</tv_com>
 		</show>
 		<show>
 			<name>The Pickup Artist</name>
