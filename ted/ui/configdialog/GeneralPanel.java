@@ -1,4 +1,5 @@
 package ted.ui.configdialog;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -71,7 +72,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 	{
 		try {
 			{
-				this.setPreferredSize(new java.awt.Dimension(320, 265));
+				this.setPreferredSize(new java.awt.Dimension(400, 400));
 			}
 			generalPanel = new JPanel();
 			this.add(generalPanel);
@@ -79,6 +80,9 @@ public class GeneralPanel extends JPanel implements ActionListener
 					"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
 					"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 			generalPanel.setLayout(generalPanelLayout);
+			generalPanel.setMaximumSize(new java.awt.Dimension(400, 400));
+			generalPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+			generalPanel.setOpaque(false);
 
 			Refresh_Label = new JLabel();
 			generalPanel.add(Refresh_Label, new CellConstraints("2, 2, 5, 1, default, default"));
@@ -105,11 +109,11 @@ public class GeneralPanel extends JPanel implements ActionListener
 			saveLavel.setBounds(14, 70, 273, 28);
 	
 			directory_Field = new JTextField();
-			generalPanel.add(directory_Field, new CellConstraints("2, 8, 3, 1, default, default"));
-			directory_Field.setEditable(false);
+			generalPanel.add(directory_Field, new CellConstraints("2, 8, 3, 1, default, default"));//, 3, 1"));
 			directory_Field.setBackground(new java.awt.Color(240, 240, 240));
 			directory_Field.setBounds(21, 98, 315, 28);
-	
+			directory_Field.setEditable(false);
+
 			SaveDir_Button = new JButton();
 			generalPanel.add(SaveDir_Button, new CellConstraints("6, 8, 1, 1, default, default"));
 			SaveDir_Button.setActionCommand("open dir");

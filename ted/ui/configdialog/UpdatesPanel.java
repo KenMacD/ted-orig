@@ -76,7 +76,8 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		FormLayout updatePanelLayout = new FormLayout(
 			"max(p;6dlu), center:60dlu, center:60dlu:grow, center:60dlu, max(p;16dlu)",
 			"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;10dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-		//updatePanel.setPreferredSize(new java.awt.Dimension(403, 336));
+		updatePanel.setMaximumSize(new java.awt.Dimension(400, 400));
+		updatePanel.setPreferredSize(new java.awt.Dimension(400, 400));
 		updatePanel.setLayout(updatePanelLayout);
 
 		checkCheckUpdates = new JCheckBox();
