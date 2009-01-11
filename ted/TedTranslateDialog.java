@@ -501,9 +501,9 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			}
 			br.close();	
 			
-			JOptionPane.showInternalMessageDialog(null, 
+			JOptionPane.showMessageDialog(this, 
 								"Translations have succesfully been downloaded.", 
-								"Succes",
+								"Info",
 								JOptionPane.INFORMATION_MESSAGE);
 		} 
 		catch (MalformedURLException e) 
