@@ -5,7 +5,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import ted.Lang;
 import ted.TedSerie;
@@ -34,7 +36,7 @@ public class FilterPanel extends JPanel
 	 */
 	private static final long serialVersionUID = -4433322536308265906L;
 	private JLabel label_minSize;
-	private JTextField text_maxSize;
+	private JSpinner spinner_maxSize;
 	private TextField keyword_text;
 	private JLabel label_keywords;
 	private JLabel label_keywords3;
@@ -42,14 +44,18 @@ public class FilterPanel extends JPanel
 	private JLabel label_keywords1;
 	private JSeparator jSeparator1;
 	private JLabel label_Seeders;
-	private JTextField text_minSeeders;
+	private JSpinner text_minSeeders;
 	private JLabel label_seederFilters;
 	private JSeparator jSeparator4;
 	private JLabel label_mb2;
 	private JLabel label_maxSize;
 	private JLabel label_mb1;
-	private JTextField text_minSize;
+	private JSpinner text_minSize;
 	private JLabel label_sizeFilters;
+	
+	private SpinnerNumberModel maxSizeSpinnerModel = new SpinnerNumberModel();
+	private SpinnerNumberModel minSizeSpinnerModel = new SpinnerNumberModel();
+	private SpinnerNumberModel minSeedersSpinnerModel = new SpinnerNumberModel();
 	
 	public FilterPanel()
 	{
@@ -76,7 +82,8 @@ public class FilterPanel extends JPanel
 					.getString("TedEpisodeDialog.LabelMinSize2"));
 			}
 			{
-				text_minSize = new JTextField();
+				text_minSize = new JSpinner();
+				text_minSize.setModel(minSizeSpinnerModel);
 				this.add(text_minSize, new CellConstraints("3, 3, 1, 1, default, default"));
 			}
 			{
@@ -92,8 +99,9 @@ public class FilterPanel extends JPanel
 					.getString("TedEpisodeDialog.LabelMaxSize"));
 			}
 			{
-				text_maxSize = new JTextField();
-				this.add(text_maxSize, new CellConstraints("3, 4, 1, 1, default, default"));
+				spinner_maxSize = new JSpinner();
+				spinner_maxSize.setModel(maxSizeSpinnerModel);
+				this.add(spinner_maxSize, new CellConstraints("3, 4, 1, 1, default, default"));
 			}
 			{
 				label_mb2 = new JLabel();
@@ -112,7 +120,8 @@ public class FilterPanel extends JPanel
 					.getString("TedEpisodeDialog.LabelSeeders2"));
 			}
 			{
-				text_minSeeders = new JTextField();
+				text_minSeeders = new JSpinner();
+				text_minSeeders.setModel(minSeedersSpinnerModel);
 				this.add(text_minSeeders, new CellConstraints("3, 7, 1, 1, default, default"));
 			}
 			{
@@ -158,6 +167,11 @@ public class FilterPanel extends JPanel
 		{
 			e.printStackTrace();
 		}
+		
+		Integer value = new Integer(0);
+		this.maxSizeSpinnerModel.setMinimum(value);
+		this.minSeedersSpinnerModel.setMinimum(value);
+		this.minSizeSpinnerModel.setMinimum(value);
 	}
 	
 	public void addKeywords(String key)
@@ -177,46 +191,23 @@ public class FilterPanel extends JPanel
 
 	public void setValues(TedSerie serie)
 	{
-		text_minSize.setText(""+serie.getMinSize());
-		text_maxSize.setText(""+serie.getMaxSize());
-		text_minSeeders.setText(""+serie.getMinNumOfSeeders());
+		// convert to integers
+		Integer minSize = new Integer (serie.getMinSize());
+		Integer maxSize = new Integer (serie.getMaxSize());
+		Integer minSeeders = new Integer (serie.getMinNumOfSeeders());
+		
+		text_minSize.setValue(minSize);
+		spinner_maxSize.setValue(maxSize);
+		text_minSeeders.setValue(minSeeders);
 		keyword_text.setText(""+serie.getKeywords());
 		
 	}
 
 	public boolean checkValues() 
 	{
-		int min = 0;
-		int max = 0;
-		int minSeeders = 0;
+		int min = this.minSizeSpinnerModel.getNumber().intValue();
+		int max = this.maxSizeSpinnerModel.getNumber().intValue();
 			
-		try
-		{
-			min = Integer.parseInt(text_minSize.getText());
-		}
-		catch (NumberFormatException e)
-		{
-			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMinimumSize")); //$NON-NLS-1$
-			return false;
-		}
-		try
-		{
-			max = Integer.parseInt(text_maxSize.getText());
-		}
-		catch (NumberFormatException e)
-		{
-			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMaximumSize")); //$NON-NLS-1$
-			return false;
-		}
-		try
-		{
-			minSeeders = Integer.parseInt(text_minSeeders.getText());
-		}
-		catch (NumberFormatException e)
-		{
-			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMinimumSeeders")); //$NON-NLS-1$
-			return false;
-		}
 		if(min>max)
 		{
 			JOptionPane.showMessageDialog(null, Lang.getString("TedEpisodeDialog.DialogMinLargerThanMax")); //$NON-NLS-1$
@@ -255,9 +246,9 @@ public class FilterPanel extends JPanel
 	{
 		if (this.checkValues())
 		{
-			int min = Integer.parseInt(text_minSize.getText());
-			int max = Integer.parseInt(text_maxSize.getText());
-			int minSeeders = Integer.parseInt(text_minSeeders.getText());
+			int min = this.minSizeSpinnerModel.getNumber().intValue();
+			int max = this.maxSizeSpinnerModel.getNumber().intValue();
+			int minSeeders = this.minSeedersSpinnerModel.getNumber().intValue();
 			currentSerie.setMinSize(min);
 			currentSerie.setMaxSize(max);
 			currentSerie.setKeywords(keyword_text.getText().toLowerCase());
