@@ -38,6 +38,7 @@ import ted.TedTranslateDialog.PropertiesFileFilter;
 import ted.ui.TimedOptionPane;
 import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.configdialog.ConfigDialog;
+import ted.ui.editshowdialog.EditMultipleShowsDialog;
 import ted.ui.editshowdialog.EditShowDialog;
 import ted.ui.messaging.MessengerCenter;
 
@@ -612,12 +613,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Edit")) //$NON-NLS-1$
 		{
-			// get the selected show and open a episode dialog for it
-			int pos = serieTable.getSelectedRow();
-			if (pos >= 0)
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
+			if (selectedShows.length == 1)
 			{
-				TedSerie selectedserie = serieTable.getSerieAt(pos);
-				new EditShowDialog(this, selectedserie, false);
+				new EditShowDialog(this, selectedShows[0], false);
+			}
+			else
+			{
+				new EditMultipleShowsDialog(this, selectedShows);
 			}
 		}
 		else if (action.equals("parse selected")) //$NON-NLS-1$

@@ -26,6 +26,7 @@ import ted.TedXMLParser;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.datastructures.StandardStructure;
+import ted.interfaces.PanelSwitcher;
 
 
 /**
@@ -40,7 +41,7 @@ import ted.datastructures.StandardStructure;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class EditShowDialog extends javax.swing.JDialog implements ActionListener
+public class EditShowDialog extends javax.swing.JDialog implements ActionListener, PanelSwitcher
 {
 	
 	private int width = 500;
@@ -63,10 +64,10 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private FilterPanel filterPanel;
 	private SchedulePanel schedulePanel;
 	private String currentSerieName;
-	public final String GENERALCOMMAND = "general";
-	public final String FEEDSCOMMAND = "feeds";
-	public final String FILTERCOMMAND = "filter";
-	public final String SCHEDULECOMMAND = "schedule";
+	public final static String GENERALCOMMAND = "general";
+	public final static String FEEDSCOMMAND = "feeds";
+	public final static String FILTERCOMMAND = "filter";
+	public final static String SCHEDULECOMMAND = "schedule";
 	private String currentTab = this.GENERALCOMMAND;
 	
 	/****************************************************
@@ -111,11 +112,11 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			e.printStackTrace();
 		}
 		
-		loadShow();
+		initMoreGui();
 		
 	}
 
-	private void loadShow()
+	private void initMoreGui()
 	{
 		// posistion of ok and cancel button for mac and linux
 		int bottomButtonLocationY 	= this.height - 60;

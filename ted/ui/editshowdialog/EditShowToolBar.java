@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JToolBar;
 
+import ted.interfaces.PanelSwitcher;
 import ted.ui.ToolBarButton;
 
 public class EditShowToolBar extends JToolBar implements ActionListener
@@ -18,7 +19,7 @@ public class EditShowToolBar extends JToolBar implements ActionListener
 	private ToolBarButton feedsButton;
 	private ToolBarButton filterButton;
 	private ToolBarButton scheduleButton;
-	private EditShowDialog editDialog;
+	private PanelSwitcher panelDialog;
 	
 	/**
 	 * ConfigDialog toolbar
@@ -27,45 +28,58 @@ public class EditShowToolBar extends JToolBar implements ActionListener
 	public EditShowToolBar(EditShowDialog ed)
 	{
 		this.setFloatable(false);
-		this.editDialog = ed;
-		this.makeToolBar();
+		this.panelDialog = ed;
+		this.makeToolBar(true);
 	}
 	
 	public EditShowToolBar()
 	{
-		this.makeToolBar();
+		this.makeToolBar(true);
 	}
 	
+	public EditShowToolBar(EditMultipleShowsDialog editMultipleShowsDialog) 
+	{
+		this.setFloatable(false);
+		this.panelDialog = editMultipleShowsDialog;
+		this.makeToolBar(false);
+	}
+
 	/**
 	 * Create the toolbar for the config dialog
 	 */
-	private void makeToolBar()
+	private void makeToolBar(boolean singleShow)
 	{
 		ButtonGroup toolBarButtons = new ButtonGroup();
-
-	    generalButton = new ToolBarButton(editDialog.GENERALCOMMAND, this, "EditShowDialog");
+	    generalButton = new ToolBarButton(EditShowDialog.GENERALCOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(generalButton);
 	    this.add(generalButton);
-	    generalButton.setSelected(true);
-		
+	    generalButton.setSelected(true);	
 
-	    feedsButton = new ToolBarButton(editDialog.FEEDSCOMMAND, this, "EditShowDialog");
+	    feedsButton = new ToolBarButton(EditShowDialog.FEEDSCOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(feedsButton);
 	    this.add(feedsButton);
 	    
-	    filterButton = new ToolBarButton(editDialog.FILTERCOMMAND, this, "EditShowDialog");
+	    filterButton = new ToolBarButton(EditShowDialog.FILTERCOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(filterButton);
 	    this.add(filterButton);
 	    
-	    scheduleButton = new ToolBarButton(editDialog.SCHEDULECOMMAND, this, "EditShowDialog");
+	    scheduleButton = new ToolBarButton(EditShowDialog.SCHEDULECOMMAND, this, "EditShowDialog");
 	    toolBarButtons.add(scheduleButton);
-	    this.add(scheduleButton);	
+		this.add(scheduleButton);	
+		
+		if (!singleShow)
+		{
+			generalButton.setVisible(false);
+			feedsButton.setVisible(false);
+			scheduleButton.setVisible(false);
+			filterButton.setSelected(true);
+		}
 	}
 
 	public void actionPerformed(ActionEvent arg0)
 	{
 		String command = arg0.getActionCommand();	
-		editDialog.showPanel(command);			
+		panelDialog.showPanel(command);			
 	}
 
 }

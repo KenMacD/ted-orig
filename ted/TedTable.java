@@ -126,7 +126,7 @@ public class TedTable extends JTable
 				new EditShowDialog(tedMain, selectedserie, false);		
 			}
 			// or did the user click right?
-			else if (SwingUtilities.isRightMouseButton(evt))
+			else 
 			{
 				boolean showBothOptions = false;
 				boolean firstShowDisabled = selectedserie.isDisabled();
@@ -143,12 +143,15 @@ public class TedTable extends JTable
 						}
 					}		
 				}
-				
-				ttPopupMenu.checkAutoSchedule(selectedserie.isUseAutoSchedule());
-				ttPopupMenu.checkDisabled(firstShowDisabled, showBothOptions);
 				tedMain.checkDisabled(firstShowDisabled, showBothOptions);
 				
-				ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+				if (SwingUtilities.isRightMouseButton(evt))
+				{			
+					ttPopupMenu.checkAutoSchedule(selectedserie.isUseAutoSchedule());
+					ttPopupMenu.checkDisabled(firstShowDisabled, showBothOptions);
+					
+					ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+				}
 			}
 		}
 			
