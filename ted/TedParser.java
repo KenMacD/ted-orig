@@ -187,7 +187,7 @@ public class TedParser extends Thread
 				
 				urlc = feedURL.openConnection();
 				// timeout for connection
-				urlc.setConnectTimeout(5000);
+				urlc.setConnectTimeout(TedConfig.getTimeOutInSecs() * 1000);
 				
 				// create an RSS parser
 				parser = RssParserFactory.createDefault();
@@ -1372,7 +1372,7 @@ public class TedParser extends Thread
 				
 				urlc = feedURL.openConnection();
 				// timeout for connection
-				urlc.setConnectTimeout(5000);
+				urlc.setConnectTimeout(TedConfig.getTimeOutInSecs() * 1000);
 				
 				// create an RSS parser
 				parser = RssParserFactory.createDefault();

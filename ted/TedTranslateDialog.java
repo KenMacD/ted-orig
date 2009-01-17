@@ -490,7 +490,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		
 			// Open a connection to the file.
 			URLConnection conn = url.openConnection();
-		    conn.setConnectTimeout(10000);
+		    conn.setConnectTimeout(TedConfig.getTimeOutInSecs() * 1000);
 		     
 		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 					
@@ -539,7 +539,7 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 			
 			// Open a connection to the file.
 			URLConnection conn = url.openConnection();
-		    conn.setConnectTimeout(10000);
+		    conn.setConnectTimeout(TedConfig.getTimeOutInSecs() * 1000);
 		     
 		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			

@@ -1012,11 +1012,11 @@ public class TedIO
 	    fos.close();
 	}
 	
-	private BufferedReader makeBufferedReader(URL url, int timeOut) throws IOException
+	private BufferedReader makeBufferedReader(URL url, int timeOutInSecs) throws IOException
 	{
 		URLConnection conn = url.openConnection();
 	    
-	    conn.setConnectTimeout(1000 * timeOut);
+	    conn.setConnectTimeout(1000 * timeOutInSecs);
 	      
 	    BufferedReader br = new BufferedReader(new InputStreamReader(
 	    		  		conn.getInputStream()));
