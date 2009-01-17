@@ -121,7 +121,8 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 
 		checkAddSystemTray = new JCheckBox();
 		lookFeelPanel.add(checkAddSystemTray, new CellConstraints("2, 2, 2, 1, default, default"));
-		checkAddSystemTray.setText(Lang.getString("TedConfigDialog.CheckAddTray"));
+		checkAddSystemTray.setText(Lang.getString("TedConfigDialog.CheckAddTray") + " ("
+				+ Lang.getString("TedConfigDialog.NeedsReboot") + ")");
 		checkAddSystemTray.addActionListener(this);
 		checkAddSystemTray
 			.setActionCommand("systray"); //$NON-NLS-1$
