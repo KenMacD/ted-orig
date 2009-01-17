@@ -545,10 +545,27 @@ public class TedIO
 			{
 				String message = Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"); //$NON-NLS-1$ //$NON-NLS-2$;
 				String title =  Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
-								
-				answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+												
+				answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
+				
+				if (answer == 0)
+				{
+					// The user clicked the always button, so store it in the configuration.
+					TedConfig.setAutoUpdateFeedList(TedConfig.ALWAYS);
+					this.SaveConfig();
+				}
+				else if (answer == 3)
+				{
+					// Do the same for the never button.
+					TedConfig.setAutoUpdateFeedList(TedConfig.NEVER);
+					this.SaveConfig();
+				}
+				// For the yes/no option nothing has to be done as when the user sees this message
+				// dialog the configuration is already correct.
 			}
 			
+			// If the user clicked the yes or always button... (for always the configuration has
+			// been saved so this can be asked with the isAutoUpdateFeedList function).
 			if (answer == JOptionPane.YES_OPTION || TedConfig.isAutoUpdateFeedList())
 			{
 				// download the XML file
@@ -567,8 +584,24 @@ public class TedIO
 		                				 Lang.getString("TedIO.DialogUpdateShows3");
 						String title =	Lang.getString("TedIO.DialogUpdateShowsHeader"); //$NON-NLS-1$
 
-						answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+						answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
+						
+						if (answer == 0)
+						{
+							// The user clicked the always button, so store it in the configuration.
+							TedConfig.setAutoAdjustFeeds(TedConfig.ALWAYS);
+							this.SaveConfig();
+						}
+						else if (answer == 3)
+						{
+							// Do the same for the never button.
+							TedConfig.setAutoAdjustFeeds(TedConfig.NEVER);
+							this.SaveConfig();
+						}
+						// For the yes/no option nothing has to be done as when the user sees this message
+						// dialog the configuration is already correctly set on "ask".
 					}
+					
 					if(TedConfig.isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
 					{
 						// adjust the feeds

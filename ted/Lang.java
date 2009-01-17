@@ -393,6 +393,17 @@ public class Lang
 		Object[] options = { Lang.getString("TedGeneral.Yes"), Lang.getString("TedGeneral.No"), Lang.getString("TedGeneral.ButtonCancel")};
 		return options;
 	}
+	
+	/**
+	 * Get a list with strings for alway yes no never
+	 * @return
+	 */
+	public static Object[] getAlwaysYesNoNeverLocale()
+	{
+		Object[] options = { Lang.getString("TedGeneral.Always"), Lang.getString("TedGeneral.Yes"), 
+				Lang.getString("TedGeneral.No"), Lang.getString("TedGeneral.Never")};
+		return options;
+	}
 
 	
 	/****************************************************

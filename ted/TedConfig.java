@@ -50,7 +50,7 @@ public class TedConfig
 	private static boolean downloadNewSeason = true;
 	private static boolean parseAtStart = true;
 	private static int autoUpdateFeedList = ALWAYS;
-	private static int autoAdjustFeeds = ASK;
+	private static int autoAdjustFeeds = ALWAYS;
 	private static int width = 400;
 	private static int height = 550;
 	private static int x = 0;
