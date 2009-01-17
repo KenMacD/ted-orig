@@ -1041,6 +1041,7 @@
 			<seeders>30</seeders>
 			<daily>True</daily>
 			<tv_com>4748</tv_com>
+			<searchname>Conan O Brien</searchname>
 		</show>
 		<show>
 			<name>Law And Order</name>
