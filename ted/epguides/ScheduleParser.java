@@ -274,10 +274,14 @@ public class ScheduleParser
 					for (int i = 0; i < seasonEpisodes.getLength(); ++i)
 					{
 						// For every season 
-						Element allSeasons = (Element)seasonEpisodes.item(i);
-					
+						Element currentSeason = (Element)seasonEpisodes.item(i);
+						
+						// For this season retrieve its season number. This is stored
+						// as an attribute of this tag.
+						int season = Integer.parseInt(currentSeason.getAttribute("no"));
+						
 						// Get all the episodes of that season
-						NodeList episodesOfSeason = allSeasons.getElementsByTagName("episode");
+						NodeList episodesOfSeason = currentSeason.getElementsByTagName("episode");
 
 						// Retrieve all the needed info
 						if (seasonEpisodes != null && seasonEpisodes.getLength() > 0)
@@ -313,7 +317,7 @@ public class ScheduleParser
 			                	try 
 			                	{
 			                		StandardStructure standardEpisode = 
-			                			constructEpisode(isDaily, i+1, episode, title, airdate, timeZone);
+			                			constructEpisode(isDaily, season, episode, title, airdate, timeZone);
 			                		
 									episodes.add(standardEpisode);
 								} 
