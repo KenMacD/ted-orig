@@ -1169,14 +1169,20 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		this.updateShowStatus();
 	}
 
-	public void setEpguidesName(String text)
+	public boolean setEpguidesName(String text)
 	{
 		if (!text.equals(this.getEpguidesName()))
 		{
 			this.epguidesName = text;
-			// update scheduler
-			this.refreshSchedule();
+			
+			// Indicate that the epguides name has changed and that the schedule
+			// should be updated. Update is not done here as we also may have
+			// to do the update when the tvRage id name has changed. As the update
+			// is a time consuming operation you only want to do it once.
+			return true;
 		}	
+		
+		return false;
 	}
 
 	/**
@@ -1333,16 +1339,20 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		return this.tvRageID;
 	}
 	
-	public void setTVRageID(String tvRageID) 
+	public boolean setTVRageID(String tvRageID) 
 	{
-		if (!tvRageID.equals(this.getEpguidesName()))
+		if (!tvRageID.equals(this.getTVRageID()))
 		{
 			this.tvRageID = tvRageID;
-			// update scheduler
-			// TODO: this is also done when epguides ID is changed.. maybe
-			// executed twice?
-			this.refreshSchedule();
+
+			// Indicate that the tvRage id has changed and that the schedule
+			// should be updated. Update is not done here as we also may have
+			// to do the update when the epguides name has changed. As the update
+			// is a time consuming operation you only want to do it once.
+			return true;
 		}	
+		
+		return false;
 	}
 	
 	public Date getScheduleLastUpdateDate()

@@ -151,20 +151,20 @@ public class SchedulePanel extends JPanel implements ActionListener
 	}
 
 	public void saveValues(TedSerie serie)
-	{
-		//wPanel.saveValues(serie);
-		//bPanel.saveValues(serie);
-		
+	{		
 		serie.setUseAutoSchedule(this.checkAutoSchedule.isSelected());
-		serie.setEpguidesName(this.textEpguidesID.getText());
-		serie.setTVRageID(this.textTVRage.getText());
+		boolean epguidesChanged = serie.setEpguidesName(this.textEpguidesID.getText());
+		boolean tvrageChanged   = serie.setTVRageID(this.textTVRage.getText());
+		
+		if (epguidesChanged || tvrageChanged)
+		{
+			serie.refreshSchedule();
+		}
 	}
 	
 	public void setValues(TedSerie serie)
 	{
 		this.serie = serie;
-		//wPanel.setValues(serie);
-		//bPanel.setValues(serie);
 		
 		this.checkAutoSchedule.setSelected(serie.isUseAutoSchedule());
 		this.textEpguidesID.setText(serie.getEpguidesName());
