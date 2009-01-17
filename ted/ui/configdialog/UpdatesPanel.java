@@ -72,11 +72,12 @@ public class UpdatesPanel extends JPanel implements ActionListener
 			//this.setPreferredSize(new Dimension(width, height));
 		updatePanel = new JPanel();
 		this.add(updatePanel);
+		this.setPreferredSize(new java.awt.Dimension(400, 400));
 		//updatePanel.setPreferredSize(new Dimension(width, height));
 		FormLayout updatePanelLayout = new FormLayout(
 			"max(p;6dlu), center:60dlu, center:60dlu:grow, center:60dlu, max(p;16dlu)",
 			"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;10dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-		updatePanel.setMaximumSize(new java.awt.Dimension(400, 400));
+		updatePanel.setMaximumSize(new java.awt.Dimension(500, 500));
 		updatePanel.setPreferredSize(new java.awt.Dimension(400, 400));
 		updatePanel.setLayout(updatePanelLayout);
 

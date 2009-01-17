@@ -78,10 +78,11 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 
 		lookFeelPanel = new JPanel();
 		this.add(lookFeelPanel);
+		this.setPreferredSize(new java.awt.Dimension(400, 400));
 		FormLayout lookFeelPanelLayout = new FormLayout(
 				"max(p;6dlu), 6dlu, 15dlu:grow, max(p;16dlu)", 
 				"max(p;5dlu), max(p;15dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 17dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-		lookFeelPanel.setMaximumSize(new java.awt.Dimension(400, 400));
+		lookFeelPanel.setMaximumSize(new java.awt.Dimension(500, 500));
 		lookFeelPanel.setPreferredSize(new java.awt.Dimension(400, 400));
 		lookFeelPanel.setLayout(lookFeelPanelLayout);
 

@@ -81,7 +81,7 @@ public class GeneralPanel extends JPanel implements ActionListener
 					"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 			generalPanel.setLayout(generalPanelLayout);
 			generalPanel.setMaximumSize(new java.awt.Dimension(400, 400));
-			generalPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+			generalPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 			generalPanel.setOpaque(false);
 
 			Refresh_Label = new JLabel();
