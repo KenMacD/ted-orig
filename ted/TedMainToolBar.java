@@ -169,6 +169,9 @@ public class TedMainToolBar extends JToolBar
 		btn_Parse.setText(string);
 		
 	}
-
-
+	
+	public void setAddButtonEnabled(boolean b)
+	{
+		this.btn_AddShow.setEnabled(b);
+	}
 }

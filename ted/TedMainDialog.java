@@ -242,6 +242,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			e.printStackTrace();
 		}
 		
+		// if the shows.xml file does not exist download it
+		File f = new File(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
+		TedIO tio = new TedIO();
+		boolean showsXMLExists = f.exists();
+		if(!showsXMLExists)
+		{
+			// disable add show button when show list is not yet available
+			this.TedToolBar.setAddButtonEnabled(false);
+		}
+		
 		this.setStatusString(Lang.getString("TedMain.LoadingConfig"));
 		
 		// register for mac os quit, preferences and about dialog items in menu
@@ -348,12 +358,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		this.messengerCenter = new MessengerCenter(this);
 		
 		// if the shows.xml file does not exist download it
-		File f = new File(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
-		TedIO tio = new TedIO();
-		if(!f.exists())
+		if(!showsXMLExists)
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
 			tio.downloadXML(this, TedConfig.getTimeOutInSecs(), -1);
+			this.TedToolBar.setAddButtonEnabled(true);
 		}
 		// check to see if there is a new shows.xml file available
 		else if (TedConfig.isAutoUpdateFeedList() || TedConfig.askAutoUpdateFeedList())
