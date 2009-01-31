@@ -66,14 +66,12 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	{
 		try 
 		{
-			this.setPreferredSize(new java.awt.Dimension(400, 400));
 			advancedPanel = new JPanel();
 			this.add(advancedPanel);
 			FormLayout advancedPanelLayout = new FormLayout(
 					"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
 			"max(p;5dlu), max(p;5dlu), 30dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-			advancedPanel.setMaximumSize(new java.awt.Dimension(500, 500));
-			advancedPanel.setPreferredSize(new java.awt.Dimension(400, 400));
+			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 			advancedPanel.setLayout(advancedPanelLayout);
 
 			labelTimeOut = new JLabel();

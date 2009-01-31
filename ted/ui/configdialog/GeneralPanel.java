@@ -72,7 +72,6 @@ public class GeneralPanel extends JPanel implements ActionListener
 	{
 		try {
 			{
-				this.setPreferredSize(new java.awt.Dimension(400, 400));
 			}
 			generalPanel = new JPanel();
 			this.add(generalPanel);
@@ -80,7 +79,6 @@ public class GeneralPanel extends JPanel implements ActionListener
 					"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
 					"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 			generalPanel.setLayout(generalPanelLayout);
-			generalPanel.setMaximumSize(new java.awt.Dimension(400, 400));
 			generalPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 			generalPanel.setOpaque(false);
 
