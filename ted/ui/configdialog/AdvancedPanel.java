@@ -126,7 +126,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 
 			checkNotDownloadCompressed = new JCheckBox();
 			checkNotDownloadCompressed.setBounds(14, 257, 371, 21);
-			checkNotDownloadCompressed.setText(Lang.getString("TedConfigDialog.GetCompressed"));
+			checkNotDownloadCompressed.setText(Lang.getString("TedConfigDialog.FilterFiles"));
 			advancedPanel.add(checkNotDownloadCompressed, new CellConstraints("2, 9, 5, 1, default, default"));
 			checkNotDownloadCompressed.addActionListener(this);
 			checkNotDownloadCompressed.setActionCommand("compressed");
