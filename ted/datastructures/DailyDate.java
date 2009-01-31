@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import ted.datastructures.StandardStructure.AirDateUnknownException;
+
 
 public class DailyDate  extends StandardStructure
 {
@@ -76,6 +78,21 @@ public class DailyDate  extends StandardStructure
 		this.Month   = cal.get(Calendar.MONTH);
 		this.setYear(cal.get(Calendar.YEAR));
 		this.airDate = d;
+	}
+
+	public DailyDate(DailyDate copy) 
+	{
+		try 
+		{
+			this.airDate = copy.getAirDate();
+		} 
+		catch (AirDateUnknownException e) 
+		{
+			// do nothing
+		}
+		this.seeders = copy.seeders;
+		this.setDate(copy.getDate());
+		this.url = copy.url;
 	}
 
 	public boolean equals (StandardStructure ss)

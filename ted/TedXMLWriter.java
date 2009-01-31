@@ -80,16 +80,15 @@ public class TedXMLWriter
 						/* write the name */
 						fw.append("\t\t<name>" + serie.getName() + "</name>"+newline);
 			
-						/* write the feeds */
-						/* From v0.92 we don't store the feeds anymore in the shows list */
-						/* feeds = serie.getFeeds();
+						/* write the (selfmade) feeds */
+						feeds = serie.getSelfmadeFeeds();
 						fw.append("\t\t<feeds>"+newline);	
 						for(int j=0; j<feeds.size(); j++)
 						{
 							feed = (TedSerieFeed)feeds.get(j);
 							fw.append("\t\t\t<feed>" + escapeXML(feed.getUrl()) + "</feed>"+newline);
 						}
-						fw.append("\t\t</feeds>"+newline); */
+						fw.append("\t\t</feeds>"+newline);
 						
 						/* write the rest of the show information */
 						//fw.append("\t\t<daily>False</daily>"+newline);
@@ -101,47 +100,7 @@ public class TedXMLWriter
 							fw.append("\t\t<seeders>" + serie.getMinNumOfSeeders() + "</seeders>"+newline);
 						if(!serie.getKeywords().equals(""))
 							fw.append("\t\t<keywords>" + serie.getKeywords() + "</keywords>"+newline);
-						
-						/* write the episode schedule */
-						String[] wd = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
-						boolean[] days = serie.getDays();
-						String releasedays = "";
-						
-						if(serie.isUseEpisodeSchedule())
-						{
-							for(int l=0; l<7; l++)
-							{
-								if(days[l])
-								{
-									if(releasedays.equals(""))
-										releasedays += wd[l];
-									else releasedays += "," + wd[l];
-								}
-							}
-						}
-						
-						if(!releasedays.equals(""))
-							fw.append("\t\t<releaseday>" + releasedays + "</releaseday>"+newline);
 												
-						/* write the break schedule */
-						if(serie.isUseBreakSchedule())
-						{
-							fw.append("\t\t<break>"+newline);
-							
-							if(serie.isUseBreakScheduleEpisode() && serie.getBreakEpisode()!=0)
-								fw.append("\t\t\t<episode>" + serie.getBreakEpisode() + "</episode>"+newline);
-							
-							if(serie.isUseBreakScheduleFrom())
-								fw.append("\t\t\t<from>" + 
-										CalendarToString(serie.getBreakFrom()) + "</from>"+newline);
-							
-							//until is always needed for the break schedule
-							fw.append("\t\t\t<until>" +
-										CalendarToString(serie.getBreakUntil()) + "</until>"+newline);
-							
-							fw.append("\t\t</break>"+newline);
-						}
-						
 						fw.append("\t</show>"+newline);
 					}	
 					

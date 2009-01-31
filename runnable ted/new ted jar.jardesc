@@ -15,8 +15,8 @@
 <file path="/ted/icons/pause.png"/>
 <javaElement handleIdentifier="=ted/&lt;ted{FileSizeException.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted.epguides"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedSerie.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{TedLog.java"/>
+<javaElement handleIdentifier="=ted/&lt;ted{TedSerie.java"/>
 <file path="/ted/icons/TedConfigDialog-advanced.png"/>
 <javaElement handleIdentifier="=ted/&lt;ted.datastructures"/>
 <file path="/ted/icons/TedConfigDialog-general.png"/>
@@ -38,8 +38,8 @@
 <javaElement handleIdentifier="=ted/&lt;ted{TedAboutDialog.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{TedSystemInfo.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{TedLogDialog.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedParserDateChecker.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{TedXMLParser.java"/>
+<javaElement handleIdentifier="=ted/&lt;ted{TedParserDateChecker.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{TedMainMenuBar.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{SeasonEpisodeScheduler.java"/>
 <javaElement handleIdentifier="=ted/&lt;ted{TedTableRowRenderer.java"/>

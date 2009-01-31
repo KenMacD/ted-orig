@@ -178,7 +178,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	 */
 	public void addFeed()
 	{
-		TedSerieFeed newFeed = new TedSerieFeed("", 0, true); //$NON-NLS-1$
+		TedSerieFeed newFeed = new TedSerieFeed("", true); //$NON-NLS-1$
 		int row = feedsTableModel.addSerie(newFeed);
 		feedsTable.setRowSelectionInterval(row,row);
 		
@@ -198,7 +198,7 @@ public class FeedsPanel extends JPanel implements ActionListener
 	
 	public void addFeed(String s)
 	{
-		TedSerieFeed newFeed = new TedSerieFeed(s, 0, true);
+		TedSerieFeed newFeed = new TedSerieFeed(s, true);
 		feedsTableModel.addSerie(newFeed);
 	}
 	

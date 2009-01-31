@@ -30,8 +30,7 @@ public class TedParserDateChecker
 	/****************************************************
 	 * GLOBAL VARIABLES
 	 ****************************************************/
-	private long thisParseDate;
-	private long lastParseDate;
+
 	
 	/****************************************************
 	 * LOCAL METHODS
@@ -71,31 +70,6 @@ public class TedParserDateChecker
 	/****************************************************
 	 * PUBLIC METHODS
 	 ****************************************************/
-	/**
-	 * Have we already checked this item?
-	 * @param item Item
-	 * @param serie Show the item is from
-	 * @return If ted already checked this item in the past
-	 */
-	public boolean alreadyChecked(SyndEntry item, TedSerieFeed feed)
-	{
-		long date = getItemDate(item);
-		if(date > feed.getDate())
-		{
-			//setting the parse date happens after finding the torrent
-			thisParseDate = date;
-			lastParseDate = date;
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public long newestEntryInFeed(SyndEntry item)
-	{
-		long date = getItemDate(item);		
-		return date;
-	}
 	
 	/**
 	 * Gets the int from a month string
@@ -133,41 +107,5 @@ public class TedParserDateChecker
 		
 		//will hopefully never happen
 		return -1; 
-	}
-	
-	
-	/****************************************************
-	 * GETTERS & SETTERS
-	 ****************************************************/
-	/**
-	 * @return Returns the lastParseDate.
-	 */
-	public long getLastParseDate() 
-	{
-		return lastParseDate;
-	}
-
-	/**
-	 * @param lastParseDate The lastParseDate to set.
-	 */
-	public void setLastParseDate(long lastParseDate)
-	{
-		this.lastParseDate = lastParseDate;
-	}
-
-	/**
-	 * @return Returns the thisParseDate.
-	 */
-	public long getThisParseDate() 
-	{
-		return thisParseDate;
-	}
-
-	/**
-	 * @param thisParseDate The thisParseDate to set.
-	 */
-	public void setThisParseDate(long thisParseDate) 
-	{
-		this.thisParseDate = thisParseDate;
 	}
 }

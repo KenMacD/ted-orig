@@ -35,13 +35,23 @@ public class TedDailySerie extends TedSerie
 	{
 		this.isDaily = true;
 		latestParseDate = new GregorianCalendar();
-		//latestParseDate.setTimeInMillis(0);
 		latestDownloadDate = new GregorianCalendar();
-		//latestDownloadDate.setTimeInMillis(0);
 		maxDownloads = 0;
 	}
 	
-	
+	public TedDailySerie(TedDailySerie currentSerie) 
+	{
+		this.copy(currentSerie);
+		if (currentSerie.isDaily)
+		{
+			this.isDaily = true;
+			this.maxDownloads = ((TedDailySerie)currentSerie).maxDownloads;
+			this.latestParseDate = ((TedDailySerie)currentSerie).latestParseDate;
+			this.latestDownloadDate = ((TedDailySerie)currentSerie).latestDownloadDate;
+			this.currentEpisodeSS = new DailyDate((DailyDate)currentSerie.getCurrentStandardStructure());
+		}
+	}
+
 	/**
 	 * 
 	 * @return the latest downloaded airdate for this show in milliseconds 
@@ -111,22 +121,6 @@ public class TedDailySerie extends TedSerie
 	public int getCurrentEpisode()
 	{
 		return -1;
-	}
-	
-	/**
-	 * Overrides the original setCurrentSeason as this is a daily show
-	 */
-	public void setCurrentSeason(int i)
-	{
-		super.currentSeason = -1;
-	}
-	
-	/**
-	 * Overrides the original setCurrentEpisode as this is a daily show
-	 */
-	public void setCurrentEpisode(int i)
-	{
-		super.currentEpisode = -1;
 	}
 
 	/**

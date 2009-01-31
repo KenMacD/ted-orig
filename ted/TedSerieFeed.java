@@ -23,23 +23,27 @@ public class TedSerieFeed implements Serializable
 	/****************************************************
 	 * GLOBAL VARIABLES
 	 ****************************************************/
-	private long checkdate;
 	private String url;
 	private boolean selfMade = false;
+	
+	// NOTE::
+	// DO NOTE REMOVE THESE FIELDS HERE!!
+	// that will break the backwards compatibility of this class
+	
+	// DEPRECATED FIELDS: only here for backwards compatibility.
+	private long checkdate;
 	
 	/****************************************************
 	 * CONSTRUCTOR
 	 ****************************************************/
 	public TedSerieFeed (String u, long date)
 	{
-		this.setDate(date);
 		this.setUrl(u);
 		this.setSelfMade(false);
 	}
 	
-	public TedSerieFeed (String u, long date, boolean b)
+	public TedSerieFeed (String u, boolean b)
 	{
-		this.setDate(date);
 		this.setUrl(u);
 		this.setSelfMade(b);
 	}
@@ -47,29 +51,6 @@ public class TedSerieFeed implements Serializable
 	/****************************************************
 	 * GETTERS & SETTERS
 	 ****************************************************/
-
-	public TedSerieFeed(String url2, boolean b) 
-	{
-		this.setDate(0);
-		this.setUrl(url2);
-		this.setSelfMade(b);
-	}
-
-	/**
-	 * @return Returns the checkdate.
-	 */
-	public long getDate()
-	{
-		return checkdate;
-	}
-
-	/**
-	 * @param checkdate The checkdate to set.
-	 */
-	public void setDate(long checkdate)
-	{
-		this.checkdate = checkdate;
-	}
 
 	/**
 	 * @return Returns the url.

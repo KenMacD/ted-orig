@@ -36,22 +36,13 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	/****************************************************
 	 * GLOBAL VARIABLES
 	 ****************************************************/
-	static final long serialVersionUID= 7210007788942770687L;
-	// DEPRECATED: only here for backwards compatibility. Use getCurrentEpisode() instead.
-	protected int currentEpisode;
-	// DEPRECATED: only here for backwards compatibility. Use getCurrentSeason() instead.
-	protected int currentSeason;
-	private int minSize;
-	private int maxSize;
-	private String name;
-	private String url;
-	private String keywords;
-	private long checkDate;
-	private boolean [] days = this.initDays();
-	private int lastWeekChecked;
-	private int lastDayChecked;
-	private int lastYearChecked;
-	private boolean downloadAll;
+	
+	// NOTE::
+	// DO NOTE REMOVE FIELDS HERE!!
+	// that will break the backwards compatibility of this class
+	// Instead, move them to the deprecated fields section below..
+	
+	// Static fields
 	public final static int STATUS_HIATUS = 3;
 	public final static int STATUS_HOLD = 2;
 	public final static int STATUS_PAUSE = 1;
@@ -59,17 +50,18 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	public final static int STATUS_DISABLED = 4;
 	public final static int IS_PARSING = 1;
 	public final static int IS_IDLE = 0;
+	static final long serialVersionUID= 7210007788942770687L;
+
+	private int minSize;
+	private int maxSize;
+	private String name;
+	private String url;
+	private String keywords;
+	private long checkDate;
 	private int activity = 0;
-	private int weeklyInterval;
 	protected int status = 0;
-	private boolean useEpisodeSchedule;
-	private boolean useBreakSchedule;
-	private boolean useBreakScheduleEpisode;
-	private boolean useBreakScheduleFrom;
 	private boolean useAutoSchedule;
 	private long breakUntil = 0;
-	private long breakFrom = 0;
-	private int breakEpisode;
 	private Vector<TedSerieFeed> feeds = new Vector<TedSerieFeed>();
 	private int minNumOfSeeders;
 	private String statusString;
@@ -83,6 +75,28 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	private int timeZone = -1;
 	protected StandardStructure currentEpisodeSS;
 	private String tvRageID;
+	
+	// NOTE::
+	// DO NOTE REMOVE THESE FIELDS HERE!!
+	// that will break the backwards compatibility of this class
+	
+	// DEPRECATED FIELDS: only here for backwards compatibility.
+	private long breakFrom = 0;
+	private int breakEpisode;
+	private boolean useEpisodeSchedule;
+	private boolean useBreakSchedule;
+	private boolean useBreakScheduleEpisode;
+	private boolean useBreakScheduleFrom;
+	private int weeklyInterval;
+	private boolean [] days;
+	private boolean downloadAll;
+	private int lastWeekChecked;
+	private int lastDayChecked;
+	private int lastYearChecked;
+	// DEPRECATED: Use getCurrentEpisode() instead.
+	protected int currentEpisode;
+	// DEPRECATED: Use getCurrentSeason() instead.
+	protected int currentSeason;
 
 	/****************************************************
 	 * CONSTRUCTOR
@@ -103,22 +117,23 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		this.lastWeekChecked = -1;
 		this.lastDayChecked = 0;
 		this.lastYearChecked = 0;
-		this.weeklyInterval = 1;
 		this.downloadAll = false;
-		this.useEpisodeSchedule = false;
-		this.useBreakSchedule = false;
-		this.useBreakScheduleEpisode = false;
-		this.useBreakScheduleFrom = false;
 		this.useAutoSchedule = true;
-		this.breakEpisode = 1;
-		this.breakFrom  = 0;
-		this.breakUntil = 0;
 		this.minNumOfSeeders = 0;
 		this.statusString = Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		this.usePresets = true;
 		this.searchName = "";
 	}
 	
+	/**
+	 * Copies all fields of original into this TedSerie
+	 * @param original
+	 * @return
+	 */
+	public TedSerie(TedSerie original) 
+	{
+		this.copy(original);	
+	}
 	
 	/****************************************************
 	 * LOCAL METHODS
@@ -138,125 +153,9 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		return days;
 	}
 	
-	/**
-	 * @param a
-	 * @param b
-	 * @return If arrays are equal in size and in contents
-	 */
-	private boolean arraysEqual(boolean[] a, boolean[] b) 
-	{
-		// arrays are equal sized
-		for (int i = 0; i < a.length; i++)
-		{
-			if (a[i] != b[i])
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * @param firstday
-	 * @param lastday
-	 * @return If there is a true in the days array between the first and the lastday
-	 */
-	boolean checkDay(int firstday, int lastday) 
-	{
-		// return true if any entry in array days on index larger than firstday and smaller or equal to i is true
-		for (int j = firstday; j<=lastday; j++)
-		{
-			if (days[j] == true)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	/****************************************************
 	 * PUBLIC METHODS
 	 ****************************************************/
-	
-	
-
-	/**
-	 * Toggle the status of the show from hold, pause to check
-	 */
-	public void toggleStatus() 
-	{
-		// toggle the status, from hold, pause to check
-		if (this.status != TedSerie.STATUS_HOLD)
-		{
-			this.setStatus(this.status + 1);
-		}
-		else
-		{
-			this.setStatus(TedSerie.STATUS_CHECK);
-		}
-		
-		if (this.status == TedSerie.STATUS_PAUSE)
-		{
-			this.setLastDatesToToday();
-		}
-	}
-
-	/**
-	 * @param currentDay Day of today
-	 * @return the next day that is checked in the days list
-	 */
-	public int getNextCheckDay(int currentDay)
-	{
-		int result = 0;
-		boolean [] days = this.getDays();
-		
-		for (int i = currentDay; i < days.length; i++)
-		{
-			if (days[i])
-			{
-				return i;
-			}
-		}
-		for (int i = 0; i < currentDay; i++)
-		{
-			if (days[i])
-			{
-				return i;
-			}
-		}	
-		return result;
-	}
-	
-	
-	/**
-	 * @param ep Current Episode
-	 * @return If the show has to be set on break
-	 */
-	public boolean checkBreakEpisode(int ep)
-	{
-		if (this.useBreakSchedule && this.isUseBreakScheduleEpisode() && 
-				ep == this.breakEpisode)
-		{
-			return true;
-		}
-		else 
-		{
-			return false;
-		}
-	}
-	
-	public boolean checkBreakDate()
-	{
-		Calendar date = new GregorianCalendar();
-		if(this.useBreakSchedule && (this.getBreakFrom() < date.getTimeInMillis()))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 	
 	public void AutoFillInPresets(TedSerie XMLserie)
 	{
@@ -304,21 +203,6 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 						this.setKeywords("(" + userKeywords + " | " + xmlKeywords + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				//else the xmlKeywords are already defined in the userKeywords
-				
-				//when the show has to be put on hold
-				if(XMLserie.isUseBreakSchedule())
-				{
-					this.setUseBreakSchedule(XMLserie.isUseBreakSchedule());
-					this.setUseBreakScheduleEpisode(XMLserie.isUseBreakScheduleEpisode());
-					this.setBreakEpisode(XMLserie.getBreakEpisode());
-					this.setUseBreakScheduleFrom(XMLserie.isUseBreakScheduleFrom());
-					this.setBreakFrom(XMLserie.getBreakFrom());
-					this.setBreakUntil(XMLserie.getBreakUntil());
-				}
-				
-				//when the show has to pause
-				if(XMLserie.isUseEpisodeSchedule())
-					this.setEpisodeSchedule(XMLserie.isUseEpisodeSchedule(), XMLserie.getDays());
 			}
 		}
 	}
@@ -405,23 +289,6 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	/****************************************************
 	 * GETTERS & SETTERS
 	 ****************************************************/
-	
-	/**
-	 * Set the latest dates (used for the episode schedule) to today
-	 */
-	public void setLastDatesToToday()
-	{
-		Calendar c = new GregorianCalendar();
-		c.setFirstDayOfWeek(Calendar.SUNDAY);
-
-		// convert day
-		int day = c.get(Calendar.DAY_OF_WEEK);
-		day --;
-		
-		this.lastDayChecked = day;
-		this.lastWeekChecked =(c.get(Calendar.WEEK_OF_YEAR));
-		this.lastYearChecked = (c.get(Calendar.YEAR));		
-	}
 
 	/**
 	 * @return The current episode of the show
@@ -521,31 +388,6 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	{
 		return this.keywords;
 	}
-	
-	/**
-	 * @return The last week we checked if the show has to get another status
-	 */
-	public int getLastWeekChecked() 
-	{
-		return lastWeekChecked;
-	}
-
-	/**
-	 * Set if ted has to download all shows from the feed
-	 * @param b
-	 */
-	public void setDownloadAll(boolean b) 
-	{
-		this.downloadAll = b;
-	}
-	
-	/**
-	 * @return If ted has to download all shows from the feed
-	 */
-	public boolean isDownloadAll()
-	{
-		return this.downloadAll;
-	}
 
 	/**
 	 * Set the status of the show
@@ -561,14 +403,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 				)
 				&& status != this.status
 			)
-		{
-			// disable break schedule if show is put on a different status as hold
-			if(this.status == TedSerie.STATUS_HOLD && status != TedSerie.STATUS_HOLD)
-			{
-				if(!(this.isUseBreakScheduleEpisode() || this.isUseBreakScheduleFrom()))
-					this.setUseBreakSchedule(false);
-			}
-			
+		{			
 			// set status
 			this.status = status;				
 			this.resetStatus(true);
@@ -578,13 +413,6 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		return false;
 	}
 	
-	/**
-	 * @return If the show is paused
-	 */
-	public boolean isPaused()
-	{
-		return this.status == TedSerie.STATUS_PAUSE;
-	}
 	/**
 	 * @return If the show is on hold
 	 */
@@ -611,160 +439,6 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		return this.status == TedSerie.STATUS_DISABLED;
 	}
 
-	/**
-	 * @return Returns if ted has to use the episode scheduler
-	 */
-	public boolean isUseEpisodeSchedule() 
-	{
-		return useEpisodeSchedule;
-	}
-
-	/**
-	 * Set if ted has to use the episode scheduler
-	 * @param useSchedule
-	 * @param newdays Days ted has to check for new episodes
-	 */
-	public void setEpisodeSchedule(boolean useSchedule, boolean[] newdays) 
-	{
-		// if someone changed the schedule, set this week as last week
-		// unless the show is on hold
-		if (useSchedule && !arraysEqual(newdays, this.days) && (!this.isHold() && ! this.isHiatus()))
-		{
-			this.setLastDatesToToday();
-		}
-		this.useEpisodeSchedule = useSchedule;
-		this.days = newdays;
-		this.resetStatus(true);
-	}
-
-	/**
-	 * @return The days ticked by the user in the scheduler
-	 */
-	public boolean[] getDays() 
-	{
-		if (days != null)
-		{
-			return days;
-		}
-		else
-		{
-			days = this.initDays();
-			return days;
-		}
-	}
-	
-	/**
-	 * Set the days used by the scheduler
-	 * @param newDays
-	 */
-	public void setDays(boolean[] newDays)
-	{
-		this.days = newDays;
-	}
-
-	/**
-	 * @return Returns the weeklyInterval.
-	 */
-	public int getWeeklyInterval() 
-	{
-		return weeklyInterval;
-	}
-
-	/**
-	 * @param weeklyInterval The weeklyInterval to set.
-	 */
-	public void setWeeklyInterval(int weeklyInterval) 
-	{
-		this.weeklyInterval = weeklyInterval;
-	}
-
-	/**
-	 * @return If ted has to use the break scheduler
-	 */
-	public boolean isUseBreakSchedule() 
-	{
-		return useBreakSchedule;
-	}
-
-	/**
-	 * Set if ted has to use the breakscheduler
-	 * @param useBreakSchedule
-	 */
-	public void setUseBreakSchedule(boolean useBreakSchedule) 
-	{
-		this.useBreakSchedule = useBreakSchedule;
-		this.resetStatus(true);
-	}
-
-	/**
-	 * @return Until when the show has a break
-	 */
-	public long getBreakUntil() 
-	{
-		return breakUntil;
-	}
-	
-	/**
-	 * @return When when the show has a break
-	 */
-	public long getBreakFrom() 
-	{
-		return breakFrom;
-	}
-
-	/**
-	 * Set untill when the show has a break
-	 * @param day
-	 * @param month
-	 * @param year
-	 */
-	public void setBreakUntil(int day, int month, int year) 
-	{
-		Calendar c = new GregorianCalendar();
-		c.set(year, month, day);
-		this.breakUntil = c.getTimeInMillis();
-	}
-	
-	public void setBreakUntil(long date)
-	{
-		this.breakUntil = date;
-	}
-	
-	/**
-	 * Set when when the show has a break
-	 * @param day
-	 * @param month
-	 * @param year
-	 */
-	public void setBreakFrom(int day, int month, int year) 
-	{
-		Calendar c = new GregorianCalendar();
-		c.set(year, month, day);
-		this.breakFrom = c.getTimeInMillis();
-	}
-	
-	public void setBreakFrom(long date)
-	{
-		this.breakFrom = date;
-	}
-	
-	/**
-	 * @return The episode the user wants the break to start
-	 */
-	public int getBreakEpisode()
-	{
-		return this.breakEpisode;
-	}
-
-	/**
-	 * Set the episode number the user wants the break to start
-	 * @param i
-	 */
-	public void setBreakEpisode (int i)
-	{
-		this.breakEpisode = i;
-	}
-	
 	/**
 	 * Set the feeds for this serie
 	 * @param serieFeeds
@@ -881,36 +555,10 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	{		
 		if (this.isHold())
 		{
-			// if we use the breakschedule: return next date we put the show on check again
-			if (this.useBreakSchedule)
-			{			
-				DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-				
-				return Lang.getString("TedSerie.StatusOnHoldUntill") + " " + df.format(breakUntil); //$NON-NLS-1$
-			}
-			else
-			{
-				return Lang.getString("TedSerie.StatusOnHold"); //$NON-NLS-1$
-			}
+			// if we use the breakschedule: return next date we put the show on check again			
+			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 			
-		}
-		else if (this.isPaused())
-		{
-			// if we use the episode schedule: return next day the show will be on check again
-			if (this.useEpisodeSchedule)
-			{
-				String[] dayNames = {Lang.getString("TedSerie.Sunday"), Lang.getString("TedSerie.Monday"), Lang.getString("TedSerie.Tuesday"), Lang.getString("TedSerie.Wednesday"), Lang.getString("TedSerie.Thursday"), Lang.getString("TedSerie.Friday"), Lang.getString("TedSerie.Saturday")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
-				// display "waiting until next tuesday"
-				Calendar c = new GregorianCalendar();
-				int today = c.get(Calendar.DAY_OF_WEEK);
-				// find next day in days array that is on true
-				int nextDay = this.getNextCheckDay(today);
-				return Lang.getString("TedSerie.OnPauseTillNext")+ " " + dayNames[nextDay]; //$NON-NLS-1$
-			}
-			else
-			{
-				return Lang.getString("TedSerie.OnPause"); //$NON-NLS-1$
-			}
+			return Lang.getString("TedSerie.StatusOnHoldUntill") + " " + df.format(breakUntil); //$NON-NLS-1$
 			
 		}
 		else if (this.isHiatus())
@@ -926,25 +574,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			return Lang.getString("TedSerie.Idle"); //$NON-NLS-1$
 		}
 	}
-	
-	
-
-	public boolean isUseBreakScheduleEpisode() {
-		return useBreakScheduleEpisode;
-	}
-
-	public void setUseBreakScheduleEpisode(boolean useBreakScheduleEpisode) {
-		this.useBreakScheduleEpisode = useBreakScheduleEpisode;
-	}
-
-	public boolean isUseBreakScheduleFrom() {
-		return useBreakScheduleFrom;
-	}
-
-	public void setUseBreakScheduleFrom(boolean useBreakScheduleFrom) {
-		this.useBreakScheduleFrom = useBreakScheduleFrom;
-	}
-	
+		
 	public void setUsePresets(boolean usePresets)
 	{
 		this.usePresets = usePresets;
@@ -1064,21 +694,11 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 				this.setCurrentEpisode(nextSE);
 			}
 		}
-		
-		updateStatus(getCurrentEpisode());
 	}
 	
 	public boolean isDoubleEpisode()
 	{
 		return getCurrentStandardStructure().isDouble();
-	}
-
-	/**
-	 * @param episode
-	 */
-	public void updateStatus(int episode) 
-	{
-		this.getScheduler().updateManualSchedulerStatus(episode);		
 	}
 
 	/**
@@ -1107,6 +727,8 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	{
 		if (currentEpisodeSS == null)
 		{
+			// There was not yet an seasonepisode: probably old version of ted
+			// create one
 			SeasonEpisode episodeToFind = new SeasonEpisode(this.currentSeason, this.currentEpisode);
 			if (isEpisodeScheduleAvailable())
 			{
@@ -1134,23 +756,6 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	public Vector<StandardStructure> getPubishedAndAiredEpisodes() 
 	{
 		return this.getScheduler().getPubishedAndAiredEpisodes();
-	}
-
-	public int getLastDayChecked() 
-	{
-		return this.lastDayChecked;
-	}
-
-	public int getLastYearChecked() 
-	{
-		return this.lastYearChecked;
-	}
-
-	public void setLastDateChecked(int day, int week, int year) 
-	{
-		this.lastDayChecked = day;
-		this.lastWeekChecked = week;
-		this.lastYearChecked = year;	
 	}
 
 	public boolean isUseAutoSchedule() 
@@ -1216,6 +821,9 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		this.timeZone = timeZone;
 	}
 	
+	/**
+	 * @return The timezone of this serie
+	 */
 	public int getTimeZone()
 	{
 		return this.timeZone;
@@ -1331,7 +939,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 
 	public String getTVRageID() 
 	{	
-		if ((this.tvRageID == null))
+		if ((this.tvRageID == null) || this.tvRageID.equals(""))
 		{
 			// try to find TVRageID
 			this.tvRageID = this.scheduler.getTVRageID(this);
@@ -1384,5 +992,55 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			this.setStatus(STATUS_DISABLED);
 		}
 		
+	}
+
+
+
+
+	public void setBreakUntil(long time) 
+	{
+		this.breakUntil = time;		
+	}
+
+	/**
+	 * Copies all fields of original into this TedSerie
+	 * @param original
+	 */
+	public void copy(TedSerie original) 
+	{
+		// Straight away copying
+		this.name = original.name;
+		this.checkDate = original.checkDate;
+		this.minSize = original.minSize;
+		this.maxSize = original.maxSize;
+		this.keywords = original.keywords;
+		this.status = original.status;
+		this.useAutoSchedule = original.useAutoSchedule;
+		this.minNumOfSeeders = original.minNumOfSeeders;
+		this.statusString = original.statusString; //$NON-NLS-1$
+		this.usePresets = original.usePresets;
+		this.searchName = original.searchName;
+		this.timeZone = original.timeZone;
+		this.epguidesName = original.epguidesName;
+		this.tvCom = original.tvCom;
+		this.tvRageID = original.tvRageID;
+		this.setScheduler(original.getScheduler());
+		
+		this.feeds.clear();
+		// copy all feeds
+		Vector<TedSerieFeed> originalFeeds = original.getFeeds();
+		for (int i = 0; i < originalFeeds.size(); i++)
+		{
+			TedSerieFeed originalFeed = originalFeeds.get(i);
+			TedSerieFeed newFeed = new TedSerieFeed(originalFeed.getUrl(), originalFeed.getSelfmade());
+			this.feeds.add(newFeed);
+		}
+		
+		// Copy season/episode
+		if (!this.isDaily && !original.isDaily)
+		{
+			this.isDaily = false;
+			this.currentEpisodeSS = new SeasonEpisode((SeasonEpisode)original.getCurrentStandardStructure());
+		}
 	}
 }

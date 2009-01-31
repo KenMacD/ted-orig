@@ -69,6 +69,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	public final static String FILTERCOMMAND = "filter";
 	public final static String SCHEDULECOMMAND = "schedule";
 	private String currentTab = this.GENERALCOMMAND;
+	private TedSerie originalSerie;
 	
 	/****************************************************
 	 * CONSTRUCTORS
@@ -84,9 +85,18 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		this.setModal(true);
 		this.setResizable(false);
 		this.tedDialog = frame;
-		this.currentSerie = serie;
+		this.originalSerie = serie;
 		this.newSerie = newSerie;
 		this.currentSerieName = serie.getName();
+		
+		if (serie.isDaily())
+		{
+			this.currentSerie = new TedDailySerie((TedDailySerie)serie);
+		}
+		else
+		{
+			this.currentSerie = new TedSerie(serie);
+		}
 		this.initGUI();
 	}
 
@@ -205,7 +215,7 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 		
 		schedulePanel = new SchedulePanel();
 		jShowTabs.add(this.SCHEDULECOMMAND, schedulePanel);
-		schedulePanel.setValues(this.currentSerie);
+		schedulePanel.setValues(this.currentSerie, this.newSerie);
 		schedulePanel.setSize(this.width, this.tabsHeight);
 		
 		this.setVisible(true);
@@ -251,6 +261,12 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 					// add the show to teds main window
 					tedDialog.addSerie(currentSerie);
 				}
+				else
+				{
+					// copy all changes into the original serie that is displayed
+					// in the main dialog
+					this.originalSerie.copy(this.currentSerie);
+				}
 				
 				// save the changed shows
 				tedDialog.saveShows();
@@ -293,27 +309,12 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			}
 		}
 		else if (action.equals("popupepisodedialog"))
-		{
-			// create a temp show with filled in values
-			TedSerie temp;
-			if (this.currentSerie.isDaily())
-			{
-				temp = new TedDailySerie();
-			}
-			else
-			{
-				temp = new TedSerie();
-			}
-			
-			temp.setName(currentSerie.getName());
-			// copy the episode schedule
-			temp.setScheduler(currentSerie.getScheduler());
-			
-			if (this.saveShow(temp))
+		{		
+			if (this.saveShow(currentSerie))
 			{		
 				// popup a select episode dialog
 				EpisodeChooserDialog ecd = new EpisodeChooserDialog(this);
-				ecd.loadEpisodes(temp);
+				ecd.loadEpisodes(currentSerie);
 				ecd.setVisible(true);
 			}
 		}
@@ -335,7 +336,6 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				copy.setName(generalPanel.getShowName());
 				copy.setUsePresets(generalPanel.isUsePresets());
 				this.currentSerie = copy;
-
 			}
 			this.generalPanel.setValues(this.currentSerie, this.newSerie);
 		}
@@ -358,11 +358,9 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 			this.schedulePanel.saveValues(show);
 			this.generalPanel.saveValues(show);	
 			
-			boolean updateFeedsAndSchedule = false;
-			
 			if (!currentName.equals(show.getName()) && !currentName.equals(""))
 			{
-				// ask user if he wants to generate feeds causet he name has changed
+				// ask user if he wants to generate feeds cause the name has changed
 				int answer = JOptionPane.showOptionDialog(null, 
 						Lang.getString("TedEpisodeDialog.NameAdjustedQuestion") + " " + 
 						Lang.getString("TedEpisodeDialog.GenerateFeedsQuestion"),
@@ -377,7 +375,21 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				}
 				else if (answer == JOptionPane.OK_OPTION)
 				{
-					updateFeedsAndSchedule = true;
+					show.setEpguidesName("");
+					show.setTVRageID("");
+
+					// force schedule update
+					show.clearScheduler();
+					
+					this.schedulePanel.setValues(show, true);
+					
+					// reset name
+					show.setSearchName("");
+					// auto generate feed locations	
+					show.generateFeedLocations();
+					
+					// update the panel with the new feeds
+					this.feedsPanel.setValues(show);
 				}
 			}
 		
@@ -392,28 +404,18 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				
 				if (answer == JOptionPane.YES_OPTION)
 				{
-					updateFeedsAndSchedule = true;
+					// reset name
+					show.setSearchName("");
+					// auto generate feed locations	
+					show.generateFeedLocations();
+					
+					// update the panel with the new feeds
+					this.feedsPanel.setValues(show);
 				}
 				if (answer == JOptionPane.NO_OPTION)
 				{
 					return false;
 				}
-			}
-			
-			if (updateFeedsAndSchedule)
-			{
-				// reset name
-				show.setSearchName("");
-				show.setEpguidesName("");
-				// auto generate feed locations	
-				show.generateFeedLocations();
-				
-				// set new values and save them
-				schedulePanel.setValues(show);
-				feedsPanel.setValues(show);
-
-				// force schedule update
-				show.clearScheduler();	
 			}
 			
 			if (this.feedsPanel.checkValues())
@@ -426,6 +428,9 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 					this.schedulePanel.saveValues(show);
 						
 					show.updateShowStatus();
+					
+					// set new values in schedule panel
+					schedulePanel.setValues(show, false);
 
 					// backup name
 					this.currentSerieName = show.getName();

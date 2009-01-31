@@ -440,7 +440,6 @@ public class SeasonEpisodeScheduler implements Serializable
 			{
 				// put serie on hold if airdate is after today
 				serie.setBreakUntil(airDate.getTime());
-				serie.setUseBreakSchedule(true);
 				serie.setStatus(TedSerie.STATUS_HOLD);
 			}
 			else
@@ -473,10 +472,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	public void updateShowStatus() 
 	{
 		if (!serie.isDisabled())
-		{
-			Calendar date =  new GregorianCalendar();
-			boolean dayToCheck = false;
-			
+		{		
 			// if the show is on hiatus, check if there is already some
 			// episode planning for the next episode available
 			if (serie.isHiatus())
@@ -497,97 +493,7 @@ public class SeasonEpisodeScheduler implements Serializable
 				// If the auto scheduler isn't set put the show to check. 
 				serie.setStatus(TedSerie.STATUS_CHECK);
 			}
-			
-			// For now I don't want to remove the code below so this weird construct.
-			if (true)
-				return; 
-			
-				// if show is hiatus: put on check, cause with auto schedule enabled
-				// shows cannot be on hiatus anymore.
-				if (serie.isHiatus())
-				{
-					serie.setStatus(TedSerie.STATUS_CHECK);
-				}
-				
-				// use manual schedules
-				if (serie.isUseEpisodeSchedule())
-				{
-					if(!serie.isHold() && !serie.isHiatus())
-					{
-						// check if the current day is a selected air day
-						date.setFirstDayOfWeek(Calendar.SUNDAY);
-						int week = date.get(Calendar.WEEK_OF_YEAR);
-						int day = date.get(Calendar.DAY_OF_WEEK);
-						int year = date.get(Calendar.YEAR);
-		
-						// minus one day, sunday is 1 in java, 0 in our array
-						day --;
-						// get week and 2 weeks ago
-						date.add(Calendar.WEEK_OF_YEAR, -1);
-						int weekAgo = date.get(Calendar.WEEK_OF_YEAR);
-						date.add(Calendar.WEEK_OF_YEAR, -1);
-						int twoWeeksAgo = date.get(Calendar.WEEK_OF_YEAR);
-						int yearTwoWeeksAgo = date.get(Calendar.YEAR);
-						int lastWeekChecked = serie.getLastWeekChecked();
-						int lastDayChecked = serie.getLastDayChecked();
-						int lastYearChecked = serie.getLastYearChecked();
-						
-						if ((lastWeekChecked == week) && (serie.checkDay(lastDayChecked + 1, day)))
-						{
-							// if we last checked in the current week, and there is a day selected between the lastchecked day and today
-							dayToCheck = true;
-						}
-						else if((lastWeekChecked == weekAgo) && (serie.checkDay(0, day) || serie.checkDay(lastDayChecked + 1, 6)))
-						{
-							// if the last week we checked was last week, and there is a day checked in this week (from start to today) or in the last week (from last checked day to the end of the week)
-							dayToCheck = true;
-						}
-						else if ((lastWeekChecked <= twoWeeksAgo && lastYearChecked == yearTwoWeeksAgo) && (serie.checkDay(0, 6)))
-						{
-							// if we last checked 2 weeks ago and there is at least one day checked in the preferences
-							dayToCheck = true;
-						}
-						else if ((lastYearChecked < year) && (serie.checkDay(0, 6)))
-						{
-							// if we last checked last year and there is one day checked in the preferences
-							dayToCheck = true;
-						}
-						
-						if (dayToCheck)
-						{
-							// set status and date
-							serie.setStatus(TedSerie.STATUS_CHECK);
-							
-							serie.setLastDateChecked(day, week, year);
-						}
-					}	
-				}	
-				if(serie.isUseBreakSchedule() && false)
-				{
-					// get date of today
-					date =  new GregorianCalendar();
-					
-					if (serie.isHold())
-					{
-						// check if its time to set the hold show on check again
-						if (serie.getBreakUntil() <= date.getTimeInMillis())
-						{
-							serie.setStatus(TedSerie.STATUS_CHECK);
-							serie.setUseBreakSchedule(false);
-							serie.setUseBreakScheduleFrom(false);
-							serie.setUseBreakScheduleEpisode(false);
-						}
-					}
-					else
-					{
-						if(serie.isUseBreakScheduleFrom() && (serie.getBreakFrom() < date.getTimeInMillis()))
-						{
-							serie.setStatus(TedSerie.STATUS_HOLD);
-						}
-					}
-				}
-			}
-		//}	
+		}
 	}
 	
 	public StandardStructure getLastAiredEpisode()
@@ -619,27 +525,6 @@ public class SeasonEpisodeScheduler implements Serializable
 		return nothingFoundStructure;
 	}
 	
-	/**
-	 * Check what the status has to be after a certain episode has been found
-	 * @param episode
-	 */
-	public void updateManualSchedulerStatus(int episode) 
-	{	
-		if (!serie.isSerieAndGlobalUseAutoSchedule())
-		{
-			// if the episode was a break episode, put the show on hold
-			if (serie.checkBreakEpisode(episode) && !serie.isHiatus())
-			{
-				serie.setStatus(TedSerie.STATUS_HOLD);
-			}
-			// if we use the episode schedule, put the show on pause
-			else if (serie.isUseEpisodeSchedule() && serie.isCheck())
-			{
-				serie.setStatus(TedSerie.STATUS_PAUSE);
-			}	
-		}
-	}
-
 	/**
 	 * Forces an update of the schedule. Needed when the epguides id is changed.
 	 */
@@ -679,13 +564,20 @@ public class SeasonEpisodeScheduler implements Serializable
 
 	public Date getLastUpdateDate() 
 	{
-		// subtract the interval from the next update date
-		Date temp = new Date();
-		temp.setTime(this.checkEpisodeSchedule.getTime());
-        Calendar weekback = Calendar.getInstance();
-        weekback.setTime(temp);
-        weekback.add(Calendar.DAY_OF_YEAR, -(this.getIntervalInDays()));
-        return weekback.getTime();
+		if (this.checkEpisodeSchedule != null)
+		{
+			// subtract the interval from the next update date
+			Date temp = new Date();
+			temp.setTime(this.checkEpisodeSchedule.getTime());
+	        Calendar weekback = Calendar.getInstance();
+	        weekback.setTime(temp);
+	        weekback.add(Calendar.DAY_OF_YEAR, -(this.getIntervalInDays()));
+	        return weekback.getTime();
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	private int getIntervalInDays() 

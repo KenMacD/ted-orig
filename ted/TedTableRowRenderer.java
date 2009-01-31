@@ -122,11 +122,7 @@ private ImageIcon getIconForShow(TedSerie show)
 		{
 			return showActive;
 		}
-		if (show.isPaused())
-		{
-			return showPaused;
-		}
-		else if (show.isCheck())
+   		if (show.isCheck())
 		{
 			return showPlay;
 		}

@@ -71,11 +71,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 					"max(p;5dlu), 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu):grow, max(p;15dlu), max(p;15dlu)", 
 					"max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 115dlu");
 			this.setLayout(thisLayout);
-			/*wPanel = new WeekSchedulePanel();
-			bPanel = new BreakSchedulePanel(); 
-			{
-				this.add(wPanel, new CellConstraints("3, 3, 5, 1, default, default"));
-			}*/
+
 			{
 				checkAutoSchedule = new JCheckBox();
 				this.add(checkAutoSchedule, new CellConstraints("2, 1, 5, 1, default, default"));
@@ -85,7 +81,6 @@ public class SchedulePanel extends JPanel implements ActionListener
 				checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
 			}
 			{
-				//this.add(bPanel, new CellConstraints("3, 5, 5, 1, default, default"));
 				{
 					labelEpGuides = new JLabel();
 					this.add(labelEpGuides, new CellConstraints("3, 2, 1, 1, default, default"));
@@ -162,7 +157,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 		}
 	}
 	
-	public void setValues(TedSerie serie)
+	public void setValues(TedSerie serie, boolean newShow)
 	{
 		this.serie = serie;
 		
@@ -170,17 +165,23 @@ public class SchedulePanel extends JPanel implements ActionListener
 		this.textEpguidesID.setText(serie.getEpguidesName());
 		this.textTVRage.setText(serie.getTVRageID());
 		
+		Date lastRefreshDate = serie.getScheduleLastUpdateDate();
+		Date nextRefreshDate = serie.getScheduleNextUpdateDate();
 		// Format the date
-		String lastRefresh = this.formatDate(serie.getScheduleLastUpdateDate());
-		String nextRefresh = this.formatDate(serie.getScheduleNextUpdateDate());
-		
-		this.labelRefresh.setText("The schedule was last refreshed on "
-									+ lastRefresh
-									+ ".");
-		
-		this.labelRefreshNext.setText("The next refresh is scheduled for "
-									+ nextRefresh
-									+ ".");
+		if (lastRefreshDate != null)
+		{
+			String lastRefresh = this.formatDate(lastRefreshDate);
+			this.labelRefresh.setText("The schedule was last refreshed on "
+					+ lastRefresh
+					+ ".");
+		}
+		if (nextRefreshDate != null)
+		{
+			String nextRefresh = this.formatDate(nextRefreshDate);
+			this.labelRefreshNext.setText("The next refresh is scheduled for "
+					+ nextRefresh
+					+ ".");
+		}
 		
 		this.updatePanels();
 	}
@@ -194,7 +195,6 @@ public class SchedulePanel extends JPanel implements ActionListener
 	public boolean checkValues()
 	{
 		return true;
-		//return bPanel.checkValues();
 	}
 
 	public void actionPerformed(ActionEvent e) 
@@ -223,10 +223,19 @@ public class SchedulePanel extends JPanel implements ActionListener
 		}		
 		else if (command.equals("opentvrage"))
 		{
-			String epguidesid = this.textTVRage.getText();
+			String tvrageid = this.textTVRage.getText();
 			try
 			{
-				BrowserLauncher.openURL("http://www.tvrage.com/shows/id-" + epguidesid + "/");
+				if (tvrageid == "" || tvrageid == null)
+				{
+					// Get epguides ID to open search page on tvrage
+					String epguidesid = this.textEpguidesID.getText();
+					BrowserLauncher.openURL("http://www.tvrage.com/search.php?search="+ epguidesid +"+&show_ids=1");
+				}
+				else
+				{
+					BrowserLauncher.openURL("http://www.tvrage.com/shows/id-" + tvrageid + "/");
+				}
 				
 			} 
 			catch (MalformedURLException e1)
@@ -243,7 +252,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 		{
 			this.saveValues(serie);
 			serie.refreshSchedule();
-			this.setValues(serie);
+			this.setValues(serie, false);
 		}
 		
 	}
@@ -263,7 +272,5 @@ public class SchedulePanel extends JPanel implements ActionListener
 		this.labelRefresh.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
 		this.labelRefreshNext.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
 		this.buttonRefreshNow.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
-		//wPanel.setContentsEnabled(!isAutoSchedule || !autoScheduleGloballyEnabled);
-		//bPanel.setContentsEnabled(!isAutoSchedule || !autoScheduleGloballyEnabled);
 	}
 }

@@ -175,7 +175,6 @@ public class TedParser extends Thread
 			}
 			//progress++;
 			currentFeed = (TedSerieFeed) feeds.get(i);
-			tPDateChecker.setLastParseDate(currentFeed.getDate());
 			try 
 			{
 				URLConnection urlc;
@@ -375,20 +374,15 @@ public class TedParser extends Thread
 		int episode = 0;
 		String sTitle = item.getTitle().toString();
 		
-		// if the user doesnt want to download all or if we want to find the latest s + e
-		// check the episode and season (a watcher is set to download all)
-		if (!serie.isDownloadAll())
+		// check the episode and season		
+		SeasonEpisode se = getSeasonEpisodeFromItem(item, serie, source, false);
+		if (se != null)
 		{
-			
-			SeasonEpisode se = getSeasonEpisodeFromItem(item, serie, source, false);
-			if (se != null)
-			{
-				season = se.getSeason();
-				episode = se.getEpisode();
-			}
-			// used if user wants to get the latest season/episode from the feed
-			// limit of 50 as maximum episode/season number
+			season = se.getSeason();
+			episode = se.getEpisode();
 		}
+		// used if user wants to get the latest season/episode from the feed
+		// limit of 50 as maximum episode/season number
 			
 		// if the season is the current season and episode is the next episode
 		// or if the season is the next season and episode is the first episode
@@ -409,8 +403,7 @@ public class TedParser extends Thread
 			foundCorrectEpisode = sTitle.contains("" + (episode + 1));
 		}
 		
-		if ( foundCorrectEpisode 
-		  || serie.isDownloadAll())
+		if ( foundCorrectEpisode )
 		{			
 			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getTimeOutInSecs());
 			
@@ -507,10 +500,6 @@ public class TedParser extends Thread
 					}	
 				}
 			}
-		}
-		else
-		{
-			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 		}
 		
 	}
@@ -1047,8 +1036,6 @@ public class TedParser extends Thread
 			
 			// increase the season/episode based on the schedule
 			serie.goToNextEpisode();
-						
-			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
 			
 			// save the shows
 			tMainDialog.saveShows();
@@ -1056,7 +1043,7 @@ public class TedParser extends Thread
 			// Write log message
 			TedLog.simpleLog(generateLogMessage());
 			
-			if (serie.isCheck() || serie.isPaused())
+			if (serie.isCheck())
 			{
 				// search for more torrents if the status is check or pause
 				parseFeeds(serie, tMainDialog);
@@ -1112,21 +1099,8 @@ public class TedParser extends Thread
 
 			foundTorrent = true;
 			
-			tPDateChecker.setLastParseDate(tPDateChecker.getThisParseDate());
-			
 			// save the shows
-			tMainDialog.saveShows();
-			
-			// if no episode is found set the date of this serie
-	        // otherwise ted checks again the whole feed
-	        /*if(foundTorrent)
-	        {
-	        	// we found something so we can pause the serie again
-	        	if (serie.isUseEpisodeSchedule())
-		        {
-		        	serie.setStatus(TedSerie.STATUS_PAUSE);
-		        }
-		    }*/			
+			tMainDialog.saveShows();		
 		}
 		else
 		{
