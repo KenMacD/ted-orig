@@ -155,6 +155,9 @@ public class TedParseHandler extends Thread
 		// if it is the day to start checking the serie again
 		serie.updateShowStatus();
 		
+		// Make sure the show is put in the correct place in the table.
+		mainDialog.updateAllSeries();
+		
 		TedParser tp = new TedParser(serie, mainDialog, forceParse);
 		runningThreads.add(tp);		
 	}

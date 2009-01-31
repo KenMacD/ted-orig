@@ -849,6 +849,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			{
 				selectedSerie.setUseAutoSchedule(!selectedSerie.isUseAutoSchedule());
 			}
+			
+			this.serieTable.updateAllSeries();
 		}
 		else if (action.equals("sort_name"))
 		{

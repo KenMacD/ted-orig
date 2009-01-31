@@ -1314,16 +1314,17 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 				// if status is hold for both shows, sort on airdate
 				StandardStructure thisSStructure = this.getCurrentStandardStructure();
 				StandardStructure secondSStructure = second.getCurrentStandardStructure();
-				
+								
 				result = thisSStructure.compareDateTo(secondSStructure);			
 			}
-			else
+
+			// Until this point everything was the same. Sort on name.
+			if (result == 0)
 			{
-				// sort on name
 				result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
 			}
 		}
-		
+				
 		return result;
 	}
 
