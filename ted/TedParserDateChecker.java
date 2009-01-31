@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import com.sun.cnpi.rss.elements.Item;
+import com.sun.syndication.feed.synd.SyndEntry;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -41,13 +41,13 @@ public class TedParserDateChecker
 	 * @param item Item 
 	 * @return Date of item (in millisecs)
 	 */
-	public long getItemDate(Item item)
+	public long getItemDate(SyndEntry item)
 	{
 		Calendar c = new GregorianCalendar();
 		int year, month, day, hour, minute, second;
 		try
 		{
-			String dateStr = item.getPubDate().toString().toLowerCase();
+			String dateStr = item.getPublishedDate().toString().toLowerCase();
 		
 			StringTokenizer st = new StringTokenizer(dateStr, " ,:");
 			st.nextToken();
@@ -77,7 +77,7 @@ public class TedParserDateChecker
 	 * @param serie Show the item is from
 	 * @return If ted already checked this item in the past
 	 */
-	public boolean alreadyChecked(Item item, TedSerieFeed feed)
+	public boolean alreadyChecked(SyndEntry item, TedSerieFeed feed)
 	{
 		long date = getItemDate(item);
 		if(date > feed.getDate())
@@ -91,7 +91,7 @@ public class TedParserDateChecker
 		return true;
 	}
 	
-	public long newestEntryInFeed(Item item)
+	public long newestEntryInFeed(SyndEntry item)
 	{
 		long date = getItemDate(item);		
 		return date;

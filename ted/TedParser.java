@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,12 +23,11 @@ import net.sf.torrentsniffer.torrent.TorrentState;
 import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 
-import com.sun.cnpi.rss.elements.Channel;
-import com.sun.cnpi.rss.elements.Item;
-import com.sun.cnpi.rss.elements.Rss;
-import com.sun.cnpi.rss.parser.RssParser;
-import com.sun.cnpi.rss.parser.RssParserException;
-import com.sun.cnpi.rss.parser.RssParserFactory;
+import com.sun.syndication.feed.rss.*;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -57,7 +57,7 @@ public class TedParser extends Thread
 	private TorrentInfo bestTorrentInfo;
 	private URL bestTorrentUrl = null;
 	private Vector<DailyDate> dailyItems;
-	private Channel[] feedsData = null;
+	private SyndFeed[] feedsData = null;
 	private int totalNumberOfFeedItems = 0;
 	private TedSerie currentSerie;
 	
@@ -159,15 +159,14 @@ public class TedParser extends Thread
 			// do not load them again
 			return;
 		}
-		
-		Rss rss;
-		// load xml
-		// parse the rss feed of the serie
-		RssParser parser;
+	
+		// Set up the rss parser
+		SyndFeedInput input = new SyndFeedInput();
+			
 		Vector feeds = serie.getFeeds();
 		TedSerieFeed currentFeed;
 		
-		feedsData = new Channel[feeds.size()];
+		feedsData = new SyndFeed[feeds.size()];
 		for (int i = 0; i < feeds.size(); i++)
 		{
 			if (main.getStopParsing())
@@ -185,36 +184,15 @@ public class TedParser extends Thread
 				TedLog.debug("Loading feed from " + serie.getName() + " URL: " + feedURL); //$NON-NLS-1$ //$NON-NLS-2$
 				serie.setStatusString(Lang.getString("TedParser.StatusLoading") + " " + feedURL, tMainDialog);		 //$NON-NLS-1$
 				
-				urlc = feedURL.openConnection();
-				// timeout for connection
-				urlc.setConnectTimeout(TedConfig.getTimeOutInSecs() * 1000);
-				
-				// create an RSS parser
-				parser = RssParserFactory.createDefault();
-				InputStream inputStream = urlc.getInputStream();
-				
-				rss = parser.parse(inputStream);
-				
-				Channel channel = rss.getChannel();
-				
-				feedsData[i] = channel;
+				// Read in the feed.
+		        SyndFeed feed = input.build(new XmlReader(feedURL));
+		       								
+				feedsData[i] = feed;
 				// This call can throw a nullpointer exception if no items are present in the feed, catched below
-				totalNumberOfFeedItems += channel.getItems().size();
+				totalNumberOfFeedItems += feed.getEntries().size();
 				
 				// clear memory
-				channel = null;
-				rss = null;
-				parser = null;
-				inputStream.close();
-
-			}
-			catch (RssParserException e) 
-			{
-				String message = Lang.getString("TedParser.ErrorCreatingParser1") + " " + serie.getName() + //$NON-NLS-1$
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser2") + 
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser3") + " " + currentFeed.getUrl(); //$NON-NLS-1$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				feedsData[i] = null;
+				feed = null;
 			}
 	        catch (MalformedURLException e) 
 	        {
@@ -277,7 +255,7 @@ public class TedParser extends Thread
 		int itemProgress = 0;
 		double progressPerItem = 100.0 / this.totalNumberOfFeedItems;
 		this.checkedTorrents = 0;
-		Channel channel;
+		SyndFeed feed;
 		
 		for (int i = 0; i < feedsData.length; i++)
 		{
@@ -286,15 +264,15 @@ public class TedParser extends Thread
 				return;
 			}
 			
-			channel = feedsData[i];
+			feed = feedsData[i];
 			
-			if (channel != null)
+			if (feed != null)
 			{
-		        Object[] items = feedsData[i].getItems().toArray();        
+				List<SyndEntry> items = feed.getEntries();       
 	
 		        // walk through the different entries until we find a desired episode
 		        // we walk in the wrong direction to get older torrents first (older = more seeders)   	        		        
-		        for (int j = items.length - 1; j >= 0; j--)
+		        for (SyndEntry item:items)
 		        {
 		        	if (main.getStopParsing())
 					{
@@ -303,7 +281,6 @@ public class TedParser extends Thread
 		        	progress += progressPerItem;
 		        	itemProgress++;
 		        	
-		        	Item item = (Item)items[j];
 		        	serie.setProgress((int) Math.abs(progress), tMainDialog);
 		        	serie.setStatusString(Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems , tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
 		        	
@@ -313,7 +290,7 @@ public class TedParser extends Thread
 		        		{
 	        				if(!serie.isDaily)
 	        				{
-	        					this.ParseItem(item, serie, feedsData[i].getTitle().getText());
+	        					this.ParseItem(item, serie, feed.getTitle());
 	        				}
 	        				else
 	        				{
@@ -332,7 +309,6 @@ public class TedParser extends Thread
 		        	else
 		        	{
 		        		i = feeds.size();
-		        		j = 0;
 		        	}
 				}
 		        
@@ -393,7 +369,7 @@ public class TedParser extends Thread
 	 * @throws FileSizeException 
 	 * @throws HeadlessException 
 	 */
-	private void ParseItem(Item item, TedSerie serie, String source)
+	private void ParseItem(SyndEntry item, TedSerie serie, String source)
 	{
 		int season = 0;
 		int episode = 0;
@@ -545,7 +521,7 @@ public class TedParser extends Thread
 	 * @param item the item which has to be checked
 	 * @param serie the daily serie which filters the torrents has to satisfy 
 	 */
-	private void addDailyItem(Item item, TedSerie serie)
+	private void addDailyItem(SyndEntry item, TedSerie serie)
 	{
 		TedIO tIO = new TedIO();
 		String sTitle = item.getTitle().toString();
@@ -1159,80 +1135,6 @@ public class TedParser extends Thread
 		
 		this.bestTorrentUrl = null;
 	}
-
-	public void setToLatestDate(TedSerie serie, TedFeedsTableModel table, TedSerieFeed[] feeds, TedMainDialog main)
-	{
-		this.tMainDialog = main;
-		Rss rss;
-		// parse the rss feed of the serie
-		RssParser parser;
-		
-		TedSerieFeed currentFeed;
-		Vector newFeeds =  new Vector(); 
-		
-		// walk through all the feeds for this show
-		for (int i = 0; i < feeds.length; i++)
-		{
-			currentFeed = feeds[i];
-			TedSerieFeed tempFeed;
-			
-			try 
-			{
-				// create an RSS parser
-				parser = RssParserFactory.createDefault();
-				rss = parser.parse(new URL(currentFeed.getUrl()));
-				
-				Channel channel = rss.getChannel();
-		        Object[] items = channel.getItems().toArray();
-
-		        Item item = (Item)items[0];
-		        tempFeed = new TedSerieFeed(currentFeed.getUrl(), 0);
-		        tempFeed.setDate(tPDateChecker.newestEntryInFeed(item));
-		        newFeeds.addElement(tempFeed);
-			}
-			catch (RssParserException e) 
-			{
-				String message = Lang.getString("TedParser.ErrorCreatingParser1") + " " + serie.getName() + //$NON-NLS-1$
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser2") + 
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser3") + " " + currentFeed.getUrl(); //$NON-NLS-1$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
-			}
-	        catch (MalformedURLException e) 
-	        {
-	        	String message = Lang.getString("TedParser.ErrorNotValidURL1") + " " +  serie.getName() + ". " + Lang.getString("TedParser.ErrorNotValidURL2") + //$NON-NLS-1$ //$NON-NLS-2$
-				"\n" + currentFeed.getUrl();; //$NON-NLS-1$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
-			}
-	        catch (IOException e) 
-			{
-	        	String message = Lang.getString("TedParser.Error404Feed1") + " " + serie.getName() + 
-	        	".\n" + Lang.getString("TedParser.Error404Feed2") +currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
-			}
-	        catch (NullPointerException e)
-	        {
-	        	// no items in the feed
-	        	String message = Lang.getString("TedParser.NoFeedItems1") + serie.getName() + 
-	        		"\n" + Lang.getString("TedParser.NoFeedItems1") + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-	        }
-	        catch (Exception e)
-	        {
-	        	TedLog.error(e, Lang.getString("TedParser.UnknownException") + " ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
-	        }
-		}
-		
-		if(newFeeds.size()!=0)
-		{
-			table.clear();
-			
-			for(int i=0; i<newFeeds.size(); i++)
-				table.addSerie((TedSerieFeed)newFeeds.get(i));
-		}
-	}
 	
 	private String generateOverviewMessage()
 	{
@@ -1347,57 +1249,33 @@ public class TedParser extends Thread
 	{
 		Vector items = new Vector();
 		
-		Rss rss;
-		// load xml
-		// parse the rss feed of the serie
-		RssParser parser;
-		Vector feeds = serie.getFeeds();
+		SyndFeedInput sfi = new SyndFeedInput();
+		
+		Vector<TedSerieFeed> feeds = serie.getFeeds();
 		TedSerieFeed currentFeed;
-		// walk through all the feeds for this show
-		//toDo += feeds.size();
-		
-		
+				
 		for (int i = 0; i < feeds.size(); i++)
 		{
-			//progress++;
 			currentFeed = (TedSerieFeed) feeds.get(i);
-			//tPDateChecker.setLastParseDate(currentFeed.getDate());
 			try 
 			{
 				URLConnection urlc;
 				URL feedURL = new URL(currentFeed.getUrl());
 				
-				TedLog.debug("Loading feed from " + serie.getName() + " URL: " + feedURL); //$NON-NLS-1$ //$NON-NLS-2$
-				//serie.setStatusString(Lang.getString("TedParser.StatusLoading") + " " + feedURL, tMainDialog);		 //$NON-NLS-1$
-				
-				urlc = feedURL.openConnection();
-				// timeout for connection
-				urlc.setConnectTimeout(TedConfig.getTimeOutInSecs() * 1000);
-				
-				// create an RSS parser
-				parser = RssParserFactory.createDefault();
-				InputStream inputStream = urlc.getInputStream();
-				
-				rss = parser.parse(inputStream);
-				inputStream.close();
-				
-				Channel channel = rss.getChannel();
-		        Object[] items2 = channel.getItems().toArray();
-		        
+				TedLog.debug("Loading feed from " + serie.getName() + " URL: " + feedURL);
+							
+				SyndFeed feed = sfi.build(new XmlReader(feedURL));
 
-		        for (int j = items2.length - 1; j >= 0; j--)
-		        {
+				List<SyndEntry>	entries = feed.getEntries();
+				
+		        for (int j = entries.size() - 1; j >= 0; j--)
+		        {		        	
+		        	SyndEntry item = (SyndEntry)entries.get(j);
 		        	
-		        	Item item = (Item)items2[j];
-		        	//serie.setProgress((int) Math.abs(progress), tMainDialog);
-		        	//serie.setStatusString(Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + itemLength , tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
-		        	
-					//if(tPKeyChecker.checkKeywords(item.getTitle().toString().toLowerCase(), serie.getKeywords().toLowerCase()))
-		        	//{
 		        	SeasonEpisode se = null;
 		        	DailyDate dd = null;
 		        	if(!serie.isDaily)
-		        		se = this.getSeasonEpisodeFromItem(item, serie, channel.getTitle().getText(), true);
+		        		se = this.getSeasonEpisodeFromItem(item, serie, feed.getTitle(), true);
 		        	else
 		        		dd = this.getDailyDateFromItem(item);
 	        		
@@ -1414,41 +1292,26 @@ public class TedParser extends Thread
 		        }
 		        
 		        // clear memory
-		        channel = null;
-		        items2 = null;
-			}
-			catch (RssParserException e) 
-			{
-				String message = Lang.getString("TedParser.ErrorCreatingParser1") + " " + serie.getName() + //$NON-NLS-1$
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser2") + 
-				"\n" + Lang.getString("TedParser.ErrorCreatingParser3") + " " + currentFeed.getUrl(); //$NON-NLS-1$
-				//tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
+		        entries = null;
 			}
 	        catch (MalformedURLException e) 
 	        {
 	        	String message = Lang.getString("TedParser.ErrorNotValidURL1") + " " +  serie.getName() + ". " + Lang.getString("TedParser.ErrorNotValidURL2") + //$NON-NLS-1$ //$NON-NLS-2$
 				"\n" + currentFeed.getUrl();; //$NON-NLS-1$
-				//tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
 			}
 	        catch (IOException e) 
 			{
 	        	String message = Lang.getString("TedParser.Error404Feed1") + " " + serie.getName() + 
 	        	"\n" + Lang.getString("TedParser.Error404Feed2") + " "+currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				//tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
-				//return;
 			}
 	        catch (NullPointerException e)
 	        {
 	        	// no items in the feed
 	        	String message = Lang.getString("TedParser.NoFeedItems1") + serie.getName() + 
 	        		"\n" + Lang.getString("TedParser.NoFeedItems1") + currentFeed.getUrl(); //$NON-NLS-1$ //$NON-NLS-2$
-				//tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
 	        catch (Exception e)
 	        {
-	        	//TedLog.error(e, Lang.getString("TedParser.UnknownException") + " ("+currentFeed.getUrl()+")"); //$NON-NLS-1$ //$NON-NLS-2$
 	        }
 	   
 	       
@@ -1460,7 +1323,7 @@ public class TedParser extends Thread
 			return removeDoublesSE(items);
 	}
 
-	private DailyDate getDailyDateFromItem(Item item)
+	private DailyDate getDailyDateFromItem(SyndEntry item)
 	{
 		DailyDate dd = new DailyDate();
 
@@ -1624,7 +1487,7 @@ public class TedParser extends Thread
 			return null;
 	}
 
-	private SeasonEpisode getSeasonEpisodeFromItem(Item item, TedSerie serie, String text, boolean checkLatest)
+	private SeasonEpisode getSeasonEpisodeFromItem(SyndEntry item, TedSerie serie, String text, boolean checkLatest)
 	{
 		SeasonEpisode se = new SeasonEpisode();
 
