@@ -537,77 +537,29 @@ public class TedIO
 		
 		// if there is a new version
 		if(onlineversion > version)
-		{
-			int answer = -1;
-			
-			// ask user for confirmation if we have to
+		{			
+			// Ask user for confirmation if we have to.
+			// The downloadXML function is called from within this window.
 			if (TedConfig.askAutoUpdateFeedList())
-			{
+			{	
 				String message = Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"); //$NON-NLS-1$ //$NON-NLS-2$;
 				String title =  Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
-												
-				answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
-				
-				if (answer == 0)
-				{
-					// The user clicked the always button, so store it in the configuration.
-					TedConfig.setAutoUpdateFeedList(TedConfig.ALWAYS);
-					this.SaveConfig();
-				}
-				else if (answer == 3)
-				{
-					// Do the same for the never button.
-					TedConfig.setAutoUpdateFeedList(TedConfig.NEVER);
-					this.SaveConfig();
-				}
-				// For the yes/no option nothing has to be done as when the user sees this message
-				// dialog the configuration is already correct.
+					
+				TedUpdateWindow update = new TedUpdateWindow(title,
+															 message,
+															 "http://www.ted.nu/wiki/index.php/Show_list_changes",
+															 "DownloadXml",
+															 main);
 			}
 			
-			// If the user clicked the yes or always button... (for always the configuration has
-			// been saved so this can be asked with the isAutoUpdateFeedList function).
-			if (answer == JOptionPane.YES_OPTION || TedConfig.isAutoUpdateFeedList())
+			// Always download the new XML file.
+			if (TedConfig.isAutoUpdateFeedList())
 			{
 				// download the XML file
-				downloadXML(main, TedConfig.getTimeOutInSecs(), onlineversion);
+				downloadXML();
 				
-				int rows = mainTable.getRowCount();
-				
-				// check if the user wants us to update the shows
-				answer = -1;
-				if(rows != 0)
-				{
-					if(TedConfig.askAutoAdjustFeeds())
-					{
-						String message = Lang.getString("TedIO.DialogUpdateShows1")+ "\n" +//$NON-NLS-1$
-		                				 Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
-		                				 Lang.getString("TedIO.DialogUpdateShows3");
-						String title =	Lang.getString("TedIO.DialogUpdateShowsHeader"); //$NON-NLS-1$
-
-						answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
-						
-						if (answer == 0)
-						{
-							// The user clicked the always button, so store it in the configuration.
-							TedConfig.setAutoAdjustFeeds(TedConfig.ALWAYS);
-							this.SaveConfig();
-						}
-						else if (answer == 3)
-						{
-							// Do the same for the never button.
-							TedConfig.setAutoAdjustFeeds(TedConfig.NEVER);
-							this.SaveConfig();
-						}
-						// For the yes/no option nothing has to be done as when the user sees this message
-						// dialog the configuration is already correctly set on "ask".
-					}
-					
-					if(TedConfig.isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
-					{
-						// adjust the feeds
-						this.UpdateShow(main, true, mainTable);
-					}	
-				}
+				// update the shows (if the user wants to).
+				updateShows(main, mainTable);				
 			}
 		}
 		else if(showresult)
@@ -617,6 +569,47 @@ public class TedIO
 	                Lang.getString("TedIO.DialogMostRecentShowsHeader"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
 		}
 
+	}
+	
+	public void updateShows(TedMainDialog main, TedTable mainTable)
+	{
+		int rows = mainTable.getRowCount();
+		
+		// check if the user wants us to update the shows
+		int answer = -1;
+		if(rows != 0)
+		{
+			if(TedConfig.askAutoAdjustFeeds())
+			{
+				String message = Lang.getString("TedIO.DialogUpdateShows1")+ "\n" +//$NON-NLS-1$
+                				 Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
+                				 Lang.getString("TedIO.DialogUpdateShows3");
+				String title =	Lang.getString("TedIO.DialogUpdateShowsHeader"); //$NON-NLS-1$
+
+				answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
+				
+				if (answer == 0)
+				{
+					// The user clicked the always button, so store it in the configuration.
+					TedConfig.setAutoAdjustFeeds(TedConfig.ALWAYS);
+					this.SaveConfig();
+				}
+				else if (answer == 3)
+				{
+					// Do the same for the never button.
+					TedConfig.setAutoAdjustFeeds(TedConfig.NEVER);
+					this.SaveConfig();
+				}
+				// For the yes/no option nothing has to be done as when the user sees this message
+				// dialog the configuration is already correctly set on "ask".
+			}
+			
+			if(TedConfig.isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
+			{
+				// adjust the feeds
+				this.UpdateShow(main, true, mainTable);
+			}	
+		}
 	}
 	
 	/**
@@ -744,14 +737,14 @@ public class TedIO
 	 * Download the XML file from internet with the show definitions
 	 * @param main
 	 */
-	public void downloadXML(TedMainDialog main, int timeOut, int onlineVersion)
+	public void downloadXML()
 	{		
 		try 
 		{
 			TedLog.debug("Downloading new show definitions XML"); //$NON-NLS-1$
 			// open connection to the XML file
 			URL url = new URL(this.XMLurl);
-			BufferedReader br = this.makeBufferedReader(url, timeOut);
+			BufferedReader br = this.makeBufferedReader(url, TedConfig.getTimeOutInSecs());
 			
 			// write the xml file
 			FileWriter fw  = new FileWriter(XML_SHOWS_FILE);
@@ -764,13 +757,10 @@ public class TedIO
 			fw.close();
 			br.close();
 			
-			if (onlineVersion < 0)
-			{
-				// get the version of the XML file
-				TedXMLParser parser = new TedXMLParser();
-				Element el = parser.readXMLFromFile(XML_SHOWS_FILE);
-				onlineVersion = parser.getVersion(el);
-			}
+			// get the version of the XML file
+			TedXMLParser parser = new TedXMLParser();
+			Element el = parser.readXMLFromFile(XML_SHOWS_FILE);
+			int onlineVersion = parser.getVersion(el);
 			
 			// set the version and save the config
 			TedConfig.setRSSVersion(onlineVersion);

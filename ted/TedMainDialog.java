@@ -180,7 +180,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		
 		Lang.setLanguage(TedConfig.getLocale());	
-		
+				
 		try 
 		{
 			// main layout
@@ -361,7 +361,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		if(!showsXMLExists)
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
-			tio.downloadXML(this, TedConfig.getTimeOutInSecs(), -1);
+			tio.downloadXML();
 			this.TedToolBar.setAddButtonEnabled(true);
 		}
 		// check to see if there is a new shows.xml file available
@@ -720,6 +720,27 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 				ep.printStackTrace();
 			}			
 		}
+		else if (action.equals("DownloadTed"))
+		{
+			// try to open the ted website
+			try 
+			{
+				BrowserLauncher.openURL("http://www.ted.nu/download.php"); //$NON-NLS-1$
+			} 
+			catch (IOException ep) 
+			{
+				// error launching ted website
+				// TODO: add error message
+				System.out.println(Lang.getString("TedMainDialog.LogErrorWebsite")); //$NON-NLS-1$
+				ep.printStackTrace();
+			}	
+		}
+		else if (action.equals("DownloadXml"))
+		{
+			TedIO tio = new TedIO();
+			tio.downloadXML();
+			tio.updateShows(this, serieTable);
+		}
 		else if (action.equals("buydvd")) //$NON-NLS-1$
 		{
 			int rows = serieTable.getRowCount();
@@ -951,21 +972,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
             								Lang.getString("TedMainDialog.DialogNewVersion3");
 			String title = Lang.getString("TedMainDialog.DialogNewVersionHeader");
 			
-			int answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getYesNoLocale(), Lang.getYesNoLocale()[0]);
+			TedUpdateWindow update = new TedUpdateWindow(title,
+					                                     message,
+														 "http://www.ted.nu/wiki/index.php/Release_notes",
+														 "DownloadTed",
+														 this);
 			
-			if (answer == JOptionPane.YES_OPTION)
-			{	
-				// launch ted website in browser
-				try 
-				{
-					BrowserLauncher.openURL("http://www.ted.nu/download.php"); //$NON-NLS-1$
-				} 
-				catch (IOException e) 
-				{
-					// error launching ted website
-				}
-				return;
-			}
+			return;
 		}
 		else if (show)
 		{
