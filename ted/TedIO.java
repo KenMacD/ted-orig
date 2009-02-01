@@ -537,21 +537,7 @@ public class TedIO
 		
 		// if there is a new version
 		if(onlineversion > version)
-		{			
-			// Ask user for confirmation if we have to.
-			// The downloadXML function is called from within this window.
-			if (TedConfig.askAutoUpdateFeedList())
-			{	
-				String message = Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"); //$NON-NLS-1$ //$NON-NLS-2$;
-				String title =  Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
-					
-				TedUpdateWindow update = new TedUpdateWindow(title,
-															 message,
-															 "http://www.ted.nu/wiki/index.php/Show_list_changes",
-															 "DownloadXml",
-															 main);
-			}
-			
+		{				
 			// Always download the new XML file.
 			if (TedConfig.isAutoUpdateFeedList())
 			{
@@ -560,6 +546,19 @@ public class TedIO
 				
 				// update the shows (if the user wants to).
 				updateShows(main, mainTable);				
+			}
+			else if (TedConfig.askAutoUpdateFeedList() || showresult)
+			{
+				// Ask user for confirmation if we have to.
+				// The downloadXML function is called from within this window.
+				String message = Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"); //$NON-NLS-1$ //$NON-NLS-2$;
+				String title =  Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
+					
+				TedUpdateWindow update = new TedUpdateWindow(title,
+															 message,
+															 "http://www.ted.nu/wiki/index.php/Show_list_changes",
+															 "DownloadXml",
+															 main);
 			}
 		}
 		else if(showresult)
