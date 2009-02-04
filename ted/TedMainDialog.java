@@ -967,16 +967,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if (currentVersion > TedMainDialog.tedVersion)
 		{
-			String message = Lang.getString("TedMainDialog.DialogNewVersion1Begin")+ " (" + currentVersion + ") "+ Lang.getString("TedMainDialog.DialogNewVersion1End") + //$NON-NLS-1$ //$NON-NLS-2$
-            								"\n" + Lang.getString("TedMainDialog.DialogNewVersion2")+ " " +  TedMainDialog.tedVersion + "\n" +  //$NON-NLS-1$
-            								Lang.getString("TedMainDialog.DialogNewVersion3");
+			String message = "<html><body>"+Lang.getString("TedMainDialog.DialogNewVersion1Begin")+ " (" + currentVersion + ") "+ Lang.getString("TedMainDialog.DialogNewVersion1End") + //$NON-NLS-1$ //$NON-NLS-2$
+            								"<br>" + Lang.getString("TedMainDialog.DialogNewVersion2")+ " " +  TedMainDialog.tedVersion + ". <br>" +  //$NON-NLS-1$
+            								Lang.getString("TedMainDialog.DialogNewVersion3") + "</body></html>";
 			String title = Lang.getString("TedMainDialog.DialogNewVersionHeader");
 			
-			TedUpdateWindow update = new TedUpdateWindow(title,
-					                                     message,
-														 "http://www.ted.nu/wiki/index.php/Release_notes",
-														 "DownloadTed",
-														 this);
+			new TedUpdateWindow(title,
+					            message,
+								"http://www.ted.nu/wiki/index.php/Release_notes",
+								"DownloadTed",
+								this);
 			
 			return;
 		}

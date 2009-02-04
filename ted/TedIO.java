@@ -551,14 +551,14 @@ public class TedIO
 			{
 				// Ask user for confirmation if we have to.
 				// The downloadXML function is called from within this window.
-				String message = Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2"); //$NON-NLS-1$ //$NON-NLS-2$;
+				String message = "<html><body>"+Lang.getString("TedIO.DialogNewPredefinedShows1")+ " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2")+"</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$;
 				String title =  Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
 					
-				TedUpdateWindow update = new TedUpdateWindow(title,
-															 message,
-															 "http://www.ted.nu/wiki/index.php/Show_list_changes",
-															 "DownloadXml",
-															 main);
+				new TedUpdateWindow(title,
+									message,
+									"http://www.ted.nu/wiki/index.php/Show_list_changes",
+									"DownloadXml",
+									main);
 			}
 		}
 		else if(showresult)

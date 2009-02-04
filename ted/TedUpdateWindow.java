@@ -2,6 +2,8 @@ package ted;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -32,12 +34,11 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 {
 	private static final long serialVersionUID = -8032924816220581954L;
 	
-	private JScrollPane showInfoScrollPane;
-	private JTextPane showInfoPane;
+	private JScrollPane updateInfoScrollPane;
+	private JTextPane updateInfoPane;
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton donateButton;
-	private JPanel mainPanel;
 	private JLabel donateLabel;
 	private String okActionCommand;
 	private TedMainDialog mainDialog;
@@ -55,16 +56,14 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		
 		try 
 		{
-			showInfoPane.setPage(url);
+			this.getShowInfoPane().setPage(url);
 		} 
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.getShowInfoPane().setText("<html><body>"+ Lang.getString("TedUpdateWindow.ErrorLoadingUpdateInfo")+"</body></html>");
 		}
-		
-		this.setTitle(title);		
-		this.setAlwaysOnTop(true);
+		this.setTitle(title);	
+		this.setResizable(false);
 	}
 	
 	private void initGUI(String message) 
@@ -73,21 +72,32 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		{
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 15dlu:grow, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu)", 
-					"max(p;5dlu), max(p;15dlu), 5dlu, max(p;5dlu), max(p;5dlu)");
+					"2dlu, max(p;15dlu), 5dlu, 30dlu:grow, max(p;15dlu), 5dlu, max(p;5dlu), max(p;5dlu)");
 			
 			getContentPane().setLayout(thisLayout);
-			this.setSize(500, 335);
+			this.setSize(500, 400);
 			
 			JLabel infoLabel = new JLabel(message);
 			
 			{
-				getContentPane().add(getMainPanel(), new CellConstraints("2, 1, 4, 1, default, default"));
-				getContentPane().add(getDonateLabel(), new CellConstraints("4, 2, 1, 1, default, default"));
-				getContentPane().add(getDonateButton(), new CellConstraints("5, 2, 1, 1, default, default"));
-				getContentPane().add(infoLabel, new CellConstraints("2, 4, 2, 1, default, default"));
-				getContentPane().add(getCancelButton(), new CellConstraints("4, 4, 1, 1, default, default"));
-				getContentPane().add(getOkButton(), new CellConstraints("5, 4, 1, 1, default, default"));
+				getContentPane().add(getShowInfoScrollPane(), new CellConstraints("2, 4, 4, 1, fill, fill"));
+				getContentPane().add(getDonateLabel(), new CellConstraints("3, 5, 2, 1, right, default"));
+				getContentPane().add(getDonateButton(), new CellConstraints("5, 5, 1, 1, default, default"));
+				getContentPane().add(infoLabel, new CellConstraints("2, 2, 2, 1, fill, fill"));
+				getContentPane().add(getCancelButton(), new CellConstraints("4, 7, 1, 1, default, default"));
+				getContentPane().add(getOkButton(), new CellConstraints("5, 7, 1, 1, default, default"));
 			}
+			
+			// Get the screen size
+		    Toolkit toolkit = Toolkit.getDefaultToolkit();
+		    Dimension screenSize = toolkit.getScreenSize();
+
+		    //Calculate the frame location
+		    int x = (screenSize.width - this.getWidth()) / 2;
+		    int y = (screenSize.height - this.getHeight()) / 2;
+
+		    //Set the new frame location
+		    this.setLocation(x, y);
 			
 			this.setVisible(true);
 
@@ -100,16 +110,15 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		
 	private JTextPane getShowInfoPane() 
 	{
-		if (showInfoPane == null) 
+		if (updateInfoPane == null) 
 		{
-			showInfoPane = new JTextPane();
-			showInfoPane.setContentType( "text/html" );
-			showInfoPane.setEditable( false );
-
-			showInfoPane.setPreferredSize(new java.awt.Dimension(475, 228));
+			updateInfoPane = new JTextPane();
+			updateInfoPane.setContentType( "text/html" );
+			updateInfoPane.setEditable( false );
+			updateInfoPane.setText(Lang.getString("TedUpdateWindow.LoadingUpdateInfo"));
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks
-		    showInfoPane.addHyperlinkListener(new HyperlinkListener() 
+		    updateInfoPane.addHyperlinkListener(new HyperlinkListener() 
 		    {
 		      public void hyperlinkUpdate(HyperlinkEvent e) 
 		      {
@@ -127,22 +136,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		    });
 			
 		}
-		return showInfoPane;
-	}
-	
-	private JPanel getMainPanel() {
-		if(mainPanel == null) 
-		{
-			mainPanel = new JPanel();
-			mainPanel.add(getShowInfoScrollPane());
-
-			// create a new infoPane to (correctly) show the information
-			showInfoPane = null;
-			showInfoScrollPane.setViewportView(this.getShowInfoPane());
-			
-			mainPanel.add(showInfoScrollPane);
-		}
-		return mainPanel;
+		return updateInfoPane;
 	}
 	
 	private JButton getOkButton() {
@@ -157,13 +151,13 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 	
 	private JScrollPane getShowInfoScrollPane() 
 	{
-		if (showInfoScrollPane == null) 
+		if (updateInfoScrollPane == null) 
 		{
-			showInfoScrollPane = new JScrollPane();
-			showInfoScrollPane.setViewportView(getShowInfoPane());
-			showInfoScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			updateInfoScrollPane = new JScrollPane();
+			updateInfoScrollPane.setViewportView(getShowInfoPane());
+			updateInfoScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		}
-		return showInfoScrollPane;
+		return updateInfoScrollPane;
 	}
 
 	public JButton getCancelButton() {
@@ -180,7 +174,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 	public JButton getDonateButton() {
 		if (donateButton == null) {
 			donateButton = new JButton();
-			donateButton.setText(Lang.getString("TedGeneral.Donate"));
+			donateButton.setText(Lang.getString("TedUpdateWindow.ButtonDonate"));
 			donateButton.addActionListener(this);
 			donateButton.setActionCommand("donate");
 			
@@ -191,7 +185,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 	
 	public JLabel getDonateLabel() {
 		if (donateLabel == null) {
-			donateLabel = new JLabel(Lang.getString("TedMainMenuBar.Support"));
+			donateLabel = new JLabel(Lang.getString("TedUpdateWindow.SupportTed"));
 		}
 		
 		return donateLabel;
@@ -206,14 +200,12 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 			mainDialog.actionPerformed(arg0);
 			
 			this.setVisible(false);
-			
-			// TODO: Delete this window.
+			this.dispose();
 		}
 		else if (action.equals("cancel"))
 		{
 			this.setVisible(false);
-			
-			// TODO: Delete this window.
+			this.dispose();
 		}
 		else if (action.equals("donate"))
 		{
