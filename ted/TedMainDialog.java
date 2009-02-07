@@ -497,10 +497,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// if it is the day to start checking the serie again
 		newSerie.updateShowStatus();
 		
+		// Save the shows. If ted is not closed by using the File->Close
+		// option, but by for example the OS when shutting down or by a
+		// user using the task manager it could be that shows get lost.
+		this.saveShows();
+		
 		// if the serie is not paused
 		if(newSerie.isCheck())
-		{
-			
+		{			
 			// parse new show
 			TedParseHandler handler = new TedParseHandler(newSerie, this);
 			handler.start();
