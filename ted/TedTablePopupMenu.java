@@ -135,8 +135,11 @@ public class TedTablePopupMenu extends JPopupMenu
 
 	public void checkAutoSchedule(boolean enabled, boolean showBoth)
 	{		
-		this.menuDisableAutoSchedule.setVisible(enabled || showBoth);
-		this.menuEnableAutoSchedule.setVisible(!enabled || showBoth);
+		// use auto schedule?
+		boolean useAutoSchedule = TedConfig.isUseAutoSchedule();
+		
+		this.menuDisableAutoSchedule.setVisible((enabled || showBoth) && useAutoSchedule);
+		this.menuEnableAutoSchedule.setVisible((!enabled || showBoth) && useAutoSchedule);
 	}
 
 	public void checkDisabled(boolean disabled, boolean showBoth) 
