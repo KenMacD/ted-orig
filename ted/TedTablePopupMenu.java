@@ -3,9 +3,8 @@ package ted;
 /****************************************************
  * IMPORTS
  ****************************************************/
-import javax.swing.ImageIcon;
+
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -38,10 +37,10 @@ public class TedTablePopupMenu extends JPopupMenu
 	private JMenuItem menuEdit;
 	private JMenuItem buyDVD;
 	private JMenuItem menuParse;
-	private JMenuItem menuEnable;
-	private JMenuItem menuDisable;
-	private JCheckBoxMenuItem checkAutoSchedule;
-	private boolean disabledShow = false;
+	private JMenuItem menuEnableShow;
+	private JMenuItem menuDisableShow;
+	private JMenuItem menuEnableAutoSchedule;
+	private JMenuItem menuDisableAutoSchedule;
 
 	/****************************************************
 	 * CONSTRUCTORS
@@ -67,21 +66,25 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuParse.setActionCommand("parse selected"); //$NON-NLS-1$
 		
 		
-		menuEnable = new JMenuItem (); //$NON-NLS-1$
-		menuEnable.addActionListener(mainDialog);
-		menuEnable.setActionCommand("setstatusenabled"); //$NON-NLS-1$
+		menuEnableShow = new JMenuItem (); //$NON-NLS-1$
+		menuEnableShow.addActionListener(mainDialog);
+		menuEnableShow.setActionCommand("setstatusenabled"); //$NON-NLS-1$
 		
-		menuDisable = new JMenuItem (); //$NON-NLS-1$
-		menuDisable.addActionListener(mainDialog);
-		menuDisable.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
+		menuDisableShow = new JMenuItem (); //$NON-NLS-1$
+		menuDisableShow.addActionListener(mainDialog);
+		menuDisableShow.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
 		
 		buyDVD = new JMenuItem ();
 		buyDVD.addActionListener(mainDialog);
 		buyDVD.setActionCommand("buyDVDselectedshow");
+			
+		menuEnableAutoSchedule = new JMenuItem (); //$NON-NLS-1$
+		menuEnableAutoSchedule.addActionListener(mainDialog);
+		menuEnableAutoSchedule.setActionCommand("setautoscheduleenabled"); //$NON-NLS-1$
 		
-		checkAutoSchedule = new JCheckBoxMenuItem();
-		checkAutoSchedule.addActionListener(mainDialog);
-		checkAutoSchedule.setActionCommand("toggleautoschedule");
+		menuDisableAutoSchedule = new JMenuItem (); //$NON-NLS-1$
+		menuDisableAutoSchedule.addActionListener(mainDialog);
+		menuDisableAutoSchedule.setActionCommand("setautoscheduledisabled"); //$NON-NLS-1$
 		
 		JSeparator separator = new JSeparator();
 		JSeparator separator2 = new JSeparator();
@@ -90,9 +93,10 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.add( menuDelete );
 		this.add( menuParse );
 		this.add(separator);
-		this.add(checkAutoSchedule);
-		this.add(menuEnable);
-		this.add(menuDisable);
+		this.add(menuEnableAutoSchedule);
+		this.add(menuDisableAutoSchedule);
+		this.add(menuEnableShow);
+		this.add(menuDisableShow);
 		this.add(separator2);
 		this.add( buyDVD);
 		
@@ -108,9 +112,10 @@ public class TedTablePopupMenu extends JPopupMenu
 		menuDelete.setText( Lang.getString("TedMainMenuBar.Edit.Delete") ); //$NON-NLS-1$
 		menuParse.setText( Lang.getString("TedTablePopupMenu.CheckShow") ); //$NON-NLS-1$
 		buyDVD.setText(Lang.getString("TedTablePopupMenu.BuyDVD"));	
-		checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
-		menuEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
-		menuDisable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
+		menuEnableShow.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
+		menuDisableShow.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
+		menuEnableAutoSchedule.setText(Lang.getString("TedMainMenuBar.Edit.EnableAutoSchedule"));
+		menuDisableAutoSchedule.setText(Lang.getString("TedMainMenuBar.Edit.DisableAutoSchedule"));
 	}
 	
 	/**
@@ -128,15 +133,15 @@ public class TedTablePopupMenu extends JPopupMenu
 		this.menuDelete.setEnabled(true);
 	}
 
-	public void checkAutoSchedule(boolean b)
+	public void checkAutoSchedule(boolean enabled, boolean showBoth)
 	{		
-		this.checkAutoSchedule.setState(b);
-		this.checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
+		this.menuDisableAutoSchedule.setVisible(enabled || showBoth);
+		this.menuEnableAutoSchedule.setVisible(!enabled || showBoth);
 	}
 
 	public void checkDisabled(boolean disabled, boolean showBoth) 
 	{
-		this.menuDisable.setVisible(!disabled || showBoth);
-		this.menuEnable.setVisible(disabled || showBoth);
+		this.menuDisableShow.setVisible(!disabled || showBoth);
+		this.menuEnableShow.setVisible(disabled || showBoth);
 	}
 }

@@ -128,8 +128,10 @@ public class TedTable extends JTable
 			// or did the user click right?
 			else 
 			{
-				boolean showBothOptions = false;
+				boolean showBothDisabledOptions = false;
+				boolean showBothAutomaticSchedulerOptions = false;
 				boolean firstShowDisabled = selectedserie.isDisabled();
+				boolean firstShowAutomaticEnabled = selectedserie.isUseAutoSchedule();
 				// if multiple selected: check if the setting for one show is different, then show both options for enable/disable
 				if (this.getSelectedRowCount() > 1)
 				{
@@ -138,17 +140,21 @@ public class TedTable extends JTable
 					{
 						if (selectedShows[i].isDisabled() != firstShowDisabled)
 						{
-							showBothOptions = true;
-							break;
+							showBothDisabledOptions = true;
+						}
+						if (selectedShows[i].isUseAutoSchedule() != firstShowAutomaticEnabled)
+						{
+							showBothAutomaticSchedulerOptions = true;
 						}
 					}		
 				}
-				tedMain.checkDisabled(firstShowDisabled, showBothOptions);
+				tedMain.checkDisabled(firstShowDisabled, showBothDisabledOptions);
+				tedMain.checkAutoSchedule(firstShowAutomaticEnabled, showBothAutomaticSchedulerOptions);
 				
 				if (SwingUtilities.isRightMouseButton(evt))
 				{			
-					ttPopupMenu.checkAutoSchedule(selectedserie.isUseAutoSchedule());
-					ttPopupMenu.checkDisabled(firstShowDisabled, showBothOptions);
+					ttPopupMenu.checkAutoSchedule(firstShowAutomaticEnabled, showBothAutomaticSchedulerOptions);
+					ttPopupMenu.checkDisabled(firstShowDisabled, showBothDisabledOptions);
 					
 					ttPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
 				}

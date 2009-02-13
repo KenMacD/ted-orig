@@ -1,15 +1,10 @@
 package ted;
 
-import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
-
-
-
 
 
 /**
@@ -75,6 +70,8 @@ public class TedMainMenuBar extends JMenuBar
 	private JMenu subLangMenu;
 	
 	private TedMainDialog tMain;
+	private JMenuItem menuDisableAutoSchedule;
+	private JMenuItem menuEnableAutoSchedule;
 	
 	/**
 	 * Main menubar for ted
@@ -164,6 +161,17 @@ public class TedMainMenuBar extends JMenuBar
 			menuDisable.addActionListener(tMain);
 			menuDisable.setActionCommand("setstatusdisabled"); //$NON-NLS-1$
 			menuEdit.add(menuDisable);
+			
+			menuEnableAutoSchedule = new JMenuItem (); //$NON-NLS-1$
+			menuEnableAutoSchedule.addActionListener(tMain);
+			menuEnableAutoSchedule.setActionCommand("setautoscheduleenabled"); //$NON-NLS-1$
+			menuEdit.add(menuEnableAutoSchedule);
+			
+			menuDisableAutoSchedule = new JMenuItem (); //$NON-NLS-1$
+			menuDisableAutoSchedule.addActionListener(tMain);
+			menuDisableAutoSchedule.setActionCommand("setautoscheduledisabled"); //$NON-NLS-1$
+			menuEdit.add(menuDisableAutoSchedule);
+			
 			
 		}
 		{
@@ -374,6 +382,8 @@ public class TedMainMenuBar extends JMenuBar
 		extraMenu.setText(Lang.getString("TedMainMenuBar.Extra"));
 		menuEnable.setText(Lang.getString("TedMainMenuBar.Edit.EnableShow"));
 		menuDisable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
+		menuEnableAutoSchedule.setText(Lang.getString("TedMainMenuBar.Edit.EnableAutoSchedule"));
+		menuDisableAutoSchedule.setText(Lang.getString("TedMainMenuBar.Edit.DisableAutoSchedule"));
 	}
 	
 	/**
@@ -427,5 +437,11 @@ public class TedMainMenuBar extends JMenuBar
 	{
 		this.menuDisable.setVisible(!disabled || showBoth);
 		this.menuEnable.setVisible(disabled || showBoth);
+	}
+
+	public void checkAutoSchedule(boolean enabled, boolean showBoth)
+	{		
+		this.menuDisableAutoSchedule.setVisible(enabled || showBoth);
+		this.menuEnableAutoSchedule.setVisible(!enabled || showBoth);
 	}
 }

@@ -671,6 +671,28 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			
 			this.saveShows();
 		}
+		else if (action.equals("setautoscheduleenabled"))
+		{
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
+			
+			for (int i = 0; i < selectedShows.length; i++)
+			{
+				selectedShows[i].setUseAutoSchedule(true);
+			}
+			
+			this.saveShows();
+		}
+		else if (action.equals("setautoscheduledisabled"))
+		{
+			TedSerie[] selectedShows = serieTable.getSelectedShows();
+			
+			for (int i = 0; i < selectedShows.length; i++)
+			{
+				selectedShows[i].setUseAutoSchedule(false);
+			}
+			
+			this.saveShows();
+		}
 		else if (action.equals("checkupdates")) //$NON-NLS-1$
 		{
 			this.isNewTed(true);
@@ -865,17 +887,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		else if(action.equals("language"))
 		{
 			this.openTranslationLink();
-		}
-		else if(action.equals("toggleautoschedule"))
-		{
-			TedSerie selectedSerie = serieTable.getSelectedShow();
-			
-			if (selectedSerie != null)
-			{
-				selectedSerie.setUseAutoSchedule(!selectedSerie.isUseAutoSchedule());
-			}
-			
-			this.serieTable.updateAllSeries();
 		}
 		else if (action.equals("sort_name"))
 		{
@@ -1187,5 +1198,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	public void checkDisabled(boolean firstShowDisabled, boolean showBothOptions) 
 	{
 		this.tMenuBar.checkDisabled(firstShowDisabled, showBothOptions);
+	}
+	
+	/**
+	 * Method to forward the automatic scheduler status of the selected shows to the 
+	 * main menu bar
+	 * @param firstShowSchedulerEnabled
+	 * @param showBothOptions
+	 */
+	public void checkAutoSchedule(boolean firstShowEnabled, boolean showBothOptions) 
+	{
+		this.tMenuBar.checkAutoSchedule(firstShowEnabled, showBothOptions);
 	}
 }
