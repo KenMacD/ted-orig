@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -127,7 +126,7 @@ public class SubscribeOptionsPanel extends JPanel
 		getCustomActivitySpinner().setVisible(false);
 		
 		this.add(nextEpisodeRadio, new CellConstraints("1, 1, 2, 1, default, default"));
-		this.add(getGlobalActivitySpinner(), new CellConstraints("1, 1, 1, 1, default, default"));
+		this.add(getGlobalActivitySpinner(), new CellConstraints("1, 1, 1, 1, fill, fill"));
 		this.add(futureEpisodeLabel, new CellConstraints("2, 3, 1, 1, default, default"));
 		this.add(lastAiredRadio, new CellConstraints("1, 5, 2, 1, default, default"));
 		this.add(airedEpisodeLabel, new CellConstraints("2, 7, 1, 1, default, default"));

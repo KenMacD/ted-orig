@@ -389,6 +389,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			showInfoPane.setContentType( "text/html" );
 			showInfoPane.setEditable( false );
 			
+			String startHTML = "<html><font face=\"Arial, Helvetica, sans-serif\">";
+			String endHTML = "</font></html>";
+			showInfoPane.setText(startHTML+ Lang.getString("TedAddShowDialog.ShowInfo.PickAShow") +endHTML);
+			
 			showInfoPane.setPreferredSize(new java.awt.Dimension(475, 128));
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks

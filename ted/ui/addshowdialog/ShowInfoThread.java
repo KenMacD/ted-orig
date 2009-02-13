@@ -24,6 +24,8 @@ public class ShowInfoThread extends Thread
 {
 	private JEditorPane showInfoPane;
 	private TedSerie currentSerie;
+	String startHTML = "<html><font face=\"Arial, Helvetica, sans-serif\">";
+	String endHTML = "</font></html>";
 	
 	public ShowInfoThread(JEditorPane jep, TedSerie ts)
 	{
@@ -34,7 +36,7 @@ public class ShowInfoThread extends Thread
 	public void run()
 	{
 		// loading...
-		showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.LabelLoadingInfo"));
+		showInfoPane.setText(startHTML + Lang.getString("TedAddShowDialog.ShowInfo.LabelLoadingInfo") + endHTML);
 		
 		// when a show is selected
 		if(currentSerie!=null)
@@ -63,24 +65,24 @@ public class ShowInfoThread extends Thread
 				catch (MalformedURLException e)
 				{
 					// url malformed, display error
-					showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.ErrorMalformedURL"));
+					showInfoPane.setText(startHTML + Lang.getString("TedAddShowDialog.ShowInfo.ErrorMalformedURL") + endHTML);
 				} 
 				catch (IOException e)
 				{
 					// url not found, display error
-					showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.ErrorIO"));
+					showInfoPane.setText(startHTML + Lang.getString("TedAddShowDialog.ShowInfo.ErrorIO") + endHTML);
 				}
 				catch (Exception e)
 				{
 					// unkown error, display error and print stacktrace
-					showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.ErrorUnknown"));
+					showInfoPane.setText(startHTML + Lang.getString("TedAddShowDialog.ShowInfo.ErrorUnknown") + endHTML);
 					e.printStackTrace();
 				}
 			}
 			else
 			{
 				// no info url available
-				showInfoPane.setText(Lang.getString("TedAddShowDialog.ShowInfo.LabelNoInfo"));
+				showInfoPane.setText(startHTML + Lang.getString("TedAddShowDialog.ShowInfo.LabelNoInfo") + endHTML);
 			}
 		}
 	
