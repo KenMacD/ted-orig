@@ -1,29 +1,30 @@
 package ted.ui.editshowdialog;
+import java.awt.Canvas;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import ted.BrowserLauncher;
 import ted.Lang;
-import ted.TedSerie;
 import ted.TedConfig;
+import ted.TedSerie;
+import ted.ui.addshowdialog.ImageCanvas;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -57,6 +58,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 	private JButton buttonRefreshNow;
 	private TedSerie serie;
 	private final Font SMALL_FONT = new Font("Dialog",0,10);
+	private Canvas globalActivityCanvas;
 
 	public SchedulePanel()
 	{
@@ -132,10 +134,12 @@ public class SchedulePanel extends JPanel implements ActionListener
 				}
 				{
 					buttonRefreshNow = new JButton();
-					this.add(buttonRefreshNow, new CellConstraints("6, 6, 2, 1, default, default"));
+					this.add(buttonRefreshNow, new CellConstraints("3, 6, 4, 1, left, default"));
 					buttonRefreshNow.setText("Refresh now!");
 					buttonRefreshNow.setActionCommand("refreshschedule");
 					buttonRefreshNow.addActionListener(this);
+					
+					this.add(getGlobalActivitySpinner(), new CellConstraints("7, 6, 1, 1, fill, fill"));
 				}
 			}
 		}
@@ -250,9 +254,11 @@ public class SchedulePanel extends JPanel implements ActionListener
 		}
 		else if (command.equals("refreshschedule"))
 		{
+			this.getGlobalActivitySpinner().setVisible(true);
 			this.saveValues(serie);
 			serie.refreshSchedule();
 			this.setValues(serie, false);
+			this.getGlobalActivitySpinner().setVisible(false);
 		}
 		
 	}
@@ -272,5 +278,18 @@ public class SchedulePanel extends JPanel implements ActionListener
 		this.labelRefresh.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
 		this.labelRefreshNext.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
 		this.buttonRefreshNow.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
+	}
+	
+	private Canvas getGlobalActivitySpinner() {
+		if (globalActivityCanvas == null) 
+		{
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Image activityIm = toolkit.getImage(getClass().getClassLoader().getResource("icons/activity.gif"));
+			
+			globalActivityCanvas = new ImageCanvas(activityIm.getSource());
+			globalActivityCanvas.setPreferredSize(new java.awt.Dimension(16, 16));
+			globalActivityCanvas.setVisible(false);
+		}
+		return globalActivityCanvas;
 	}
 }
