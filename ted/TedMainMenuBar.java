@@ -72,6 +72,8 @@ public class TedMainMenuBar extends JMenuBar
 	private TedMainDialog tMain;
 	private JMenuItem menuDisableAutoSchedule;
 	private JMenuItem menuEnableAutoSchedule;
+	private JMenuItem editAllShowsMenuItem;
+	private JSeparator jSeparator7;
 	
 	/**
 	 * Main menubar for ted
@@ -131,12 +133,23 @@ public class TedMainMenuBar extends JMenuBar
 		this.add(menuEdit);
 		
 		{
+			// edit all shows
+			editAllShowsMenuItem = new JMenuItem();
+			menuEdit.add(editAllShowsMenuItem);
+			
+			editAllShowsMenuItem.setActionCommand("editAllShows");
+			editAllShowsMenuItem.addActionListener(tMain);
+			
+			jSeparator7 = new JSeparator();
+			menuEdit.add(jSeparator7);
+			
 			// edit..
 			editMenuItem = new JMenuItem();
 			menuEdit.add(editMenuItem);
 			
 			editMenuItem.setActionCommand("Edit"); //$NON-NLS-1$
 			editMenuItem.addActionListener(tMain);
+			
 			// delete
 			deleteMenuItem = new JMenuItem();
 			menuEdit.add(deleteMenuItem);
@@ -384,6 +397,7 @@ public class TedMainMenuBar extends JMenuBar
 		menuDisable.setText(Lang.getString("TedMainMenuBar.Edit.DisableShow"));
 		menuEnableAutoSchedule.setText(Lang.getString("TedMainMenuBar.Edit.EnableAutoSchedule"));
 		menuDisableAutoSchedule.setText(Lang.getString("TedMainMenuBar.Edit.DisableAutoSchedule"));
+		this.editAllShowsMenuItem.setText(Lang.getString("TedMainMenuBar.Edit.editAllShowsMenuItem"));
 	}
 	
 	/**
@@ -413,6 +427,8 @@ public class TedMainMenuBar extends JMenuBar
 		this.menuEnable.setEnabled(b);
 		this.menuDisable.setEnabled(b);
 		this.menuParse.setEnabled(b);
+		this.menuDisableAutoSchedule.setEnabled(b);
+		this.menuEnableAutoSchedule.setEnabled(b);
 	}
 	
 	public void updateSortMenu()

@@ -626,15 +626,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if(action.equals("Edit")) //$NON-NLS-1$
 		{
-			TedSerie[] selectedShows = serieTable.getSelectedShows();
-			if (selectedShows.length == 1)
-			{
-				new EditShowDialog(this, selectedShows[0], false);
-			}
-			else
-			{
-				new EditMultipleShowsDialog(this, selectedShows);
-			}
+			this.showEditShowDialog();
 		}
 		else if (action.equals("parse selected")) //$NON-NLS-1$
 		{			
@@ -911,6 +903,27 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			TedConfig.setSortDirection(TedConfig.SORT_DESCENDING);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
+		}
+		else if (action.equals("editAllShows"))
+		{
+			// select all shows in table
+			this.serieTable.selectAll();
+			
+			// open edit dialog
+			this.showEditShowDialog();
+		}
+	}
+	
+	public void showEditShowDialog()
+	{
+		TedSerie[] selectedShows = serieTable.getSelectedShows();
+		if (selectedShows.length == 1)
+		{
+			new EditShowDialog(this, selectedShows[0], false);
+		}
+		else if (selectedShows.length > 1)
+		{
+			new EditMultipleShowsDialog(this, selectedShows);
 		}
 	}
 	
