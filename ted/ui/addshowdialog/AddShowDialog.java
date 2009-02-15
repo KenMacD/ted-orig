@@ -190,7 +190,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			allShows = names;
 		}
 		else
+		{
+			this.getShowInfoPane().setText((Lang.getString("TedEpisodeDialog.ShowXmlNotFound")));
 			TedLog.error(Lang.getString("TedEpisodeDialog.LogXmlNotFound")); //$NON-NLS-1$
+		}
 		
 		return names;
 	}
