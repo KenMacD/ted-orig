@@ -915,7 +915,7 @@ public class TedIO
 	    		// what if growl isn't supported?
 	    	    GrowlMessenger gm = new GrowlMessenger();
 	    		gm.displayError(Lang.getString("TedGeneral.Error"),
-	    						Lang.getString("TedIO.ShowsFileNotPresent"));
+	    						Lang.getString("TedIO.ShowsFileNotPresent2"));
 	        }
 	        
 	    	// Alert Windows users
@@ -924,7 +924,7 @@ public class TedIO
 	    		// by balloon?
 	    	    PopupMessenger pm = new PopupMessenger(null);
 	    		pm.displayError(Lang.getString("TedGeneral.Error"),
-								Lang.getString("TedIO.ShowsFileNotPresent"));
+								Lang.getString("TedIO.ShowsFileNotPresent2"));
 	        }
 	    	
 	    	return false;
