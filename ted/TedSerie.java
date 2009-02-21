@@ -1043,10 +1043,5 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			this.isDaily = false;
 			this.currentEpisodeSS = new SeasonEpisode((SeasonEpisode)original.getCurrentStandardStructure());
 		}
-		else // Copy air date
-		{
-			this.isDaily = true;
-			this.currentEpisodeSS = new DailyDate((DailyDate)original.getCurrentStandardStructure());
-		}
 	}
 }
