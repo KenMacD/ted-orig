@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 
 import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.SeasonEpisode;
+import ted.datastructures.DailyDate;
 import ted.datastructures.StandardStructure;
 import ted.ui.editshowdialog.FeedPopupItem;
 
@@ -1041,6 +1042,11 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		{
 			this.isDaily = false;
 			this.currentEpisodeSS = new SeasonEpisode((SeasonEpisode)original.getCurrentStandardStructure());
+		}
+		else // Copy air date
+		{
+			this.isDaily = true;
+			this.currentEpisodeSS = new DailyDate((DailyDate)original.getCurrentStandardStructure());
 		}
 	}
 }
