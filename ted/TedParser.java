@@ -926,7 +926,7 @@ public class TedParser extends Thread
 	 * from the download array
 	 * @param serie the serie for which the items have to be downloaded
 	 */
-	private void downloadBestDaily(TedSerie serie)
+	private void downloadBestDaily(TedSerie serie) throws Exception
 	{
 		Collections.sort(dailyItems);
 		TedDailySerie dailySerie = (TedDailySerie) serie;
@@ -959,8 +959,7 @@ public class TedParser extends Thread
 				} 
 				catch (Exception e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw e;
 				}
 				
 				// Add one day, to search for next episode
