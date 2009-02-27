@@ -556,7 +556,7 @@ public class TedIO
 					
 				new TedUpdateWindow(title,
 									message,
-									"http://www.ted.nu/wiki/index.php/Show_list_changes",
+									"http://ted.sourceforge.net/newshowsinfo.php",
 									"DownloadXml",
 									main);
 			}

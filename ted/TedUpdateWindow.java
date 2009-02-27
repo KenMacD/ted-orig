@@ -39,9 +39,10 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton donateButton;
-	private JLabel donateLabel;
 	private String okActionCommand;
 	private TedMainDialog mainDialog;
+	String startHTML = "<html><font face=\"Arial, Helvetica, sans-serif\">";
+	String endHTML = "</font></html>";
 
 	public TedUpdateWindow(String title,
 						   String message,
@@ -60,7 +61,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		} 
 		catch (IOException e) 
 		{
-			this.getShowInfoPane().setText("<html><body>"+ Lang.getString("TedUpdateWindow.ErrorLoadingUpdateInfo")+"</body></html>");
+			this.getShowInfoPane().setText(startHTML + Lang.getString("TedUpdateWindow.ErrorLoadingUpdateInfo") + endHTML);
 		}
 		this.setTitle(title);	
 		this.setResizable(false);
@@ -72,20 +73,19 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		{
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 15dlu:grow, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu)", 
-					"2dlu, max(p;15dlu), 5dlu, 30dlu:grow, max(p;15dlu), 5dlu, max(p;5dlu), max(p;5dlu)");
+					"2dlu, max(p;15dlu), 5dlu, 30dlu:grow, 5dlu, max(p;5dlu), max(p;5dlu)");
 			
 			getContentPane().setLayout(thisLayout);
-			this.setSize(500, 400);
+			this.setSize(500, 500);
 			
 			JLabel infoLabel = new JLabel(message);
 			
 			{
 				getContentPane().add(getShowInfoScrollPane(), new CellConstraints("2, 4, 4, 1, fill, fill"));
-				getContentPane().add(getDonateLabel(), new CellConstraints("3, 5, 2, 1, right, default"));
-				getContentPane().add(getDonateButton(), new CellConstraints("5, 5, 1, 1, default, default"));
-				getContentPane().add(infoLabel, new CellConstraints("2, 2, 2, 1, fill, fill"));
-				getContentPane().add(getCancelButton(), new CellConstraints("4, 7, 1, 1, default, default"));
-				getContentPane().add(getOkButton(), new CellConstraints("5, 7, 1, 1, default, default"));
+				getContentPane().add(getDonateButton(), new CellConstraints("2, 6, 1, 1, left, default"));
+				getContentPane().add(infoLabel, new CellConstraints("2, 2, 4, 1, fill, fill"));
+				getContentPane().add(getCancelButton(), new CellConstraints("4, 6, 1, 1, default, default"));
+				getContentPane().add(getOkButton(), new CellConstraints("5, 6, 1, 1, default, default"));
 			}
 			
 			// Get the screen size
@@ -115,7 +115,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 			updateInfoPane = new JTextPane();
 			updateInfoPane.setContentType( "text/html" );
 			updateInfoPane.setEditable( false );
-			updateInfoPane.setText(Lang.getString("TedUpdateWindow.LoadingUpdateInfo"));
+			updateInfoPane.setText(startHTML + Lang.getString("TedUpdateWindow.LoadingUpdateInfo") + endHTML);
 			
 			//	Set up the JEditorPane to handle clicks on hyperlinks
 		    updateInfoPane.addHyperlinkListener(new HyperlinkListener() 
@@ -181,14 +181,6 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		}
 		
 		return donateButton;
-	}
-	
-	public JLabel getDonateLabel() {
-		if (donateLabel == null) {
-			donateLabel = new JLabel(Lang.getString("TedUpdateWindow.SupportTed"));
-		}
-		
-		return donateLabel;
 	}
 
 	public void actionPerformed(ActionEvent arg0) 

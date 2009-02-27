@@ -1002,7 +1002,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			
 			new TedUpdateWindow(title,
 					            message,
-								"http://www.ted.nu/wiki/index.php/Release_notes",
+								"http://ted.sourceforge.net/newtedinfo.php",
 								"DownloadTed",
 								this);
 			
