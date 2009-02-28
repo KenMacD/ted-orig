@@ -48,20 +48,24 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 						   String message,
 						   String url,
 						   String actionCommand,
+						   String buttonOk,
+						   String buttonCancel,
 						   TedMainDialog mainDialog)
 	{
 		this.mainDialog = mainDialog;
 		this.okActionCommand = actionCommand;
+		this.getOkButton().setText(buttonOk);
+		this.getCancelButton().setText(buttonCancel);
 		
 		this.initGUI(message);
 		
 		try 
 		{
-			this.getShowInfoPane().setPage(url);
+			this.getUpdateInfoPane().setPage(url);
 		} 
 		catch (IOException e) 
 		{
-			this.getShowInfoPane().setText(startHTML + Lang.getString("TedUpdateWindow.ErrorLoadingUpdateInfo") + endHTML);
+			this.getUpdateInfoPane().setText(startHTML + Lang.getString("TedUpdateWindow.ErrorLoadingUpdateInfo") + endHTML);
 		}
 		this.setTitle(title);	
 		this.setResizable(false);
@@ -81,7 +85,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 			JLabel infoLabel = new JLabel(message);
 			
 			{
-				getContentPane().add(getShowInfoScrollPane(), new CellConstraints("2, 4, 4, 1, fill, fill"));
+				getContentPane().add(getUpdateInfoScrollPane(), new CellConstraints("2, 4, 4, 1, fill, fill"));
 				getContentPane().add(getDonateButton(), new CellConstraints("2, 6, 1, 1, left, default"));
 				getContentPane().add(infoLabel, new CellConstraints("2, 2, 4, 1, fill, fill"));
 				getContentPane().add(getCancelButton(), new CellConstraints("4, 6, 1, 1, default, default"));
@@ -108,7 +112,7 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		}
 	}
 		
-	private JTextPane getShowInfoPane() 
+	private JTextPane getUpdateInfoPane() 
 	{
 		if (updateInfoPane == null) 
 		{
@@ -149,12 +153,12 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		return okButton;
 	}
 	
-	private JScrollPane getShowInfoScrollPane() 
+	private JScrollPane getUpdateInfoScrollPane() 
 	{
 		if (updateInfoScrollPane == null) 
 		{
 			updateInfoScrollPane = new JScrollPane();
-			updateInfoScrollPane.setViewportView(getShowInfoPane());
+			updateInfoScrollPane.setViewportView(getUpdateInfoPane());
 			updateInfoScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		}
 		return updateInfoScrollPane;

@@ -558,6 +558,8 @@ public class TedIO
 									message,
 									"http://ted.sourceforge.net/newshowsinfo.php",
 									"DownloadXml",
+									Lang.getString("TedGeneral.ButtonDownload"),
+									Lang.getString("TedGeneral.ButtonLater"),
 									main);
 			}
 		}

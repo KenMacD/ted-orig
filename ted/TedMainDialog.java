@@ -11,31 +11,23 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.channels.FileChannel;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Element;
 
-import ted.TedTranslateDialog.PropertiesFileFilter;
-import ted.ui.TimedOptionPane;
 import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.configdialog.ConfigDialog;
 import ted.ui.editshowdialog.EditMultipleShowsDialog;
@@ -78,7 +70,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 ****************************************************/
 	private static final long serialVersionUID = 3722636937353936684L;
 
-	private static final double tedVersion = 0.96;
+	private static final double tedVersion = 0.95;
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
@@ -995,15 +987,17 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		
 		if (currentVersion > TedMainDialog.tedVersion)
 		{
-			String message = "<html><body>"+Lang.getString("TedMainDialog.DialogNewVersion1Begin")+ " (" + currentVersion + ") "+ Lang.getString("TedMainDialog.DialogNewVersion1End") + //$NON-NLS-1$ //$NON-NLS-2$
+			String title = Lang.getString("TedMainDialog.DialogNewVersionHeader");
+			String message = "<html><body><b>" + title + "</b><br>"+Lang.getString("TedMainDialog.DialogNewVersion1Begin")+ " (" + currentVersion + ") "+ Lang.getString("TedMainDialog.DialogNewVersion1End") + //$NON-NLS-1$ //$NON-NLS-2$
             								"<br>" + Lang.getString("TedMainDialog.DialogNewVersion2")+ " " +  TedMainDialog.tedVersion + ". <br>" +  //$NON-NLS-1$
             								Lang.getString("TedMainDialog.DialogNewVersion3") + "</body></html>";
-			String title = Lang.getString("TedMainDialog.DialogNewVersionHeader");
 			
 			new TedUpdateWindow(title,
 					            message,
 								"http://ted.sourceforge.net/newtedinfo.php",
 								"DownloadTed",
+								Lang.getString("TedGeneral.ButtonDownload"),
+								Lang.getString("TedGeneral.ButtonLater"),
 								this);
 			
 			return;
