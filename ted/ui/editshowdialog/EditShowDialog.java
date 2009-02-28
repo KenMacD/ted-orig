@@ -265,7 +265,14 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				{
 					// copy all changes into the original serie that is displayed
 					// in the main dialog
-					this.originalSerie.copy(this.currentSerie);
+					if (this.currentSerie.isDaily())
+					{
+						((TedDailySerie)this.originalSerie).copy((TedDailySerie)this.currentSerie);
+					}
+					else
+					{
+						this.originalSerie.copy(this.currentSerie);
+					}
 				}
 				
 				// save the changed shows
@@ -418,10 +425,12 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 				}
 			}
 			
+			// Check and save the feeds
 			if (this.feedsPanel.checkValues())
 			{
 				this.feedsPanel.saveValues(show);		
 				
+				// Check and save the filter/schedules
 				if (this.filterPanel.checkValues() && this.schedulePanel.checkValues())
 				{		
 					this.filterPanel.saveValues(show);

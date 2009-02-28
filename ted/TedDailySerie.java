@@ -42,14 +42,6 @@ public class TedDailySerie extends TedSerie
 	public TedDailySerie(TedDailySerie currentSerie) 
 	{
 		this.copy(currentSerie);
-		if (currentSerie.isDaily)
-		{
-			this.isDaily = true;
-			this.maxDownloads = ((TedDailySerie)currentSerie).maxDownloads;
-			this.latestParseDate = ((TedDailySerie)currentSerie).latestParseDate;
-			this.latestDownloadDate = ((TedDailySerie)currentSerie).latestDownloadDate;
-			this.currentEpisodeSS = new DailyDate((DailyDate)currentSerie.getCurrentStandardStructure());
-		}
 	}
 
 	/**
@@ -265,5 +257,16 @@ public class TedDailySerie extends TedSerie
 		}
 		
 		return this.currentEpisodeSS;
+	}
+	
+	public void copy (TedDailySerie original)
+	{
+		super.copy(original);
+		
+		this.isDaily = true;
+		this.maxDownloads = original.maxDownloads;
+		this.latestParseDate = original.latestParseDate;
+		this.latestDownloadDate = original.latestDownloadDate;
+		this.currentEpisodeSS = original.getCurrentStandardStructure();
 	}
 }
