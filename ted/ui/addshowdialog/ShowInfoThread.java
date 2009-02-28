@@ -26,11 +26,13 @@ public class ShowInfoThread extends Thread
 	private TedSerie currentSerie;
 	String startHTML = "<html><font face=\"Arial, Helvetica, sans-serif\">";
 	String endHTML = "</font></html>";
+	private boolean done;
 	
 	public ShowInfoThread(JEditorPane jep, TedSerie ts)
 	{
 		showInfoPane = jep;
 		currentSerie = ts;
+		done = false;
 	}
 	
 	public void run()
@@ -39,7 +41,7 @@ public class ShowInfoThread extends Thread
 		showInfoPane.setText(startHTML + Lang.getString("TedAddShowDialog.ShowInfo.LabelLoadingInfo") + endHTML);
 		
 		// when a show is selected
-		if(currentSerie!=null)
+		if(currentSerie!=null && !done)
 		{	
 			// and has a TV.com url
 			if (currentSerie.getTVcom() != "" && currentSerie.getTVcom() != null)
@@ -51,7 +53,7 @@ public class ShowInfoThread extends Thread
 					Element nl = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE);
 					String location = parser.getShowInfoURL(nl);
 					
-					if(!location.equals(""))
+					if(!location.equals("")  && !done)
 					{
 						// open the showinfo url and display
 						url = new URL(location+currentSerie.getTVcom());
@@ -86,6 +88,11 @@ public class ShowInfoThread extends Thread
 			}
 		}
 	
+	}
+
+	public void done() 
+	{
+		done = true;	
 	}
 
 }

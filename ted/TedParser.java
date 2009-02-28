@@ -70,6 +70,7 @@ public class TedParser extends Thread
 	
 	private String[][] parseLogInfo;
 	private boolean forceParce = false;
+	private boolean stopGetItems = false;
 	
   	/****************************************************
 	 * CONSTRUCTORS
@@ -1227,7 +1228,7 @@ public class TedParser extends Thread
 		Vector<TedSerieFeed> feeds = serie.getFeeds();
 		TedSerieFeed currentFeed;
 				
-		for (int i = 0; i < feeds.size(); i++)
+		for (int i = 0; i < feeds.size() && !stopGetItems; i++)
 		{
 			currentFeed = (TedSerieFeed) feeds.get(i);
 			try 
@@ -1241,7 +1242,7 @@ public class TedParser extends Thread
 
 				List<SyndEntry>	entries = feed.getEntries();
 				
-		        for (int j = entries.size() - 1; j >= 0; j--)
+		        for (int j = entries.size() - 1 ; j >= 0 && !stopGetItems; j--)
 		        {		        	
 		        	SyndEntry item = (SyndEntry)entries.get(j);
 		        	
@@ -1290,10 +1291,13 @@ public class TedParser extends Thread
 	       
 		}
 		
+		stopGetItems = false;
+		
 		if(serie.isDaily)
 			return removeDoublesDD(items);
 		else
 			return removeDoublesSE(items);
+		
 	}
 
 	private DailyDate getDailyDateFromItem(SyndEntry item)
@@ -1665,5 +1669,13 @@ public class TedParser extends Thread
 		}
 		
 		return singleVector;
+	}
+
+	/**
+	 * Interrupt the GetItems() function
+	 */
+	public void stopGetItems() 
+	{
+		stopGetItems = true;		
 	}
 }

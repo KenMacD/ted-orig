@@ -1044,4 +1044,12 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			this.currentEpisodeSS = new SeasonEpisode((SeasonEpisode)original.getCurrentStandardStructure());
 		}
 	}
+
+	/**
+	 * Cancels the retrieval of schedule/torrent site info per episode
+	 */
+	public void interruptPubishedAndAiredEpisodes() 
+	{
+		this.scheduler.interruptPubishedAndAiredEpisodes();
+	}
 }

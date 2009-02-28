@@ -32,6 +32,8 @@ public class SeasonEpisodeScheduler implements Serializable
 	private Vector<StandardStructure> scheduledEpisodes;
 	private Date checkEpisodeSchedule;
 	private int updateIntervalInDays;
+	private boolean retrievalPublishedAndAiredInterrupted = false;
+	private TedParser showParser;
 	
 	public SeasonEpisodeScheduler (TedSerie serie)
 	{
@@ -191,8 +193,9 @@ public class SeasonEpisodeScheduler implements Serializable
 	 */
 	private Vector<StandardStructure> getPublishedEpisodes()
 	{
-		TedParser showParser = new TedParser();
+		showParser = new TedParser();
 		Vector<StandardStructure> publishedSeasonEpisodes = showParser.getItems(serie);
+		showParser = null;
 		return publishedSeasonEpisodes;
 	}
 	
@@ -355,7 +358,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		Vector<StandardStructure> airedEpisodes     = this.getAiredEpisodes();
 		Vector<StandardStructure> results           = new Vector<StandardStructure>();
 		
-		if (publishedEpisodes.size() > 0 && airedEpisodes.size() > 0)
+		if (publishedEpisodes.size() > 0 && airedEpisodes.size() > 0 && !retrievalPublishedAndAiredInterrupted)
 		{		
 			results.addAll(airedEpisodes);
 			// filter out any items in publishedEpisodes that are not in airedEpisodes
@@ -367,7 +370,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			airedCounter++;
 			publishedCounter++;
 			
-			while (airedCounter < results.size() && publishedCounter < publishedEpisodes.size())
+			while (airedCounter < results.size() && publishedCounter < publishedEpisodes.size()  && !retrievalPublishedAndAiredInterrupted)
 			{
 				// compare the two episodes.
 				
@@ -417,6 +420,7 @@ public class SeasonEpisodeScheduler implements Serializable
 		airedEpisodes = null;
 		publishedEpisodes = null;
 		
+		retrievalPublishedAndAiredInterrupted = false;
 		return results;
 	}
 	
@@ -593,5 +597,16 @@ public class SeasonEpisodeScheduler implements Serializable
 	public Date getNextUpdateDate() 
 	{
 		return this.checkEpisodeSchedule;
+	}
+
+	public void interruptPubishedAndAiredEpisodes() 
+	{
+		retrievalPublishedAndAiredInterrupted  = true;
+		
+		// also stop the parser from getting it's items
+		if (showParser != null)
+		{
+			showParser.stopGetItems();
+		}	
 	}
 }

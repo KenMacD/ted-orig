@@ -32,6 +32,7 @@ public class EpisodeParserThread extends Thread
 	private EpisodeChooserPanel episodeChooserPanel;
 	private TedSerie selectedSerie;
 	private SubscribeOptionsPanel subscribeOptionsPanel = null;
+	private boolean done = false;
 	
 	/****************************************************
 	 * CONSTRUCTOR
@@ -47,6 +48,7 @@ public class EpisodeParserThread extends Thread
 		this.episodeChooserPanel = ecp;
 		this.selectedSerie = ts;
 		this.subscribeOptionsPanel = subscribeOptionsPanel;
+		done = false;
 	}
 	
 	public EpisodeParserThread(EpisodeChooserPanel episodeChooserPanel2,
@@ -54,6 +56,7 @@ public class EpisodeParserThread extends Thread
 	{
 		this.episodeChooserPanel = episodeChooserPanel2;
 		this.selectedSerie = show;
+		done = false;
 	}
 
 	/****************************************************
@@ -62,7 +65,6 @@ public class EpisodeParserThread extends Thread
 	
 	public void run()
 	{
-		
 		this.episodeChooserPanel.clear();
 		if (this.subscribeOptionsPanel != null)
 		{
@@ -74,18 +76,18 @@ public class EpisodeParserThread extends Thread
 			this.episodeChooserPanel.setActivityStatus(true);
 		}
 		
-		if (selectedSerie!=null)
+		if (selectedSerie!=null && !done)
 		{	
 			StandardStructure nextEpisode = null;
 			boolean scheduleAvailable = true;
 			boolean isSubscribeOptionsPanel = (this.subscribeOptionsPanel != null);
 			// check if schedule is available
-			if (selectedSerie.isEpisodeScheduleAvailableWithUpdate())
+			if (selectedSerie.isEpisodeScheduleAvailableWithUpdate() && !done)
 			{
 				// get next to air episode
 				nextEpisode = selectedSerie.getNextEpisode();
 				
-				if (isSubscribeOptionsPanel)
+				if (isSubscribeOptionsPanel && !done)
 				{		
 					this.subscribeOptionsPanel.setGlobalActivityStatus(false);
 					this.subscribeOptionsPanel.setCustomActivityStatus(true);
@@ -106,7 +108,7 @@ public class EpisodeParserThread extends Thread
 			Vector<StandardStructure> publishedEpisodes = selectedSerie.getPubishedAndAiredEpisodes();	
 			
 			// if no schedule, also fill the subscribeoptionspanel with info from the torrent sites
-			if (!scheduleAvailable && publishedEpisodes.size() > 0 && isSubscribeOptionsPanel)
+			if (!scheduleAvailable && publishedEpisodes.size() > 0 && isSubscribeOptionsPanel && !done)
 			{
 				StandardStructure lastAiredGuess = publishedEpisodes.elementAt(0);
 				this.subscribeOptionsPanel.setLastAiredEpisode(lastAiredGuess);
@@ -117,19 +119,22 @@ public class EpisodeParserThread extends Thread
 			}
 			
 			// add episodes to episodechooserpanel
-			this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
+			if (!done)
+			{
+				this.episodeChooserPanel.setSeasonEpisodes(publishedEpisodes);
+			}
 			
-			if (nextEpisode != null)
+			if (nextEpisode != null && !done)
 			{
 				this.episodeChooserPanel.setNextEpisode(nextEpisode);
 			}
 			
-			if (isSubscribeOptionsPanel)
+			if (isSubscribeOptionsPanel && !done)
 			{
 				this.subscribeOptionsPanel.enableCustomEpisodes();
 				this.subscribeOptionsPanel.setCustomActivityStatus(false);
 			}
-			else
+			else if (!done)
 			{
 				this.episodeChooserPanel.setActivityStatus(false);
 			}
@@ -140,5 +145,14 @@ public class EpisodeParserThread extends Thread
 		
 		// disable activity image	
 		this.episodeChooserPanel.selectEpisode();
+	}
+
+	/**
+	 * Stop parsing the episodes and end the thread
+	 */
+	public void done() 
+	{
+		done = true;	
+		selectedSerie.interruptPubishedAndAiredEpisodes();
 	}
 }

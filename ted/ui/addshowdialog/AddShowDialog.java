@@ -84,6 +84,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JButton buttonAddEmptyShow;
 	private Vector<SimpleTedSerie> allShows;
 	private SimpleTedSerie selectedShow;
+	private ShowInfoThread showInfoThread;
+	private EpisodeParserThread episodeParserThread;
 
 	private EpisodeChooserPanel   episodeChooserPanel   = new EpisodeChooserPanel(this);
 	private SubscribeOptionsPanel subscribeOptionsPanel = new SubscribeOptionsPanel(this);
@@ -218,12 +220,13 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		int selectedRow = showsTable.getSelectedRow();
 		
 		if (selectedRow >= 0)
-		{			
+		{	
 			// get the simple info of the show
 			SimpleTedSerie selectedShow = this.showsTableModel.getSerieAt(selectedRow);
 			
 			if (this.selectedShow == null || !(this.selectedShow.getName().equals(selectedShow.getName())))
 			{
+
 				this.selectedShow = selectedShow;
 						
 				this.showNameLabel.setText(selectedShow.getName());
@@ -246,15 +249,24 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
 				items = parser.getAutoFeedLocations(series);
 				selectedSerie.generateFeedLocations(items);
+				// kill running threads
+				
+				if (episodeParserThread != null && episodeParserThread.isAlive())
+				{
+					episodeParserThread.done();
+				}
+				if (showInfoThread != null && showInfoThread.isAlive())
+				{
+					showInfoThread.done();
+				}
 				
 				// retrieve the show info and the episodes from the web
-				ShowInfoThread sit = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
-				//sit.setPriority( Thread.NORM_PRIORITY + 1 ); 
-				EpisodeParserThread ept = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie, this.subscribeOptionsPanel);
-				//ept.setPriority( Thread.NORM_PRIORITY - 1 ); 
+				showInfoThread = new ShowInfoThread(this.getShowInfoPane(), selectedSerie);
 				
-				sit.start();
-				ept.start();	
+				episodeParserThread = new EpisodeParserThread(this.episodeChooserPanel, selectedSerie, this.subscribeOptionsPanel);		
+				
+				showInfoThread.start();
+				episodeParserThread.start();	
 				
 				// set the selected show
 				this.setSelectedSerie(selectedSerie);
