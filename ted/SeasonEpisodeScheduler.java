@@ -31,7 +31,7 @@ public class SeasonEpisodeScheduler implements Serializable
 	// Vector containing the scheduled episodes. Sorted on airdate. First item is with highest airdate
 	private Vector<StandardStructure> scheduledEpisodes;
 	private Date checkEpisodeSchedule;
-	private int updateIntervalInDays;
+	private int updateIntervalInDays = 6;
 	private boolean retrievalPublishedAndAiredInterrupted = false;
 	private TedParser showParser;
 	
@@ -59,6 +59,7 @@ public class SeasonEpisodeScheduler implements Serializable
 			this.scheduledEpisodes.addAll(scheduler2.getScheduledEpisodes());
 		}
 		this.checkEpisodeSchedule = scheduler2.checkEpisodeSchedule;
+		this.updateIntervalInDays = scheduler2.getIntervalInDays();
 		this.serie = serie;
 	}
 	
@@ -585,8 +586,13 @@ public class SeasonEpisodeScheduler implements Serializable
 	}
 
 	private int getIntervalInDays() 
-	{
-		if (this.updateIntervalInDays == 0)
+	{		
+		if (this.serie.isDaily)
+		{
+			// for a daily show, update the schedule more regularly
+			this.updateIntervalInDays = 3;
+		}
+		else
 		{
 			this.updateIntervalInDays = 6;
 		}
