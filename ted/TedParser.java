@@ -286,7 +286,7 @@ public class TedParser extends Thread
 		        	
 		        	if(serie.isDaily || this.continueParsing())
 		        	{
-		        		if(tPKeyChecker.checkKeywords(item.getTitle().toString(), serie.getKeywords()))
+		        		if (titleMatchesKeywords(item, serie))
 		        		{
 	        				if(!serie.isDaily)
 	        				{
@@ -858,6 +858,22 @@ public class TedParser extends Thread
 			return false;
 		}		
 		
+	}
+	
+	private boolean titleMatchesKeywords(SyndEntry item, TedSerie serie)
+	{
+		String torrentTitle = item.getTitle().toString();
+		boolean matchesNormalKeywords =
+			tPKeyChecker.checkKeywords(torrentTitle, serie.getKeywords());
+		
+		boolean matchesHDKeywords = true;
+		if (serie.isDownloadInHD())
+		{
+			matchesHDKeywords =
+				tPKeyChecker.checkKeywords(torrentTitle, TedConfig.getHDKeywords());
+		}
+		
+		return matchesHDKeywords && matchesNormalKeywords;
 	}
 	
 	/**

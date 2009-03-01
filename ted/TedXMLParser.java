@@ -458,4 +458,10 @@ public class TedXMLParser
 		
 		return "";
 	}
+	
+	public String getHDKeywords(Element nodelist)
+	{
+		String keywords = getTextValue(nodelist, "hdkeywords");
+		return keywords;
+	}
 }

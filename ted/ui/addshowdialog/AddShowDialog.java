@@ -14,6 +14,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -30,6 +31,7 @@ import org.w3c.dom.Element;
 
 import ted.BrowserLauncher;
 import ted.Lang;
+import ted.TedConfig;
 import ted.TedIO;
 import ted.TedLog;
 import ted.TedMainDialog;
@@ -74,6 +76,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private TedSerie selectedSerie;
 	private TedMainDialog tedMain;
 	private JTextPane showInfoPane;
+	private JCheckBox downloadInHD;
 	private JTextField jSearchField;
 	private JLabel showNameLabel;
 	private JLabel selectShowLabel;
@@ -134,6 +137,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 10, 2, 1, left, default"));
 			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 10, 4, 1, left, default"));
 			getContentPane().add(getJSearchField(), new CellConstraints("3, 2, 1, 1, default, fill"));
+			getContentPane().add(getDownloadInHD(), new CellConstraints("3, 10, 1, 1, default, default"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());
 			
@@ -154,6 +158,9 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 					showsTableSelectionChanged();
 					
 				}});		
+			
+			// This preference has been saved for the user's convenience.
+			downloadInHD.setSelected(TedConfig.isHDDownloadPreference());
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -359,8 +366,17 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		if (selectedSerie != null)
 		{
 			StandardStructure selectedEpisode = this.subscribeOptionsPanel.getSelectedEpisode();
-			selectedSerie.setCurrentEpisode(selectedEpisode);
+			selectedSerie.setCurrentEpisode(selectedEpisode);		
 			selectedSerie.updateShowStatus();
+			
+			// Handle HD episodes.
+			boolean downloadSerieInHD = downloadInHD.isSelected();
+			selectedSerie.setDownloadInHD(downloadSerieInHD);
+			if (downloadSerieInHD)
+			{
+				selectedSerie.setMinSize(selectedSerie.getMinSize() * 2);
+				selectedSerie.setMaxSize(selectedSerie.getMaxSize() * 2);
+			}
 			
 			// add the serie
 			tedMain.addSerie(selectedSerie);
@@ -371,6 +387,11 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	private void close() 
 	{
+		// Save this preference for the next time.
+		TedConfig.setHDDownloadPreference(downloadInHD.isSelected());
+		TedIO tio = new TedIO();
+		tio.SaveConfig();
+		
 		this.showsTableModel.removeSeries();
 		this.episodeChooserPanel.clear();
 		// close the dialog
@@ -615,5 +636,13 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	{
 		this.episodeChooserPanel.setVisible(b);
 		
+	}
+	
+	private JCheckBox getDownloadInHD() {
+		if(downloadInHD == null) {
+			downloadInHD = new JCheckBox();
+			downloadInHD.setText("Download in HD quality");
+		}
+		return downloadInHD;
 	}
 }

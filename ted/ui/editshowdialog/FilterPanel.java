@@ -1,5 +1,7 @@
 package ted.ui.editshowdialog;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
@@ -17,6 +19,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ted.Lang;
+import ted.TedConfig;
 import ted.TedSerie;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -35,7 +38,7 @@ import com.jgoodies.forms.layout.FormLayout;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class FilterPanel extends JPanel implements ChangeListener, TextListener
+public class FilterPanel extends JPanel implements ChangeListener, TextListener, ActionListener
 {
 
 	/**
@@ -45,6 +48,9 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 	private JLabel label_minSize;
 	private JSpinner spinner_maxSize;
 	private TextField keyword_text;
+	private JLabel hdLabel;
+	private JCheckBox downloadHDCheckbox;
+	private JSeparator jSeparator2;
 	private JLabel label_keywords;
 	private JLabel label_keywords3;
 	private JLabel label_keywords2;
@@ -56,6 +62,7 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 	private JCheckBox check_applySeeders;
 	private JCheckBox check_applyMaxSize;
 	private JCheckBox check_applyMinSize;
+	private JCheckBox check_applyHD;
 	private JLabel label_seederFilters;
 	private JSeparator jSeparator4;
 	private JLabel label_mb2;
@@ -79,8 +86,9 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 		{
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), max(p;0dlu), 90dlu:grow, 40dlu, 5dlu, max(p;5dlu):grow, max(p;15dlu)", 
-					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu):grow, max(p;10px)");
+					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 			this.setLayout(thisLayout);
+			this.setPreferredSize(new java.awt.Dimension(379, 299));
 			{
 				label_sizeFilters = new JLabel();
 				this.add(label_sizeFilters, new CellConstraints("2, 2, 5, 1, default, default"));
@@ -174,6 +182,23 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 				this.add(keyword_text, new CellConstraints("4, 12, 3, 1, default, fill"));
 			}
 			{
+				jSeparator2 = new JSeparator();
+				this.add(jSeparator2, new CellConstraints("2, 13, 5, 1, default, default"));
+			}
+			{
+				downloadHDCheckbox = new JCheckBox();
+				this.add(downloadHDCheckbox, new CellConstraints("3, 14, 5, 1, default, default"));
+				downloadHDCheckbox.setText("Download HD episodes");
+				downloadHDCheckbox.addActionListener(this);
+				downloadHDCheckbox.setActionCommand("hd");
+			}
+			{
+				hdLabel = new JLabel();
+				this.add(hdLabel, new CellConstraints("3, 15, 4, 1, default, default"));
+				hdLabel.setText("Will adjust the size filter and use additional keywords (" + 
+						TedConfig.getHDKeywords() + ")");
+			}
+			{
 			}
 		}
 		catch (Exception e)
@@ -185,6 +210,7 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 		check_applyMaxSize = new JCheckBox();
 		check_applySeeders = new JCheckBox();
 		check_applyKeyWords = new JCheckBox();
+		check_applyHD = new JCheckBox();
 		
 		Integer value = new Integer(0);
 		this.maxSizeSpinnerModel.setMinimum(value);
@@ -219,7 +245,7 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 		spinner_maxSize.setValue(maxSize);
 		spinner_minSeeders.setValue(minSeeders);
 		keyword_text.setText(""+serie.getKeywords());
-		
+		downloadHDCheckbox.setSelected(serie.isDownloadInHD());		
 	}
 
 	public boolean checkValues() 
@@ -272,6 +298,7 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 			currentSerie.setMaxSize(max);
 			currentSerie.setKeywords(keyword_text.getText().toLowerCase());
 			currentSerie.setMinNumOfSeeders(minSeeders);
+			currentSerie.setDownloadInHD(downloadHDCheckbox.isSelected());
 		}
 		
 	}
@@ -283,7 +310,8 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 		this.add(check_applyMinSize, new CellConstraints("2, 3, 1, 1, default, default"));
 		this.add(check_applyMaxSize, new CellConstraints("2, 4, 1, 1, default, default"));
 		this.add(check_applySeeders, new CellConstraints("2, 7, 1, 1, default, default"));
-		this.add(check_applyKeyWords, new CellConstraints("2, 12, 1, 1, default, top"));
+		this.add(check_applyKeyWords, new CellConstraints("2, 12, 1, 1, default, default"));
+		this.add(check_applyHD, new CellConstraints("2, 14, 1, 1, default, default"));
 	
 		// check if one of the values is equal for all shows, then pre-populate
 		// that value in the fields of the dialog
@@ -293,11 +321,13 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 			boolean maxSizeEqual = true;
 			boolean minSeedersEqual = true;
 			boolean keywordsEqual = true;
+			boolean hdEqual = true;
 			
 			int minSize = showsList[0].getMinSize();
 			int maxSize = showsList[0].getMaxSize();
 			int minSeeders = showsList[0].getMinNumOfSeeders();
 			String keyWords = showsList[0].getKeywords();
+			boolean useHD = showsList[0].isDownloadInHD();
 			
 			for (int i = 1; i < showsList.length; i++)
 			{
@@ -305,8 +335,9 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 				maxSizeEqual = maxSizeEqual && (maxSize == showsList[i].getMaxSize());
 				minSeedersEqual = minSeedersEqual && (minSeeders == showsList[i].getMinNumOfSeeders());
 				keywordsEqual = keywordsEqual && (keyWords.equalsIgnoreCase(showsList[i].getKeywords()));
+				hdEqual = hdEqual && (useHD == showsList[i].isDownloadInHD());
 				
-				if (!minSizeEqual && !maxSizeEqual && !minSeedersEqual && !keywordsEqual)
+				if (!minSizeEqual && !maxSizeEqual && !minSeedersEqual && !keywordsEqual && !hdEqual)
 				{
 					break;
 				}
@@ -331,6 +362,10 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 			{
 				this.keyword_text.setText(keyWords);
 			}
+			if (hdEqual)
+			{
+				this.downloadHDCheckbox.setSelected(useHD);
+			}
 		}
 		
 		// add listeners after we set the values (otherwise an event will be thrown once we set the value :)
@@ -350,33 +385,59 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 			boolean applyMinSize = this.check_applyMinSize.isSelected();
 			boolean applyMinSeeders = this.check_applySeeders.isSelected();
 			boolean applyKeywords = this.check_applyKeyWords.isSelected();
+			boolean applyDownloadHD = this.check_applyHD.isSelected();
 			int min = this.minSizeSpinnerModel.getNumber().intValue();
 			int max = this.maxSizeSpinnerModel.getNumber().intValue();
 			int minSeeders = this.minSeedersSpinnerModel.getNumber().intValue();
 			String keywords = this.keyword_text.getText();
+			boolean useHD = this.downloadHDCheckbox.isSelected();
 			
 			for (int i = 0; i < showsList2.length; i++)
 			{
 				TedSerie currentSerie = showsList2[i];
+
 				if (applyMaxSize)
 				{
 					currentSerie.setMaxSize(max);
 				}
+				else if (  applyDownloadHD
+						&& currentSerie.isDownloadInHD() != useHD)
+				{
+					// Adjust the size settings for en/disabling the HD option.
+					// Only do this for sizes which don't have been adjusted by
+					// the user himself (or the ones which were adjusted when
+					// this option was selected).
+					if (useHD) currentSerie.setMaxSize(currentSerie.getMaxSize() * 2);
+					else       currentSerie.setMaxSize(currentSerie.getMaxSize() / 2);
+				}
+				
 				if (applyMinSize)
 				{
 					currentSerie.setMinSize(min);
 				}
+				else if (  applyDownloadHD
+						&& currentSerie.isDownloadInHD() != useHD)
+				{
+					if (useHD) currentSerie.setMinSize(currentSerie.getMinSize() * 2);
+					else       currentSerie.setMinSize(currentSerie.getMinSize() / 2);
+				}
+				
 				if (applyMinSeeders)
 				{
 					currentSerie.setMinNumOfSeeders(minSeeders);
 				}
+				
 				if (applyKeywords)
 				{
 					currentSerie.setKeywords(keywords);
 				}
+				
+				if (applyDownloadHD)
+				{
+					currentSerie.setDownloadInHD(useHD);
+				}
 			}
-		}
-		
+		}		
 	}
 
 	public void stateChanged(ChangeEvent e) 
@@ -401,6 +462,34 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener
 		{
 			this.check_applyKeyWords.setSelected(true);
 		}	
+	}
+
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		String command = arg0.getActionCommand();
+		
+		if (command.equals("hd"))
+		{
+			this.check_applyHD.setSelected(true);
+			
+			int minSize = minSizeSpinnerModel.getNumber().intValue();
+			int maxSize = maxSizeSpinnerModel.getNumber().intValue();
+			
+			// If the user selected the option to download HD episodes
+			// increase the size filters.
+			if (downloadHDCheckbox.isSelected())
+			{
+				if (minSize > 0) minSizeSpinnerModel.setValue(minSize * 2);
+				if (maxSize > 0) maxSizeSpinnerModel.setValue(maxSize * 2);
+			}
+			// Otherwise the user has deselected the option so half the
+			// size filters
+			else 
+			{
+				if (minSize > 0) minSizeSpinnerModel.setValue(minSize / 2);
+				if (maxSize > 0) maxSizeSpinnerModel.setValue(maxSize / 2);				
+			}
+		}
 	}
 
 }

@@ -69,6 +69,8 @@ public class TedConfig
 	private static boolean useAutoSchedule = true;
 	private static int sortType = SORT_STATUS;
 	private static int sortDirection = SORT_ASCENDING;
+	private static String hdKeywords = "720p & HD";
+	private static boolean hdDownloadPreference = false;
 	
 	
 	private static final Color defaultEvenRowColor = Color.WHITE;
@@ -666,5 +668,25 @@ public class TedConfig
 	public static void setSortDirection (int direction)
 	{
 		TedConfig.sortDirection = direction;
+	}
+	
+	public static String getHDKeywords()
+	{
+		return hdKeywords;		
+	}
+	
+	public static void setHDKeywords(String keywords)
+	{
+		TedConfig.hdKeywords = keywords;
+	}
+
+	public static void setHDDownloadPreference(boolean hdDownloadPreference) 
+	{
+		TedConfig.hdDownloadPreference = hdDownloadPreference;
+	}
+
+	public static boolean isHDDownloadPreference() 
+	{
+		return hdDownloadPreference;
 	}
 }

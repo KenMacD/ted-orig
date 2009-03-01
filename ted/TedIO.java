@@ -222,7 +222,9 @@ public class TedIO
 			fw.append("timezoneoffset=" + TedConfig.getTimeZoneOffset() + "\n");
 			fw.append("sorttype=" + TedConfig.getSortType() + "\n");
 			fw.append("sortdirection=" + TedConfig.getSortDirection() + "\n");
-			fw.append("autoschedule=" + TedConfig.isUseAutoSchedule());	
+			fw.append("autoschedule=" + TedConfig.isUseAutoSchedule() + "\n");
+			fw.append("hdkeywords=" + TedConfig.getHDKeywords() + "\n");
+			fw.append("hdpreference=" + TedConfig.isHDDownloadPreference());
 			
 			fw.close();
 		}
@@ -432,6 +434,14 @@ public class TedIO
 				else if(configItem.equals("sortdirection"))
 				{
 					TedConfig.setSortDirection(Integer.parseInt(configItemValue));
+				}
+				else if(configItem.equals("hdkeywords"))
+				{
+					TedConfig.setHDKeywords(configItemValue);
+				}
+				else if(configItem.equals("hdpreference"))
+				{
+					TedConfig.setHDDownloadPreference(Boolean.parseBoolean(configItemValue));
 				}
 			}
 			
@@ -760,11 +770,16 @@ public class TedIO
 			
 			// get the version of the XML file
 			TedXMLParser parser = new TedXMLParser();
-			Element el = parser.readXMLFromFile(XML_SHOWS_FILE);
-			int onlineVersion = parser.getVersion(el);
+			Element xmlFile = parser.readXMLFromFile(XML_SHOWS_FILE);
+			int onlineVersion = parser.getVersion(xmlFile);
 			
-			// set the version and save the config
+			// also get the HD keywords (if available).
+			String hdKeywords = parser.getHDKeywords(xmlFile);
+			
+			// Save the config.
 			TedConfig.setRSSVersion(onlineVersion);
+			TedConfig.setHDKeywords(hdKeywords);
+			
 			this.SaveConfig();
 		}
 		catch (MalformedURLException e) 

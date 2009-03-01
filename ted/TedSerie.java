@@ -53,29 +53,34 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	public final static int IS_IDLE = 0;
 	static final long serialVersionUID= 7210007788942770687L;
 
-	private int minSize;
-	private int maxSize;
+	// General
 	private String name;
 	private String url;
+	private String statusString;
+	private String searchName = "";
+	private boolean usePresets;
+	private int progress = 0;
+	private int timeZone = -1;
+	protected boolean isDaily = false;
+	protected StandardStructure currentEpisodeSS;	
+	// Feeds
+	private Vector<TedSerieFeed> feeds = new Vector<TedSerieFeed>();	
+	// Filters
+	private int minSize;
+	private int maxSize;
+	private int minNumOfSeeders;
 	private String keywords;
+	private boolean isDownloadInHD;	
+	// Schedule
 	private long checkDate;
 	private int activity = 0;
 	protected int status = 0;
 	private boolean useAutoSchedule;
 	private long breakUntil = 0;
-	private Vector<TedSerieFeed> feeds = new Vector<TedSerieFeed>();
-	private int minNumOfSeeders;
-	private String statusString;
-	private int progress = 0;
-	private boolean usePresets;
-	private String tvCom;
-	protected boolean isDaily = false;
-	private String searchName = "";
-	protected SeasonEpisodeScheduler scheduler = null;
-	private String epguidesName;
-	private int timeZone = -1;
-	protected StandardStructure currentEpisodeSS;
 	private String tvRageID;
+	private String tvCom;
+	private String epguidesName;
+	protected SeasonEpisodeScheduler scheduler = null;
 	
 	// NOTE::
 	// DO NOTE REMOVE THESE FIELDS HERE!!
@@ -1026,6 +1031,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		this.tvCom = original.tvCom;
 		this.tvRageID = original.tvRageID;
 		this.setScheduler(original.getScheduler());
+		this.isDownloadInHD = original.isDownloadInHD;
 		
 		this.feeds.clear();
 		// copy all feeds
@@ -1045,11 +1051,4 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		}
 	}
 
-	/**
-	 * Cancels the retrieval of schedule/torrent site info per episode
-	 */
-	public void interruptPubishedAndAiredEpisodes() 
-	{
-		this.scheduler.interruptPubishedAndAiredEpisodes();
-	}
-}
+	public void setDownloadInHD(boolean isDownloadInHD) 	{		this.isDownloadInHD = isDownloadInHD;	}	public boolean isDownloadInHD() 	{		return isDownloadInHD;	}	/**	 * Cancels the retrieval of schedule/torrent site info per episode	 */	public void interruptPubishedAndAiredEpisodes() 	{		this.scheduler.interruptPubishedAndAiredEpisodes();	}}
