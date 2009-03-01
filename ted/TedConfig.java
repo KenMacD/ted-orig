@@ -677,7 +677,10 @@ public class TedConfig
 	
 	public static void setHDKeywords(String keywords)
 	{
-		TedConfig.hdKeywords = keywords;
+		if (!keywords.equals(""))
+		{
+			TedConfig.hdKeywords = keywords;
+		}
 	}
 
 	public static void setHDDownloadPreference(boolean hdDownloadPreference) 
