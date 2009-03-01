@@ -306,7 +306,18 @@ public class TedIO
 					String s = configItemValue;
 					File f = new File(s);
 					
-					if(f.isDirectory())
+					boolean directoryAvailable = false;
+					// Create the directory if it doesn't exist.
+					if (!f.exists())
+					{
+						directoryAvailable = f.mkdir();
+					}
+					else
+					{
+						directoryAvailable = true;
+					}
+					
+					if (directoryAvailable)
 					{
 						TedConfig.setDirectory(s);
 					}
