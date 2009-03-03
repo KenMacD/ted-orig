@@ -122,6 +122,10 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		return this.summaryURL;
 	}
 	
+	/**
+	 * @return The airdate of this structure, with time zone correction applied
+	 * @throws AirDateUnknownException When the airdate is not known
+	 */
 	public Date getAirDate() throws AirDateUnknownException
 	{
 		if (this.airDate != null)

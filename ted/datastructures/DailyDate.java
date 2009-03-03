@@ -82,14 +82,7 @@ public class DailyDate  extends StandardStructure
 
 	public DailyDate(DailyDate copy) 
 	{
-		try 
-		{
-			this.airDate = copy.getAirDate();
-		} 
-		catch (AirDateUnknownException e) 
-		{
-			// do nothing
-		}
+		this.airDate = copy.airDate;
 		this.seeders = copy.seeders;
 		this.setDate(copy.getDate());
 		this.url = copy.url;

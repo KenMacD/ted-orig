@@ -31,19 +31,12 @@ public class SeasonEpisode extends StandardStructure
 	
 	public SeasonEpisode(SeasonEpisode se) 
 	{
-		this.season = se.getSeason();
-		this.episode = se.getEpisode();
-		try 
-		{
-			this.setAirDate(se.getAirDate());
-		} 
-		catch (AirDateUnknownException e) 
-		{
-			// do nothing
-		}
-		this.title = se.getTitle();
-		this.quality = se.getQuality();
-		this.publishTimeZone = se.getPublishTimeZone();
+		this.season = se.season;
+		this.episode = se.episode;
+		this.airDate = se.airDate;
+		this.title = se.title;
+		this.quality = se.quality;
+		this.publishTimeZone = se.publishTimeZone;
 	}	
 
 	public SeasonEpisode() 
@@ -125,6 +118,11 @@ public class SeasonEpisode extends StandardStructure
 		{
 			result += " & " + (this.episode + 1);
 		}
+		if (this.airDate == null)
+		{
+			// add "or season s+1"
+			result += " "+Lang.getString("TedTableModel.Or")+" " + Lang.getString("TedTableModel.Season") + ": " + (this.season+1);
+		}
 		return result;
 	}
 	
@@ -136,7 +134,7 @@ public class SeasonEpisode extends StandardStructure
 	public String getSearchStringWithTitle()
 	{
 		String result = this.toString();
-		if (this.title != "" && this.title != null)
+		if (this.title.length() > 0 && this.title != "" && this.title != null)
 		{
 			result += ": \"" + this.title + "\"";
 		}
@@ -151,6 +149,11 @@ public class SeasonEpisode extends StandardStructure
 		if (this.isDouble())
 		{
 			result += " & " + (this.episode + 1);
+		}
+		
+		if (this.airDate == null)
+		{
+			result += " "+Lang.getString("TedTableModel.Or")+" " + (this.season + 1) + "x1";
 		}
 		
 		if (this.getTitle() != "")
