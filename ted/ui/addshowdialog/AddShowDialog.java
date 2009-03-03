@@ -641,7 +641,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private JCheckBox getDownloadInHD() {
 		if(downloadInHD == null) {
 			downloadInHD = new JCheckBox();
-			downloadInHD.setText("Download in HD quality");
+			downloadInHD.setText(Lang.getString("TedAddShowDialog.DownloadInHd"));
 		}
 		return downloadInHD;
 	}

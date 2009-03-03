@@ -188,14 +188,14 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 			{
 				downloadHDCheckbox = new JCheckBox();
 				this.add(downloadHDCheckbox, new CellConstraints("3, 14, 5, 1, default, default"));
-				downloadHDCheckbox.setText("Download HD episodes");
+				downloadHDCheckbox.setText(Lang.getString("TedEpisodeDialog.CheckboxHD"));
 				downloadHDCheckbox.addActionListener(this);
 				downloadHDCheckbox.setActionCommand("hd");
 			}
 			{
 				hdLabel = new JLabel();
 				this.add(hdLabel, new CellConstraints("3, 15, 4, 1, default, default"));
-				hdLabel.setText("Will adjust the size filter and use additional keywords (" + 
+				hdLabel.setText(Lang.getString("TedEpisodeDialog.LabelHD") + "(" + 
 						TedConfig.getHDKeywords() + ")");
 			}
 			{
