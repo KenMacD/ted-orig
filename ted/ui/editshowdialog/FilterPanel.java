@@ -196,7 +196,7 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 				hdLabel = new JLabel();
 				this.add(hdLabel, new CellConstraints("3, 15, 4, 1, default, default"));
 				hdLabel.setText(Lang.getString("TedEpisodeDialog.LabelHD") + "(" + 
-						TedConfig.getHDKeywords() + ")");
+						TedConfig.getInstance().getHDKeywords() + ")");
 			}
 			{
 			}

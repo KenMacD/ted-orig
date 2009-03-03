@@ -88,15 +88,15 @@ public class TedColorPicker extends JDialog
 		String command = action.getActionCommand();
 		if (command.equals("odd"))
 		{
-			TedConfig.setOddRowColor(tcc.getColor());
+			TedConfig.getInstance().setOddRowColor(tcc.getColor());
 		}
 		else if (command.equals("even"))
 		{
-			TedConfig.setEvenRowColor(tcc.getColor());
+			TedConfig.getInstance().setEvenRowColor(tcc.getColor());
 		}
 		else if (command.equals("default"))
 		{
-			TedConfig.restoreDefaultColors();
+			TedConfig.getInstance().restoreDefaultColors();
 		}
 		else if (command.equals("return"))
 		{

@@ -131,7 +131,7 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		if (this.airDate != null)
 		{
 			long dateTime = this.airDate.getTime();
-			int  offset   = TedConfig.getTimeZoneOffset();
+			int  offset   = TedConfig.getInstance().getTimeZoneOffset();
 						
 			// shows in the us are aired one day later in the
 			// rest of the world. So for every country right

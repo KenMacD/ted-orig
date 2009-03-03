@@ -80,7 +80,7 @@ public class ConfigDialog extends javax.swing.JDialog
 	/**
 	 * Create a new config dialog
 	 * @param frame Main window of ted
-	 * @param tc Current TedConfig
+	 * @param tc Current TedConfig.getInstance()
 	 * @param showcancelbutton Show a cancel button in the config dialog?
 	 */
 	public ConfigDialog(TedMainDialog frame) 
@@ -204,11 +204,11 @@ public class ConfigDialog extends javax.swing.JDialog
 	 * PUBLIC METHODS
 	 ****************************************************/
 	/**
-	 * Save the values from the dialog into the TedConfig
+	 * Save the values from the dialog into the TedConfig.getInstance()
 	 */
 	public void saveConfig()
 	{
-		int currentTime = TedConfig.getRefreshTime();
+		int currentTime = TedConfig.getInstance().getRefreshTime();
 		boolean resetTime = false;
 		
 		if (this.generalPanel.checkValues() && this.looknfeelPanel.checkValues() && this.advancedPanel.checkValues() && this.updatesPanel.checkValues())
@@ -219,7 +219,7 @@ public class ConfigDialog extends javax.swing.JDialog
 			this.updatesPanel.saveValues();
 			
 			
-			int newTime = TedConfig.getRefreshTime();
+			int newTime = TedConfig.getInstance().getRefreshTime();
 			
 			if (currentTime != newTime)
 			{

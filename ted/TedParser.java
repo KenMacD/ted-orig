@@ -343,11 +343,11 @@ public class TedParser extends Thread
 	 */
 	private boolean continueParsing()
 	{
-		if (TedConfig.getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
+		if (TedConfig.getInstance().getSeederSetting() == TedConfig.getInstance().DOWNLOADMOSTSEEDERS)
 		{
 			return true;
 		}
-		else if (TedConfig.getSeederSetting() == TedConfig.DOWNLOADMINIMUMSEEDERS && this.bestTorrentUrl == null)
+		else if (TedConfig.getInstance().getSeederSetting() == TedConfig.getInstance().DOWNLOADMINIMUMSEEDERS && this.bestTorrentUrl == null)
 		{
 			return true;
 		}
@@ -406,7 +406,7 @@ public class TedParser extends Thread
 		
 		if ( foundCorrectEpisode )
 		{			
-			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getTimeOutInSecs());
+			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getInstance().getTimeOutInSecs());
 			
 			TedLog.debug(Lang.getString("TedSerie.Checking") + " " + sTitle); //$NON-NLS-1$
 			serie.setStatusString(Lang.getString("TedSerie.Checking") + " " + sTitle, tMainDialog); //$NON-NLS-1$
@@ -435,7 +435,7 @@ public class TedParser extends Thread
 		else if(season == serie.getCurrentSeason()+1 && episode == 1)
 		{
 			TedLog.debug(Lang.getString("TedParser.FoundNextSeason"));
-			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getTimeOutInSecs());
+			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getInstance().getTimeOutInSecs());
 			
 			// make connection with torrent
 			URL url;
@@ -452,7 +452,7 @@ public class TedParser extends Thread
 			}
 			
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
+			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
 			
 			// check size and amount of seeders to filter out fakes
 			boolean correctSize = true;
@@ -470,7 +470,7 @@ public class TedParser extends Thread
 				
 				// we found a new season, does the user wants to download it?
 				
-				if (TedConfig.isDownloadNewSeason())
+				if (TedConfig.getInstance().isDownloadNewSeason())
 				{
 					int answer = JOptionPane.NO_OPTION;
 					
@@ -497,7 +497,7 @@ public class TedParser extends Thread
 					else
 					{
 						// remember the preference of the user
-						TedConfig.setDownloadNewSeason(false);
+						TedConfig.getInstance().setDownloadNewSeason(false);
 					}	
 				}
 			}
@@ -516,7 +516,7 @@ public class TedParser extends Thread
 		TedIO tIO = new TedIO();
 		String sTitle = item.getTitle().toString();
 		String torrentUrl = item.getLink().toString();
-		torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getTimeOutInSecs());
+		torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig.getInstance().getTimeOutInSecs());
 		
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
@@ -634,7 +634,7 @@ public class TedParser extends Thread
 		try
 		{
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			torrent = new TorrentImpl(url, TedConfig.getTimeOutInSecs());
+			torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
 						
@@ -650,7 +650,7 @@ public class TedParser extends Thread
 			}
 			
 			// if the user does not want to download compressed files
-			if(TedConfig.getDoNotDownloadCompressed())
+			if(TedConfig.getInstance().getDoNotDownloadCompressed())
 			{
 				// and the torrent contains compressed files
 				if(this.containsCompressedFiles(torrent))
@@ -667,10 +667,10 @@ public class TedParser extends Thread
 			{
 				int torrentSeeders = 0;
 				// only get the torrent state when minimum seeders > 0
-				if (serie.getMinNumOfSeeders() > 0 || TedConfig.getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
+				if (serie.getMinNumOfSeeders() > 0 || TedConfig.getInstance().getSeederSetting() == TedConfig.getInstance().DOWNLOADMOSTSEEDERS)
 				{
 					// get torrent state (containing seeders/leechers
-					torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+					torrentState = torrent.getState(TedConfig.getInstance().getTimeOutInSecs());
 					
 					torrentSeeders = torrentState.getComplete();
 				}
@@ -850,7 +850,7 @@ public class TedParser extends Thread
 		// get torrent state (containing seeders/leechers)
 		try
 		{
-			TorrentState torrentState = torrent.getState(TedConfig.getTimeOutInSecs());
+			TorrentState torrentState = torrent.getState(TedConfig.getInstance().getTimeOutInSecs());
 			return(torrentState.getComplete() >= serie.getMinNumOfSeeders());
 		}
 		catch (Exception e)
@@ -870,7 +870,7 @@ public class TedParser extends Thread
 		if (serie.isDownloadInHD())
 		{
 			matchesHDKeywords =
-				tPKeyChecker.checkKeywords(torrentTitle, TedConfig.getHDKeywords());
+				tPKeyChecker.checkKeywords(torrentTitle, TedConfig.getInstance().getHDKeywords());
 		}
 		
 		return matchesHDKeywords && matchesNormalKeywords;
@@ -931,7 +931,7 @@ public class TedParser extends Thread
 	 */
 	private boolean isCompressedFile(String extension)
 	{
-		String extensions = TedConfig.getFilterExtensions();
+		String extensions = TedConfig.getInstance().getFilterExtensions();
 		if(extensions.contains(extension))
 			return true;
 		else

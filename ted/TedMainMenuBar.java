@@ -434,15 +434,15 @@ public class TedMainMenuBar extends JMenuBar
 	public void updateSortMenu()
 	{
 		// update sort type menu
-		boolean isSortOnName = (TedConfig.getSortType() == TedConfig.SORT_NAME);
-		boolean isSortOnStatus = (TedConfig.getSortType() == TedConfig.SORT_STATUS);
+		boolean isSortOnName = (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_NAME);
+		boolean isSortOnStatus = (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_STATUS);
 		
 		this.sortOnNameItem.setSelected(isSortOnName);
 		this.sortOnStatusItem.setSelected(isSortOnStatus);
 		
 		// update sort direction menu
-		boolean isSortAscending = (TedConfig.getSortDirection() == TedConfig.SORT_ASCENDING);
-		boolean isSortDescending = (TedConfig.getSortDirection() == TedConfig.SORT_DESCENDING);
+		boolean isSortAscending = (TedConfig.getInstance().getSortDirection() == TedConfig.getInstance().SORT_ASCENDING);
+		boolean isSortDescending = (TedConfig.getInstance().getSortDirection() == TedConfig.getInstance().SORT_DESCENDING);
 		
 		this.sortAscendingRadioItem.setSelected(isSortAscending);
 		this.sortDescendingRadioItem.setSelected(isSortDescending);
@@ -458,7 +458,7 @@ public class TedMainMenuBar extends JMenuBar
 	public void checkAutoSchedule(boolean enabled, boolean showBoth)
 	{	
 		// use auto schedule?
-		boolean useAutoSchedule = TedConfig.isUseAutoSchedule();
+		boolean useAutoSchedule = TedConfig.getInstance().isUseAutoSchedule();
 		
 		this.menuDisableAutoSchedule.setVisible((enabled || showBoth) && useAutoSchedule);
 		this.menuEnableAutoSchedule.setVisible((!enabled || showBoth) && useAutoSchedule);

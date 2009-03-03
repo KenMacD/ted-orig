@@ -80,7 +80,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 				checkAutoSchedule.setText(Lang.getString("TedEpisodeDialog.CheckAutoSchedule"));
 				checkAutoSchedule.setActionCommand("autoupdate");
 				checkAutoSchedule.addActionListener(this);
-				checkAutoSchedule.setEnabled(TedConfig.isUseAutoSchedule());
+				checkAutoSchedule.setEnabled(TedConfig.getInstance().isUseAutoSchedule());
 			}
 			{
 				{
@@ -266,7 +266,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 	private void updatePanels()
 	{
 		boolean isAutoSchedule = checkAutoSchedule.isSelected();
-		boolean autoScheduleGloballyEnabled = TedConfig.isUseAutoSchedule();
+		boolean autoScheduleGloballyEnabled = TedConfig.getInstance().isUseAutoSchedule();
 		
 		this.labelEpGuides.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);
 		this.textEpguidesID.setEnabled(isAutoSchedule && autoScheduleGloballyEnabled);

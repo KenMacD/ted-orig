@@ -161,17 +161,17 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		    Dimension screenSize = toolkit.getScreenSize();
-		    TedConfig.setHeight((int) Math.round(screenSize.height * 0.8));
+		    TedConfig.getInstance().setHeight((int) Math.round(screenSize.height * 0.8));
 		    
-		    this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
+		    this.setSize(TedConfig.getInstance().getWidth(), TedConfig.getInstance().getHeight());
 		    
 			int x = (screenSize.width - this.getWidth()) / 2;
 		    int y = (screenSize.height - this.getHeight()) / 2;
-		    TedConfig.setX(x);
-		    TedConfig.setY(y);
+		    TedConfig.getInstance().setX(x);
+		    TedConfig.getInstance().setY(y);
 		}
 		
-		Lang.setLanguage(TedConfig.getLocale());	
+		Lang.setLanguage(TedConfig.getInstance().getLocale());	
 				
 		try 
 		{
@@ -299,13 +299,13 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		serieTable.setSeries(tcio.GetShows());
 		
 		// set size and position of ted
-		this.setSize(TedConfig.getWidth(), TedConfig.getHeight());
-		this.setLocation(TedConfig.getX(), TedConfig.getY());
+		this.setSize(TedConfig.getInstance().getWidth(), TedConfig.getInstance().getHeight());
+		this.setLocation(TedConfig.getInstance().getX(), TedConfig.getInstance().getY());
 		this.setMinimumSize(new java.awt.Dimension(320, 320));
 		
 		// only if the os is supported by the trayicon program
 		// currently supports windows, linux and solaris		
-		this.osHasTray = this.osHasTray && TedConfig.isAddSysTray();
+		this.osHasTray = this.osHasTray && TedConfig.getInstance().isAddSysTray();
 		
 		if (osHasTray)
 		{
@@ -318,11 +318,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			{
 				TedLog.error(e, "Error while adding tray icon. Disabling tray in config");
 				this.osHasTray = false;
-				TedConfig.setAddSysTray(false);
-				TedConfig.setStartMinimized(false);
+				TedConfig.getInstance().setAddSysTray(false);
+				TedConfig.getInstance().setStartMinimized(false);
 			}
 		}
-		if (TedConfig.isStartMinimized())
+		if (TedConfig.getInstance().isStartMinimized())
 		{
 			if (this.osHasTray)
 			{
@@ -357,7 +357,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 			this.TedToolBar.setAddButtonEnabled(true);
 		}
 		// check to see if there is a new shows.xml file available
-		else if (TedConfig.isAutoUpdateFeedList() || TedConfig.askAutoUpdateFeedList())
+		else if (TedConfig.getInstance().isAutoUpdateFeedList() || TedConfig.getInstance().askAutoUpdateFeedList())
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
 			tio.checkNewXMLFile(this, false, serieTable);
@@ -369,7 +369,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// start the counter
 		tCounter.start();
 		
-		if (TedConfig.isCheckVersion())
+		if (TedConfig.getInstance().isCheckVersion())
 		{
 			this.isNewTed(false);
 		}
@@ -386,7 +386,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		// only if UI is initialized
 		if (uiInitialized)
 		{
-			Lang.setLanguage(TedConfig.getLocale());
+			Lang.setLanguage(TedConfig.getInstance().getLocale());
 			
 			this.TedToolBar.updateText();
 			this.serieTable.updateText();
@@ -511,19 +511,19 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		if(!isParsing)
 		{
 			// first check if ted is up to date
-			if(TedConfig.getTimesParsedSinceLastCheck() == 5)
+			if(TedConfig.getInstance().getTimesParsedSinceLastCheck() == 5)
 			{
-				if(TedConfig.isCheckVersion())
+				if(TedConfig.getInstance().isCheckVersion())
 				{
 					isNewTed(false);
 				}
 				
 				isNewPredefinedShowsXML(false);
-				TedConfig.setTimesParsedSinceLastCheck(0);
+				TedConfig.getInstance().setTimesParsedSinceLastCheck(0);
 			}
 			else
 			{
-				TedConfig.setTimesParsedSinceLastCheck(TedConfig.getTimesParsedSinceLastCheck()+1);
+				TedConfig.getInstance().setTimesParsedSinceLastCheck(TedConfig.getInstance().getTimesParsedSinceLastCheck()+1);
 			}
 				
 			tParseHandler = new TedParseHandler(this);
@@ -832,7 +832,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			// parse all shows
 			this.parseShows();
-			//this.tCounter.setCount(TedConfig.getRefreshTime());
+			//this.tCounter.setCount(TedConfig.getInstance().getRefreshTime());
 		}
 		else if(action.equals("stop parsing")) //$NON-NLS-1$
 		{
@@ -874,25 +874,25 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if (action.equals("sort_name"))
 		{
-			TedConfig.setSortType(TedConfig.SORT_NAME);
+			TedConfig.getInstance().setSortType(TedConfig.getInstance().SORT_NAME);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
 		else if (action.equals("sort_status"))
 		{
-			TedConfig.setSortType(TedConfig.SORT_STATUS);
+			TedConfig.getInstance().setSortType(TedConfig.getInstance().SORT_STATUS);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
 		else if (action.equals("sort_ascending"))
 		{
-			TedConfig.setSortDirection(TedConfig.SORT_ASCENDING);
+			TedConfig.getInstance().setSortDirection(TedConfig.getInstance().SORT_ASCENDING);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
 		else if (action.equals("sort_descending"))
 		{
-			TedConfig.setSortDirection(TedConfig.SORT_DESCENDING);
+			TedConfig.getInstance().setSortDirection(TedConfig.getInstance().SORT_DESCENDING);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
@@ -957,10 +957,10 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		TedIO tcio = new TedIO();
 		
 		// set the current width, heigth and position of the window
-		TedConfig.setWidth(this.getWidth());
-		TedConfig.setHeight(this.getHeight());
-		TedConfig.setX(this.getX());
-		TedConfig.setY(this.getY());
+		TedConfig.getInstance().setWidth(this.getWidth());
+		TedConfig.getInstance().setHeight(this.getHeight());
+		TedConfig.getInstance().setX(this.getX());
+		TedConfig.getInstance().setY(this.getY());
 		
 		// save
 		tcio.SaveConfig();

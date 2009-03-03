@@ -27,60 +27,61 @@ public class TedConfig
 	/****************************************************
 	 * GLOBAL VARIABLES
 	 ****************************************************/
-	private static final long serialVersionUID = 2199026019828977965L;
-	public static final int NEVER = 0;
-	public static final int ASK = 1;
-	public static final int ALWAYS = 2;
-	public static final int DOWNLOADMINIMUMSEEDERS = 0;
-	public static final int DOWNLOADMOSTSEEDERS = 1;
-	public static final int SORT_OFF = 0;
-	public static final int SORT_NAME = 1;
-	public static final int SORT_STATUS = 2;
-	public static final int SORT_ASCENDING = 0;
-	public static final int SORT_DESCENDING = 1;
+	private final long serialVersionUID = 2199026019828977965L;
+	public final int NEVER = 0;
+	public final int ASK = 1;
+	public final int ALWAYS = 2;
+	public final int DOWNLOADMINIMUMSEEDERS = 0;
+	public final int DOWNLOADMOSTSEEDERS = 1;
+	public final int SORT_OFF = 0;
+	public final int SORT_NAME = 1;
+	public final int SORT_STATUS = 2;
+	public final int SORT_ASCENDING = 0;
+	public final int SORT_DESCENDING = 1;
 	
 	// create some default settings
-	private static int RefreshTime = 3600;
-	private static String Directory = "";
-	private static boolean ShowErrors = false;
-	private static boolean ShowHurray = true;
-	private static boolean OpenTorrent = true;
-	private static boolean StartMinimized = false;
-	private static boolean CheckVersion = true;
-	private static boolean downloadNewSeason = true;
-	private static boolean parseAtStart = true;
-	private static int autoUpdateFeedList = ALWAYS;
-	private static int autoAdjustFeeds = ALWAYS;
-	private static int width = 400;
-	private static int height = 550;
-	private static int x = 0;
-	private static int y = 0;
-	private static int RSSVersion = 0;
-	private static int TimeOutInSecs = 10;
-	private static int SeederSetting = 0;
-	private static Locale tedLocale = Locale.getDefault();
-	private static boolean addSysTray = TedSystemInfo.osSupportsTray();
-	private static boolean getCompressed = true;
-	private static String filterExtensions = "zip, rar, r01";
-	private static int timesParsedSinceLastCheck = 0; 
-	private static boolean allowLogging = true;
-	private static boolean logToFile = true;
-	private static int timeZoneOffset = -1;
-	private static boolean useAutoSchedule = true;
-	private static int sortType = SORT_STATUS;
-	private static int sortDirection = SORT_ASCENDING;
-	private static String hdKeywords = "720p & HD";
-	private static boolean hdDownloadPreference = false;
+	private int RefreshTime = 3600;
+	private String Directory = "";
+	private boolean ShowErrors = false;
+	private boolean ShowHurray = true;
+	private boolean OpenTorrent = true;
+	private boolean StartMinimized = false;
+	private boolean CheckVersion = true;
+	private boolean downloadNewSeason = true;
+	private boolean parseAtStart = true;
+	private int autoUpdateFeedList = ALWAYS;
+	private int autoAdjustFeeds = ALWAYS;
+	private int width = 400;
+	private int height = 550;
+	private int x = 0;
+	private int y = 0;
+	private int RSSVersion = 0;
+	private int TimeOutInSecs = 10;
+	private int SeederSetting = 0;
+	private Locale tedLocale = Locale.getDefault();
+	private boolean addSysTray = TedSystemInfo.osSupportsTray();
+	private boolean getCompressed = true;
+	private String filterExtensions = "zip, rar, r01";
+	private int timesParsedSinceLastCheck = 0; 
+	private boolean allowLogging = true;
+	private boolean logToFile = true;
+	private int timeZoneOffset = -1;
+	private boolean useAutoSchedule = true;
+	private int sortType = SORT_STATUS;
+	private int sortDirection = SORT_ASCENDING;
+	private String hdKeywords = "720p & HD";
+	private boolean hdDownloadPreference = false;
 	
 	
-	private static final Color defaultEvenRowColor = Color.WHITE;
-	private static final Color defaultOddRowColor  = new Color(236,243,254);
+	private final Color defaultEvenRowColor = Color.WHITE;
+	private final Color defaultOddRowColor  = new Color(236,243,254);
 	
-	private static Color evenRowColor     	= Color.WHITE;
-	private static Color oddRowColor      	= new Color(236,243,254);
-	private static Color selectedRowColor 	= new Color(61, 128, 223);  
-	private static Color gridColor 			= new Color(205,205,205);
+	private Color evenRowColor     	= Color.WHITE;
+	private Color oddRowColor      	= new Color(236,243,254);
+	private Color selectedRowColor 	= new Color(61, 128, 223);  
+	private Color gridColor 			= new Color(205,205,205);
 
+	private static TedConfig configSingleton = null;
 
 	/****************************************************
 	 * CONSTRUCTORS
@@ -88,9 +89,35 @@ public class TedConfig
 	/**
 	 * Creates a TedConfig with some default values
 	 */
-	public TedConfig()
+	private TedConfig()
 	{
 	}
+	
+	// Handle multi threading problems. Only allow one singleton to be made.
+    private synchronized static void createInstance() 
+    {
+        if (configSingleton == null) 
+        {
+        	configSingleton = new TedConfig();
+        }
+    }
+ 
+    public static TedConfig getInstance() 
+    {
+        if (configSingleton == null) 
+        {
+        	createInstance();
+        }
+        
+        return configSingleton;
+    }
+    
+    // Prevent cloning.
+    public Object clone() throws CloneNotSupportedException 
+    {
+    	throw new CloneNotSupportedException();
+    }
+
 		
 	/****************************************************
 	 * GETTERS & SETTERS
@@ -99,7 +126,7 @@ public class TedConfig
 	/**
 	 * @return Returns the directory where ted has to save the torrents
 	 */
-	public static String getDirectory() 
+	public String getDirectory() 
 	{
 		if (Directory.equals(""))
 		{
@@ -114,14 +141,14 @@ public class TedConfig
 	 * Sets the directory where ted has to save the torrents he downloads
 	 * @param directory
 	 */
-	public static void setDirectory(String directory) 
+	public void setDirectory(String directory) 
 	{
 		Directory = directory;
 	}
 	/**
 	 * @return Returns the time (in seconds) between the parser intervals
 	 */
-	public static int getRefreshTime() 
+	public int getRefreshTime() 
 	{
 		// convert to minutes
 		return RefreshTime;
@@ -130,7 +157,7 @@ public class TedConfig
 	 * Set the time (in seconds) between two parser rounds
 	 * @param refreshTime
 	 */
-	public static void setRefreshTime(int refreshTime) 
+	public void setRefreshTime(int refreshTime) 
 	{
 		// in minutes
 		RefreshTime = refreshTime;
@@ -139,7 +166,7 @@ public class TedConfig
 	/**
 	 * @return Returns if the user wants to see the errors
 	 */
-	public static boolean isShowErrors() 
+	public boolean isShowErrors() 
 	{
 		return ShowErrors;
 	}
@@ -148,7 +175,7 @@ public class TedConfig
 	 * Set if the user wants to see messages when errors occur
 	 * @param showErrors
 	 */
-	public static void setShowErrors(boolean showErrors) 
+	public void setShowErrors(boolean showErrors) 
 	{
 		ShowErrors = showErrors;
 	}
@@ -156,7 +183,7 @@ public class TedConfig
 	/**
 	 * @return Returns if the user wants to see hurray messages
 	 */
-	public static boolean isShowHurray() 
+	public boolean isShowHurray() 
 	{
 		return ShowHurray;
 	}
@@ -165,7 +192,7 @@ public class TedConfig
 	 * Set if the user wants to see hurray messages
 	 * @param showHurray
 	 */
-	public static void setShowHurray(boolean showHurray) 
+	public void setShowHurray(boolean showHurray) 
 	{
 		ShowHurray = showHurray;
 	}
@@ -173,7 +200,7 @@ public class TedConfig
 	/**
 	 * @return Returns if the user wants ted to open downloaded torrents in a default torrent client
 	 */
-	public static boolean isOpenTorrent() 
+	public boolean isOpenTorrent() 
 	{
 		return OpenTorrent;
 	}
@@ -182,7 +209,7 @@ public class TedConfig
 	 * Set if the user wants ted to open a downloaded torrent
 	 * @param openTorrent
 	 */
-	public static void setOpenTorrent(boolean openTorrent) 
+	public void setOpenTorrent(boolean openTorrent) 
 	{
 		OpenTorrent = openTorrent;
 	}
@@ -190,7 +217,7 @@ public class TedConfig
 	/**
 	 * @return Returns if the user wants ted to check his version at startup
 	 */
-	public static boolean isCheckVersion() 
+	public boolean isCheckVersion() 
 	{
 		return CheckVersion;
 	}
@@ -199,7 +226,7 @@ public class TedConfig
 	 * Set if the user wants ted to check his version at startup
 	 * @param checkVersion
 	 */
-	public static void setCheckVersion(boolean checkVersion) 
+	public void setCheckVersion(boolean checkVersion) 
 	{
 		CheckVersion = checkVersion;
 	}
@@ -207,7 +234,7 @@ public class TedConfig
 	/**
 	 * @return Returns the user wants ted to start minimized
 	 */
-	public static boolean isStartMinimized() 
+	public boolean isStartMinimized() 
 	{
 		return StartMinimized;
 	}
@@ -216,7 +243,7 @@ public class TedConfig
 	 * Set if the user wants ted to start minimized
 	 * @param startMinimized
 	 */
-	public static void setStartMinimized(boolean startMinimized) 
+	public void setStartMinimized(boolean startMinimized) 
 	{
 		StartMinimized = startMinimized;
 	}
@@ -224,7 +251,7 @@ public class TedConfig
 	/**
 	 * @return Returns the stored height of the mainwindow.
 	 */
-	public static int getHeight() 
+	public int getHeight() 
 	{
 		return height;
 	}
@@ -232,7 +259,7 @@ public class TedConfig
 	/**
 	 * @param h The height of the mainwindow to set.
 	 */
-	public static void setHeight(int h) 
+	public void setHeight(int h) 
 	{
 		height = h;
 	}
@@ -240,7 +267,7 @@ public class TedConfig
 	/**
 	 * @return Returns the width of the mainwindow.
 	 */
-	public static int getWidth()
+	public int getWidth()
 	{
 		return width;
 	}
@@ -248,7 +275,7 @@ public class TedConfig
 	/**
 	 * @param w The width of the mainwindow to set.
 	 */
-	public static void setWidth(int w) 
+	public void setWidth(int w) 
 	{
 		width = w;
 	}
@@ -256,7 +283,7 @@ public class TedConfig
 	/**
 	 * @return Returns the x of the mainwindow.
 	 */
-	public static int getX() 
+	public int getX() 
 	{
 		return x;
 	}
@@ -264,7 +291,7 @@ public class TedConfig
 	/**
 	 * @param x_pos The x of the mainwindow to set.
 	 */
-	public static void setX(int x_pos) 
+	public void setX(int x_pos) 
 	{
 		x = x_pos;
 	}
@@ -272,7 +299,7 @@ public class TedConfig
 	/**
 	 * @return Returns the y of the mainwindow.
 	 */
-	public static int getY() 
+	public int getY() 
 	{
 		return y;
 	}
@@ -280,7 +307,7 @@ public class TedConfig
 	/**
 	 * @param y_pos The y of the mainwindow to set.
 	 */
-	public static void setY(int y_pos) 
+	public void setY(int y_pos) 
 	{
 		y = y_pos;
 	}
@@ -288,7 +315,7 @@ public class TedConfig
 	/**
 	 * @return Returns if the user wants to download a new season when ted encounters one
 	 */
-	public static boolean isDownloadNewSeason() 
+	public boolean isDownloadNewSeason() 
 	{
 		return downloadNewSeason;
 	}
@@ -297,7 +324,7 @@ public class TedConfig
 	 * Set if the user wants to download a new season when ted encounters one
 	 * @param download
 	 */
-	public static void setDownloadNewSeason(boolean download) 
+	public void setDownloadNewSeason(boolean download) 
 	{
 		downloadNewSeason = download;
 	}
@@ -305,7 +332,7 @@ public class TedConfig
 	/**
 	 * @return Returns the number of the latest downloaded RSS feeds.
 	 */
-	public static int getRSSVersion() 
+	public int getRSSVersion() 
 	{
 		return RSSVersion;
 	}
@@ -313,7 +340,7 @@ public class TedConfig
 	/**
 	 * @param version The RSSVersion of the latest downloaded RSS feeds.
 	 */
-	public static void setRSSVersion(int version) 
+	public void setRSSVersion(int version) 
 	{
 		RSSVersion = version;
 	}
@@ -321,14 +348,14 @@ public class TedConfig
 	/**
 	 * @return If the feeds should be auto-adjusted
 	 */
-	public static boolean isAutoAdjustFeeds() 
+	public boolean isAutoAdjustFeeds() 
 	{
 		return (autoAdjustFeeds == ALWAYS);
 	}
 	/**
 	 * @return If the user wants to be asked before autoadjustement of the feeds
 	 */
-	public static boolean askAutoAdjustFeeds() 
+	public boolean askAutoAdjustFeeds() 
 	{
 		return (autoAdjustFeeds == ASK);
 	}
@@ -337,7 +364,7 @@ public class TedConfig
 	 * Set the auto-adjustment of feeds
 	 * @param adjust
 	 */
-	public static void setAutoAdjustFeeds(int adjust) 
+	public void setAutoAdjustFeeds(int adjust) 
 	{
 		autoAdjustFeeds = adjust;
 	}
@@ -345,7 +372,7 @@ public class TedConfig
 	/**
 	 * @return If the feed list should be auto-updated
 	 */
-	public static boolean isAutoUpdateFeedList() 
+	public boolean isAutoUpdateFeedList() 
 	{
 		return (autoUpdateFeedList == ALWAYS);
 	}
@@ -353,7 +380,7 @@ public class TedConfig
 	/**
 	 * @return If the user wants to be asked before the feedslist is updated
 	 */
-	public static boolean askAutoUpdateFeedList() 
+	public boolean askAutoUpdateFeedList() 
 	{
 		return (autoUpdateFeedList == ASK);
 	}
@@ -362,7 +389,7 @@ public class TedConfig
 	 * Set the auto-update of the feedlist
 	 * @param update
 	 */
-	public static void setAutoUpdateFeedList(int update) 
+	public void setAutoUpdateFeedList(int update) 
 	{
 		autoUpdateFeedList = update;
 	}
@@ -370,7 +397,7 @@ public class TedConfig
 	/**
 	 * @return Auto-update of the feedlist
 	 */
-	public static int getAutoUpdateFeedList()
+	public int getAutoUpdateFeedList()
 	{
 		return autoUpdateFeedList;
 	}
@@ -378,7 +405,7 @@ public class TedConfig
 	/**
 	 * @return If the feeds should be auto-adjusted
 	 */
-	public static int getAutoAdjustFeeds()
+	public int getAutoAdjustFeeds()
 	{
 		return autoAdjustFeeds;
 	}
@@ -386,7 +413,7 @@ public class TedConfig
 	/**
 	 * @return Returns the timeOutInSecs.
 	 */
-	public static int getTimeOutInSecs()
+	public int getTimeOutInSecs()
 	{
 		return TimeOutInSecs;
 	}
@@ -394,7 +421,7 @@ public class TedConfig
 	/**
 	 * @param timeOutInSecs The timeOutInSecs to set.
 	 */
-	public static void setTimeOutInSecs(int timeOutInSecs)
+	public void setTimeOutInSecs(int timeOutInSecs)
 	{
 		TimeOutInSecs = timeOutInSecs;
 	}
@@ -402,7 +429,7 @@ public class TedConfig
 	/**
 	 * @return Returns the seederSetting.
 	 */
-	public static int getSeederSetting()
+	public int getSeederSetting()
 	{
 		return SeederSetting;
 	}
@@ -410,7 +437,7 @@ public class TedConfig
 	/**
 	 * @param seederSetting The seederSetting to set.
 	 */
-	public static void setSeederSetting(int seederSetting)
+	public void setSeederSetting(int seederSetting)
 	{
 		SeederSetting = seederSetting;
 	}
@@ -418,7 +445,7 @@ public class TedConfig
 	/**
 	 * @return Returns the current locale.
 	 */
-	public static Locale getLocale()
+	public Locale getLocale()
 	{
 		return tedLocale;
 	}
@@ -426,7 +453,7 @@ public class TedConfig
 	/**
 	 * @return Returns current language code (eg en for english)
 	 */
-	public static String getLanguage()
+	public String getLanguage()
 	{
 		return tedLocale.getLanguage();
 	}
@@ -434,7 +461,7 @@ public class TedConfig
 	/**
 	 * @return current country code (eg US for United States)
 	 */
-	public static String getCountry()
+	public String getCountry()
 	{
 		return tedLocale.getCountry();
 	}
@@ -442,7 +469,7 @@ public class TedConfig
 	/**
 	 * @param language The language to set.
 	 */
-	public static void setLocale(Locale language)
+	public void setLocale(Locale language)
 	{
 		tedLocale = language;
 	}
@@ -451,12 +478,12 @@ public class TedConfig
 	 * @param country The country
 	 * @param language The language
 	 */
-	public static void setLocale(String country, String language)
+	public void setLocale(String country, String language)
 	{
 		tedLocale = new Locale(language, country);
 	}
 	
-	public static void setParseAtStart(boolean b)
+	public void setParseAtStart(boolean b)
 	{
 		parseAtStart = b;
 	}
@@ -464,7 +491,7 @@ public class TedConfig
 	/**
 	 * @return Should ted parse at startup?
 	 */
-	public static boolean isParseAtStart()
+	public boolean isParseAtStart()
 	{
 		return parseAtStart;
 	}
@@ -472,7 +499,7 @@ public class TedConfig
 	/**
 	 * @return Should ted add a systray?
 	 */
-	public static boolean isAddSysTray()
+	public boolean isAddSysTray()
 	{
 		return addSysTray;
 	}
@@ -481,7 +508,7 @@ public class TedConfig
 	 * Set the add systray setting
 	 * @param b
 	 */
-	public static void setAddSysTray(boolean b)
+	public void setAddSysTray(boolean b)
 	{
 		addSysTray = b;
 	}
@@ -489,7 +516,7 @@ public class TedConfig
 	/**
 	 * @return The download torrents with compressed files setting
 	 */
-	public static boolean getDoNotDownloadCompressed() 
+	public boolean getDoNotDownloadCompressed() 
 	{
 		return getCompressed;
 	}
@@ -498,7 +525,7 @@ public class TedConfig
 	 * Set the download torrents with compressed files settings
 	 * @param b
 	 */
-	public static void setDoNotDownloadCompressed(boolean b)
+	public void setDoNotDownloadCompressed(boolean b)
 	{
 		getCompressed = b;
 	}
@@ -507,7 +534,7 @@ public class TedConfig
 	 * Set the extensions used in the filtering of torrents with compressed files
 	 * @param text
 	 */
-	public static void setFilterExtensions(String text) 
+	public void setFilterExtensions(String text) 
 	{
 		filterExtensions = text;
 	}
@@ -516,7 +543,7 @@ public class TedConfig
 	 * Get the extensions set by the user to filter torrents with compressed files
 	 * @return
 	 */
-	public static String getFilterExtensions()
+	public String getFilterExtensions()
 	{
 		return filterExtensions;
 	}
@@ -526,7 +553,7 @@ public class TedConfig
 	 * Get the number of times that ted has searched for new episodes after the last update check
 	 * @return
 	 */
-	public static int getTimesParsedSinceLastCheck() 
+	public int getTimesParsedSinceLastCheck() 
 	{
 		return timesParsedSinceLastCheck;
 	}
@@ -535,7 +562,7 @@ public class TedConfig
 	 * Set the number of times that ted searched for new shows after the last update check
 	 * @param timesParsed
 	 */
-	public static void setTimesParsedSinceLastCheck(int timesParsed) 
+	public void setTimesParsedSinceLastCheck(int timesParsed) 
 	{
 		timesParsedSinceLastCheck = timesParsed;
 	}
@@ -544,7 +571,7 @@ public class TedConfig
 	 * Set the log setting
 	 * @param allowLog
 	 */
-	public static void setAllowLogging(boolean allowLog) 
+	public void setAllowLogging(boolean allowLog) 
 	{
 		allowLogging = allowLog;
 		TedLog.setAllowLogging(allowLog);
@@ -554,7 +581,7 @@ public class TedConfig
 	 * Set the log to file setting
 	 * @param logToFile2
 	 */
-	public static void setLogToFile(boolean logToFile2) 
+	public void setLogToFile(boolean logToFile2) 
 	{
 		logToFile = logToFile2;
 		TedLog.setWriteToFile(logToFile2);
@@ -563,7 +590,7 @@ public class TedConfig
 	/**
 	 * @return If ted should keep a log
 	 */
-	public static boolean isAllowLogging() 
+	public boolean isAllowLogging() 
 	{
 		return allowLogging;
 	}
@@ -571,76 +598,76 @@ public class TedConfig
 	/**
 	 * @return If ted should write the log to a file
 	 */
-	public static boolean isLogToFile() 
+	public boolean isLogToFile() 
 	{
 		return logToFile;
 	}
 
-	public static Color getEvenRowColor() {
+	public Color getEvenRowColor() {
 		return evenRowColor;
 	}
 
-	public static void setEvenRowColor(Color evenRowColor) 
+	public void setEvenRowColor(Color evenRowColor) 
 	{
-		TedConfig.evenRowColor = evenRowColor;
+		this.evenRowColor = evenRowColor;
 	}
 
-	public static Color getOddRowColor() 
+	public Color getOddRowColor() 
 	{
 		return oddRowColor;
 	}
 
-	public static void setOddRowColor(Color oddRowColor) 
+	public void setOddRowColor(Color oddRowColor) 
 	{
-		TedConfig.oddRowColor = oddRowColor;
+		this.oddRowColor = oddRowColor;
 	}
 
-	public static Color getSelectedRowColor()
+	public Color getSelectedRowColor()
 	{
 		return selectedRowColor;
 	}
 
-	public static void setSelectedRowColor(Color selectedRowColor)
+	public void setSelectedRowColor(Color selectedRowColor)
 	{
-		TedConfig.selectedRowColor = selectedRowColor;
+		this.selectedRowColor = selectedRowColor;
 	}
 	
-	public static Color getGridColor()
+	public Color getGridColor()
 	{
 		return gridColor;
 	}
 	
-	public static void restoreDefaultColors()
+	public void restoreDefaultColors()
 	{
 		setEvenRowColor(defaultEvenRowColor);
 		setOddRowColor (defaultOddRowColor );
 	}
 
-	public static void setTimeZoneOffset(int timezoneOffset) 
+	public void setTimeZoneOffset(int timezoneOffset) 
 	{
-		TedConfig.timeZoneOffset = timezoneOffset;
+		this.timeZoneOffset = timezoneOffset;
 	}
 	
-	public static int getTimeZoneOffset()
+	public int getTimeZoneOffset()
 	{
-		return TedConfig.timeZoneOffset;
+		return this.timeZoneOffset;
 	}
 
-	public static boolean isUseAutoSchedule() 
+	public boolean isUseAutoSchedule() 
 	{
 		return useAutoSchedule;
 	}
 
-	public static void setUseAutoSchedule(boolean useAutoSchedule) 
+	public void setUseAutoSchedule(boolean useAutoSchedule) 
 	{
-		TedConfig.useAutoSchedule = useAutoSchedule;
+		this.useAutoSchedule = useAutoSchedule;
 	}
 	
 	/**
 	 * @return The type of field the maintable should be sorted on.
 	 * 0 = no sort, 1 = on name, 2 = on status and airdate
 	 */
-	public static int getSortType()
+	public int getSortType()
 	{
 		return sortType;
 	}
@@ -648,16 +675,16 @@ public class TedConfig
 	/**
 	 * @param sortType Type of sort that should be applied to the maintable
 	 */
-	public static void setSortType(int sortType)
+	public void setSortType(int sortType)
 	{
-		TedConfig.sortType = sortType;
+		this.sortType = sortType;
 	}
 	
 	/**
 	 * @return The direction of sorting for the maintable
 	 * 0 = ascensing, 1 = descending
 	 */
-	public static int getSortDirection()
+	public int getSortDirection()
 	{
 		return sortDirection;
 	}
@@ -665,30 +692,30 @@ public class TedConfig
 	/**
 	 * @param direction Direction of sort for the maintable
 	 */
-	public static void setSortDirection (int direction)
+	public void setSortDirection (int direction)
 	{
-		TedConfig.sortDirection = direction;
+		this.sortDirection = direction;
 	}
 	
-	public static String getHDKeywords()
+	public String getHDKeywords()
 	{
 		return hdKeywords;		
 	}
 	
-	public static void setHDKeywords(String keywords)
+	public void setHDKeywords(String keywords)
 	{
 		if (!keywords.equals(""))
 		{
-			TedConfig.hdKeywords = keywords;
+			this.hdKeywords = keywords;
 		}
 	}
 
-	public static void setHDDownloadPreference(boolean hdDownloadPreference) 
+	public void setHDDownloadPreference(boolean hdDownloadPreference) 
 	{
-		TedConfig.hdDownloadPreference = hdDownloadPreference;
+		this.hdDownloadPreference = hdDownloadPreference;
 	}
 
-	public static boolean isHDDownloadPreference() 
+	public boolean isHDDownloadPreference() 
 	{
 		return hdDownloadPreference;
 	}

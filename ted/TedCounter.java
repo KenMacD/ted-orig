@@ -35,10 +35,10 @@ public class TedCounter extends Thread
 	{
 		main = m;
 		
-		if(TedConfig.isParseAtStart())
+		if(TedConfig.getInstance().isParseAtStart())
 			count = 0;
 		else
-			count = TedConfig.getRefreshTime();
+			count = TedConfig.getInstance().getRefreshTime();
 	}
 	
 	/****************************************************
@@ -70,7 +70,7 @@ public class TedCounter extends Thread
 		{
 			main.updateCounter(0);
 			main.parseShows();
-			count = TedConfig.getRefreshTime();
+			count = TedConfig.getInstance().getRefreshTime();
 			this.run();
 		}
 	}
@@ -80,7 +80,7 @@ public class TedCounter extends Thread
 	 */
 	public void updateRefreshTime()
 	{
-		this.count = TedConfig.getRefreshTime();
+		this.count = TedConfig.getInstance().getRefreshTime();
 		main.updateCounter((int)Math.floor(count/60));
 	}
 	

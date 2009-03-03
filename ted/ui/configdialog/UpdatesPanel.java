@@ -88,7 +88,7 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		updatePanel.add(labelUpdateShows, new CellConstraints(
 			"2, 5, 3, 1, default, default"));
 		labelUpdateShows.setText(Lang
-			.getString("TedConfigDialog.LabelNewShowDefinitions"));
+			.getString("TedConfig.getInstance()Dialog.LabelNewShowDefinitions"));
 		labelUpdateShows.setBounds(14, 287, 371, 28);
 
 		radioUpdateShowsNever = new JRadioButton();
@@ -169,9 +169,9 @@ public class UpdatesPanel extends JPanel implements ActionListener
 	public void setValues()
 	{
 		// set values
-		this.setSelectedButton(updateShowsGroup, TedConfig.getAutoUpdateFeedList());
-		this.setSelectedButton(syncShowsGroup, TedConfig.getAutoAdjustFeeds());
-		this.checkCheckUpdates.setSelected(TedConfig.isCheckVersion());	
+		this.setSelectedButton(updateShowsGroup, TedConfig.getInstance().getAutoUpdateFeedList());
+		this.setSelectedButton(syncShowsGroup, TedConfig.getInstance().getAutoAdjustFeeds());
+		this.checkCheckUpdates.setSelected(TedConfig.getInstance().isCheckVersion());	
 	}
 	
 	/**
@@ -194,9 +194,9 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		int updateShows = this.getSelectedButton(updateShowsGroup);
 		int syncShows = this.getSelectedButton(syncShowsGroup);
 		
-		TedConfig.setCheckVersion(checkVersion);
-		TedConfig.setAutoUpdateFeedList(updateShows);
-		TedConfig.setAutoAdjustFeeds(syncShows);
+		TedConfig.getInstance().setCheckVersion(checkVersion);
+		TedConfig.getInstance().setAutoUpdateFeedList(updateShows);
+		TedConfig.getInstance().setAutoAdjustFeeds(syncShows);
 		
 	}
 	
@@ -218,11 +218,11 @@ public class UpdatesPanel extends JPanel implements ActionListener
 				// check which state is selected and return it
 				String text = temp.getText();
 				if (text.equals(Lang.getString("TedConfigDialog.Never"))) //$NON-NLS-1$
-					return TedConfig.NEVER;
+					return TedConfig.getInstance().NEVER;
 				else if (text.equals(Lang.getString("TedConfigDialog.Ask"))) //$NON-NLS-1$
-					return TedConfig.ASK;
+					return TedConfig.getInstance().ASK;
 				else if (text.equals((Lang.getString("TedConfigDialog.Always")))) //$NON-NLS-1$
-					return TedConfig.ALWAYS;
+					return TedConfig.getInstance().ALWAYS;
 			}
 			else
 				i++;
@@ -245,9 +245,9 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		{
 			temp = (JRadioButton)buttons.nextElement();
 			String text = temp.getText();
-			if ((text.equals(Lang.getString("TedConfigDialog.Never")) 	&& toSelect == TedConfig.NEVER) //$NON-NLS-1$
-			||  (text.equals(Lang.getString("TedConfigDialog.Ask")) 	&& toSelect == TedConfig.ASK) //$NON-NLS-1$
-			||  (text.equals(Lang.getString("TedConfigDialog.Always")) 	&& toSelect == TedConfig.ALWAYS)) //$NON-NLS-1$
+			if ((text.equals(Lang.getString("TedConfigDialog.Never")) 	&& toSelect == TedConfig.getInstance().NEVER) //$NON-NLS-1$
+			||  (text.equals(Lang.getString("TedConfigDialog.Ask")) 	&& toSelect == TedConfig.getInstance().ASK) //$NON-NLS-1$
+			||  (text.equals(Lang.getString("TedConfigDialog.Always")) 	&& toSelect == TedConfig.getInstance().ALWAYS)) //$NON-NLS-1$
 			{
 				temp.setSelected(true);
 			}

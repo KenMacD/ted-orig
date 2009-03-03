@@ -173,11 +173,11 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 	 */
 	public void setValues()
 	{
-		checkAlertNewTorrent.setSelected(TedConfig.isShowHurray());
-		checkAlertErrors.setSelected(TedConfig.isShowErrors());
+		checkAlertNewTorrent.setSelected(TedConfig.getInstance().isShowHurray());
+		checkAlertErrors.setSelected(TedConfig.getInstance().isShowErrors());
 		
-		checkAllowLogging.setSelected(TedConfig.isAllowLogging());
-		checkLogToFile.setSelected(TedConfig.isLogToFile());
+		checkAllowLogging.setSelected(TedConfig.getInstance().isAllowLogging());
+		checkLogToFile.setSelected(TedConfig.getInstance().isLogToFile());
 		
 		// when the os ted runs on does not support a tray icon
 		if (!TedSystemInfo.osSupportsTray())
@@ -190,10 +190,10 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		}
 		else
 		{
-			checkAddSystemTray.setSelected(TedConfig.isAddSysTray());
-			checkStartMinimized.setSelected(TedConfig.isStartMinimized());
+			checkAddSystemTray.setSelected(TedConfig.getInstance().isAddSysTray());
+			checkStartMinimized.setSelected(TedConfig.getInstance().isStartMinimized());
 			
-			if (!TedConfig.isAddSysTray())
+			if (!TedConfig.getInstance().isAddSysTray())
 			{
 				this.checkStartMinimized.setSelected(false);
 				this.checkStartMinimized.setEnabled(false);
@@ -204,7 +204,7 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		
 		
 		// fill combobox with available languages, and select current language
-		String currentLanguage = TedConfig.getLocale().getDisplayLanguage();
+		String currentLanguage = TedConfig.getInstance().getLocale().getDisplayLanguage();
 		int toSelect = 0;
 		for (int i = 0; i < locales.length; i++)
 		{
@@ -240,13 +240,13 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		boolean logToFile = checkLogToFile.isSelected();
 		Locale languageSetting = locales[this.comboLanguages.getSelectedIndex()];
 	
-		TedConfig.setShowHurray(alertHurray);
-		TedConfig.setShowErrors(alertError);
-		TedConfig.setStartMinimized(startMinimized);
-		TedConfig.setAddSysTray(addSysTray);
-		TedConfig.setAllowLogging(allowLog);
-		TedConfig.setLogToFile(logToFile);
-		TedConfig.setLocale(languageSetting);		
+		TedConfig.getInstance().setShowHurray(alertHurray);
+		TedConfig.getInstance().setShowErrors(alertError);
+		TedConfig.getInstance().setStartMinimized(startMinimized);
+		TedConfig.getInstance().setAddSysTray(addSysTray);
+		TedConfig.getInstance().setAllowLogging(allowLog);
+		TedConfig.getInstance().setLogToFile(logToFile);
+		TedConfig.getInstance().setLocale(languageSetting);		
 	}
 
 	public void actionPerformed(ActionEvent arg0)

@@ -364,7 +364,7 @@ public class TedTable extends JTable
 
 	public void sort() 
 	{
-		if (TedConfig.getSortType() != TedConfig.SORT_OFF)
+		if (TedConfig.getInstance().getSortType() != TedConfig.getInstance().SORT_OFF)
 		{
 			this.serieTableModel.sortTable();
 		}

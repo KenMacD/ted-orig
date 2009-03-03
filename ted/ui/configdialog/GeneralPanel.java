@@ -193,15 +193,15 @@ public class GeneralPanel extends JPanel implements ActionListener
 	public void setValues()
 	{
 		// get values
-		openTorrentBox.setSelected(TedConfig.isOpenTorrent());
-		checkParseAtStart.setSelected(TedConfig.isParseAtStart());
-		textRefresh.setText(TedConfig.getRefreshTime()/60+"");
+		openTorrentBox.setSelected(TedConfig.getInstance().isOpenTorrent());
+		checkParseAtStart.setSelected(TedConfig.getInstance().isParseAtStart());
+		textRefresh.setText(TedConfig.getInstance().getRefreshTime()/60+"");
 		
-		this.directory_nieuw = TedConfig.getDirectory();
+		this.directory_nieuw = TedConfig.getInstance().getDirectory();
 		directory_Field.setText(this.directory_nieuw);
 	
 		// Find the timezone with the correct offset in the combobox
-		int offset = TedConfig.getTimeZoneOffset();
+		int offset = TedConfig.getInstance().getTimeZoneOffset();
 		
 		// If not time zone is specified determine time zone based on
 		// OS settings. 
@@ -277,11 +277,11 @@ public class GeneralPanel extends JPanel implements ActionListener
 		int timezoneOffset = TimeZone.getTimeZone(timezone).getRawOffset();
 		
 		// write them to config
-		TedConfig.setRefreshTime(newTime);	
-		TedConfig.setDirectory(directory_nieuw);
-		TedConfig.setOpenTorrent(opentorrent);
-		TedConfig.setParseAtStart(parseAtStart);
-		TedConfig.setTimeZoneOffset(timezoneOffset);
+		TedConfig.getInstance().setRefreshTime(newTime);	
+		TedConfig.getInstance().setDirectory(directory_nieuw);
+		TedConfig.getInstance().setOpenTorrent(opentorrent);
+		TedConfig.getInstance().setParseAtStart(parseAtStart);
+		TedConfig.getInstance().setTimeZoneOffset(timezoneOffset);
 	}
 	
 	/**

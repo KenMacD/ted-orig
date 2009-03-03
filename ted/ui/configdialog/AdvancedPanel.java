@@ -156,7 +156,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	public void setValues()
 	{
 		// get values
-		int timeOut = TedConfig.getTimeOutInSecs();
+		int timeOut = TedConfig.getInstance().getTimeOutInSecs();
 		if (timeOut < MINTIMEOUT)
 		{
 			timeOut = MINTIMEOUT;
@@ -168,12 +168,12 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		timeoutInSecondsSlider.setValue(timeOut);
 		
 		
-		this.setSelectedButton(seederSettingGroup, TedConfig.getSeederSetting());
+		this.setSelectedButton(seederSettingGroup, TedConfig.getInstance().getSeederSetting());
 		this.setPreferredSize(new java.awt.Dimension(400, 400));
-		checkNotDownloadCompressed.setSelected(TedConfig.getDoNotDownloadCompressed());
-		filterExtensions.setText(TedConfig.getFilterExtensions());
+		checkNotDownloadCompressed.setSelected(TedConfig.getInstance().getDoNotDownloadCompressed());
+		filterExtensions.setText(TedConfig.getInstance().getFilterExtensions());
 		filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
-		useAutoScheduleCheckBox.setSelected(TedConfig.isUseAutoSchedule());
+		useAutoScheduleCheckBox.setSelected(TedConfig.getInstance().isUseAutoSchedule());
 	}
 	
 	/**
@@ -195,11 +195,11 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		int newTime = timeoutInSecondsSlider.getValue();
 		int seederSetting = this.getSelectedButton(seederSettingGroup);
 		
-		TedConfig.setTimeOutInSecs(newTime);
-		TedConfig.setSeederSetting(seederSetting);
-		TedConfig.setDoNotDownloadCompressed(checkNotDownloadCompressed.isSelected());
-		TedConfig.setFilterExtensions(filterExtensions.getText());
-		TedConfig.setUseAutoSchedule(useAutoScheduleCheckBox.isSelected());
+		TedConfig.getInstance().setTimeOutInSecs(newTime);
+		TedConfig.getInstance().setSeederSetting(seederSetting);
+		TedConfig.getInstance().setDoNotDownloadCompressed(checkNotDownloadCompressed.isSelected());
+		TedConfig.getInstance().setFilterExtensions(filterExtensions.getText());
+		TedConfig.getInstance().setUseAutoSchedule(useAutoScheduleCheckBox.isSelected());
 	}
 	
 	/**
@@ -220,9 +220,9 @@ public class AdvancedPanel extends JPanel implements ActionListener
 				// check which state is selected and return it
 				String text = temp.getText();
 				if  (text.equals((Lang.getString("TedConfigDialog.RadioMinimumSeeders")))) //$NON-NLS-1$
-					return TedConfig.DOWNLOADMINIMUMSEEDERS;
+					return TedConfig.getInstance().DOWNLOADMINIMUMSEEDERS;
 				else if (text.equals((Lang.getString("TedConfigDialog.RadioMostSeeders")))) //$NON-NLS-1$
-					return TedConfig.DOWNLOADMOSTSEEDERS;
+					return TedConfig.getInstance().DOWNLOADMOSTSEEDERS;
 			}
 			else
 				i++;
@@ -245,8 +245,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		{
 			temp = (JRadioButton)buttons.nextElement();
 			String text = temp.getText();
-			if (((text.equals(Lang.getString("TedConfigDialog.RadioMinimumSeeders")) && toSelect == TedConfig.DOWNLOADMINIMUMSEEDERS) //$NON-NLS-1$
-					|| text.equals(Lang.getString("TedConfigDialog.RadioMostSeeders")) && toSelect == TedConfig.DOWNLOADMOSTSEEDERS)) //$NON-NLS-1$
+			if (((text.equals(Lang.getString("TedConfigDialog.RadioMinimumSeeders")) && toSelect == TedConfig.getInstance().DOWNLOADMINIMUMSEEDERS) //$NON-NLS-1$
+					|| text.equals(Lang.getString("TedConfigDialog.RadioMostSeeders")) && toSelect == TedConfig.getInstance().DOWNLOADMOSTSEEDERS)) //$NON-NLS-1$
 			{
 				temp.setSelected(true);
 			}

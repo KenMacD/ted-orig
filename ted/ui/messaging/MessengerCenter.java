@@ -51,7 +51,7 @@ public class MessengerCenter
 	
 	public void displayError (String title, String body)
 	{
-		if (TedConfig.isShowErrors())
+		if (TedConfig.getInstance().isShowErrors())
 		{
 			//this.checkCurrentMessenger();
 			currentMessenger.displayError(title, body);
@@ -83,7 +83,7 @@ public class MessengerCenter
 
 	public void displayHurray(String title, String body)
 	{
-		if (TedConfig.isShowHurray())
+		if (TedConfig.getInstance().isShowHurray())
 		{
 			//this.checkCurrentMessenger();
 			currentMessenger.displayHurray(title, body);

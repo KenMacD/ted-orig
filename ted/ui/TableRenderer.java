@@ -40,13 +40,13 @@ public class TableRenderer extends DefaultTableCellRenderer
 	   {
 		  // get odd/even rows a different color
 	     if( (row%2)==0)
-	         setBackground(TedConfig.getEvenRowColor());
+	         setBackground(TedConfig.getInstance().getEvenRowColor());
 	      else
-	         setBackground(TedConfig.getOddRowColor());
+	         setBackground(TedConfig.getInstance().getOddRowColor());
 	   }
 	   else
 	   {
-		   setBackground(TedConfig.getSelectedRowColor());
+		   setBackground(TedConfig.getInstance().getSelectedRowColor());
 	   }
 	   
 	   return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

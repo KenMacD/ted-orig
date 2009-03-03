@@ -160,7 +160,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				}});		
 			
 			// This preference has been saved for the user's convenience.
-			downloadInHD.setSelected(TedConfig.isHDDownloadPreference());
+			downloadInHD.setSelected(TedConfig.getInstance().isHDDownloadPreference());
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -388,7 +388,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private void close() 
 	{
 		// Save this preference for the next time.
-		TedConfig.setHDDownloadPreference(downloadInHD.isSelected());
+		TedConfig.getInstance().setHDDownloadPreference(downloadInHD.isSelected());
 		TedIO tio = new TedIO();
 		tio.SaveConfig();
 		

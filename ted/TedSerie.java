@@ -771,7 +771,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	
 	public boolean isSerieAndGlobalUseAutoSchedule()
 	{
-		return useAutoSchedule && TedConfig.isUseAutoSchedule();
+		return useAutoSchedule && TedConfig.getInstance().isUseAutoSchedule();
 	}
 
 	public void setUseAutoSchedule(boolean useAutoSchedule) 
@@ -904,12 +904,12 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		int result = 0;
 		
 		// sort on name
-		if (TedConfig.getSortType() == TedConfig.SORT_NAME)
+		if (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_NAME)
 		{
 			result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
 		}
 		// sort on status and airdate
-		else if (TedConfig.getSortType() == TedConfig.SORT_STATUS)
+		else if (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_STATUS)
 		{
 			// sort on status
 			if (this.status != second.status)
