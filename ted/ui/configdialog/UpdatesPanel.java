@@ -88,7 +88,7 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		updatePanel.add(labelUpdateShows, new CellConstraints(
 			"2, 5, 3, 1, default, default"));
 		labelUpdateShows.setText(Lang
-			.getString("TedConfig.getInstance()Dialog.LabelNewShowDefinitions"));
+			.getString("TedConfigDialog.LabelNewShowDefinitions"));
 		labelUpdateShows.setBounds(14, 287, 371, 28);
 
 		radioUpdateShowsNever = new JRadioButton();
@@ -218,11 +218,11 @@ public class UpdatesPanel extends JPanel implements ActionListener
 				// check which state is selected and return it
 				String text = temp.getText();
 				if (text.equals(Lang.getString("TedConfigDialog.Never"))) //$NON-NLS-1$
-					return TedConfig.getInstance().NEVER;
+					return TedConfig.NEVER;
 				else if (text.equals(Lang.getString("TedConfigDialog.Ask"))) //$NON-NLS-1$
-					return TedConfig.getInstance().ASK;
+					return TedConfig.ASK;
 				else if (text.equals((Lang.getString("TedConfigDialog.Always")))) //$NON-NLS-1$
-					return TedConfig.getInstance().ALWAYS;
+					return TedConfig.ALWAYS;
 			}
 			else
 				i++;
@@ -245,9 +245,9 @@ public class UpdatesPanel extends JPanel implements ActionListener
 		{
 			temp = (JRadioButton)buttons.nextElement();
 			String text = temp.getText();
-			if ((text.equals(Lang.getString("TedConfigDialog.Never")) 	&& toSelect == TedConfig.getInstance().NEVER) //$NON-NLS-1$
-			||  (text.equals(Lang.getString("TedConfigDialog.Ask")) 	&& toSelect == TedConfig.getInstance().ASK) //$NON-NLS-1$
-			||  (text.equals(Lang.getString("TedConfigDialog.Always")) 	&& toSelect == TedConfig.getInstance().ALWAYS)) //$NON-NLS-1$
+			if ((text.equals(Lang.getString("TedConfigDialog.Never")) 	&& toSelect == TedConfig.NEVER) //$NON-NLS-1$
+			||  (text.equals(Lang.getString("TedConfigDialog.Ask")) 	&& toSelect == TedConfig.ASK) //$NON-NLS-1$
+			||  (text.equals(Lang.getString("TedConfigDialog.Always")) 	&& toSelect == TedConfig.ALWAYS)) //$NON-NLS-1$
 			{
 				temp.setSelected(true);
 			}

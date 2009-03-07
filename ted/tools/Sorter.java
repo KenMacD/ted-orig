@@ -61,7 +61,7 @@ public class Sorter
 		boolean smaller = (serieA.compareTo(serieB) < 0);
 		
 		// when sorting descending, invert the result
-		if (TedConfig.getInstance().getSortDirection() == TedConfig.getInstance().SORT_DESCENDING)
+		if (TedConfig.getInstance().getSortDirection() == TedConfig.SORT_DESCENDING)
 		{
 			smaller = !smaller;
 		}

@@ -343,11 +343,11 @@ public class TedParser extends Thread
 	 */
 	private boolean continueParsing()
 	{
-		if (TedConfig.getInstance().getSeederSetting() == TedConfig.getInstance().DOWNLOADMOSTSEEDERS)
+		if (TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
 		{
 			return true;
 		}
-		else if (TedConfig.getInstance().getSeederSetting() == TedConfig.getInstance().DOWNLOADMINIMUMSEEDERS && this.bestTorrentUrl == null)
+		else if (TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMINIMUMSEEDERS && this.bestTorrentUrl == null)
 		{
 			return true;
 		}
@@ -667,7 +667,7 @@ public class TedParser extends Thread
 			{
 				int torrentSeeders = 0;
 				// only get the torrent state when minimum seeders > 0
-				if (serie.getMinNumOfSeeders() > 0 || TedConfig.getInstance().getSeederSetting() == TedConfig.getInstance().DOWNLOADMOSTSEEDERS)
+				if (serie.getMinNumOfSeeders() > 0 || TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
 				{
 					// get torrent state (containing seeders/leechers
 					torrentState = torrent.getState(TedConfig.getInstance().getTimeOutInSecs());

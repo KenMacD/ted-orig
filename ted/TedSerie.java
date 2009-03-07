@@ -904,12 +904,12 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		int result = 0;
 		
 		// sort on name
-		if (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_NAME)
+		if (TedConfig.getInstance().getSortType() == TedConfig.SORT_NAME)
 		{
 			result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
 		}
 		// sort on status and airdate
-		else if (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_STATUS)
+		else if (TedConfig.getInstance().getSortType() == TedConfig.SORT_STATUS)
 		{
 			// sort on status
 			if (this.status != second.status)

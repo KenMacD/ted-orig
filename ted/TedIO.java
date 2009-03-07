@@ -167,20 +167,9 @@ public class TedIO
 		}
 		return vec;
 	}
-	
-	/**
-	 * Checks and saves a found torrent to the harddisk
-	 * @param name Name of the torrent
-	 * @param minSize Minimum size for the contents of the torrent
-	 * @param maxSize Maximum size for the contents of the torrent
-	 * @param location Folder where ted has to store the torrent
-	 * @param config Current TedConfig.getInstance()
-	 * @throws Exception
-	 */
-		
+			
 	/**
 	 * Saves the config to the harddrive
-	 * @param tc TedConfig.getInstance() we have to save
 	 */
 	public void SaveConfig()
 	{
@@ -189,42 +178,42 @@ public class TedIO
 			File file = new File(CONFIG_FILE);
 			FileWriter fw = new FileWriter(file);
 			
-			TedLogDialog t = TedLogDialog.getInstance();
+			TedConfig config = TedConfig.getInstance();
 						
 			// write all the settings in new lines to config.ted
-			fw.append("refresh=" + TedConfig.getInstance().getRefreshTime() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("directory=" + TedConfig.getInstance().getDirectory()  + "\n");	 //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("opentorrent=" + TedConfig.getInstance().isOpenTorrent() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("checkversion=" + TedConfig.getInstance().isCheckVersion()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("showerrors=" + TedConfig.getInstance().isShowErrors()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("showhurray=" + TedConfig.getInstance().isShowHurray()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("windowwidth=" + TedConfig.getInstance().getWidth()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("windowheight=" + TedConfig.getInstance().getHeight()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("windowx=" + TedConfig.getInstance().getX()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("windowy=" + TedConfig.getInstance().getY()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("startminimized=" + TedConfig.getInstance().isStartMinimized() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("timeoutsecs=" + TedConfig.getInstance().getTimeOutInSecs() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("seedersetting=" + TedConfig.getInstance().getSeederSetting() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("rssversion=" + TedConfig.getInstance().getRSSVersion() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("rssupdate=" + TedConfig.getInstance().getAutoUpdateFeedList() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("rssadjust=" + TedConfig.getInstance().getAutoAdjustFeeds() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("locale_language=" + TedConfig.getInstance().getLanguage() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("locale_country=" + TedConfig.getInstance().getCountry() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("parse_at_start=" + TedConfig.getInstance().isParseAtStart() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("add_tray=" + TedConfig.getInstance().isAddSysTray() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("downloadcompressed=" + TedConfig.getInstance().getDoNotDownloadCompressed() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("filterextensions=" + TedConfig.getInstance().getFilterExtensions() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			fw.append("loglines=" + t.getLines() + "\n"); //$NON-NLS-1$
-			fw.append("allowlogging=" + TedConfig.getInstance().isAllowLogging() + "\n"); //$NON-NLS-1$
-			fw.append("logtofile=" + TedConfig.getInstance().isLogToFile() + "\n"); //$NON-NLS-1$
-			fw.append("oddrowcolor=" +  TedConfig.getInstance().getOddRowColor().getRGB() + "\n");
-			fw.append("evenrowcolor=" + TedConfig.getInstance().getEvenRowColor().getRGB() + "\n");
-			fw.append("timezoneoffset=" + TedConfig.getInstance().getTimeZoneOffset() + "\n");
-			fw.append("sorttype=" + TedConfig.getInstance().getSortType() + "\n");
-			fw.append("sortdirection=" + TedConfig.getInstance().getSortDirection() + "\n");
-			fw.append("autoschedule=" + TedConfig.getInstance().isUseAutoSchedule() + "\n");
-			fw.append("hdkeywords=" + TedConfig.getInstance().getHDKeywords() + "\n");
-			fw.append("hdpreference=" + TedConfig.getInstance().isHDDownloadPreference());
+			fw.append("refresh=" 			+ config.getRefreshTime() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("directory=" 			+ config.getDirectory()  + "\n");	 //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("opentorrent=" 		+ config.isOpenTorrent() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("checkversion=" 		+ config.isCheckVersion()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("showerrors=" 		+ config.isShowErrors()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("showhurray=" 		+ config.isShowHurray()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("windowwidth=" 		+ config.getWidth()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("windowheight=" 		+ config.getHeight()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("windowx=" 			+ config.getX()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("windowy=" 			+ config.getY()  + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("startminimized=" 	+ config.isStartMinimized() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("timeoutsecs=" 		+ config.getTimeOutInSecs() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("seedersetting="		+ config.getSeederSetting() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("rssversion="			+ config.getRSSVersion() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("rssupdate=" 			+ config.getAutoUpdateFeedList() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("rssadjust=" 			+ config.getAutoAdjustFeeds() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("locale_language=" 	+ config.getLanguage() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("locale_country=" 	+ config.getCountry() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("parse_at_start=" 	+ config.isParseAtStart() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("add_tray=" 			+ config.isAddSysTray() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("downloadcompressed=" + config.getDoNotDownloadCompressed() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("filterextensions=" 	+ config.getFilterExtensions() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+			fw.append("loglines=" 			+ TedLogDialog.getInstance().getLines() + "\n"); //$NON-NLS-1$
+			fw.append("allowlogging=" 		+ config.isAllowLogging() + "\n"); //$NON-NLS-1$
+			fw.append("logtofile=" 			+ config.isLogToFile() + "\n"); //$NON-NLS-1$
+			fw.append("oddrowcolor=" 		+ config.getOddRowColor().getRGB() + "\n");
+			fw.append("evenrowcolor=" 		+ config.getEvenRowColor().getRGB() + "\n");
+			fw.append("timezoneoffset=" 	+ config.getTimeZoneOffset() + "\n");
+			fw.append("sorttype=" 			+ config.getSortType() + "\n");
+			fw.append("sortdirection=" 		+ config.getSortDirection() + "\n");
+			fw.append("autoschedule=" 		+ config.isUseAutoSchedule() + "\n");
+			fw.append("hdkeywords=" 		+ config.getHDKeywords() + "\n");
+			fw.append("hdpreference=" 		+ config.isHDDownloadPreference());
 			
 			fw.close();
 		}
@@ -284,6 +273,8 @@ public class TedIO
 			String tempLanguage = ""; //$NON-NLS-1$
 			String tempCountry = ""; //$NON-NLS-1$
 			
+			TedConfig config = TedConfig.getInstance();
+			
 			String line = null;
 			while((line=br.readLine()) != null)
 			{
@@ -299,7 +290,7 @@ public class TedIO
 
 				if(configItem.equals("refresh")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setRefreshTime(Integer.parseInt(configItemValue));
+					config.setRefreshTime(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("directory")) //$NON-NLS-1$
 				{
@@ -319,68 +310,68 @@ public class TedIO
 					
 					if (directoryAvailable)
 					{
-						TedConfig.getInstance().setDirectory(s);
+						config.setDirectory(s);
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, Lang.getString("TedConfig.getInstance()Dialog.DialogSelectDirectory")); //$NON-NLS-1$
+						JOptionPane.showMessageDialog(null, Lang.getString("TedConfigDialog.DialogSelectDirectory")); //$NON-NLS-1$
 					}
 				}
 				else if(configItem.equals("opentorrent")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setOpenTorrent(Boolean.parseBoolean(configItemValue));
+					config.setOpenTorrent(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("checkversion")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setCheckVersion(Boolean.parseBoolean(configItemValue));
+					config.setCheckVersion(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("showerrors")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setShowErrors(Boolean.parseBoolean(configItemValue));
+					config.setShowErrors(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("showhurray")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setShowHurray(Boolean.parseBoolean(configItemValue));
+					config.setShowHurray(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("windowwidth")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setWidth(Integer.parseInt(configItemValue));
+					config.setWidth(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("windowheight")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setHeight(Integer.parseInt(configItemValue));
+					config.setHeight(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("windowx")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setX(Integer.parseInt(configItemValue));
+					config.setX(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("windowy")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setY(Integer.parseInt(configItemValue));
+					config.setY(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("startminimized")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setStartMinimized(Boolean.parseBoolean(configItemValue));
+					config.setStartMinimized(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("rssversion")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setRSSVersion(Integer.parseInt(configItemValue));
+					config.setRSSVersion(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("rssupdate")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setAutoUpdateFeedList(Integer.parseInt(configItemValue));
+					config.setAutoUpdateFeedList(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("rssadjust")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setAutoAdjustFeeds(Integer.parseInt(configItemValue));
+					config.setAutoAdjustFeeds(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("timeoutsecs")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setTimeOutInSecs(Integer.parseInt(configItemValue));
+					config.setTimeOutInSecs(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("seedersetting")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setSeederSetting(Integer.parseInt(configItemValue));
+					config.setSeederSetting(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("locale_language")) //$NON-NLS-1$
 				{
@@ -392,19 +383,19 @@ public class TedIO
 				}
 				else if(configItem.equals("parse_at_start")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setParseAtStart(Boolean.parseBoolean(configItemValue));
+					config.setParseAtStart(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("add_tray")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setAddSysTray(Boolean.parseBoolean(configItemValue));
+					config.setAddSysTray(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("downloadcompressed")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setDoNotDownloadCompressed(Boolean.parseBoolean(configItemValue));
+					config.setDoNotDownloadCompressed(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("filterextensions")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setFilterExtensions(configItemValue);
+					config.setFilterExtensions(configItemValue);
 				}	
 				else if(configItem.equals("loglines")) //$NON-NLS-1$
 				{
@@ -413,54 +404,53 @@ public class TedIO
 				}
 				else if(configItem.equals("allowlogging")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setAllowLogging(Boolean.parseBoolean(configItemValue));
+					config.setAllowLogging(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("logtofile")) //$NON-NLS-1$
 				{
-					TedConfig.getInstance().setLogToFile(Boolean.parseBoolean(configItemValue));
+					config.setLogToFile(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("oddrowcolor"))
 				{
 					String s = configItemValue;
 					Color color = new Color(Integer.parseInt(s));
-					TedConfig.getInstance().setOddRowColor(color);
+					config.setOddRowColor(color);
 				}
 				else if(configItem.equals("evenrowcolor"))
 				{
 					Color color = new Color(Integer.parseInt(configItemValue));
-					TedConfig.getInstance().setEvenRowColor(color);
+					config.setEvenRowColor(color);
 				}
 				else if(configItem.equals("timezoneoffset"))
 				{
-					TedConfig.getInstance().setTimeZoneOffset(Integer.parseInt(configItemValue));
+					config.setTimeZoneOffset(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("autoschedule"))
 				{
-					TedConfig.getInstance().setUseAutoSchedule(Boolean.parseBoolean(configItemValue));
+					config.setUseAutoSchedule(Boolean.parseBoolean(configItemValue));
 				}
 				else if(configItem.equals("sorttype"))
 				{
-					TedConfig.getInstance().setSortType(Integer.parseInt(configItemValue));
+					config.setSortType(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("sortdirection"))
 				{
-					TedConfig.getInstance().setSortDirection(Integer.parseInt(configItemValue));
+					config.setSortDirection(Integer.parseInt(configItemValue));
 				}
 				else if(configItem.equals("hdkeywords"))
 				{
-					TedConfig.getInstance().setHDKeywords(configItemValue);
+					config.setHDKeywords(configItemValue);
 				}
 				else if(configItem.equals("hdpreference"))
 				{
-					TedConfig.getInstance().setHDDownloadPreference(Boolean.parseBoolean(configItemValue));
+					config.setHDDownloadPreference(Boolean.parseBoolean(configItemValue));
 				}
 			}
 			
-			TedConfig.getInstance().setLocale(tempCountry, tempLanguage);
+			config.setLocale(tempCountry, tempLanguage);
 		
 			br.close();
 			fr.close();
-			
 		}
 		catch (FileNotFoundException e)
 		{
@@ -613,13 +603,13 @@ public class TedIO
 				if (answer == 0)
 				{
 					// The user clicked the always button, so store it in the configuration.
-					TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().ALWAYS);
+					TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.ALWAYS);
 					this.SaveConfig();
 				}
 				else if (answer == 3)
 				{
 					// Do the same for the never button.
-					TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().NEVER);
+					TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.NEVER);
 					this.SaveConfig();
 				}
 				// For the yes/no option nothing has to be done as when the user sees this message
@@ -807,7 +797,7 @@ public class TedIO
 	 * torrentclient if user wants to
 	 * @param url URL of torrent to download
 	 * @param name FileName to save torrent to (without directory)
-	 * @param config TedConfig.getInstance() containing usersettings
+	 * @param config TedConfig containing usersettings
 	 * @throws Exception
 	 */
 	public void downloadTorrent(URL url, String name) throws Exception
@@ -822,7 +812,7 @@ public class TedIO
 			name = name.replaceAll(" ()", ".");
          
             //create output torrent file
-            String loc = TedConfig.getInstance().getInstance().getDirectory() + File.separator  + name + ".torrent"; //$NON-NLS-1$
+            String loc = TedConfig.getInstance().getDirectory() + File.separator  + name + ".torrent"; //$NON-NLS-1$
 			File outputFile = new File(loc); 
 		
     		//file already exists
@@ -837,7 +827,7 @@ public class TedIO
     		URLConnection urlc2 = null;
 
     		urlc2 = url.openConnection();
-    		urlc2.setConnectTimeout(1000*TedConfig.getInstance().getTimeOutInSecs());
+    		urlc2.setConnectTimeout(1000 * TedConfig.getInstance().getTimeOutInSecs());
 			int length = urlc2.getContentLength();
 			InputStream in = urlc2.getInputStream();
 			

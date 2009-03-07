@@ -434,15 +434,15 @@ public class TedMainMenuBar extends JMenuBar
 	public void updateSortMenu()
 	{
 		// update sort type menu
-		boolean isSortOnName = (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_NAME);
-		boolean isSortOnStatus = (TedConfig.getInstance().getSortType() == TedConfig.getInstance().SORT_STATUS);
+		boolean isSortOnName = (TedConfig.getInstance().getSortType() == TedConfig.SORT_NAME);
+		boolean isSortOnStatus = (TedConfig.getInstance().getSortType() == TedConfig.SORT_STATUS);
 		
 		this.sortOnNameItem.setSelected(isSortOnName);
 		this.sortOnStatusItem.setSelected(isSortOnStatus);
 		
 		// update sort direction menu
-		boolean isSortAscending = (TedConfig.getInstance().getSortDirection() == TedConfig.getInstance().SORT_ASCENDING);
-		boolean isSortDescending = (TedConfig.getInstance().getSortDirection() == TedConfig.getInstance().SORT_DESCENDING);
+		boolean isSortAscending = (TedConfig.getInstance().getSortDirection() == TedConfig.SORT_ASCENDING);
+		boolean isSortDescending = (TedConfig.getInstance().getSortDirection() == TedConfig.SORT_DESCENDING);
 		
 		this.sortAscendingRadioItem.setSelected(isSortAscending);
 		this.sortDescendingRadioItem.setSelected(isSortDescending);

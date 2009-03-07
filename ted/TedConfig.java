@@ -28,16 +28,17 @@ public class TedConfig
 	 * GLOBAL VARIABLES
 	 ****************************************************/
 	private final long serialVersionUID = 2199026019828977965L;
-	public final int NEVER = 0;
-	public final int ASK = 1;
-	public final int ALWAYS = 2;
-	public final int DOWNLOADMINIMUMSEEDERS = 0;
-	public final int DOWNLOADMOSTSEEDERS = 1;
-	public final int SORT_OFF = 0;
-	public final int SORT_NAME = 1;
-	public final int SORT_STATUS = 2;
-	public final int SORT_ASCENDING = 0;
-	public final int SORT_DESCENDING = 1;
+	
+	public static final int NEVER = 0;
+	public static final int ASK = 1;
+	public static final int ALWAYS = 2;
+	public static final int DOWNLOADMINIMUMSEEDERS = 0;
+	public static final int DOWNLOADMOSTSEEDERS = 1;
+	public static final int SORT_OFF = 0;
+	public static final int SORT_NAME = 1;
+	public static final int SORT_STATUS = 2;
+	public static final int SORT_ASCENDING = 0;
+	public static final int SORT_DESCENDING = 1;
 	
 	// create some default settings
 	private int RefreshTime = 3600;

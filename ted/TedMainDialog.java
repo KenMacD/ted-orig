@@ -832,7 +832,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			// parse all shows
 			this.parseShows();
-			//this.tCounter.setCount(TedConfig.getInstance().getRefreshTime());
 		}
 		else if(action.equals("stop parsing")) //$NON-NLS-1$
 		{
@@ -874,25 +873,25 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		}
 		else if (action.equals("sort_name"))
 		{
-			TedConfig.getInstance().setSortType(TedConfig.getInstance().SORT_NAME);
+			TedConfig.getInstance().setSortType(TedConfig.SORT_NAME);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
 		else if (action.equals("sort_status"))
 		{
-			TedConfig.getInstance().setSortType(TedConfig.getInstance().SORT_STATUS);
+			TedConfig.getInstance().setSortType(TedConfig.SORT_STATUS);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
 		else if (action.equals("sort_ascending"))
 		{
-			TedConfig.getInstance().setSortDirection(TedConfig.getInstance().SORT_ASCENDING);
+			TedConfig.getInstance().setSortDirection(TedConfig.SORT_ASCENDING);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}
 		else if (action.equals("sort_descending"))
 		{
-			TedConfig.getInstance().setSortDirection(TedConfig.getInstance().SORT_DESCENDING);
+			TedConfig.getInstance().setSortDirection(TedConfig.SORT_DESCENDING);
 			this.tMenuBar.updateSortMenu();
 			this.serieTable.sort();
 		}

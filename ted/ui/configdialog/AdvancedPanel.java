@@ -220,9 +220,9 @@ public class AdvancedPanel extends JPanel implements ActionListener
 				// check which state is selected and return it
 				String text = temp.getText();
 				if  (text.equals((Lang.getString("TedConfigDialog.RadioMinimumSeeders")))) //$NON-NLS-1$
-					return TedConfig.getInstance().DOWNLOADMINIMUMSEEDERS;
+					return TedConfig.DOWNLOADMINIMUMSEEDERS;
 				else if (text.equals((Lang.getString("TedConfigDialog.RadioMostSeeders")))) //$NON-NLS-1$
-					return TedConfig.getInstance().DOWNLOADMOSTSEEDERS;
+					return TedConfig.DOWNLOADMOSTSEEDERS;
 			}
 			else
 				i++;
@@ -245,8 +245,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		{
 			temp = (JRadioButton)buttons.nextElement();
 			String text = temp.getText();
-			if (((text.equals(Lang.getString("TedConfigDialog.RadioMinimumSeeders")) && toSelect == TedConfig.getInstance().DOWNLOADMINIMUMSEEDERS) //$NON-NLS-1$
-					|| text.equals(Lang.getString("TedConfigDialog.RadioMostSeeders")) && toSelect == TedConfig.getInstance().DOWNLOADMOSTSEEDERS)) //$NON-NLS-1$
+			if (((text.equals(Lang.getString("TedConfigDialog.RadioMinimumSeeders")) && toSelect == TedConfig.DOWNLOADMINIMUMSEEDERS) //$NON-NLS-1$
+					|| text.equals(Lang.getString("TedConfigDialog.RadioMostSeeders")) && toSelect == TedConfig.DOWNLOADMOSTSEEDERS)) //$NON-NLS-1$
 			{
 				temp.setSelected(true);
 			}
