@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="ted/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="ted/forms-1.1.0.jar"/>
+	<classpathentry kind="lib" path="ted/jdic.jar"/>
+	<classpathentry kind="lib" path="ted/jdom.jar"/>
+	<classpathentry kind="lib" path="ted/rome.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

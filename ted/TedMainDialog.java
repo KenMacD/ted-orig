@@ -28,6 +28,8 @@ import javax.swing.UIManager;
 
 import org.w3c.dom.Element;
 
+import ted.infrastructure.ITedMain;
+import ted.infrastructure.TedMainCore;
 import ted.ui.addshowdialog.AddShowDialog;
 import ted.ui.configdialog.ConfigDialog;
 import ted.ui.editshowdialog.EditMultipleShowsDialog;
@@ -63,12 +65,14 @@ import ted.ui.messaging.MessengerCenter;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedMainDialog extends javax.swing.JFrame implements ActionListener 
+public class TedMainDialog extends javax.swing.JFrame implements ActionListener, ITedMain
 {
 	/****************************************************
 	 * GLOBAL VARIABLES
 	 ****************************************************/
 	private static final long serialVersionUID = 3722636937353936684L;
+	
+	private TedMainCore tedCore = new TedMainCore();
 
 	private static final double tedVersion = 0.96;
 	
@@ -296,7 +300,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		this.setIconImage(tedProgramIcon.getImage());
 		
 		// load the config files
-		serieTable.setSeries(tcio.GetShows());
+		
+		this.tedCore.setSeries(tcio.GetShows());
+		serieTable.setSeries(this.tedCore.getSeries());
 		
 		// set size and position of ted
 		this.setSize(TedConfig.getInstance().getWidth(), TedConfig.getInstance().getHeight());
@@ -485,6 +491,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	public void addSerie(TedSerie newSerie) 
 	{
 		serieTable.addSerie(newSerie);
+		this.tedCore.setSeries(this.serieTable.getSeries());
 		
 		// if it is the day to start checking the serie again
 		newSerie.updateShowStatus();
@@ -854,7 +861,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 		{
 			TedIO tio = new TedIO();
 			tio.ImportShows(this);
-			serieTable.setSeries(tio.GetShows());
+			serieTable.setSeries(this.tedCore.getSeries());
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
 		{
@@ -941,9 +948,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 */
 	public void saveShows() 
 	{
-		TedIO tcio = new TedIO();
 		serieTable.sort();
-		tcio.SaveShows(serieTable.getSeries());	
+		tedCore.setSeries(this.serieTable.getSeries());
+		tedCore.saveShows();	
 		this.repaint();
 	}
 	
@@ -952,18 +959,14 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener
 	 * @param resetTime Parse interval
 	 */
 	public void saveConfig(boolean resetTime) 
-	{
-		TedIO tcio = new TedIO();
-		
+	{			
 		// set the current width, heigth and position of the window
 		TedConfig.getInstance().setWidth(this.getWidth());
 		TedConfig.getInstance().setHeight(this.getHeight());
 		TedConfig.getInstance().setX(this.getX());
 		TedConfig.getInstance().setY(this.getY());
 		
-		// save
-		tcio.SaveConfig();
-		
+		tedCore.saveConfig(resetTime);
 		this.updateGUI();
 		
 		// notify counter of refreshtime change

@@ -1,5 +1,7 @@
 package ted;
 
+import ted.headless.Daemon;
+
 public class TedMain {
 
 	/**
@@ -25,16 +27,32 @@ public class TedMain {
 		}
 		boolean userWantsTray = true;
 		boolean saveLocal = false;
+		boolean headless = false;
 		
 		for(int i=0; i<args.length; i++)
 		{
 			if(args[i].equals("noTray"))
+			{
 				userWantsTray=false;
+			}
 			else if(args[i].equals("localSave"))
-				saveLocal=true;			
+			{
+				saveLocal=true;
+			}
+			else if (args[i].equals("headless"))
+			{
+				headless = true;
+			}
 		}
 		
-		new TedMainDialog(userWantsTray, saveLocal);
+		if (!headless)
+		{
+			new TedMainDialog(userWantsTray, saveLocal);
+		}
+		else
+		{
+			Daemon.main(new String[0]);
+		}
 
 	}
 

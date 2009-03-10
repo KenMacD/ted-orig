@@ -2,17 +2,15 @@
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import org.w3c.dom.Element;
 
 import ted.SeasonEpisodeScheduler.NoEpisodeFoundException;
 import ted.datastructures.SeasonEpisode;
-import ted.datastructures.DailyDate;
 import ted.datastructures.StandardStructure;
+import ted.infrastructure.ITedMain;
 import ted.ui.editshowdialog.FeedPopupItem;
 
 /**
@@ -517,7 +515,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	 * @param statusString The statusString to set.
 	 * @param mainDialog 
 	 */
-	public void setStatusString(String statusString, TedMainDialog mainDialog)
+	public void setStatusString(String statusString, ITedMain mainDialog)
 	{
 		this.statusString = statusString;
 		mainDialog.repaint();
@@ -535,7 +533,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	 * @param progress The progress to set.
 	 * @param mainDialog 
 	 */
-	public void setProgress(int progress, TedMainDialog mainDialog)
+	public void setProgress(int progress, ITedMain mainDialog)
 	{
 		this.progress = progress;
 		mainDialog.repaint();

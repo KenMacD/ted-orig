@@ -3,6 +3,7 @@ package ted;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -86,7 +87,8 @@ public class TedXMLParser
 			db = dbf.newDocumentBuilder();
 
 			// parse using builder to get DOM representation of the XML file
-			Document dom = db.parse(url);
+			InputStream stream = TedIO.makeBufferedInputStream(new URL(url), TedConfig.getInstance().getTimeOutInSecs());
+			Document dom = db.parse(stream);
 			
 			return dom.getDocumentElement();
 		} 

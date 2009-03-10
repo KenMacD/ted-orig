@@ -487,12 +487,8 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		try 
 		{
 			url = new URL("http://ted.svn.sourceforge.net/viewvc/ted/trunk/ted/translations/translations.txt");
-		
-			// Open a connection to the file.
-			URLConnection conn = url.openConnection();
-		    conn.setConnectTimeout(TedConfig.getInstance().getTimeOutInSecs() * 1000);
-		     
-		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				     
+		    BufferedReader br = TedIO.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
 					
 			String line;	
 			while((line = br.readLine()) != null)
@@ -536,12 +532,8 @@ public class TedTranslateDialog extends JFrame implements ActionListener
 		{
 			// The location of the file we want to download.
 			URL url = new URL("http://ted.svn.sourceforge.net/viewvc/ted/trunk/ted/translations/" + fileName);
-			
-			// Open a connection to the file.
-			URLConnection conn = url.openConnection();
-		    conn.setConnectTimeout(TedConfig.getInstance().getTimeOutInSecs() * 1000);
-		     
-		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+					     
+		    BufferedReader br = TedIO.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
 			
 			// Write the properties file
 			FileWriter fw  = new FileWriter(fileName);

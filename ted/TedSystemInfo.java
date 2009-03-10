@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 public class TedSystemInfo
 {
+	private static boolean isHeadless=false;
 	private static boolean saveLocal;
 	private static final String osname = System.getProperty("os.name").toLowerCase(); //$NON-NLS-1$
 	
@@ -236,5 +237,17 @@ public class TedSystemInfo
 		
 		return false;			
 	}
+
+	public static boolean isHeadless()
+	{
+		return isHeadless;
+	}
+
+	public static void setHeadless(boolean isHeadless)
+	{
+		TedSystemInfo.isHeadless = isHeadless;
+	}
+	
+	
 
 }

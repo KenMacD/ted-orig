@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import ted.TedIO;
+
 //import org.apache.log4j.Logger;
 
 /**
@@ -80,9 +82,8 @@ public class BencodingImpl implements Bencoding {
         try {
         	URLConnection connection; 
         	//connection.setConnectTimeout(1);
-        	connection = url.openConnection();
-        	connection.setConnectTimeout(1000 * timeOutInSecs);
-            return decode(connection.getInputStream());
+        	connection = TedIO.makeUrlConnection(url, timeOutInSecs);
+        	return decode(connection.getInputStream());
         } catch (IOException ex) {
             throw new BencodingException(ex);
         }

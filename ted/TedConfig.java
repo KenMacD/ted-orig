@@ -72,7 +72,12 @@ public class TedConfig
 	private int sortDirection = SORT_ASCENDING;
 	private String hdKeywords = "720p & HD";
 	private boolean hdDownloadPreference = false;
-	
+	private boolean useProxy = false;
+	private boolean useProxyAuth = false;
+	private String proxyUsername = "";
+	private String proxyPassword = "";
+	private String proxyHost = "";
+	private String proxyPort = "";
 	
 	private final Color defaultEvenRowColor = Color.WHITE;
 	private final Color defaultOddRowColor  = new Color(236,243,254);
@@ -604,7 +609,8 @@ public class TedConfig
 		return logToFile;
 	}
 
-	public Color getEvenRowColor() {
+	public Color getEvenRowColor()
+	{
 		return evenRowColor;
 	}
 
@@ -720,4 +726,66 @@ public class TedConfig
 	{
 		return hdDownloadPreference;
 	}
+	
+	public void setUseProxy(boolean useProxy)
+	{
+		this.useProxy = useProxy;
+	}
+	
+	public boolean getUseProxy()
+	{
+		return this.useProxy;
+	}
+	
+	public void setUseProxyAuth(boolean useProxyAuth)
+	{
+		this.useProxyAuth = useProxyAuth;
+	}
+
+	public String getProxyUsername()
+	{
+		return proxyUsername;
+	}
+
+	public void setProxyUsername(String proxyUsername)
+	{
+		this.proxyUsername = proxyUsername;
+	}
+
+	public String getProxyPassword()
+	{
+		return proxyPassword;
+	}
+
+	public void setProxyPassword(String proxyPassword)
+	{
+		this.proxyPassword = proxyPassword;
+	}
+
+	public boolean getUseProxyAuth()
+	{
+		return useProxyAuth;
+	}
+
+	public String getProxyHost()
+	{
+		return proxyHost;
+	}
+
+	public void setProxyHost(String proxyHost)
+	{
+		this.proxyHost = proxyHost;
+	}
+
+	public String getProxyPort()
+	{
+		return proxyPort;
+	}
+
+	public void setProxyPort(String proxyPort)
+	{
+		this.proxyPort = proxyPort;
+	}
+	
+	
 }

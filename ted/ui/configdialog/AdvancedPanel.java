@@ -7,8 +7,8 @@ import java.util.Hashtable;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
@@ -34,11 +34,21 @@ import com.jgoodies.forms.layout.FormLayout;
 */
 public class AdvancedPanel extends JPanel implements ActionListener
 {
+
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel advancedPanel;
+	private JPanel advancedPanel;  //  @jve:decl-index=0:visual-constraint="10,37"
 	private JLabel labelTimeOutSeconds;
 	private JLabel labelTimeOut;
 	private JTextField textTimeOutSecs;
@@ -47,15 +57,23 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private JSeparator jSeparator2;
 	private JRadioButton radioTorrentSettings2;
 	private JLabel labelTorrentSettings;
-	private JCheckBox useAutoScheduleCheckBox;
+	private JCheckBox useAutoScheduleCheckBox;	
 	private JSeparator jSeparator3;
+	private JSeparator jSeparatorProxy;
 	private JLabel labelTimeOutInSecs;
-	private ButtonGroup seederSettingGroup;
+	private ButtonGroup seederSettingGroup;  //  @jve:decl-index=0:
 	private JCheckBox checkNotDownloadCompressed = null;
 	private JTextField filterExtensions;
 	private JSlider timeoutInSecondsSlider;
+	private JCheckBox useProxy;
+	private JTextField proxyHost;
+	private JTextField proxyPort;
+	private JCheckBox useAuthProxy;
+	private JTextField proxyUsername;
+	private JTextField proxyPassword;
 	private final int MINTIMEOUT = 1;
 	private final int MAXTIMEOUT = 20;
+		
 	
 	public AdvancedPanel()
 	{
@@ -67,11 +85,11 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		try 
 		{
 			advancedPanel = new JPanel();
-			this.add(advancedPanel);
+			this.add(advancedPanel);	
 			FormLayout advancedPanelLayout = new FormLayout(
 					"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
-			"max(p;5dlu), max(p;5dlu), 30dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+			"max(p;5dlu), max(p;5dlu), 30dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu)");
+			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 650));
 			advancedPanel.setLayout(advancedPanelLayout);
 
 			labelTimeOut = new JLabel();
@@ -134,16 +152,50 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			filterExtensions = new JTextField();
 			filterExtensions.setBounds(15, 257, 371, 21);
 			filterExtensions.setText("zip, rar, r01");
-			advancedPanel.add(filterExtensions, new CellConstraints("3, 10, 3, 1, default, default"));
+			advancedPanel.add(filterExtensions, new CellConstraints("2, 10, 5, 1, default, default"));
 			{
 				jSeparator3 = new JSeparator();
 				advancedPanel.add(jSeparator3, new CellConstraints("2, 11, 5, 1, default, default"));
 			}
 			{
 				useAutoScheduleCheckBox = new JCheckBox();
-				advancedPanel.add(getUseAutoScheduleCheckBox(), new CellConstraints("2, 12, 5, 1, default, default"));
+				advancedPanel.add(useAutoScheduleCheckBox, new CellConstraints("5, 12, 3, 1, default, default"));
 				useAutoScheduleCheckBox.setText(Lang.getString("TedConfigDialog.AutomaticSchedule"));
 			}
+			
+			jSeparatorProxy = new JSeparator();
+			advancedPanel.add(jSeparatorProxy, new CellConstraints("2, 13, 5, 1, default, default"));
+			
+			useProxy = new JCheckBox();
+			useProxy.setText(Lang.getString("TedConfigDialog.UseProxy"));
+			advancedPanel.add(useProxy, new CellConstraints("2, 14, 5, 1, default, default"));
+			useProxy.addActionListener(this);
+			useProxy.setActionCommand("useProxy");
+			
+			proxyHost = new JTextField();
+			advancedPanel.add(proxyHost, new CellConstraints("2, 15, 5, 1, default, default"));
+			proxyHost.setEnabled(false);
+			
+			proxyPort = new JTextField();
+			advancedPanel.add(proxyPort, new CellConstraints("2, 16, 5, 1, default, default"));
+			proxyPort.setEnabled(false);
+			
+			useAuthProxy = new JCheckBox();
+			useAuthProxy.setEnabled(false);
+			useAuthProxy.setText(Lang.getString("TedConfigDialog.UseAuthProxy"));
+			advancedPanel.add(useAuthProxy, new CellConstraints("2, 17, 5, 1, default, default"));
+			useAuthProxy.addActionListener(this);
+			useAuthProxy.setActionCommand("useAuthProxy");
+			
+			proxyUsername = new JTextField();
+			proxyUsername.setEnabled(false);
+			advancedPanel.add(proxyUsername,new CellConstraints("2, 18, 5, 1, default, default"));
+			
+			proxyPassword = new JPasswordField();
+			proxyPassword.setEnabled(false);
+			advancedPanel.add(proxyPassword,new CellConstraints("2, 19, 5, 1, default, default"));
+			
+						
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -174,6 +226,14 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		filterExtensions.setText(TedConfig.getInstance().getFilterExtensions());
 		filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
 		useAutoScheduleCheckBox.setSelected(TedConfig.getInstance().isUseAutoSchedule());
+		this.useProxy.setSelected(TedConfig.getInstance().getUseProxy());
+		this.useAuthProxy.setSelected(TedConfig.getInstance().getUseProxyAuth());
+		this.actionPerformed(new ActionEvent(this.useProxy,0,"useProxy"));
+		this.actionPerformed(new ActionEvent(this.useAuthProxy,0,"useAuthProxy"));
+		this.proxyUsername.setText(TedConfig.getInstance().getProxyUsername());
+		this.proxyPassword.setText(TedConfig.getInstance().getProxyPassword());
+		this.proxyHost.setText(TedConfig.getInstance().getProxyHost());
+		this.proxyPort.setText(TedConfig.getInstance().getProxyPort());
 	}
 	
 	/**
@@ -200,6 +260,12 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		TedConfig.getInstance().setDoNotDownloadCompressed(checkNotDownloadCompressed.isSelected());
 		TedConfig.getInstance().setFilterExtensions(filterExtensions.getText());
 		TedConfig.getInstance().setUseAutoSchedule(useAutoScheduleCheckBox.isSelected());
+		TedConfig.getInstance().setUseProxy(this.useProxy.isSelected());
+		TedConfig.getInstance().setUseProxyAuth(this.useAuthProxy.isSelected());
+		TedConfig.getInstance().setProxyUsername(this.proxyUsername.getText());
+		TedConfig.getInstance().setProxyPassword(this.proxyPassword.getText());
+		TedConfig.getInstance().setProxyHost(this.proxyHost.getText());
+		TedConfig.getInstance().setProxyPassword(this.proxyPort.getText());
 	}
 	
 	/**
@@ -264,9 +330,38 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		{
 			filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
 		}
+		else if(action.equals("useProxy"))
+		{
+			this.updateProxyOptions();
+		}
+		else if(action.equals("useAuthProxy"))
+		{
+			this.updateUseAuthProxy();
+		}
 		
 	}
 	
+	private void updateProxyOptions() {	
+		this.updateUseAuthProxy();
+		this.proxyHost.setEnabled(this.useProxy.isSelected());
+		this.proxyPort.setEnabled(this.useProxy.isSelected());
+	}
+
+	private void updateUseAuthProxy() {
+		this.useAuthProxy.setEnabled(this.useProxy.isSelected());
+		if (!this.useProxy.isSelected())
+		{
+			this.useAuthProxy.setSelected(false);
+		}
+		this.updateAuthProxyInput();
+		
+	}
+
+	private void updateAuthProxyInput() {
+		this.proxyUsername.setEnabled(this.useAuthProxy.isSelected());
+		this.proxyPassword.setEnabled(this.useAuthProxy.isSelected());
+	}
+
 	public JCheckBox getUseAutoScheduleCheckBox() {
 		return useAutoScheduleCheckBox;
 	}

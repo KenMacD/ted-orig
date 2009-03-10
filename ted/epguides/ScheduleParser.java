@@ -15,6 +15,8 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 
 import ted.Lang;
+import ted.TedConfig;
+import ted.TedIO;
 import ted.TedLog;
 import ted.TedSerie;
 import ted.TedXMLParser;
@@ -78,7 +80,7 @@ public class ScheduleParser
         {
             URL epguides = new URL("http://www.epguides.com/" + epguidesName + "/");
             TedLog.debug(showName + ": " + Lang.getString("TedScheduleParser.EpguidesGetInfo") + ": " + epguides.toString());
-            BufferedReader in = new BufferedReader( new InputStreamReader(epguides.openStream())); 
+            BufferedReader in = TedIO.makeBufferedReader(epguides, TedConfig.getInstance().getTimeOutInSecs()); 
                 
             String inputLine;
             while ((inputLine = in.readLine()) != null) 
