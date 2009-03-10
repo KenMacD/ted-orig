@@ -40,26 +40,22 @@ public class TedMainCore implements ITedMain
 	tcio.SaveConfig();
     }
 
-    @Override
     public void repaint()
     {
 	// update status file
     }
 
-    @Override
     public void displayError(String string, String message, String string2)
     {
 	DaemonLog.error(string + " " + message + " " + string2);
     }
 
-    @Override
     public void displayHurray(String string, String message, String string2)
     {
 	DaemonLog.debug("Hurray !!!: " + string + " " + message + " " + string2);
 
     }
 
-    @Override
     public boolean getStopParsing()
     {
 	// TODO Auto-generated method stub
