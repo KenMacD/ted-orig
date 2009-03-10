@@ -155,67 +155,74 @@ public class TedIO
      */
     public Vector GetShows()
     {
-	Vector vec = new Vector();
-	try
-	{
-	    // check application folder for all shows file
-
-	    File userdir_shows_file = new File(SHOWS_FILE);
-	    // if config does not exist, copy from current dir & delete original
-	    if (!userdir_shows_file.exists())
-	    {
-		// if config does not exist in current dir either: new ted
-		File shows_file = new File("shows.ted"); //$NON-NLS-1$
-
-		if (shows_file.exists())
+		Vector vec = new Vector();
+		try
 		{
-		    // copy config_file and delete afterwards
-		    try
+		    // check application folder for all shows file
+	
+		    File userdir_shows_file = new File(SHOWS_FILE);
+		  
+		    // if config does not exist, copy from current dir & delete original
+		    if (!userdir_shows_file.exists())
 		    {
-			copyFile(shows_file, userdir_shows_file);
-			if (!shows_file.delete())
-			{
-			    TedLog.error("Error deleting shows file from original ted dir"); //$NON-NLS-1$
-			}
-		    } catch (Exception e)
-		    {
-			TedLog.error(e, "Error copying shows file to user directory"); //$NON-NLS-1$
+				// if config does not exist in current dir either: new ted
+				File shows_file = new File("shows.ted"); //$NON-NLS-1$
+		
+				if (shows_file.exists())
+				{
+				    // copy config_file and delete afterwards
+				    try
+				    {
+						copyFile(shows_file, userdir_shows_file);
+						if (!shows_file.delete())
+						{
+						    TedLog.error("Error deleting shows file from original ted dir"); //$NON-NLS-1$
+						}
+				    } 
+				    catch (Exception e)
+				    {
+				    	TedLog.error(e, "Error copying shows file to user directory"); //$NON-NLS-1$
+				    }
+				}
 		    }
+		    
+		    // Read from disk using FileInputStream
+		    FileInputStream f_in;
+		    f_in = new FileInputStream(SHOWS_FILE);
+	
+		    // Read object using ObjectInputStream
+		    ObjectInputStream obj_in = new ObjectInputStream(f_in);
+	
+		    // Read an object
+		    Object obj = obj_in.readObject();
+	
+		    if (obj instanceof Vector)
+		    {
+				// Cast object to a Vector
+				vec = (Vector) obj;
+				return vec;
+		    }
+	
+		    f_in.close();
+		    obj_in.close();
+		} 
+		catch (FileNotFoundException e)
+		{
+		    // do nothing, just return the empty vector
+		    return vec;
+		} 
+		catch (IOException e)
+		{
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e)
+		{
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
 		}
-	    }
-	    // Read from disk using FileInputStream
-	    FileInputStream f_in;
-	    f_in = new FileInputStream(SHOWS_FILE);
-
-	    // Read object using ObjectInputStream
-	    ObjectInputStream obj_in = new ObjectInputStream(f_in);
-
-	    // Read an object
-	    Object obj = obj_in.readObject();
-
-	    if (obj instanceof Vector)
-	    {
-		// Cast object to a Vector
-		vec = (Vector) obj;
+		
 		return vec;
-	    }
-
-	    f_in.close();
-	    obj_in.close();
-	} catch (FileNotFoundException e)
-	{
-	    // do nothing, just return the empty vector
-	    return vec;
-	} catch (IOException e)
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} catch (ClassNotFoundException e)
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-	return vec;
     }
 
     /**

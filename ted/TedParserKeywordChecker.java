@@ -1,5 +1,7 @@
 package ted;
 
+import java.io.Serializable;
+
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -16,7 +18,7 @@ package ted;
  * for more details see: http://en.wikipedia.org/wiki/GNU_General_Public_License
  *
  */
-public class TedParserKeywordChecker 
+public class TedParserKeywordChecker implements Serializable
 {
 
 	/****************************************************
