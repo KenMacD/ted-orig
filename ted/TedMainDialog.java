@@ -152,12 +152,10 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 			SwingUtilities.updateComponentTreeUI( this );
 		}
 		
-		// load config file
-		TedIO tcio = new TedIO();
 		
 		try 
 		{
-			tcio.GetConfig();
+			TedIO.getInstance().GetConfig();
 		} 
 		catch (FileNotFoundException e) 
 		{		
@@ -240,7 +238,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		
 		// if the shows.xml file does not exist download it
 		File f = new File(TedIO.XML_SHOWS_FILE); //$NON-NLS-1$
-		TedIO tio = new TedIO();
+		
 		boolean showsXMLExists = f.exists();
 		if(!showsXMLExists)
 		{
@@ -301,7 +299,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		
 		// load the config files
 		
-		this.tedCore.setSeries(tcio.GetShows());
+		this.tedCore.setSeries(TedIO.getInstance().GetShows());
 		serieTable.setSeries(this.tedCore.getSeries());
 		
 		// set size and position of ted
@@ -359,18 +357,18 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		if(!showsXMLExists)
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
-			tio.downloadXML();
+			TedIO.getInstance().downloadXML();
 			this.TedToolBar.setAddButtonEnabled(true);
 		}
 		// check to see if there is a new shows.xml file available
 		else if (TedConfig.getInstance().isAutoUpdateFeedList() || TedConfig.getInstance().askAutoUpdateFeedList())
 		{
 			this.setStatusString(Lang.getString("TedMain.CheckingNewShows"));
-			tio.checkNewXMLFile(this, false, serieTable);
+			TedIO.getInstance().checkNewXMLFile(this, false, serieTable);
 		}
 		
 		// Check if the file is now actually present on the user's system.
-		tio.checkForShowsXML();
+		TedIO.getInstance().checkForShowsXML();
 		
 		// start the counter
 		tCounter.start();
@@ -754,9 +752,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		}
 		else if (action.equals("DownloadXml"))
 		{
-			TedIO tio = new TedIO();
-			tio.downloadXML();
-			tio.updateShows(this, serieTable);
+			TedIO.getInstance().downloadXML();
+			TedIO.getInstance().updateShows(this, serieTable);
 		}
 		else if (action.equals("buydvd")) //$NON-NLS-1$
 		{
@@ -853,20 +850,17 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		}
 		else if(action.equals("Export")) //$NON-NLS-1$
 		{
-			TedIO tio = new TedIO();
 			this.saveShows();
-			tio.ExportShows(this);
+			TedIO.getInstance().ExportShows(this);
 		}
 		else if (action.equals("Import"))
 		{
-			TedIO tio = new TedIO();
-			tio.ImportShows(this);
+			TedIO.getInstance().ImportShows(this);
 			serieTable.setSeries(this.tedCore.getSeries());
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
 		{
-			TedIO tio = new TedIO();
-			tio.UpdateShow(this, false, serieTable);
+			TedIO.getInstance().UpdateShow(this, false, serieTable);
 			serieTable.fireTableDataChanged();
 		}
 		else if(action.equals("translate"))
@@ -984,8 +978,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	public void isNewTed(boolean show)
 	{
 		// check the website if there is a new version availble
-		TedIO tio = new TedIO();
-		double currentVersion = tio.checkNewTed(TedMainDialog.tedVersion);
+		double currentVersion = TedIO.getInstance().checkNewTed(TedMainDialog.tedVersion);
 		
 		if (currentVersion > TedMainDialog.tedVersion)
 		{
@@ -1015,8 +1008,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	
 	public void isNewPredefinedShowsXML(boolean show)
 	{
-		TedIO tio = new TedIO();
-		tio.checkNewXMLFile(this, show, serieTable);
+		TedIO.getInstance().checkNewXMLFile(this, show, serieTable);
 	}
 	
 	/**

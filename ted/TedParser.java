@@ -413,7 +413,6 @@ public class TedParser extends Thread implements Serializable{
 		// if the season is the current season and episode is the next episode
 		// or if the season is the next season and episode is the first episode
 		// also download all from feed is so selected
-		TedIO tIO = new TedIO();
 
 		// translate the url from the feed to a download url
 		String torrentUrl = item.getLink().toString();
@@ -431,7 +430,7 @@ public class TedParser extends Thread implements Serializable{
 
 		if (foundCorrectEpisode)
 		{
-			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig
+			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig
 					.getInstance().getTimeOutInSecs());
 
 			TedLog.debug(Lang.getString("TedSerie.Checking") + " " + sTitle); //$NON-NLS-1$
@@ -463,7 +462,7 @@ public class TedParser extends Thread implements Serializable{
 		} else if (season == serie.getCurrentSeason() + 1 && episode == 1)
 		{
 			TedLog.debug(Lang.getString("TedParser.FoundNextSeason"));
-			torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig
+			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig
 					.getInstance().getTimeOutInSecs());
 
 			// make connection with torrent
@@ -564,10 +563,9 @@ public class TedParser extends Thread implements Serializable{
 	 */
 	private void addDailyItem(SyndEntry item, TedSerie serie)
 	{
-		TedIO tIO = new TedIO();
 		String sTitle = item.getTitle().toString();
 		String torrentUrl = item.getLink().toString();
-		torrentUrl = tIO.translateUrl(torrentUrl, sTitle, TedConfig
+		torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig
 				.getInstance().getTimeOutInSecs());
 
 		this.bestTorrent = null;
@@ -1120,10 +1118,11 @@ public class TedParser extends Thread implements Serializable{
 
 			fileName = serie.getName() + "-s" + season + "_e" + episode; //$NON-NLS-1$ //$NON-NLS-2$
 
-			TedIO tio = new TedIO();
-			try {
-				tio.downloadTorrent(this.bestTorrentUrl, fileName);
-			} catch (Exception e)
+			try 
+			{
+				TedIO.getInstance().downloadTorrent(this.bestTorrentUrl, fileName);
+			} 
+			catch (Exception e)
 			{
 				throw e;
 			}
@@ -1196,10 +1195,11 @@ public class TedParser extends Thread implements Serializable{
 			fileName = serie.getName() + "-" + dd.getYear() + "_"
 					+ (dd.getMonth() + 1) + "_" + dd.getDay();
 
-			TedIO tio = new TedIO();
-			try {
-				tio.downloadTorrent(this.bestTorrentUrl, fileName);
-			} catch (Exception e)
+			try 
+			{
+				TedIO.getInstance().downloadTorrent(this.bestTorrentUrl, fileName);
+			} 
+			catch (Exception e)
 			{
 				throw e;
 			}

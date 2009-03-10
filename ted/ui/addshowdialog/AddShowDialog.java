@@ -389,8 +389,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	{
 		// Save this preference for the next time.
 		TedConfig.getInstance().setHDDownloadPreference(downloadInHD.isSelected());
-		TedIO tio = new TedIO();
-		tio.SaveConfig();
+		TedIO.getInstance().SaveConfig();
 		
 		this.showsTableModel.removeSeries();
 		this.episodeChooserPanel.clear();
@@ -403,8 +402,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 
 	public void setSelectedSerie(TedSerie selectedSerie2)
 	{
-		this.selectedSerie = selectedSerie2;
-		
+		this.selectedSerie = selectedSerie2;		
 	}
 	
 	private JScrollPane getShowInfoScrollPane() 
