@@ -46,6 +46,7 @@ public class Daemon
 			TedIO.getInstance().GetConfig();
 		    loadShows();
 		    parseShows();
+		    TedIO.getInstance().SaveShows(this.core.getSeries());
 		    DaemonLog.debug("Its been a hard day's night... gotta get some sleep (for "+TedConfig.getInstance().getRefreshTime()  +" seconds)");
 		    Thread.sleep(TedConfig.getInstance().getRefreshTime()*1000);
 		    DaemonLog.debug("Yaawn... I woke up and will look for shows...");
