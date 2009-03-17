@@ -1,7 +1,5 @@
 package ted.headless;
 
-import java.io.FileNotFoundException;
-
 import ted.TedConfig;
 import ted.TedIO;
 import ted.TedParser;
@@ -19,16 +17,8 @@ public class Daemon
 		TedSystemInfo.getUserDirectory();
 		TedSystemInfo.setHeadless(true);
 		Daemon d = new Daemon();
-		try
-		{
-		    d.runDaemon();
-		}
-		catch (Exception e)
-		{
-		    DaemonLog.error("Daemon exiting with error");
-		    e.printStackTrace();
-		    System.exit(1);
-		}
+		d.runDaemon();
+
 		DaemonLog.debug("All Done. Goodbye.");
 		System.exit(0);
     }
@@ -39,17 +29,26 @@ public class Daemon
     	this.core.setSeries(TedIO.getInstance().GetShows());
     }
 
-    public void runDaemon() throws InterruptedException, FileNotFoundException
+    public void runDaemon()
     {
 		while (true)
 		{	    
-			TedIO.getInstance().GetConfig();
-		    loadShows();
-		    parseShows();
-		    TedIO.getInstance().SaveShows(this.core.getSeries());
-		    DaemonLog.debug("Its been a hard day's night... gotta get some sleep (for "+TedConfig.getInstance().getRefreshTime()  +" seconds)");
-		    Thread.sleep(TedConfig.getInstance().getRefreshTime()*1000);
-		    DaemonLog.debug("Yaawn... I woke up and will look for shows...");
+			try
+			{
+				TedIO.getInstance().GetConfig();
+			    loadShows();
+			    parseShows();
+			    TedIO.getInstance().SaveShows(this.core.getSeries());
+			    DaemonLog.debug("Its been a hard day's night... gotta get some sleep (for "+TedConfig.getInstance().getRefreshTime()  +" seconds)");
+			    Thread.sleep(TedConfig.getInstance().getRefreshTime()*1000);
+			    DaemonLog.debug("Yaawn... I woke up and will look for shows...");
+			}
+			catch (Exception e)
+			{
+			    DaemonLog.error("Got an error... continuing after printing stacktrace...");
+			    e.printStackTrace();
+			    System.exit(1);
+			}
 		}
     }
 
