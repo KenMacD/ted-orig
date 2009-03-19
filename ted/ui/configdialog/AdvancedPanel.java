@@ -71,6 +71,10 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private JCheckBox useAuthProxy;
 	private JTextField proxyUsername;
 	private JTextField proxyPassword;
+	private JLabel proxyUserNameLabel;
+	private JLabel proxyPasswordLabel;
+	private JLabel proxyHostLabel;
+	private JLabel proxyPortLabel;
 	private final int MINTIMEOUT = 1;
 	private final int MAXTIMEOUT = 20;
 		
@@ -89,7 +93,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			FormLayout advancedPanelLayout = new FormLayout(
 					"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
 			"max(p;5dlu), max(p;5dlu), 30dlu, 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu),max(p;15dlu)");
-			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 650));
+			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+			advancedPanel.setSize(new java.awt.Dimension(500,500));
 			advancedPanel.setLayout(advancedPanelLayout);
 
 			labelTimeOut = new JLabel();
@@ -101,12 +106,12 @@ public class AdvancedPanel extends JPanel implements ActionListener
 					MINTIMEOUT, MAXTIMEOUT, 10);
 			timeoutInSecondsSlider.setMajorTickSpacing(19);
 			timeoutInSecondsSlider.setMinorTickSpacing(1);
-			//Create the label table
-			Hashtable labelTable = new Hashtable();
-			labelTable.put( new Integer( MINTIMEOUT ), new JLabel(MINTIMEOUT+"") );
-			labelTable.put( new Integer( MAXTIMEOUT/2 ), new JLabel(Lang.getString("TedConfigDialog.Seconds")) );
-			labelTable.put( new Integer( MAXTIMEOUT ), new JLabel(MAXTIMEOUT+"") );
-			timeoutInSecondsSlider.setLabelTable( labelTable );
+//			//Create the label table
+//			Hashtable labelTable = new Hashtable();
+//			labelTable.put( new Integer( MINTIMEOUT ), new JLabel(MINTIMEOUT+"") );
+//			labelTable.put( new Integer( MAXTIMEOUT/2 ), new JLabel(Lang.getString("TedConfigDialog.Seconds")) );
+//			labelTable.put( new Integer( MAXTIMEOUT ), new JLabel(MAXTIMEOUT+"") );
+//			timeoutInSecondsSlider.setLabelTable( labelTable );
 
 			timeoutInSecondsSlider.setPaintTicks(true);
 			timeoutInSecondsSlider.setPaintLabels(true);
@@ -163,37 +168,65 @@ public class AdvancedPanel extends JPanel implements ActionListener
 				useAutoScheduleCheckBox.setText(Lang.getString("TedConfigDialog.AutomaticSchedule"));
 			}
 			
-			jSeparatorProxy = new JSeparator();
-			advancedPanel.add(jSeparatorProxy, new CellConstraints("2, 13, 5, 1, default, default"));
-			
-			useProxy = new JCheckBox();
-			useProxy.setText(Lang.getString("TedConfigDialog.UseProxy"));
-			advancedPanel.add(useProxy, new CellConstraints("2, 14, 5, 1, default, default"));
-			useProxy.addActionListener(this);
-			useProxy.setActionCommand("useProxy");
-			
-			proxyHost = new JTextField();
-			advancedPanel.add(proxyHost, new CellConstraints("2, 15, 5, 1, default, default"));
-			proxyHost.setEnabled(false);
-			
-			proxyPort = new JTextField();
-			advancedPanel.add(proxyPort, new CellConstraints("2, 16, 5, 1, default, default"));
-			proxyPort.setEnabled(false);
-			
-			useAuthProxy = new JCheckBox();
-			useAuthProxy.setEnabled(false);
-			useAuthProxy.setText(Lang.getString("TedConfigDialog.UseAuthProxy"));
-			advancedPanel.add(useAuthProxy, new CellConstraints("2, 17, 5, 1, default, default"));
-			useAuthProxy.addActionListener(this);
-			useAuthProxy.setActionCommand("useAuthProxy");
-			
-			proxyUsername = new JTextField();
-			proxyUsername.setEnabled(false);
-			advancedPanel.add(proxyUsername,new CellConstraints("2, 18, 5, 1, default, default"));
-			
-			proxyPassword = new JPasswordField();
-			proxyPassword.setEnabled(false);
-			advancedPanel.add(proxyPassword,new CellConstraints("2, 19, 5, 1, default, default"));
+			{
+				jSeparatorProxy = new JSeparator();
+				advancedPanel.add(jSeparatorProxy, new CellConstraints("2, 13, 5, 1, default, default"));
+			}
+			{
+				useProxy = new JCheckBox();
+				advancedPanel.add(useProxy, new CellConstraints("2, 14, 5, 1, default, default"));
+				useProxy.setText(Lang.getString("TedConfigDialog.UseProxy"));
+				useProxy.addActionListener(this);
+				useProxy.setActionCommand("useProxy");
+			}
+			{
+				proxyHost = new JTextField();
+				advancedPanel.add(proxyHost, new CellConstraints("5, 15, 2, 1, default, default"));
+				proxyHost.setEnabled(false);
+			}
+			{
+				proxyPort = new JTextField();
+				advancedPanel.add(proxyPort, new CellConstraints("5, 16, 2, 1, default, default"));
+				proxyPort.setEnabled(false);
+			}
+			{
+				useAuthProxy = new JCheckBox();
+				advancedPanel.add(useAuthProxy, new CellConstraints("2, 17, 5, 1, default, default"));
+				useAuthProxy.setEnabled(false);
+				useAuthProxy.setText(Lang.getString("TedConfigDialog.UseAuthProxy"));
+				useAuthProxy.addActionListener(this);
+				useAuthProxy.setActionCommand("useAuthProxy");
+			}
+			{
+				proxyUsername = new JTextField();
+				advancedPanel.add(proxyUsername, new CellConstraints("5, 18, 2, 1, default, default"));
+				proxyUsername.setEnabled(false);
+			}
+			{
+				proxyPassword = new JPasswordField();
+				advancedPanel.add(proxyPassword, new CellConstraints("5, 19, 2, 1, default, default"));
+				proxyPassword.setEnabled(false);
+			}
+			{
+				proxyHostLabel = new JLabel();
+				advancedPanel.add(proxyHostLabel, new CellConstraints("2, 15, 3, 1, default, default"));
+				proxyHostLabel.setText(Lang.getString("TedConfigDialog.proxyHostLabel"));
+			}
+			{
+				proxyPortLabel = new JLabel();
+				advancedPanel.add(proxyPortLabel, new CellConstraints("2, 16, 3, 1, default, default"));
+				proxyPortLabel.setText(Lang.getString("TedConfigDialog.ProxyPort"));
+			}
+			{
+				proxyUserNameLabel = new JLabel();
+				advancedPanel.add(proxyUserNameLabel, new CellConstraints("2, 18, 3, 1, default, default"));
+				proxyUserNameLabel.setText(Lang.getString("TedConfigDialog.proxyUserName"));
+			}
+			{
+				proxyPasswordLabel = new JLabel();
+				advancedPanel.add(proxyPasswordLabel, new CellConstraints("2, 19, 3, 1, default, default"));
+				proxyPasswordLabel.setText(Lang.getString("TedConfigDialog.Password"));
+			}
 			
 						
 		}
@@ -221,7 +254,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		
 		
 		this.setSelectedButton(seederSettingGroup, TedConfig.getInstance().getSeederSetting());
-		this.setPreferredSize(new java.awt.Dimension(400, 400));
+		this.setPreferredSize(new java.awt.Dimension(500, 500));
+		this.setSize(new java.awt.Dimension(500,500));
 		checkNotDownloadCompressed.setSelected(TedConfig.getInstance().getDoNotDownloadCompressed());
 		filterExtensions.setText(TedConfig.getInstance().getFilterExtensions());
 		filterExtensions.setEnabled(checkNotDownloadCompressed.isSelected());
