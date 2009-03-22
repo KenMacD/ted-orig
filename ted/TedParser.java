@@ -452,9 +452,11 @@ public class TedParser extends Thread implements Serializable{
 			{
 				// save found torrent to file
 
-				try {
+				try 
+				{
 					this.checkIfBest(torrentUrl, serie);
-				} catch (Exception e)
+				} 
+				catch (Exception e)
 				{
 					TedLog.error(e, Lang.getString("TedLog.ErrorTorrent")); //$NON-NLS-1$
 				}
@@ -1098,14 +1100,15 @@ public class TedParser extends Thread implements Serializable{
 	}
 
 	/**
-	 * Downloads the currently best torrent to the userset location Announces
+	 * Downloads the currently best torrent to the user set location Announces
 	 * download via balloon if succesful
 	 * 
 	 * @param serie
 	 *            Current serie the best torrent belongs to
 	 * @throws Exception
 	 */
-	private void downloadBest(TedSerie serie) throws Exception {
+	private void downloadBest(TedSerie serie) throws Exception 
+	{
 		foundTorrent = false;
 
 		if (this.bestTorrentUrl != null)
@@ -1145,10 +1148,8 @@ public class TedParser extends Thread implements Serializable{
 
 			message += Lang.getString("TedParser.BalloonFoundTorrent3") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-			tMainDialog
-					.displayHurray(
-							Lang
-									.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
+			tMainDialog.displayHurray(
+				Lang.getString("TedParser.BallonFoundTorrentHeader"), message, "Download succesful"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			// increase the season/episode based on the schedule
 			serie.goToNextEpisode();
@@ -1164,7 +1165,8 @@ public class TedParser extends Thread implements Serializable{
 				// search for more torrents if the status is check or pause
 				parseFeeds(serie, tMainDialog);
 			}
-		} else
+		} 
+		else
 		{
 			TedLog.simpleLog(generateLogMessage());
 			serie.setStatusString(generateOverviewMessage(), tMainDialog);
@@ -1435,15 +1437,15 @@ public class TedParser extends Thread implements Serializable{
 
 		// Match title on the following format:
 		// #-#-# (where # stands for one or more integers)
-		// (#.#.# is also checked for)
-		String sMatch = "((\\d)+)\\p{Punct}((\\d)+)\\p{Punct}((\\d)+)";
+		// (#.#.# and # # # are also checked for)
+		String sMatch = "((\\d)+)(-|\\.| )((\\d)+)(-|\\.| )((\\d)+)";
 		Pattern pDate = Pattern.compile(sMatch);
 		Matcher mDate = pDate.matcher(title);
 
 		if (mDate.find())
 		{
 			String match = mDate.group();
-			String split[] = match.split("\\p{Punct}");
+			String split[] = match.split("(-|\\.| )");
 
 			// Check for different patterns
 			// If value > 999 (e.g. > 2000) that's the year
@@ -1457,7 +1459,8 @@ public class TedParser extends Thread implements Serializable{
 				dd.setYear(firstItem);
 				dd.setMonth(secondItem - 1);
 				dd.setDay(thirdItem);
-			} else
+			} 
+			else
 			{
 				if (thirdItem < 999)
 					thirdItem += 2000;
@@ -1484,13 +1487,17 @@ public class TedParser extends Thread implements Serializable{
 					// try to find out by looking at the publish date
 					// of the torrent.
 					DailyDate monthFirstDate = new DailyDate(secondItem,
-							firstItem - 1, thirdItem);
+															 firstItem - 1, 
+															 thirdItem);
+					
 					DailyDate dayFirstDate = new DailyDate(firstItem,
-							secondItem - 1, thirdItem);
-					long monthMillis = monthFirstDate.getDate()
-							.getTimeInMillis();
+														   secondItem - 1, 
+														   thirdItem);
+					
+					long monthMillis = monthFirstDate.getDate().getTimeInMillis();
 					long dayMillis = dayFirstDate.getDate().getTimeInMillis();
 					long pdMillis = dd.getPublishDate().getTime();
+					
 					boolean monthFirst = false;
 
 					// both have a date larger than publish date
@@ -1528,7 +1535,8 @@ public class TedParser extends Thread implements Serializable{
 					}
 				}
 			}
-		} else
+		} 
+		else
 		{
 			// Start looking for another pattern.
 			// Jan 1st 2008
@@ -1561,7 +1569,8 @@ public class TedParser extends Thread implements Serializable{
 						// remove 'st', 'nd', 'th' from name.
 						day = Integer.parseInt(split[1].substring(0, (split[1]
 								.length() - 2)));
-					} else
+					}
+					else
 					{
 						// not well formed input.
 						return null;
