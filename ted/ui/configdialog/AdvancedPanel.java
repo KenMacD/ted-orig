@@ -1,6 +1,7 @@
 package ted.ui.configdialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -106,12 +107,13 @@ public class AdvancedPanel extends JPanel implements ActionListener
 					MINTIMEOUT, MAXTIMEOUT, 10);
 			timeoutInSecondsSlider.setMajorTickSpacing(19);
 			timeoutInSecondsSlider.setMinorTickSpacing(1);
-//			//Create the label table
-//			Hashtable labelTable = new Hashtable();
-//			labelTable.put( new Integer( MINTIMEOUT ), new JLabel(MINTIMEOUT+"") );
-//			labelTable.put( new Integer( MAXTIMEOUT/2 ), new JLabel(Lang.getString("TedConfigDialog.Seconds")) );
-//			labelTable.put( new Integer( MAXTIMEOUT ), new JLabel(MAXTIMEOUT+"") );
-//			timeoutInSecondsSlider.setLabelTable( labelTable );
+
+			//Create the label table
+			Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+			labelTable.put( new Integer( MINTIMEOUT ),   new JLabel(MINTIMEOUT+"") );
+			labelTable.put( new Integer( MAXTIMEOUT/2 ), new JLabel(Lang.getString("TedConfigDialog.Seconds")) );
+			labelTable.put( new Integer( MAXTIMEOUT ),   new JLabel(MAXTIMEOUT+"") );
+			timeoutInSecondsSlider.setLabelTable( labelTable );
 
 			timeoutInSecondsSlider.setPaintTicks(true);
 			timeoutInSecondsSlider.setPaintLabels(true);
@@ -164,7 +166,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			}
 			{
 				useAutoScheduleCheckBox = new JCheckBox();
-				advancedPanel.add(useAutoScheduleCheckBox, new CellConstraints("5, 12, 3, 1, default, default"));
+				advancedPanel.add(useAutoScheduleCheckBox, new CellConstraints("2, 12, 5, 1, default, default"));
 				useAutoScheduleCheckBox.setText(Lang.getString("TedConfigDialog.AutomaticSchedule"));
 			}
 			
@@ -300,6 +302,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 		TedConfig.getInstance().setProxyPassword(this.proxyPassword.getText());
 		TedConfig.getInstance().setProxyHost(this.proxyHost.getText());
 		TedConfig.getInstance().setProxyPassword(this.proxyPort.getText());
+		TedConfig.getInstance().setProxyPort(this.proxyPort.getText());
 	}
 	
 	/**
