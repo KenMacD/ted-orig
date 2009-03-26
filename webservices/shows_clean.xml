@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>35</version>
+	<version>36</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -262,6 +262,14 @@
 			<tv_com>23557</tv_com>
 		</show>
 		<show>
+			<name>The Beast</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>75357</tv_com>
+		</show> 
+		<show>
 			<name>Ben 10: Alien Force</name>
 			<daily>False</daily>
 			<minimumsize>100</minimumsize>
@@ -309,9 +317,16 @@
 		<show>
 			<name>Bones</name>
 			<minimumsize>300</minimumsize>
-			<maximumsize>450</maximumsize>
+			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>33332</tv_com>
+		</show>
+		<show>
+			<name>The Border</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>74588</tv_com>
 		</show>
 		<show>
 			<name>Boston Legal</name>
@@ -363,7 +378,8 @@
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
-			<tv_com>76394</tv_com>
+			<tv_com>75394</tv_com>
+			<epguides>Castle_2009</epguides>
 		</show>
 		<show>
 			<name>Charlie Brooker's Screenwipe</name>
@@ -512,6 +528,13 @@
 			<seeders>10</seeders>
 			<tv_com>35850</tv_com>
 			<epguides>DancingwiththeStars</epguides>
+		</show>
+		<show>
+			<name>DEA</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>75356</tv_com>
 		</show>
 		<show>
 			<name>Demons</name>
@@ -750,6 +773,13 @@
 			<tv_com>34277</tv_com>
 		</show>
 		<show>
+		<name>Gary Unmarried</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>75593</tv_com>
+		</show>
+		<show>
 			<name>Generation Kill</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -857,6 +887,7 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>22374</tv_com>
+			<keywords>!Housewives</keywords>
 		</show>
 		<show>
 			<name>How I Met Your Mother</name>
@@ -1045,6 +1076,15 @@
 			<searchname>Conan O Brien</searchname>
 		</show>
 		<show>
+			<name>Late Night with Craig Ferguson</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>5</seeders>
+			<daily>True</daily>
+			<tv_com>22830</tv_com>
+			<searchname>Craig Ferguson</searchname>
+		</show>
+		<show>
 			<name>Law And Order</name>
 			<daily>False</daily>
 			<minimumsize>300</minimumsize>
@@ -1073,6 +1113,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>75118</tv_com>
+		</show> 
+		<show>
+			<name>Leverage</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>75367</tv_com>
 		</show> 
 		<show>
 			<name>Lie To Me</name>
@@ -1166,6 +1213,13 @@
 			<seeders>50</seeders>
 			<releaseday>friday</releaseday>
 			<tv_com>74140</tv_com>
+		</show>
+		<show>
+			<name>Man vs. Wild</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>66696</tv_com>
 		</show>
 		<show>
 			<name>McLeod's Daughters</name>
@@ -1623,6 +1677,14 @@
 			<tv_com>60618</tv_com>
 		</show>
 		<show>
+			<name>The Soup</name>
+			<daily>True</daily>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>28386</tv_com>
+		</show>
+		<show>
 			<name>South Park</name>
 			<daily>False</daily>
 			<minimumsize>150</minimumsize>
@@ -1728,6 +1790,13 @@
 			<tv_com>75927</tv_com>
 		</show> 
 		<show>
+			<name>The City</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>76361</tv_com>
+		</show>
+		<show>
 			<name>The Life and Times of Tim</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
@@ -1797,6 +1866,14 @@
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>74645</tv_com>
+		</show>
+		<show>
+			<name>Trust Me</name>
+			<daily>False</daily>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>75363</tv_com>
 		</show>
 		<show>
 			<name>Two And A Half Men</name>
