@@ -217,17 +217,17 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			{
 				proxyPortLabel = new JLabel();
 				advancedPanel.add(proxyPortLabel, new CellConstraints("2, 16, 3, 1, default, default"));
-				proxyPortLabel.setText(Lang.getString("TedConfigDialog.ProxyPort"));
+				proxyPortLabel.setText(Lang.getString("TedConfigDialog.proxyPortLabel"));
 			}
 			{
 				proxyUserNameLabel = new JLabel();
 				advancedPanel.add(proxyUserNameLabel, new CellConstraints("2, 18, 3, 1, default, default"));
-				proxyUserNameLabel.setText(Lang.getString("TedConfigDialog.proxyUserName"));
+				proxyUserNameLabel.setText(Lang.getString("TedConfigDialog.proxyUserNameLabel"));
 			}
 			{
 				proxyPasswordLabel = new JLabel();
 				advancedPanel.add(proxyPasswordLabel, new CellConstraints("2, 19, 3, 1, default, default"));
-				proxyPasswordLabel.setText(Lang.getString("TedConfigDialog.Password"));
+				proxyPasswordLabel.setText(Lang.getString("TedConfigDialog.proxyPasswordLabel"));
 			}
 			
 						
