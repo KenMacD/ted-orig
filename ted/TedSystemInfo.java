@@ -8,6 +8,7 @@ public class TedSystemInfo
 	private static boolean isHeadless=false;
 	private static boolean saveLocal;
 	private static final String osname = System.getProperty("os.name").toLowerCase(); //$NON-NLS-1$
+	private static final String jrearch =System.getProperty("os.arch").toLowerCase();
 	
 	public static final String MINIMUM_JAVA = "1.5";
 	
@@ -18,7 +19,7 @@ public class TedSystemInfo
 	public static boolean osSupportsTray() 
 	{
 		// return if the tray program supports the current os ted is running on	
-		if (osIsWindows() || osIsMac() || osIsLinux() || osIsSolaris()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		if ((osIsWindows() && !isJre64Bit() )|| osIsMac() || osIsLinux() || osIsSolaris()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		{
 			return true;
 		}
@@ -41,7 +42,10 @@ public class TedSystemInfo
 		return false;
 	}
 	
-	
+	public static boolean isJre64Bit()
+	{
+		return jrearch.contains("64");
+	}
 	
 	/**
 	 * create user directory from user.home property
