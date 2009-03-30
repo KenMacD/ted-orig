@@ -19,7 +19,7 @@ public class TedSystemInfo
 	public static boolean osSupportsTray() 
 	{
 		// return if the tray program supports the current os ted is running on	
-		if ((osIsWindows() && !isJre64Bit() )|| osIsMac() || osIsLinux() || osIsSolaris()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		if ((osIsWindows()|| osIsMac() || osIsLinux() || osIsSolaris()) && !isJre64Bit()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		{
 			return true;
 		}
@@ -34,7 +34,7 @@ public class TedSystemInfo
 	public static boolean osSupportsBalloon() 
 	{
 		// return if the tray program supports the current os ted is running on
-		if (osIsWindows() || osIsLinux() || osIsSolaris()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		if ((osIsWindows() || osIsLinux() || osIsSolaris()) && !isJre64Bit()) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		{
 			return true;
 		}
