@@ -25,6 +25,7 @@ import ted.datastructures.DailyDate;
 import ted.datastructures.SeasonEpisode;
 import ted.infrastructure.ITedMain;
 
+import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -304,12 +305,10 @@ public class TedParser extends Thread implements Serializable{
 					}
 					progress += progressPerItem;
 					itemProgress++;
-
+					
 					serie.setProgress((int) Math.abs(progress), tMainDialog);
-					serie
-							.setStatusString(
-									Lang
-											.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems, tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
+					serie.setStatusString(
+							Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems, tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
 
 					if (serie.isDaily || this.continueParsing())
 					{
@@ -318,23 +317,23 @@ public class TedParser extends Thread implements Serializable{
 							if (!serie.isDaily)
 							{
 								this.ParseItem(item, serie, feed.getTitle());
-							} else
+							} 
+							else
 							{
 								// retrieve date from string
 								DailyDate date = getDailyDateFromItem(item);
 								// if date isn't found or date of item is older
 								// than latest downloaded item
 								// don't download item
-								if (date != null
-										&& ((((TedDailySerie) serie)
-												.getLatestDownloadDateInMillis()) <= date
-												.getDate().getTimeInMillis()))
+								if (   date != null
+									&& ((((TedDailySerie) serie).getLatestDownloadDateInMillis()) <= date.getDate().getTimeInMillis()))
 								{
 									this.addDailyItem(item, serie);
 								}
 							}
 						}
-					} else
+					} 
+					else
 					{
 						i = feeds.size();
 					}
@@ -343,17 +342,20 @@ public class TedParser extends Thread implements Serializable{
 				items = null;
 			}
 		}
-		try {
+		try 
+		{
 			if (!serie.isDaily)
 			{
 				this.downloadBest(serie);
-			} else
+			}
+			else
 			{
 				this.downloadBestDaily(serie);
 			}
 
 			serie.setProgress(100, tMainDialog);
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
 			// error while downloading best torrent
 			e.printStackTrace();
@@ -418,8 +420,7 @@ public class TedParser extends Thread implements Serializable{
 		String torrentUrl = item.getLink().toString();
 
 		// Do we have found the correct episode?
-		boolean foundCorrectEpisode = (season == serie.getCurrentSeason() && episode == serie
-				.getCurrentEpisode());
+		boolean foundCorrectEpisode = (season == serie.getCurrentSeason() && episode == serie.getCurrentEpisode());
 
 		// Some extra check for double episode. Make sure that the next episode
 		// number is also in the string of the torrent file.
@@ -430,74 +431,70 @@ public class TedParser extends Thread implements Serializable{
 
 		if (foundCorrectEpisode)
 		{
-			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig
-					.getInstance().getTimeOutInSecs());
+			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig.getInstance().getTimeOutInSecs());
 
 			TedLog.debug(Lang.getString("TedSerie.Checking") + " " + sTitle); //$NON-NLS-1$
-			serie
-					.setStatusString(
-							Lang.getString("TedSerie.Checking") + " " + sTitle, tMainDialog); //$NON-NLS-1$
+			serie.setStatusString(Lang.getString("TedSerie.Checking") + " " + sTitle, tMainDialog); //$NON-NLS-1$
 			tMainDialog.repaint();
 
 			if (torrentUrl == null)
 			{
-				tMainDialog
-						.displayError(
-								Lang.getString("TedParser.ErrorHeader"),
-								Lang
-										.getString("TedParser.ErrorNotSupportedFeed1") + " " + serie.getName() + " " + Lang.getString("TedParser.ErrorNotSupportedFeed2") + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-										Lang
-												.getString("TedParser.ErrorNotSupportedFeed3"), Lang.getString("TedParser.ErrorNotSupportedFeed4") + " " + source); //$NON-NLS-1$ //$NON-NLS-2$
-			} else
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"),
+										 Lang.getString("TedParser.ErrorNotSupportedFeed1") + " " + serie.getName() + " " + Lang.getString("TedParser.ErrorNotSupportedFeed2") + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+										 Lang.getString("TedParser.ErrorNotSupportedFeed3"), Lang.getString("TedParser.ErrorNotSupportedFeed4") + " " + source); //$NON-NLS-1$ //$NON-NLS-2$
+			} 
+			else
 			{
 				// save found torrent to file
 
 				try 
 				{
-					this.checkIfBest(torrentUrl, serie);
+					this.checkIfBest(torrentUrl, serie, item);
 				} 
 				catch (Exception e)
 				{
 					TedLog.error(e, Lang.getString("TedLog.ErrorTorrent")); //$NON-NLS-1$
 				}
 			}
-		} else if (season == serie.getCurrentSeason() + 1 && episode == 1)
+		} 
+		else if (season == serie.getCurrentSeason() + 1 && episode == 1)
 		{
 			TedLog.debug(Lang.getString("TedParser.FoundNextSeason"));
-			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig
-					.getInstance().getTimeOutInSecs());
+			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, 
+														  sTitle, 
+														  TedConfig.getInstance().getTimeOutInSecs());
 
 			// make connection with torrent
 			URL url;
-			try {
-				url = new URL(torrentUrl);
-			} catch (Exception e)
+			try 
 			{
-				String message = Lang
-						.getString("TedParser.ErrorWhileChecking1") + " " + torrentUrl + " " + Lang.getString("TedParser.ErrorWhileChecking2") + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$
-				tMainDialog
-						.displayError(
-								Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+				url = new URL(torrentUrl);
+			} 
+			catch (Exception e)
+			{
+				String message = Lang.getString("TedParser.ErrorWhileChecking1") + " " + torrentUrl + " " + Lang.getString("TedParser.ErrorWhileChecking2") + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+				
 				e.printStackTrace();
 				return;
 			}
 
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getInstance()
-					.getTimeOutInSecs());
+			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
 
 			// check size and amount of seeders to filter out fakes
 			boolean correctSize = true;
-			try {
-				hasCorrectSize(torrent, serie);
-			} catch (FileSizeException e)
+			try 
+			{
+				hasCorrectSize(torrent, serie, item);
+			} 
+			catch (FileSizeException e)
 			{
 				correctSize = false;
 			}
 
-			if (hasEnoughSeeders(torrent, serie) && correctSize)
+			if (hasEnoughSeeders(torrent, serie, item) && correctSize)
 			{
-
 				// we found a new season, does the user wants to download it?
 				//if we are headless, yes indeed
 
@@ -567,8 +564,7 @@ public class TedParser extends Thread implements Serializable{
 	{
 		String sTitle = item.getTitle().toString();
 		String torrentUrl = item.getLink().toString();
-		torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig
-				.getInstance().getTimeOutInSecs());
+		torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, sTitle, TedConfig.getInstance().getTimeOutInSecs());
 
 		this.bestTorrent = null;
 		this.bestTorrentInfo = null;
@@ -576,7 +572,7 @@ public class TedParser extends Thread implements Serializable{
 		this.bestTorrentSeeders = 0;
 
 		// check seeders, size and keyword filters
-		checkIfBest(torrentUrl, serie);
+		checkIfBest(torrentUrl, serie, item);
 
 		// itemNr is updated in checkIfBest
 		parseLogInfo[itemNr][0] = torrentUrl;
@@ -610,18 +606,15 @@ public class TedParser extends Thread implements Serializable{
 
 			// see if there is already a selected daily with the same date as
 			// the new DD
-			if (existingItem.getDate().getTimeInMillis() == newItem.getDate()
-					.getTimeInMillis())
+			if (existingItem.getDate().getTimeInMillis() == newItem.getDate().getTimeInMillis())
 			{
-				// if the new DD is has more seeders replace the old selected
-				// daily
+				// if the new DD is has more seeders replace the old selected daily
 				if (existingItem.getSeeders() < newItem.getSeeders())
 				{
 					dailyItems.remove(i);
 					dailyItems.add(newItem);
 
-					int placeInLog = findPlaceInLog(existingItem.getUrl()
-							.toString());
+					int placeInLog = findPlaceInLog(existingItem.getUrl().toString());
 					if (placeInLog != 0)
 					{
 						parseLogInfo[placeInLog][1] = Lang
@@ -633,19 +626,18 @@ public class TedParser extends Thread implements Serializable{
 
 					}
 
-					parseLogInfo[itemNr][1] = Lang
-							.getString("TedLog.BestTorrent");
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
 
 					return;
-				} else
+				} 
+				else
 				{
 					// as for every date there is only one selected daily you
 					// can stop
 					for (int j = 0; j < this.totalNumberOfFeedItems + 1; j++)
 					{
 						// existing one is better so log this
-						int placeInLog = findPlaceInLog(existingItem.getUrl()
-								.toString());
+						int placeInLog = findPlaceInLog(existingItem.getUrl().toString());
 
 						parseLogInfo[itemNr][1] = Lang
 								.getString("TedMainMenuBar.File")
@@ -673,12 +665,11 @@ public class TedParser extends Thread implements Serializable{
 	 * @param serie
 	 *            TedSerie that torrent belongs to
 	 */
-	private void checkIfBest(String torrentUrl, TedSerie serie)
+	private void checkIfBest(String torrentUrl, TedSerie serie, SyndEntry item)
 	{
 		// make url
 		URL url;
 		TorrentImpl torrent;
-		TorrentState torrentState;
 		TorrentInfo torrentInfo;
 
 		this.checkedTorrents++;
@@ -686,14 +677,14 @@ public class TedParser extends Thread implements Serializable{
 		itemNr++;
 		parseLogInfo[itemNr][0] = torrentUrl.toString();
 
-		try {
+		try 
+		{
 			url = new URL(torrentUrl);
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
 			String message = Lang.getString("TedParser.ErrorWhileChecking1") + " " + torrentUrl + " " + Lang.getString("TedParser.ErrorWhileChecking2") + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$
-			tMainDialog
-					.displayError(
-							Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+			tMainDialog	.displayError(Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
 
 			parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorTorrentInfo");
 
@@ -701,20 +692,20 @@ public class TedParser extends Thread implements Serializable{
 		}
 
 		// download torrent info
-		try {
+		try 
+		{
 			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			torrent = new TorrentImpl(url, TedConfig.getInstance()
-					.getTimeOutInSecs());
+			torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
 
-			try {
-				hasCorrectSize(torrent, serie);
-			} catch (FileSizeException e)
+			try 
 			{
-				parseLogInfo[itemNr][1] = Lang
-						.getString("TedLog.ErrorFileSize")
-						+ " (" + e.size + ")";
+				hasCorrectSize(torrent, serie, item);
+			} 
+			catch (FileSizeException e)
+			{
+				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorFileSize") + " (" + e.size + ")";
 				throw e;
 			}
 
@@ -725,33 +716,30 @@ public class TedParser extends Thread implements Serializable{
 				if (this.containsCompressedFiles(torrent))
 				{
 					// reject it
-					parseLogInfo[itemNr][1] = Lang
-							.getString("TedLog.ErrorCompressedFiles");
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorCompressedFiles");
 					return;
 				}
 			}
 
 			// get torrent state (for seeders)
-			try {
+			try 
+			{
 				int torrentSeeders = 0;
 				// only get the torrent state when minimum seeders > 0
-				if (serie.getMinNumOfSeeders() > 0 || TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
+				if (   serie.getMinNumOfSeeders() > 0 
+					|| TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
 				{
-					// get torrent state (containing seeders/leechers
-					torrentState = torrent.getState(TedConfig.getInstance()
-							.getTimeOutInSecs());
-
-					torrentSeeders = torrentState.getComplete();
+					torrentSeeders = getSeeders(torrent, serie, item);
 				}
 
 				// compare with best
 				// if more seeders than best and more seeders than min seeders
-				if ((this.bestTorrentUrl == null || (torrentSeeders > this.bestTorrentSeeders))
-						&& torrentSeeders >= serie.getMinNumOfSeeders())
+				if (   (this.bestTorrentUrl == null || (torrentSeeders > this.bestTorrentSeeders))
+					&& torrentSeeders >= serie.getMinNumOfSeeders())
 				{
 					// print seeders
-					TedLog
-							.debug("Found new best torrent! (" + torrentSeeders + " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
+					TedLog.debug("Found new best torrent! (" + torrentSeeders + " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
+					
 					// current is best
 					this.bestTorrentUrl = url;
 					this.bestTorrentInfo = torrentInfo;
@@ -764,43 +752,34 @@ public class TedParser extends Thread implements Serializable{
 						{
 							// the message for the old best torrent is
 							// changed...
-							parseLogInfo[bestItemNr][1] = Lang
-									.getString("TedMainMenuBar.File")
-									+ " "
-									+ itemNr
-									+ " "
-									+ Lang
-											.getString("TedLog.FoundBetterTorrent");
+							parseLogInfo[bestItemNr][1] = Lang.getString("TedMainMenuBar.File")
+														+ " "
+														+ itemNr
+														+ " "
+														+ Lang.getString("TedLog.FoundBetterTorrent");
 						}
 
 						// and the new best torrent gets his own message...
-						parseLogInfo[itemNr][1] = Lang
-								.getString("TedLog.BestTorrent");
+						parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
 						this.bestItemNr = itemNr;
 					}
-				} else
+				} 
+				else
 				{
-					parseLogInfo[itemNr][1] = Lang
-							.getString("TedLog.ErrorSeeders")
-							+ " (" + torrentSeeders + ")";
-					TedLog
-							.debug("Torrent has not enough seeders (" + torrentSeeders + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorSeeders")	+ " (" + torrentSeeders + ")";
+					TedLog.debug("Torrent has not enough seeders (" + torrentSeeders + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-			} catch (Exception e)
+			} 
+			catch (Exception e)
 			{
-				parseLogInfo[itemNr][1] = Lang
-						.getString("TedLog.ErrorTorrentInfo");
+				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorTorrentInfo");
 
 				if (e.getMessage().contains("bencoding"))
 				{
-					parseLogInfo[itemNr][1] = Lang
-							.getString("TedLog.BencodingError");
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BencodingError");
 				}
 
-				TedLog
-						.error(
-								e,
-								"Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
+				TedLog.error(e,	"Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 			}
 		}
 		// TODO: catch all exceptions here and determine logging
@@ -809,8 +788,7 @@ public class TedParser extends Thread implements Serializable{
 			// error reading torrentinfo or info from tracker
 			if (e.getMessage().startsWith("Unknown object")) 
 			{
-				tMainDialog
-						.displayError(
+				tMainDialog	.displayError(
 								Lang.getString("TedParser.ErrorHeader"),
 								Lang.getString("TedParser.ErrorWhileChecking1")
 										+ torrentUrl
@@ -818,13 +796,12 @@ public class TedParser extends Thread implements Serializable{
 										+ "\n" + Lang.getString("TedParser.ErrorBencoding"), "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
 			} else
 			{
-				tMainDialog
-						.displayError(
-								Lang.getString("TedParser.ErrorHeader"), e.getMessage(), "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+				tMainDialog	.displayError(Lang.getString("TedParser.ErrorHeader"), e.getMessage(), "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 			parseLogInfo[itemNr][1] = Lang.getString("TedLog.BencodingError");
-		} catch (TorrentException e)
+		} 
+		catch (TorrentException e)
 		{
 			// error reading torrentinfo or info from tracker
 			// tMainDialog.displayError("ted Error!", e.getMessage(),
@@ -835,11 +812,13 @@ public class TedParser extends Thread implements Serializable{
 
 			return;
 
-		} catch (FileSizeException e) 
+		} 
+		catch (FileSizeException e) 
 		{
 			// torrent contents too small
 			return;
-		} catch (RuntimeException e)
+		} 
+		catch (RuntimeException e)
 		{
 			// happens when scraping tracker for torrent seeder information
 			e.printStackTrace();
@@ -848,21 +827,18 @@ public class TedParser extends Thread implements Serializable{
 			parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorTorrentInfo");
 
 			return;
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
-			String message = Lang
-					.getString("TedParser.ErrorDownloadingContent1")
-					+ " "
-					+ torrentUrl
-					+ " " + Lang.getString("TedParser.ErrorDownloadingContent2") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$
-			tMainDialog
-					.displayError(
-							Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
+			String message = Lang.getString("TedParser.ErrorDownloadingContent1")
+						   + " "
+						   + torrentUrl
+						   + " " + Lang.getString("TedParser.ErrorDownloadingContent2") + " " + serie.getName(); //$NON-NLS-1$ //$NON-NLS-2$
+			tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, "Exception"); //$NON-NLS-1$ //$NON-NLS-2$
 			TedLog.error(e, e.getLocalizedMessage());
 			e.printStackTrace();
 
-			parseLogInfo[itemNr][1] = Lang
-					.getString("TedParser.ErrorDownloadingContent1");
+			parseLogInfo[itemNr][1] = Lang.getString("TedParser.ErrorDownloadingContent1");
 		}
 	}
 
@@ -875,8 +851,10 @@ public class TedParser extends Thread implements Serializable{
 	 *            TedSerie that torrent belongs to
 	 * @return Returns if the torrent has the correct size
 	 */
-	private boolean hasCorrectSize(TorrentImpl torrent, TedSerie serie)
-			throws FileSizeException {
+	private boolean hasCorrectSize(TorrentImpl torrent, 
+								   TedSerie    serie,
+								   SyndEntry   rssItem)	throws FileSizeException 
+	{
 		int minSize = serie.getMinSize();
 		int maxSize = serie.getMaxSize();
 
@@ -887,19 +865,25 @@ public class TedParser extends Thread implements Serializable{
 			maxSize *= 2;
 		}
 
-		// get torrent info (for size)
-		TorrentInfo torrentInfo = torrent.getInfo();
-		// first check if size is between min and max
-		// convert bytes to MB
-		double byteSize = 9.5367431 * Math.pow(10, -7);
-		int sizeMB = (int) Math.round(torrentInfo.getLength() * byteSize);
+		int sizeMB = 0;
+		sizeMB = getRssDescriptionSize(rssItem);
+		
+		// Size not found in description, try the torrent file itself.
+		if (sizeMB == 0)
+		{
+			// get torrent info (for size)
+			TorrentInfo torrentInfo = torrent.getInfo();
+			// first check if size is between min and max
+			// convert bytes to MB
+			double byteSize = 9.5367431 * Math.pow(10, -7);
+			sizeMB = (int) Math.round(torrentInfo.getLength() * byteSize);
+		}
 
 		// the size of the file(s) is zero. Not useful and probably not even a
 		// torrent
 		if (sizeMB == 0)
 		{
-			TedLog
-					.debug(Lang.getString("TedParser.FileSizeSmall") + " (" + sizeMB + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+			TedLog.debug(Lang.getString("TedParser.FileSizeSmall") + " (" + sizeMB + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 			FileSizeException e = new FileSizeException();
 			e.size = 0;
 			throw e;
@@ -908,26 +892,26 @@ public class TedParser extends Thread implements Serializable{
 		// the size is smaller than the minimum size or larger than the maximum
 		// size
 		if ((minSize != 0 && minSize >= sizeMB)
-				|| (maxSize != 0 && maxSize <= sizeMB))
+		 || (maxSize != 0 && maxSize <= sizeMB))
 		{
 			// print error
 			if (sizeMB > maxSize)
 			{
-				TedLog
-						.debug(Lang.getString("TedParser.FileSizeLarge") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
-			} else if (sizeMB < minSize)
+				TedLog.debug(Lang.getString("TedParser.FileSizeLarge") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
+			} 
+			else if (sizeMB < minSize)
 			{
-				TedLog
-						.debug(Lang.getString("TedParser.FileSizeSmall") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
+				TedLog.debug(Lang.getString("TedParser.FileSizeSmall") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
+			
 			// throw exception
 			FileSizeException e = new FileSizeException();
 			e.size = sizeMB;
 			throw e;
-		} else
+		} 
+		else
 		{
-			TedLog
-					.debug(Lang.getString("TedParser.FileSizeOK") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
+			TedLog.debug(Lang.getString("TedParser.FileSizeOK") + " (" + sizeMB + " mb)"); //$NON-NLS-1$ //$NON-NLS-2$
 			return true;
 		}
 	}
@@ -941,18 +925,44 @@ public class TedParser extends Thread implements Serializable{
 	 *            TedSerie that torrent belongs to
 	 * @return Returns if the torrent has enough seeders
 	 */
-	private boolean hasEnoughSeeders(TorrentImpl torrent, TedSerie serie)
+	private boolean hasEnoughSeeders(TorrentImpl torrent, TedSerie serie, SyndEntry item)
 	{
-		// get torrent state (containing seeders/leechers)
-		try {
-			TorrentState torrentState = torrent.getState(TedConfig
-					.getInstance().getTimeOutInSecs());
-			return (torrentState.getComplete() >= serie.getMinNumOfSeeders());
-		} catch (Exception e)
+		// Get torrent state (containing seeders/leechers)
+		try 
+		{
+			int numberOfSeeders = getSeeders(torrent, serie, item);
+			
+			// Return if the found number of seeders is large enough.
+			return (numberOfSeeders >= serie.getMinNumOfSeeders());
+		} 
+		catch (Exception e)
 		{
 			return false;
 		}
-
+	}
+	
+	private int getSeeders(TorrentImpl torrent, TedSerie serie, SyndEntry item)
+	{
+		// First try to get the number of seeders out of the description.
+		int numberOfSeeders = 0;
+		String urlInFeed = item.getLink();
+		if (urlInFeed.contains("mininova"))
+		{
+			numberOfSeeders = getMininovaDescriptionSeeders(item);
+		}
+		else if (urlInFeed.contains("btjunkie"))
+		{
+			numberOfSeeders = getBtJunkieDescriptionSeeders(item.getTitle());
+		}
+		
+		// If unsuccessful check the torrent.
+		if (numberOfSeeders <= 0) 
+		{					
+			TorrentState torrentState = torrent.getState(TedConfig.getInstance().getTimeOutInSecs());
+			numberOfSeeders = torrentState.getComplete();
+		}
+		
+		return numberOfSeeders;
 	}
 
 	private boolean titleMatchesKeywords(SyndEntry item, TedSerie serie)
@@ -1806,5 +1816,150 @@ public class TedParser extends Thread implements Serializable{
 	public void stopGetItems()
 	{
 		stopGetItems = true;
+	}
+	
+	private int getMininovaDescriptionSeeders(SyndEntry rssItem)
+	{
+		// See if there is a description.
+		SyndContent rssContent = rssItem.getDescription();
+		if (rssContent == null)
+		{
+			// No description available.
+			return -1;
+		}
+		
+		// Retrieve the description.
+		String description = rssContent.getValue().toLowerCase();
+		
+		// Search for the seeders in the description.
+		Pattern seedersPattern = Pattern.compile("((-*)(\\d+))(.+)(seeds)");
+		Matcher seedersMatcher = seedersPattern.matcher(description);
+		
+		// First see if the seeders can be found in the description.
+		int nrOfSeeders = 0;
+		if (seedersMatcher.find())
+		{
+			// Retrieve seeders.
+			// Group 0 is the entire matched string. Group 1 is the number of seeders.
+			String matchedString = seedersMatcher.group(1);
+			
+			try
+			{
+				// Retrieve the number from the string.
+				nrOfSeeders = Integer.parseInt(matchedString);
+			}
+			catch (Exception e)
+			{
+				// Return if it has failed.
+				return -1;
+			}
+			
+			if (nrOfSeeders < 0)
+			{
+				// Seeders are not available in the description.
+				return -1;
+			}				
+		}
+		else
+		{
+			// Seeders not found.
+			return -1;
+		}
+				
+		return nrOfSeeders;
+	}
+	
+	private int getBtJunkieDescriptionSeeders(String rssItemTitle)
+	{
+		if (rssItemTitle.equals(""))
+		{
+			return -1;
+		}
+		
+		Pattern seedersPattern = Pattern.compile("(\\[(\\d+)/(\\d+)\\])");
+		Matcher seedersMatcher = seedersPattern.matcher(rssItemTitle);
+		
+		int nrOfSeeders = 0;
+		if (seedersMatcher.find())
+		{
+			String matchedString = seedersMatcher.group(2);			
+			
+			try
+			{
+				// Retrieve the number from the string.
+				nrOfSeeders = Integer.parseInt(matchedString);
+			}
+			catch (Exception e)
+			{
+				// Return if it has failed.
+				return -1;
+			}
+			
+			if (nrOfSeeders < 0)
+			{
+				// Seeders are not available in the description.
+				return -1;
+			}				
+		}
+		else
+		{
+			// Seeders not found.
+			return -1;
+		}
+				
+		return nrOfSeeders;
+	}
+	
+	private int getRssDescriptionSize(SyndEntry rssItem)
+	{
+		// See if there is a description.
+		SyndContent rssContent = rssItem.getDescription();
+		if (rssContent == null)
+		{
+			// No description available.
+			return 0;
+		}
+		
+		// Retrieve the description.
+		String description = rssContent.getValue().toLowerCase();
+				
+		Pattern sizePattern = Pattern.compile("(size: )(\\d+)(.*)((megabyte|mb)|(gigabyte|gb))");
+		Matcher sizeMatcher = sizePattern.matcher(description);
+	
+		// Find the file size in the description.
+		int fileSize = 0; 
+		if (sizeMatcher.find())
+		{
+			// Retrieve the file size.
+			String fileSizeMatch = sizeMatcher.group(2);
+			
+			// If the file size is in GB we've to multiply it by 1024
+			// to get it in MB.
+			String kindOfBytes = sizeMatcher.group(4);
+			
+			try
+			{
+				// Retrieve the number from the string.
+				fileSize = Integer.parseInt(fileSizeMatch);
+			}
+			catch (Exception e)
+			{
+				// Return if it has failed.
+				return 0;
+			}
+			
+			if (kindOfBytes.equals("gigabytes") || kindOfBytes.equals("gb"))
+			{
+				fileSize *= 1024;
+			}
+			
+		}
+		else
+		{
+			// Size not found
+			return 0;
+		}
+				
+		return fileSize;
 	}
 }
