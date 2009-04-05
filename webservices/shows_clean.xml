@@ -80,6 +80,9 @@
 		</showinfo>
 	</weblocations>
 	<hdkeywords>720p &amp; HD</hdkeywords>
+	<private_trackers>
+		<tracker_url>pretome.net</tracker_url>
+	</private_trackers>
 	<shows>
 		<show>
 			<name>13: Fear Is Real</name>

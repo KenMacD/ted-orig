@@ -1,7 +1,10 @@
 package ted;
 
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 
@@ -85,7 +88,9 @@ public class TedConfig
 	private Color evenRowColor     	= Color.WHITE;
 	private Color oddRowColor      	= new Color(236,243,254);
 	private Color selectedRowColor 	= new Color(61, 128, 223);  
-	private Color gridColor 			= new Color(205,205,205);
+	private Color gridColor 		= new Color(205,205,205);
+	
+	private Set<String> privateTrackers;
 
 	private static TedConfig configSingleton = null;
 
@@ -787,5 +792,26 @@ public class TedConfig
 		this.proxyPort = proxyPort;
 	}
 	
+	public boolean isPrivateTracker(String trackerName)
+	{
+		// Walk over all the listed private trackers.
+		Iterator<String> trackerIterator = privateTrackers.iterator();		
+		while (trackerIterator.hasNext())
+		{
+			// If the tracker is listed we've found a private tracker.
+			String trackerUrl = trackerIterator.next();
+			if (trackerName.contains(trackerUrl))
+			{
+				return true;
+			}
+		}
+		
+		// The tracker is not in our list so it's assumed not to be a private tracker.
+		return false;
+	}
 	
+	public void setPrivateTrackers(Set<String> privateTrackers)
+	{
+		this.privateTrackers = privateTrackers; 
+	}
 }

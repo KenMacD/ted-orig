@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -459,6 +461,24 @@ public class TedXMLParser
 		}
 		
 		return "";
+	}
+	
+	public Set<String> getPrivateTrackers(Element nodelist)
+	{
+		NodeList trackersList = nodelist.getElementsByTagName("private_trackers");
+		
+		Set<String> trackers = new HashSet<String>();
+		if (trackersList != null && trackersList.getLength() > 0)
+		{			
+			for (int trackerIndex = 0; trackerIndex < trackersList.getLength(); ++trackerIndex)
+			{
+				Element trackerElement = (Element)trackersList.item(trackerIndex);
+				String trackerUrl = getTextValue(trackerElement, "tracker_url");
+				trackers.add(trackerUrl);
+			}
+		}
+		
+		return trackers;
 	}
 	
 	public String getHDKeywords(Element nodelist)

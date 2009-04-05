@@ -25,6 +25,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.channels.FileChannel;
 import java.util.Properties;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -317,36 +318,38 @@ public class TedIO
     {
 		try
 		{
-		    // check application folder for all config / shows files
-	
+		    // check application folder for all config / shows files	
 		    File userdir_config_file = new File(CONFIG_FILE);
+		    
 		    // if config does not exist, copy from current dir & delete original
 		    if (!userdir_config_file.exists())
 		    {
-			// if config does not exist in current dir either: new ted
-			File config_file = new File("config.ted"); //$NON-NLS-1$
-	
-			if (!config_file.exists())
-			{
-			    // new ted: show config dialog at startup
-			    FileNotFoundException e = new FileNotFoundException();
-			    throw e;
-			} else
-			{
-			    // copy config_file and delete afterwards
-			    try
-			    {
-				copyFile(config_file, userdir_config_file);
-				if (!config_file.delete())
+				// if config does not exist in current dir either: new ted
+				File config_file = new File("config.ted"); //$NON-NLS-1$
+		
+				if (!config_file.exists())
 				{
-				    TedLog.error("Error deleting config file from original ted dir"); //$NON-NLS-1$
+				    // new ted: show config dialog at startup
+				    FileNotFoundException e = new FileNotFoundException();
+				    throw e;
+				} 
+				else
+				{
+				    // copy config_file and delete afterwards
+				    try
+				    {
+						copyFile(config_file, userdir_config_file);
+						if (!config_file.delete())
+						{
+						    TedLog.error("Error deleting config file from original ted dir"); //$NON-NLS-1$
+						}
+				    } 
+				    catch (Exception e)
+				    {
+				    	TedLog.error(e, "Error copying config file to user directory"); //$NON-NLS-1$
+				    }
+		
 				}
-			    } catch (Exception e)
-			    {
-				TedLog.error(e, "Error copying config file to user directory"); //$NON-NLS-1$
-			    }
-	
-			}
 		    }
 	
 		    TedLog.debug("Open config file " + userdir_config_file.getAbsolutePath()); //$NON-NLS-1$
@@ -359,168 +362,208 @@ public class TedIO
 		    String line = null;
 		    while ((line = br.readLine()) != null)
 		    {
-			int seperatorIndex = line.indexOf('=');
-	
-			// Get the name of this config item.
-			String configItem = line.substring(0, seperatorIndex);
-	
-			// Get the value for the item. Just retrieve the rest of the
-			// string (available tokens) so also values with an '=' in
-			// them are correctly used.
-			String configItemValue = line.substring(seperatorIndex + 1);
-	
-			if (configItem.equals("refresh")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setRefreshTime(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("directory")) //$NON-NLS-1$
-			{
-			    String s = configItemValue;
-			    File f = new File(s);
-	
-			    boolean directoryAvailable = false;
-			    // Create the directory if it doesn't exist.
-			    if (!f.exists())
-			    {
-				directoryAvailable = f.mkdir();
-			    } else
-			    {
-				directoryAvailable = true;
-			    }
-	
-			    if (directoryAvailable)
-			    {
-				TedConfig.getInstance().setDirectory(s);
-			    } else
-			    {
-				if (TedSystemInfo.isHeadless())
+				int seperatorIndex = line.indexOf('=');
+		
+				// Get the name of this config item.
+				String configItem = line.substring(0, seperatorIndex);
+		
+				// Get the value for the item. Just retrieve the rest of the
+				// string (available tokens) so also values with an '=' in
+				// them are correctly used.
+				String configItemValue = line.substring(seperatorIndex + 1);
+		
+				if (configItem.equals("refresh")) //$NON-NLS-1$
 				{
-				    DaemonLog.error(Lang.getString("TedConfig.getInstance()Dialog.DialogSelectDirectory")); //$NON-NLS-1$)
-				}
-				else
+				    TedConfig.getInstance().setRefreshTime(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("directory")) //$NON-NLS-1$
 				{
-				    JOptionPane.showMessageDialog(null, Lang.getString("TedConfig.getInstance()Dialog.DialogSelectDirectory")); //$NON-NLS-1$
+				    String s = configItemValue;
+				    File f = new File(s);
+		
+				    boolean directoryAvailable = false;
+				    // Create the directory if it doesn't exist.
+				    if (!f.exists())
+				    {
+				    	directoryAvailable = f.mkdir();
+				    } 
+				    else
+				    {
+				    	directoryAvailable = true;
+				    }
+		
+				    if (directoryAvailable)
+				    {
+				    	TedConfig.getInstance().setDirectory(s);
+				    }
+				    else
+				    {
+						if (TedSystemInfo.isHeadless())
+						{
+						    DaemonLog.error(Lang.getString("TedConfig.getInstance()Dialog.DialogSelectDirectory")); //$NON-NLS-1$)
+						}
+						else
+						{
+						    JOptionPane.showMessageDialog(null, Lang.getString("TedConfig.getInstance()Dialog.DialogSelectDirectory")); //$NON-NLS-1$
+						}
+				    }
+				} 
+				else if (configItem.equals("opentorrent")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setOpenTorrent(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("checkversion")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setCheckVersion(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("showerrors")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setShowErrors(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("showhurray")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setShowHurray(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("windowwidth")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setWidth(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("windowheight")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setHeight(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("windowx")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setX(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("windowy")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setY(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("startminimized")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setStartMinimized(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("rssversion")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setRSSVersion(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("rssupdate")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setAutoUpdateFeedList(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("rssadjust")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setAutoAdjustFeeds(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("timeoutsecs")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setTimeOutInSecs(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("seedersetting")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setSeederSetting(Integer.parseInt(configItemValue));
+				} 
+				else if (configItem.equals("locale_language")) //$NON-NLS-1$
+				{
+				    tempLanguage = configItemValue;
+				} 
+				else if (configItem.equals("locale_country")) //$NON-NLS-1$
+				{
+				    tempCountry = configItemValue;
+				} 
+				else if (configItem.equals("parse_at_start")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setParseAtStart(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("add_tray")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setAddSysTray(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("downloadcompressed")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setDoNotDownloadCompressed(Boolean.parseBoolean(configItemValue));
+				} 
+				else if (configItem.equals("filterextensions")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setFilterExtensions(configItemValue);
 				}
-			    }
-			} else if (configItem.equals("opentorrent")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setOpenTorrent(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("checkversion")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setCheckVersion(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("showerrors")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setShowErrors(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("showhurray")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setShowHurray(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("windowwidth")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setWidth(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("windowheight")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setHeight(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("windowx")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setX(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("windowy")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setY(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("startminimized")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setStartMinimized(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("rssversion")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setRSSVersion(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("rssupdate")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setAutoUpdateFeedList(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("rssadjust")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setAutoAdjustFeeds(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("timeoutsecs")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setTimeOutInSecs(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("seedersetting")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setSeederSetting(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("locale_language")) //$NON-NLS-1$
-			{
-			    tempLanguage = configItemValue;
-			} else if (configItem.equals("locale_country")) //$NON-NLS-1$
-			{
-			    tempCountry = configItemValue;
-			} else if (configItem.equals("parse_at_start")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setParseAtStart(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("add_tray")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setAddSysTray(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("downloadcompressed")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setDoNotDownloadCompressed(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("filterextensions")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setFilterExtensions(configItemValue);
-			} else if (configItem.equals("loglines") && !TedSystemInfo.isHeadless()) //$NON-NLS-1$
-			{
-			    TedLogDialog t = TedLogDialog.getInstance();
-			    t.setMaxLines(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("allowlogging")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setAllowLogging(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("logtofile")) //$NON-NLS-1$
-			{
-			    TedConfig.getInstance().setLogToFile(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("oddrowcolor") && !TedSystemInfo.isHeadless())
-			{
-			    String s = configItemValue;
-			    Color color = new Color(Integer.parseInt(s));
-			    TedConfig.getInstance().setOddRowColor(color);
-			} else if (configItem.equals("evenrowcolor") && !TedSystemInfo.isHeadless())
-			{
-			    Color color = new Color(Integer.parseInt(configItemValue));
-			    TedConfig.getInstance().setEvenRowColor(color);
-			} else if (configItem.equals("timezoneoffset"))
-			{
-			    TedConfig.getInstance().setTimeZoneOffset(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("autoschedule"))
-			{
-			    TedConfig.getInstance().setUseAutoSchedule(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("sorttype"))
-			{
-			    TedConfig.getInstance().setSortType(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("sortdirection"))
-			{
-			    TedConfig.getInstance().setSortDirection(Integer.parseInt(configItemValue));
-			} else if (configItem.equals("hdkeywords"))
-			{
-			    TedConfig.getInstance().setHDKeywords(configItemValue);
-			} else if (configItem.equals("hdpreference"))
-			{
-			    TedConfig.getInstance().setHDDownloadPreference(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("useProxy"))
-			{
-			    TedConfig.getInstance().setUseProxy(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("useProxyAuth"))
-			{
-			    TedConfig.getInstance().setUseProxyAuth(Boolean.parseBoolean(configItemValue));
-			} else if (configItem.equals("proxyPassword"))
-			{
-			    TedConfig.getInstance().setProxyPassword(configItemValue);
-			} else if (configItem.equals("proxyUsername"))
-			{
-			    TedConfig.getInstance().setProxyUsername(configItemValue);
-			} else if (configItem.equals("proxyHost"))
-			{
-			    TedConfig.getInstance().setProxyHost(configItemValue);
-			} else if (configItem.equals("proxyPort"))
-			{
-			    TedConfig.getInstance().setProxyPort(configItemValue);
-			}
-	
+				else if (configItem.equals("loglines") && !TedSystemInfo.isHeadless()) //$NON-NLS-1$
+				{
+				    TedLogDialog t = TedLogDialog.getInstance();
+				    t.setMaxLines(Integer.parseInt(configItemValue));
+				}
+				else if (configItem.equals("allowlogging")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setAllowLogging(Boolean.parseBoolean(configItemValue));
+				}
+				else if (configItem.equals("logtofile")) //$NON-NLS-1$
+				{
+				    TedConfig.getInstance().setLogToFile(Boolean.parseBoolean(configItemValue));
+				}
+				else if (configItem.equals("oddrowcolor") && !TedSystemInfo.isHeadless())
+				{
+				    String s = configItemValue;
+				    Color color = new Color(Integer.parseInt(s));
+				    TedConfig.getInstance().setOddRowColor(color);
+				}
+				else if (configItem.equals("evenrowcolor") && !TedSystemInfo.isHeadless())
+				{
+				    Color color = new Color(Integer.parseInt(configItemValue));
+				    TedConfig.getInstance().setEvenRowColor(color);
+				}
+				else if (configItem.equals("timezoneoffset"))
+				{
+				    TedConfig.getInstance().setTimeZoneOffset(Integer.parseInt(configItemValue));
+				}
+				else if (configItem.equals("autoschedule"))
+				{
+				    TedConfig.getInstance().setUseAutoSchedule(Boolean.parseBoolean(configItemValue));
+				}
+				else if (configItem.equals("sorttype"))
+				{
+				    TedConfig.getInstance().setSortType(Integer.parseInt(configItemValue));
+				}
+				else if (configItem.equals("sortdirection"))
+				{
+				    TedConfig.getInstance().setSortDirection(Integer.parseInt(configItemValue));
+				}
+				else if (configItem.equals("hdkeywords"))
+				{
+				    TedConfig.getInstance().setHDKeywords(configItemValue);
+				}
+				else if (configItem.equals("hdpreference"))
+				{
+				    TedConfig.getInstance().setHDDownloadPreference(Boolean.parseBoolean(configItemValue));
+				}
+				else if (configItem.equals("useProxy"))
+				{
+				    TedConfig.getInstance().setUseProxy(Boolean.parseBoolean(configItemValue));
+				}
+				else if (configItem.equals("useProxyAuth"))
+				{
+				    TedConfig.getInstance().setUseProxyAuth(Boolean.parseBoolean(configItemValue));
+				}
+				else if (configItem.equals("proxyPassword"))
+				{
+				    TedConfig.getInstance().setProxyPassword(configItemValue);
+				}
+				else if (configItem.equals("proxyUsername"))
+				{
+				    TedConfig.getInstance().setProxyUsername(configItemValue);
+				}
+				else if (configItem.equals("proxyHost"))
+				{
+				    TedConfig.getInstance().setProxyHost(configItemValue);
+				}
+				else if (configItem.equals("proxyPort"))
+				{
+				    TedConfig.getInstance().setProxyPort(configItemValue);
+				}	
 		    }
 	
 		    TedConfig.getInstance().setLocale(tempCountry, tempLanguage);
+		    TedConfig.getInstance().setPrivateTrackers(getPrivateTrackersFromXml());
 	
 		    br.close();
 		    fr.close();
@@ -620,78 +663,80 @@ public class TedIO
      */
     public void checkNewXMLFile(TedMainDialog main, boolean showresult, TedTable mainTable)
     {
-	// check the website if there is a new version available
-	int version = TedConfig.getInstance().getRSSVersion();
-	int onlineversion = this.getXMLVersion();
-
-	// if there is a new version
-	if (onlineversion > version)
-	{
-	    // Always download the new XML file.
-	    if (TedConfig.getInstance().isAutoUpdateFeedList())
-	    {
-		// download the XML file
-		downloadXML();
-
-		// update the shows (if the user wants to).
-		updateShows(main, mainTable);
-	    } else if (TedConfig.getInstance().askAutoUpdateFeedList() || showresult)
-	    {
-		// Ask user for confirmation if we have to.
-		// The downloadXML function is called from within this window.
-		String message = "<html><body>" + Lang.getString("TedIO.DialogNewPredefinedShows1") + " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$;
-		String title = Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
-
-		new TedUpdateWindow(title, message, "http://ted.sourceforge.net/newshowsinfo.php", "DownloadXml", Lang.getString("TedGeneral.ButtonDownload"), Lang.getString("TedGeneral.ButtonLater"), main);
-	    }
-	} else if (showresult)
-	{
-	    JOptionPane.showMessageDialog(null, Lang.getString("TedIO.DialogMostRecentShows1") + " " + version + Lang.getString("TedIO.DialogMostRecentShows2"), //$NON-NLS-1$ //$NON-NLS-2$
-		    Lang.getString("TedIO.DialogMostRecentShowsHeader"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
-	}
-
+		// check the website if there is a new version available
+		int version = TedConfig.getInstance().getRSSVersion();
+		int onlineversion = this.getXMLVersion();
+	
+		// if there is a new version
+		if (onlineversion > version)
+		{
+		    // Always download the new XML file.
+		    if (TedConfig.getInstance().isAutoUpdateFeedList())
+		    {
+		    	// download the XML file
+				downloadXML();
+		
+				// update the shows (if the user wants to).
+				updateShows(main, mainTable);
+		    } 
+		    else if (TedConfig.getInstance().askAutoUpdateFeedList() || showresult)
+		    {
+				// Ask user for confirmation if we have to.
+				// The downloadXML function is called from within this window.
+				String message = "<html><body>" + Lang.getString("TedIO.DialogNewPredefinedShows1") + " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$;
+				String title = Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
+		
+				new TedUpdateWindow(title, message, "http://ted.sourceforge.net/newshowsinfo.php", "DownloadXml", Lang.getString("TedGeneral.ButtonDownload"), Lang.getString("TedGeneral.ButtonLater"), main);
+		    }
+		} 
+		else if (showresult)
+		{
+		    JOptionPane.showMessageDialog(null, Lang.getString("TedIO.DialogMostRecentShows1") + " " + version + Lang.getString("TedIO.DialogMostRecentShows2"), //$NON-NLS-1$ //$NON-NLS-2$
+			    Lang.getString("TedIO.DialogMostRecentShowsHeader"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
+		}
     }
 
     public void updateShows(TedMainDialog main, TedTable mainTable)
     {
-	int rows = mainTable.getRowCount();
-
-	// check if the user wants us to update the shows
-	int answer = -1;
-	if (rows != 0)
-	{
-	    if (TedConfig.getInstance().askAutoAdjustFeeds())
-	    {
-		String message = Lang.getString("TedIO.DialogUpdateShows1") + "\n" + //$NON-NLS-1$
-			Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
-			Lang.getString("TedIO.DialogUpdateShows3");
-		String title = Lang.getString("TedIO.DialogUpdateShowsHeader"); //$NON-NLS-1$
-
-		answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
-
-		if (answer == 0)
+		int rows = mainTable.getRowCount();
+	
+		// check if the user wants us to update the shows
+		int answer = -1;
+		if (rows != 0)
 		{
-		    // The user clicked the always button, so store it in the
-		    // configuration.
-		    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().ALWAYS);
-		    this.SaveConfig();
-		} else if (answer == 3)
-		{
-		    // Do the same for the never button.
-		    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().NEVER);
-		    this.SaveConfig();
+		    if (TedConfig.getInstance().askAutoAdjustFeeds())
+		    {
+				String message = Lang.getString("TedIO.DialogUpdateShows1") + "\n" + //$NON-NLS-1$
+					Lang.getString("TedIO.DialogUpdateShows2") + "\n" + //$NON-NLS-1$
+					Lang.getString("TedIO.DialogUpdateShows3");
+				String title = Lang.getString("TedIO.DialogUpdateShowsHeader"); //$NON-NLS-1$
+		
+				answer = TimedOptionPane.showTimedOptionPane(null, message, title, "", 30000, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null, Lang.getAlwaysYesNoNeverLocale(), Lang.getAlwaysYesNoNeverLocale()[0]);
+		
+				if (answer == 0)
+				{
+				    // The user clicked the always button, so store it in the
+				    // configuration.
+				    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().ALWAYS);
+				    this.SaveConfig();
+				} 
+				else if (answer == 3)
+				{
+				    // Do the same for the never button.
+				    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().NEVER);
+				    this.SaveConfig();
+				}
+				// For the yes/no option nothing has to be done as when the user
+				// sees this message
+				// dialog the configuration is already correctly set on "ask".
+		    }
+	
+		    if (TedConfig.getInstance().isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
+			{
+				// adjust the feeds
+				this.UpdateShow(main, true, mainTable);
+		    }
 		}
-		// For the yes/no option nothing has to be done as when the user
-		// sees this message
-		// dialog the configuration is already correctly set on "ask".
-	    }
-
-	    if (TedConfig.getInstance().isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
-	    {
-		// adjust the feeds
-		this.UpdateShow(main, true, mainTable);
-	    }
-	}
     }
 
     /**
@@ -702,74 +747,77 @@ public class TedIO
      */
     public void UpdateShow(TedMainDialog main, boolean AutoUpdate, TedTable mainTable)
     {
-	String s;
-	String location;
-	int returnVal;
-
-	if (!AutoUpdate)
-	{
-	    location = XML_SHOWS_FILE;
-	    File standardFile = new File(location);
-	    JFileChooser chooser = new JFileChooser();
-	    TedExampleFileFilter filter = new TedExampleFileFilter();
-	    filter.addExtension("xml"); //$NON-NLS-1$
-	    filter.setDescription("XML-file"); //$NON-NLS-1$
-	    chooser.setFileFilter(filter);
-	    chooser.setSelectedFile(standardFile);
-	    chooser.setCurrentDirectory(standardFile);
-	    chooser.setDialogTitle(Lang.getString("TedIO.ChooseSync")); //$NON-NLS-1$
-
-	    returnVal = chooser.showOpenDialog(chooser);
-
-	    location = chooser.getSelectedFile().getName();
-
-	    if (!location.endsWith(".xml")) //$NON-NLS-1$
-		location += ".xml"; //$NON-NLS-1$
-	} else
-	{
-	    location = TedIO.XML_SHOWS_FILE;
-	    returnVal = JFileChooser.APPROVE_OPTION;
-	}
-
-	if (returnVal == JFileChooser.APPROVE_OPTION)
-	{
-	    int rows = mainTable.getRowCount();
-
-	    TedXMLParser parser = new TedXMLParser();
-	    Element el = parser.readXMLFromFile(location);
-
-	    for (int i = 0; i < rows; i++)
-	    {
-		TedSerie serie = mainTable.getSerieAt(i);
-
-		if (serie != null)
+		String s;
+		String location;
+		int returnVal;
+	
+		if (!AutoUpdate)
 		{
-		    TedSerie XMLserie = parser.getSerie(el, serie.getName());
-		    serie.AutoFillInPresets(XMLserie);
-
-		    // add auto-generated search based feeds to the show
-		    // do this after AutoFillInPresets, 'cause that will reset
-		    // the feeds
-		    // of the serie
-		    Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
-		    items = parser.getAutoFeedLocations(el);
-		    serie.generateFeedLocations(items);
+		    location = XML_SHOWS_FILE;
+		    File standardFile = new File(location);
+		    JFileChooser chooser = new JFileChooser();
+		    TedExampleFileFilter filter = new TedExampleFileFilter();
+		    filter.addExtension("xml"); //$NON-NLS-1$
+		    filter.setDescription("XML-file"); //$NON-NLS-1$
+		    chooser.setFileFilter(filter);
+		    chooser.setSelectedFile(standardFile);
+		    chooser.setCurrentDirectory(standardFile);
+		    chooser.setDialogTitle(Lang.getString("TedIO.ChooseSync")); //$NON-NLS-1$
+	
+		    returnVal = chooser.showOpenDialog(chooser);
+	
+		    location = chooser.getSelectedFile().getName();
+	
+		    if (!location.endsWith(".xml")) //$NON-NLS-1$
+			location += ".xml"; //$NON-NLS-1$
+		} 
+		else
+		{
+		    location = TedIO.XML_SHOWS_FILE;
+		    returnVal = JFileChooser.APPROVE_OPTION;
 		}
-	    }
-	    if (!AutoUpdate)
-	    {
-		s = Lang.getString("TedIO.ShowsSynced"); //$NON-NLS-1$
-	    } else
-	    {
-		s = Lang.getString("TedIO.ShowsSyncedWithNew"); //$NON-NLS-1$
-	    }
-	    TedLog.debug(s);
 
-	    if (!AutoUpdate)
-	    {
-		JOptionPane.showMessageDialog(null, s, null, 1);
-	    }
-	}
+		if (returnVal == JFileChooser.APPROVE_OPTION)
+		{
+		    int rows = mainTable.getRowCount();
+	
+		    TedXMLParser parser = new TedXMLParser();
+		    Element el = parser.readXMLFromFile(location);
+	
+		    for (int i = 0; i < rows; i++)
+		    {
+				TedSerie serie = mainTable.getSerieAt(i);
+		
+				if (serie != null)
+				{
+				    TedSerie XMLserie = parser.getSerie(el, serie.getName());
+				    serie.AutoFillInPresets(XMLserie);
+		
+				    // add auto-generated search based feeds to the show
+				    // do this after AutoFillInPresets, 'cause that will reset
+				    // the feeds
+				    // of the serie
+				    Vector<FeedPopupItem> items = new Vector<FeedPopupItem>();
+				    items = parser.getAutoFeedLocations(el);
+				    serie.generateFeedLocations(items);
+				}
+		    }
+		    
+		    if (!AutoUpdate)
+		    {
+		    	s = Lang.getString("TedIO.ShowsSynced"); //$NON-NLS-1$
+		    } 
+		    else
+		    {
+		    	s = Lang.getString("TedIO.ShowsSyncedWithNew"); //$NON-NLS-1$
+		    }
+		    TedLog.debug(s);
+	
+		    if (!AutoUpdate)
+		    {
+		    	JOptionPane.showMessageDialog(null, s, null, 1);
+		    }
+		}
     }
 
     /**
@@ -783,35 +831,37 @@ public class TedIO
      */
     public String translateUrl(String uri, String title, int timeOut)
     {
-	try
-	{
-	    TedLog.debug(Lang.getString("TedIO.TranslatingUrl") + uri); //$NON-NLS-1$
-	    URL url = new URL("http://ted.sourceforge.net/urltranslator.php?url=" + uri + "&sTitle=" + URLEncoder.encode(title, "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	    String line;
-
-	    BufferedReader data = this.makeBufferedReader(url, timeOut);
-
-	    while ((line = data.readLine()) != null)
-	    {
-		String torrentUrl = line;
-		if (torrentUrl.equals("null")) //$NON-NLS-1$
+		try
 		{
-		    TedLog.debug(Lang.getString("TedIO.UnableTranslate")); //$NON-NLS-1$
+		    TedLog.debug(Lang.getString("TedIO.TranslatingUrl") + uri); //$NON-NLS-1$
+		    URL url = new URL("http://ted.sourceforge.net/urltranslator.php?url=" + uri + "&sTitle=" + URLEncoder.encode(title, "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		    String line;
+	
+		    BufferedReader data = this.makeBufferedReader(url, timeOut);
+	
+		    while ((line = data.readLine()) != null)
+		    {
+				String torrentUrl = line;
+				if (torrentUrl.equals("null")) //$NON-NLS-1$
+				{
+				    TedLog.debug(Lang.getString("TedIO.UnableTranslate")); //$NON-NLS-1$
+				    return null;
+				} 
+				else
+				{
+				    TedLog.debug(Lang.getString("TedIO.UrlTranslated") + torrentUrl); //$NON-NLS-1$
+				    return torrentUrl;
+				}
+		    }
+	
+		    data.close();
+		} 
+		catch (Exception e)
+		{
+		    TedLog.error(e, Lang.getString("TedIO.TranslateError")); //$NON-NLS-1$
 		    return null;
-		} else
-		{
-		    TedLog.debug(Lang.getString("TedIO.UrlTranslated") + torrentUrl); //$NON-NLS-1$
-		    return torrentUrl;
 		}
-	    }
-
-	    data.close();
-	} catch (Exception e)
-	{
-	    TedLog.error(e, Lang.getString("TedIO.TranslateError")); //$NON-NLS-1$
-	    return null;
-	}
-	return null;
+		return null;
     }
 
     /**
@@ -821,44 +871,58 @@ public class TedIO
      */
     public void downloadXML()
     {
-	try
-	{
-	    TedLog.debug("Downloading new show definitions XML"); //$NON-NLS-1$
-	    // open connection to the XML file
-	    URL url = new URL(this.XMLurl);
-	    BufferedReader br = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
-
-	    // write the xml file
-	    FileWriter fw = new FileWriter(XML_SHOWS_FILE);
-
-	    String line;
-	    while ((line = br.readLine()) != null)
-	    {
-		fw.write(line + "\n"); //$NON-NLS-1$
-	    }
-	    fw.close();
-	    br.close();
-
-	    // get the version of the XML file
+		try
+		{
+		    TedLog.debug("Downloading new show definitions XML"); //$NON-NLS-1$
+		    // open connection to the XML file
+		    URL url = new URL(this.XMLurl);
+		    BufferedReader br = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
+	
+		    // write the xml file
+		    FileWriter fw = new FileWriter(XML_SHOWS_FILE);
+	
+		    String line;
+		    while ((line = br.readLine()) != null)
+		    {
+		    	fw.write(line + "\n"); //$NON-NLS-1$
+		    }
+		    fw.close();
+		    br.close();
+	
+		    // Get the version of the XML file
+		    TedXMLParser parser = new TedXMLParser();
+		    Element xmlFile = parser.readXMLFromFile(XML_SHOWS_FILE);
+		    int onlineVersion = parser.getVersion(xmlFile);
+	
+		    // Also get the HD keywords (if available).
+		    String hdKeywords = parser.getHDKeywords(xmlFile);
+		    	
+		    // Save the config.
+		    TedConfig.getInstance().setRSSVersion(onlineVersion);
+		    TedConfig.getInstance().setHDKeywords(hdKeywords);
+	
+		    this.SaveConfig();
+		} 
+		catch (MalformedURLException e)
+		{
+		    TedLog.debug("Showdefinitions XML file cannot be found: MalformedURL"); //$NON-NLS-1$
+		} 
+		catch (IOException e)
+		{
+		    TedLog.debug("Showdefinitions XML file cannot be read"); //$NON-NLS-1$
+		}
+    }
+    
+    public Set<String> getPrivateTrackersFromXml()
+    {
 	    TedXMLParser parser = new TedXMLParser();
 	    Element xmlFile = parser.readXMLFromFile(XML_SHOWS_FILE);
-	    int onlineVersion = parser.getVersion(xmlFile);
 
-	    // also get the HD keywords (if available).
-	    String hdKeywords = parser.getHDKeywords(xmlFile);
-
-	    // Save the config.
-	    TedConfig.getInstance().setRSSVersion(onlineVersion);
-	    TedConfig.getInstance().setHDKeywords(hdKeywords);
-
-	    this.SaveConfig();
-	} catch (MalformedURLException e)
-	{
-	    TedLog.debug("Showdefinitions XML file cannot be found: MalformedURL"); //$NON-NLS-1$
-	} catch (IOException e)
-	{
-	    TedLog.debug("Showdefinitions XML file cannot be read"); //$NON-NLS-1$
-	}
+	    // Get the private trackers.
+	    Set<String> privateTrackers = parser.getPrivateTrackers(xmlFile);
+	    
+	    // And save them in the config.
+	    return privateTrackers;
     }
 
     /**
@@ -982,33 +1046,34 @@ public class TedIO
 
     public boolean checkForShowsXML()
     {
-	// Checks if the show xml file is present on the user system.
-	// If not, alert the user.
-	File showXML = new File(XML_SHOWS_FILE);
-
-	if (!showXML.exists())
-	{
-	    // Alert Mac users
-	    if (TedSystemInfo.osIsMac())
-	    {
-		// what if growl isn't supported?
-		GrowlMessenger gm = new GrowlMessenger();
-		gm.displayError(Lang.getString("TedGeneral.Error"), Lang.getString("TedIO.ShowsFileNotPresent2"));
-	    }
-
-	    // Alert Windows users
-	    if (TedSystemInfo.osSupportsBalloon())
-	    {
-		// by balloon?
-		PopupMessenger pm = new PopupMessenger(null);
-		pm.displayError(Lang.getString("TedGeneral.Error"), Lang.getString("TedIO.ShowsFileNotPresent2"));
-	    }
-
-	    return false;
-	} else
-	{
-	    return true;
-	}
+		// Checks if the show xml file is present on the user system.
+		// If not, alert the user.
+		File showXML = new File(XML_SHOWS_FILE);
+	
+		if (!showXML.exists())
+		{
+		    // Alert Mac users
+		    if (TedSystemInfo.osIsMac())
+		    {
+				// what if growl isn't supported?
+				GrowlMessenger gm = new GrowlMessenger();
+				gm.displayError(Lang.getString("TedGeneral.Error"), Lang.getString("TedIO.ShowsFileNotPresent2"));
+		    }
+	
+		    // Alert Windows users
+		    if (TedSystemInfo.osSupportsBalloon())
+		    {
+				// by balloon?
+				PopupMessenger pm = new PopupMessenger(null);
+				pm.displayError(Lang.getString("TedGeneral.Error"), Lang.getString("TedIO.ShowsFileNotPresent2"));
+		    }
+	
+		    return false;
+		} 
+		else
+		{
+		    return true;
+		}
     }
 
     public void ExportShows(TedMainDialog main)

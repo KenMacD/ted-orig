@@ -107,8 +107,7 @@ public class TedParser extends Thread implements Serializable{
 
 	}
 
-	public TedParser(TedSerie serie, ITedMain mainDialog,
-			boolean forceParse)
+	public TedParser(TedSerie serie, ITedMain mainDialog, boolean forceParse)
 	{
 		this.tMainDialog = mainDialog;
 		this.currentSerie = serie;
@@ -182,19 +181,16 @@ public class TedParser extends Thread implements Serializable{
 			}
 			// progress++;
 			currentFeed = (TedSerieFeed) feeds.get(i);
-			try {
+			try 
+			{
 				URLConnection urlc;
 				URL feedURL = new URL(currentFeed.getUrl());
 
-				TedLog
-						.debug("Loading feed from " + serie.getName() + " URL: " + feedURL); //$NON-NLS-1$ //$NON-NLS-2$
-				serie
-						.setStatusString(
-								Lang.getString("TedParser.StatusLoading") + " " + feedURL, tMainDialog); //$NON-NLS-1$
+				TedLog.debug("Loading feed from " + serie.getName() + " URL: " + feedURL); //$NON-NLS-1$ //$NON-NLS-2$
+				serie.setStatusString(Lang.getString("TedParser.StatusLoading") + " " + feedURL, tMainDialog); //$NON-NLS-1$
 
 				// Read in the feed.
-				BufferedInputStream stream = TedIO.makeBufferedInputStream(
-						feedURL, 5000);
+				BufferedInputStream stream = TedIO.makeBufferedInputStream(feedURL, TedConfig.getInstance().getTimeOutInSecs());
 
 				XmlReader xmlReader = new XmlReader(stream);
 				SyndFeed feed = input.build(xmlReader);
@@ -206,15 +202,14 @@ public class TedParser extends Thread implements Serializable{
 
 				// clear memory
 				feed = null;
-			} catch (MalformedURLException e)
+			} 
+			catch (MalformedURLException e)
 			{
-				String message = Lang.getString("TedParser.ErrorNotValidURL1") + " " + serie.getName() + ". " + Lang.getString("TedParser.ErrorNotValidURL2") + //$NON-NLS-1$ //$NON-NLS-2$
-						"\n" + currentFeed.getUrl();
-				; //$NON-NLS-1$
-				tMainDialog.displayError(Lang
-						.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
+				String message = Lang.getString("TedParser.ErrorNotValidURL1") + " " + serie.getName() + ". " + Lang.getString("TedParser.ErrorNotValidURL2") + "\n" + currentFeed.getUrl(); //$NON-NLS-1$
+				tMainDialog.displayError(Lang.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 				feedsData[i] = null;
-			} catch (IOException e)
+			} 
+			catch (IOException e)
 			{
 				String message = Lang.getString("TedParser.Error404Feed1")
 						+ " "
@@ -223,7 +218,8 @@ public class TedParser extends Thread implements Serializable{
 				tMainDialog.displayError(Lang
 						.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 				feedsData[i] = null;
-			} catch (NullPointerException e)
+			} 
+			catch (NullPointerException e)
 			{
 				// no items in the feed
 				String message = Lang.getString("TedParser.NoFeedItems1")
@@ -232,12 +228,11 @@ public class TedParser extends Thread implements Serializable{
 				tMainDialog.displayError(Lang
 						.getString("TedParser.ErrorHeader"), message, ""); //$NON-NLS-1$ //$NON-NLS-2$
 				feedsData[i] = null;
-			} catch (Exception e)
+			} 
+			catch (Exception e)
 			{
-				TedLog
-						.error(
-								e,
-								Lang.getString("TedParser.UnknownException") + " (" + currentFeed.getUrl() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+				TedLog.error(e,
+							 Lang.getString("TedParser.UnknownException") + " (" + currentFeed.getUrl() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 				feedsData[i] = null;
 			}
 		}
@@ -307,8 +302,7 @@ public class TedParser extends Thread implements Serializable{
 					itemProgress++;
 					
 					serie.setProgress((int) Math.abs(progress), tMainDialog);
-					serie.setStatusString(
-							Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems, tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
+					serie.setStatusString(Lang.getString("TedParser.StatusCheckingItem") + " " + itemProgress + "/" + totalNumberOfFeedItems, tMainDialog); //$NON-NLS-1$ //$NON-NLS-2$
 
 					if (serie.isDaily || this.continueParsing())
 					{
@@ -698,7 +692,16 @@ public class TedParser extends Thread implements Serializable{
 			torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
 			// get torrent info (for size)
 			torrentInfo = torrent.getInfo();
-
+			
+			// First see if we´re dealing with a private tracker.
+			String trackerUrl = torrent.getTracker().getAnnounce();
+			if (TedConfig.getInstance().isPrivateTracker(trackerUrl))
+			{
+				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorPrivateTracker") + " (" + trackerUrl + ")";
+				return;
+			}
+			
+			// Check for the size of the file.
 			try 
 			{
 				hasCorrectSize(torrent, serie, item);
