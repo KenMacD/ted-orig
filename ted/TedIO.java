@@ -1188,17 +1188,12 @@ public class TedIO
 		    systemProperties.setProperty("http.proxyPort", TedConfig.getInstance().getProxyPort());
 	
 		    if (TedConfig.getInstance().getUseProxyAuth())
-		    {
-		    	Authenticator.setDefault(new ProxyAuthenticator(TedConfig.getInstance().getProxyUsername(), TedConfig.getInstance().getProxyPassword()));
+		    {    	
+		    	conn.setRequestProperty("Proxy-Authorization", TedConfig.getInstance().getProxyPassword());
 		    } 
-		    else
-		    {
-		    	Authenticator.setDefault(null);
-		    }
 		} 
 		else
 		{
-		    Authenticator.setDefault(null);
 		    systemProperties.setProperty("http.proxyHost", "");
 		    systemProperties.setProperty("http.proxyPort", "");
 		}

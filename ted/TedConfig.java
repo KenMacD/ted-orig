@@ -1,6 +1,7 @@
 package ted;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
@@ -756,6 +757,9 @@ public class TedConfig
 	public void setProxyUsername(String proxyUsername)
 	{
 		this.proxyUsername = proxyUsername;
+		
+		// Change the proxy password which contains the new name.
+		this.setProxyPassword(this.proxyPassword);
 	}
 
 	public String getProxyPassword()
@@ -765,7 +769,15 @@ public class TedConfig
 
 	public void setProxyPassword(String proxyPassword)
 	{
-		this.proxyPassword = proxyPassword;
+		try 
+		{
+			this.proxyPassword = Base64.encodeObject(proxyUsername + ":" + proxyPassword);
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 
 	public boolean getUseProxyAuth()
