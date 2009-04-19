@@ -71,7 +71,7 @@ public class EditShowToolBar extends JToolBar implements ActionListener
 		{
 			generalButton.setVisible(false);
 			feedsButton.setVisible(false);
-			scheduleButton.setVisible(false);
+			scheduleButton.setVisible(false);			
 			filterButton.setSelected(true);
 		}
 	}

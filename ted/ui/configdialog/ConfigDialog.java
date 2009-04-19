@@ -56,21 +56,19 @@ public class ConfigDialog extends javax.swing.JDialog
 	private JButton Annuleer_Button;
 	private TedMainDialog main;
 	ConfigDialogListener TCListener = new ConfigDialogListener(this);
-	JToggleButton generalButton;
-    JToggleButton looknfeelButton;
-    JToggleButton advancedButton;
-    JToggleButton updatesButton;
 	private GeneralPanel generalPanel;
 	private LooknFeelPanel looknfeelPanel;
 	private AdvancedPanel advancedPanel;
 	private UpdatesPanel updatesPanel;
+	private NetworkPanel networkPanel;
 	private int width = 500;
-	private int height = 650;
+	private int height = 500;
 	private int tabsHeight = 500;
 	public final String COMMANDGENERAL 	 = "general";
 	public final String COMMANDLOOKNFEEL = "looknfeel";
 	public final String COMMANDADVANCED  = "advanced";
 	public final String COMMANDUPDATES 	 = "updates";
+	public final String COMMANDNETWORK   = "network";
 	private String currentTab = COMMANDGENERAL;
 	
 	
@@ -196,6 +194,10 @@ public class ConfigDialog extends javax.swing.JDialog
 		this.updatesPanel = new UpdatesPanel(this.main);
 		this.jConfigTabs.add(this.COMMANDUPDATES, this.updatesPanel);
 		this.updatesPanel.setValues();
+		
+		this.networkPanel = new NetworkPanel();
+		this.jConfigTabs.add(this.COMMANDNETWORK, this.networkPanel);
+		this.networkPanel.setValues();
 	}
 
 	
@@ -211,13 +213,17 @@ public class ConfigDialog extends javax.swing.JDialog
 		int currentTime = TedConfig.getInstance().getRefreshTime();
 		boolean resetTime = false;
 		
-		if (this.generalPanel.checkValues() && this.looknfeelPanel.checkValues() && this.advancedPanel.checkValues() && this.updatesPanel.checkValues())
+		if (this.generalPanel  .checkValues() 
+		 && this.looknfeelPanel.checkValues() 
+		 && this.advancedPanel .checkValues() 
+		 && this.updatesPanel  .checkValues()
+		 && this.networkPanel  .checkValues())
 		{		
-			this.generalPanel.saveValues();
+			this.generalPanel  .saveValues();
 			this.looknfeelPanel.saveValues();
-			this.advancedPanel.saveValues();
-			this.updatesPanel.saveValues();
-			
+			this.advancedPanel .saveValues();
+			this.updatesPanel  .saveValues();
+			this.networkPanel  .saveValues();			
 			
 			int newTime = TedConfig.getInstance().getRefreshTime();
 			

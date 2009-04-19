@@ -64,9 +64,9 @@ public class EditShowDialog extends javax.swing.JDialog implements ActionListene
 	private FilterPanel filterPanel;
 	private SchedulePanel schedulePanel;
 	private String currentSerieName;
-	public final static String GENERALCOMMAND = "general";
-	public final static String FEEDSCOMMAND = "feeds";
-	public final static String FILTERCOMMAND = "filter";
+	public final static String GENERALCOMMAND  = "general";
+	public final static String FEEDSCOMMAND    = "feeds";
+	public final static String FILTERCOMMAND   = "filter";
 	public final static String SCHEDULECOMMAND = "schedule";
 	private String currentTab = this.GENERALCOMMAND;
 	private TedSerie originalSerie;

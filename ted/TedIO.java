@@ -299,7 +299,9 @@ public class TedIO
 		    fw.append("proxyUsername=" + TedConfig.getInstance().getProxyUsername() + "\n");
 		    fw.append("proxyPassword=" + TedConfig.getInstance().getProxyPassword() + "\n");
 		    fw.append("proxyHost=" + TedConfig.getInstance().getProxyHost() + "\n");
-		    fw.append("proxyPort=" + TedConfig.getInstance().getProxyPort());
+		    fw.append("proxyPort=" + TedConfig.getInstance().getProxyPort() + "\n");
+		    
+		    fw.append("filterPrivateTrackers=" + TedConfig.getInstance().isFilterPrivateTrackers());
 		    fw.close();
 		} 
 		catch (Exception e)
@@ -560,6 +562,10 @@ public class TedIO
 				{
 				    TedConfig.getInstance().setProxyPort(configItemValue);
 				}	
+				else if (configItem.equals("filterPrivateTrackers"))
+				{
+					TedConfig.getInstance().setFilterPrivateTrackers(Boolean.parseBoolean(configItemValue));
+				}
 		    }
 	
 		    TedConfig.getInstance().setLocale(tempCountry, tempLanguage);

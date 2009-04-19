@@ -19,6 +19,7 @@ public class ConfigDialogToolBar extends JToolBar implements ActionListener
 	private ToolBarButton looknfeelButton;
 	private ToolBarButton advancedButton;
 	private ToolBarButton updatesButton;
+	private ToolBarButton networkButton;
 	private ConfigDialog tedConfigDialog;
 
 	/**
@@ -61,6 +62,10 @@ public class ConfigDialogToolBar extends JToolBar implements ActionListener
 	    updatesButton = new ToolBarButton(this.tedConfigDialog.COMMANDUPDATES, this, "TedConfigDialog");
 	    toolBarButtons.add(updatesButton);
 	    this.add(updatesButton);	
+	    
+	    networkButton = new ToolBarButton(this.tedConfigDialog.COMMANDNETWORK, this, "TedConfigDialog");
+	    toolBarButtons.add(networkButton);
+	    this.add(networkButton);
 	}
 
 	/* (non-Javadoc)

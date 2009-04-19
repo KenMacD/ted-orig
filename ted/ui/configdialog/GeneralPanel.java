@@ -264,7 +264,6 @@ public class GeneralPanel extends JPanel implements ActionListener
 	
 	/**
 	 * Save values from the dialog to the config file
-	 * @param config
 	 */
 	public void saveValues()
 	{

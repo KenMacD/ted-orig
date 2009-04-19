@@ -81,6 +81,7 @@ public class TedConfig
 	private String proxyPassword = "";
 	private String proxyHost = "";
 	private String proxyPort = "";
+	private boolean filterPrivateTrackers = true;
 	
 	private final Color defaultEvenRowColor = Color.WHITE;
 	private final Color defaultOddRowColor  = new Color(236,243,254);
@@ -813,5 +814,15 @@ public class TedConfig
 	public void setPrivateTrackers(Set<String> privateTrackers)
 	{
 		this.privateTrackers = privateTrackers; 
+	}
+	
+	public void setFilterPrivateTrackers(boolean filterThem)
+	{
+		filterPrivateTrackers = filterThem;
+	}
+
+	public boolean isFilterPrivateTrackers() 
+	{
+		return filterPrivateTrackers;
 	}
 }
