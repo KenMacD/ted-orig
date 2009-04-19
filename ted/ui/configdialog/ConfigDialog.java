@@ -62,8 +62,8 @@ public class ConfigDialog extends javax.swing.JDialog
 	private UpdatesPanel updatesPanel;
 	private NetworkPanel networkPanel;
 	private int width = 500;
-	private int height = 500;
-	private int tabsHeight = 500;
+	private int height = 520;
+	private int tabsHeight = 350;
 	public final String COMMANDGENERAL 	 = "general";
 	public final String COMMANDLOOKNFEEL = "looknfeel";
 	public final String COMMANDADVANCED  = "advanced";

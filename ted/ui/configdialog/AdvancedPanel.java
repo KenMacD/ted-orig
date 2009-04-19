@@ -77,7 +77,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			FormLayout advancedPanelLayout = new FormLayout(
 					"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
 					"max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 243));
 			advancedPanel.setSize(new java.awt.Dimension(500,500));
 			advancedPanel.setLayout(advancedPanelLayout);
 
@@ -147,7 +147,7 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	public void setValues()
 	{		
 		this.setSelectedButton(seederSettingGroup, TedConfig.getInstance().getSeederSetting());
-		this.setPreferredSize(new java.awt.Dimension(500, 500));
+		this.setPreferredSize(new java.awt.Dimension(500, 245));
 		this.setSize(new java.awt.Dimension(500,500));
 		checkNotDownloadCompressed.setSelected(TedConfig.getInstance().getDoNotDownloadCompressed());
 		filterExtensions.setText(TedConfig.getInstance().getFilterExtensions());
