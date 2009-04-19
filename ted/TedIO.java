@@ -1184,6 +1184,7 @@ public class TedIO
 		Properties systemProperties = System.getProperties();
 		if (TedConfig.getInstance().getUseProxy())
 		{
+			System.getProperties().put( "proxySet", "true");
 		    systemProperties.setProperty("http.proxyHost", TedConfig.getInstance().getProxyHost());
 		    systemProperties.setProperty("http.proxyPort", TedConfig.getInstance().getProxyPort());
 	
@@ -1194,6 +1195,7 @@ public class TedIO
 		} 
 		else
 		{
+			System.getProperties().put( "proxySet", "false");
 		    systemProperties.setProperty("http.proxyHost", "");
 		    systemProperties.setProperty("http.proxyPort", "");
 		}
