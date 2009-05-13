@@ -29,7 +29,7 @@
 	</target>
 
 	<target name="build" depends="prepare">
-		<javac source="1.6" target="1.6" destdir="${build.dir}">
+		<javac source="1.5" target="1.5" destdir="${build.dir}">
 			<src path="${ted.src.dir}" />
 			<src path="${com.src.dir}" />
 			<src path="${net.src.dir}" />
