@@ -472,77 +472,105 @@ public class TedParser extends Thread implements Serializable{
 				e.printStackTrace();
 				return;
 			}
+			int seedersFromRSS = getSeedersFromRSS(item);
 
-			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			TorrentImpl torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
-
-			// check size and amount of seeders to filter out fakes
-			boolean correctSize = true;
-			try 
+			// Only load the torrent when the seeders found in the RSS entry are 0 or
+			// larger than the minimum number of seeders
+			if (seedersFromRSS <= 0 || seedersFromRSS >= serie.getMinNumOfSeeders())
 			{
-				hasCorrectSize(torrent, serie, item);
-			} 
-			catch (FileSizeException e)
-			{
-				correctSize = false;
-			}
-
-			if (hasEnoughSeeders(torrent, serie, item) && correctSize)
-			{
-				// we found a new season, does the user wants to download it?
-				//if we are headless, yes indeed
-
-				int answer = JOptionPane.NO_OPTION;
-				if (TedSystemInfo.isHeadless())
-				{
-					answer = JOptionPane.YES_OPTION;
-				}
-				else
-				{
-					if ( TedConfig.getInstance().isDownloadNewSeason())
-					{					
+				TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
+				TorrentImpl torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
 	
-						// ask user if he wants to download new season
-						answer = JOptionPane
-								.showOptionDialog(
-										null,
-										Lang
-												.getString("TedParser.DialogNewSeason1") + " " + season + " " + Lang.getString("TedParser.DialogNewSeason2") + " " + serie.getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-												+ "\n" + Lang.getString("TedParser.DialiogNewSeason3") + " " + season + "?" //$NON-NLS-1$ //$NON-NLS-2$
-												+ "\n"
-												+ Lang
-														.getString("TedParser.DialogNewSeason4")
-												+ " "
-												+ (season - 1)
-												+ "\n" + Lang.getString("TedParser.DialogNewSeason5"), //$NON-NLS-1$ //$NON-NLS-2$
-										Lang
-												.getString("TedParser.DialogNewSeasonHeader") + serie.getName(), //$NON-NLS-1$
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE, null, Lang
-												.getYesNoLocale(), Lang
-												.getYesNoLocale()[0]);
+				// check size and amount of seeders to filter out fakes
+				boolean correctSize = true;
+				try 
+				{
+					hasCorrectSize(torrent, serie, item);
+				} 
+				catch (FileSizeException e)
+				{
+					correctSize = false;
+				}
+	
+				if (hasEnoughSeeders(torrent, serie, seedersFromRSS) && correctSize)
+				{
+					// we found a new season, does the user wants to download it?
+					//if we are headless, yes indeed
+	
+					int answer = JOptionPane.NO_OPTION;
+					if (TedSystemInfo.isHeadless())
+					{
+						answer = JOptionPane.YES_OPTION;
 					}
-
-					if (answer == JOptionPane.YES_OPTION)
+					else
 					{
-						// download new season
-						SeasonEpisode nextSeason = new SeasonEpisode(season, 1);
-						serie.setCurrentEpisode(nextSeason);
-						tMainDialog.saveShows();
-
-						// only the season and episode are changed, no torrent
-						// has actually
-						// been downloaded
-						foundTorrent = false;
-					} else
-					{
-						// remember the preference of the user
-						TedConfig.getInstance().setDownloadNewSeason(false);
+						if ( TedConfig.getInstance().isDownloadNewSeason())
+						{					
+		
+							// ask user if he wants to download new season
+							answer = JOptionPane
+									.showOptionDialog(
+											null,
+											Lang
+													.getString("TedParser.DialogNewSeason1") + " " + season + " " + Lang.getString("TedParser.DialogNewSeason2") + " " + serie.getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+													+ "\n" + Lang.getString("TedParser.DialiogNewSeason3") + " " + season + "?" //$NON-NLS-1$ //$NON-NLS-2$
+													+ "\n"
+													+ Lang
+															.getString("TedParser.DialogNewSeason4")
+													+ " "
+													+ (season - 1)
+													+ "\n" + Lang.getString("TedParser.DialogNewSeason5"), //$NON-NLS-1$ //$NON-NLS-2$
+											Lang
+													.getString("TedParser.DialogNewSeasonHeader") + serie.getName(), //$NON-NLS-1$
+											JOptionPane.YES_NO_OPTION,
+											JOptionPane.QUESTION_MESSAGE, null, Lang
+													.getYesNoLocale(), Lang
+													.getYesNoLocale()[0]);
+						}
+	
+						if (answer == JOptionPane.YES_OPTION)
+						{
+							// download new season
+							SeasonEpisode nextSeason = new SeasonEpisode(season, 1);
+							serie.setCurrentEpisode(nextSeason);
+							tMainDialog.saveShows();
+	
+							// only the season and episode are changed, no torrent
+							// has actually
+							// been downloaded
+							foundTorrent = false;
+						} else
+						{
+							// remember the preference of the user
+							TedConfig.getInstance().setDownloadNewSeason(false);
+						}
 					}
 				}
 			}
 		}
 
+	}
+
+	/**
+	 * @param item
+	 * @return Number of seeders in item if present. If not present: -1.
+	 */
+	private int getSeedersFromRSS(SyndEntry item) 
+	{
+		int numberOfSeeders = -1;
+		String urlInFeed = item.getLink();
+		if (urlInFeed.contains("mininova"))
+		{
+			numberOfSeeders = getMininovaDescriptionSeeders(item);
+		}
+		else if (urlInFeed.contains("btjunkie"))
+		{
+			numberOfSeeders = getBtJunkieDescriptionSeeders(item.getTitle());
+		}
+		
+		TedLog.debug("Seeders from RSS:" + " " + numberOfSeeders);
+		
+		return numberOfSeeders;
 	}
 
 	/**
@@ -688,102 +716,113 @@ public class TedParser extends Thread implements Serializable{
 		// download torrent info
 		try 
 		{
-			TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
-			torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
-			// get torrent info (for size)
-			torrentInfo = torrent.getInfo();
+			int seedersFromRSS = getSeedersFromRSS(item);
+			// Only load the torrent when the seeders found in the RSS entry are 0 or
+			// larger than the minimum number of seeders
+			if (seedersFromRSS <= 0 || seedersFromRSS >= serie.getMinNumOfSeeders())
+			{
 			
-			// First see if we´re dealing with a private tracker.
-			String trackerUrl = torrent.getTracker().getAnnounce();
-			if (TedConfig.getInstance().isFilterPrivateTrackers()
-			 && TedConfig.getInstance().isPrivateTracker(trackerUrl))
-			{
-				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorPrivateTracker") + " (" + trackerUrl + ")";
-				return;
-			}
-			
-			// Check for the size of the file.
-			try 
-			{
-				hasCorrectSize(torrent, serie, item);
-			} 
-			catch (FileSizeException e)
-			{
-				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorFileSize") + " (" + e.size + ")";
-				throw e;
-			}
-
-			// if the user does not want to download compressed files
-			if (TedConfig.getInstance().getDoNotDownloadCompressed())
-			{
-				// and the torrent contains compressed files
-				if (this.containsCompressedFiles(torrent))
+				TedLog.debug(Lang.getString("TedLog.LoadingTorrent")); //$NON-NLS-1$
+				torrent = new TorrentImpl(url, TedConfig.getInstance().getTimeOutInSecs());
+				// get torrent info (for size)
+				torrentInfo = torrent.getInfo();
+				
+				// First see if weï¿½re dealing with a private tracker.
+				String trackerUrl = torrent.getTracker().getAnnounce();
+				if (TedConfig.getInstance().isFilterPrivateTrackers()
+				 && TedConfig.getInstance().isPrivateTracker(trackerUrl))
 				{
-					// reject it
-					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorCompressedFiles");
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorPrivateTracker") + " (" + trackerUrl + ")";
 					return;
 				}
-			}
-
-			// get torrent state (for seeders)
-			try 
-			{
-				int torrentSeeders = 0;
-				// only get the torrent state when minimum seeders > 0
-				if (   serie.getMinNumOfSeeders() > 0 
-					|| TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
+				
+				// Check for the size of the file.
+				try 
 				{
-					torrentSeeders = getSeeders(torrent, serie, item);
+					hasCorrectSize(torrent, serie, item);
+				} 
+				catch (FileSizeException e)
+				{
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorFileSize") + " (" + e.size + ")";
+					throw e;
 				}
-
-				// compare with best
-				// if more seeders than best and more seeders than min seeders
-				if (   (this.bestTorrentUrl == null || (torrentSeeders > this.bestTorrentSeeders))
-					&& torrentSeeders >= serie.getMinNumOfSeeders())
+	
+				// if the user does not want to download compressed files
+				if (TedConfig.getInstance().getDoNotDownloadCompressed())
 				{
-					// print seeders
-					TedLog.debug("Found new best torrent! (" + torrentSeeders + " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
-					
-					// current is best
-					this.bestTorrentUrl = url;
-					this.bestTorrentInfo = torrentInfo;
-					this.bestTorrentSeeders = torrentSeeders;
-					this.bestTorrent = torrent;
-
-					if (!serie.isDaily)
+					// and the torrent contains compressed files
+					if (this.containsCompressedFiles(torrent))
 					{
-						if (bestItemNr != 0)
+						// reject it
+						parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorCompressedFiles");
+						return;
+					}
+				}
+	
+				// get torrent state (for seeders)
+				try 
+				{
+					int torrentSeeders = 0;
+					// only get the torrent state when minimum seeders > 0
+					if (seedersFromRSS > 0)
+					{
+						torrentSeeders = seedersFromRSS;
+					}
+					else if (   serie.getMinNumOfSeeders() > 0 
+						|| TedConfig.getInstance().getSeederSetting() == TedConfig.DOWNLOADMOSTSEEDERS)
+					{
+						torrentSeeders = getSeedersFromTorrent(torrent, serie);
+					}
+	
+					// compare with best
+					// if more seeders than best and more seeders than min seeders
+					if (   (this.bestTorrentUrl == null || (torrentSeeders > this.bestTorrentSeeders))
+						&& torrentSeeders >= serie.getMinNumOfSeeders())
+					{
+						// print seeders
+						TedLog.debug("Found new best torrent! (" + torrentSeeders + " seeders)"); //$NON-NLS-1$ //$NON-NLS-2$
+						
+						// current is best
+						this.bestTorrentUrl = url;
+						this.bestTorrentInfo = torrentInfo;
+						this.bestTorrentSeeders = torrentSeeders;
+						this.bestTorrent = torrent;
+	
+						if (!serie.isDaily)
 						{
-							// the message for the old best torrent is
-							// changed...
-							parseLogInfo[bestItemNr][1] = Lang.getString("TedMainMenuBar.File")
-														+ " "
-														+ itemNr
-														+ " "
-														+ Lang.getString("TedLog.FoundBetterTorrent");
+							if (bestItemNr != 0)
+							{
+								// the message for the old best torrent is
+								// changed...
+								parseLogInfo[bestItemNr][1] = Lang.getString("TedMainMenuBar.File")
+															+ " "
+															+ itemNr
+															+ " "
+															+ Lang.getString("TedLog.FoundBetterTorrent");
+							}
+	
+							// and the new best torrent gets his own message...
+							parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
+							this.bestItemNr = itemNr;
 						}
-
-						// and the new best torrent gets his own message...
-						parseLogInfo[itemNr][1] = Lang.getString("TedLog.BestTorrent");
-						this.bestItemNr = itemNr;
+					} 
+					else
+					{
+						parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorSeeders")	+ " (" + torrentSeeders + ")";
+						TedLog.debug("Torrent has not enough seeders (" + torrentSeeders + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				} 
-				else
+				catch (Exception e)
 				{
-					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorSeeders")	+ " (" + torrentSeeders + ")";
-					TedLog.debug("Torrent has not enough seeders (" + torrentSeeders + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+					parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorTorrentInfo");
+	
+					if (e.getMessage().contains("bencoding"))
+					{
+						parseLogInfo[itemNr][1] = Lang.getString("TedLog.BencodingError");
+					}
+	
+					TedLog.error(e,	"Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 				}
-			} 
-			catch (Exception e)
-			{
-				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorTorrentInfo");
-
-				if (e.getMessage().contains("bencoding"))
-				{
-					parseLogInfo[itemNr][1] = Lang.getString("TedLog.BencodingError");
-				}
-
-				TedLog.error(e,	"Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 			}
 		}
 		// TODO: catch all exceptions here and determine logging
@@ -929,13 +968,16 @@ public class TedParser extends Thread implements Serializable{
 	 *            TedSerie that torrent belongs to
 	 * @return Returns if the torrent has enough seeders
 	 */
-	private boolean hasEnoughSeeders(TorrentImpl torrent, TedSerie serie, SyndEntry item)
+	private boolean hasEnoughSeeders(TorrentImpl torrent, TedSerie serie, int seedersFromRSS)
 	{
 		// Get torrent state (containing seeders/leechers)
 		try 
 		{
-			int numberOfSeeders = getSeeders(torrent, serie, item);
-			
+			int numberOfSeeders = seedersFromRSS;
+			if (seedersFromRSS == 0)
+			{
+				numberOfSeeders = getSeedersFromTorrent(torrent, serie);
+			}
 			// Return if the found number of seeders is large enough.
 			return (numberOfSeeders >= serie.getMinNumOfSeeders());
 		} 
@@ -945,27 +987,15 @@ public class TedParser extends Thread implements Serializable{
 		}
 	}
 	
-	private int getSeeders(TorrentImpl torrent, TedSerie serie, SyndEntry item)
+	private int getSeedersFromTorrent(TorrentImpl torrent, TedSerie serie)
 	{
-		// First try to get the number of seeders out of the description.
+		// First try to get the number of the torrent.
 		int numberOfSeeders = 0;
-		String urlInFeed = item.getLink();
-		if (urlInFeed.contains("mininova"))
-		{
-			numberOfSeeders = getMininovaDescriptionSeeders(item);
-		}
-		else if (urlInFeed.contains("btjunkie"))
-		{
-			numberOfSeeders = getBtJunkieDescriptionSeeders(item.getTitle());
-		}
+		TorrentState torrentState = torrent.getState(TedConfig.getInstance().getTimeOutInSecs());
+		numberOfSeeders = torrentState.getComplete();
 		
-		// If unsuccessful check the torrent.
-		if (numberOfSeeders <= 0) 
-		{					
-			TorrentState torrentState = torrent.getState(TedConfig.getInstance().getTimeOutInSecs());
-			numberOfSeeders = torrentState.getComplete();
-		}
-		
+		TedLog.debug("Seeders from torrent:" + " " + numberOfSeeders); //$NON-NLS-1$ //$NON-NLS-2$
+
 		return numberOfSeeders;
 	}
 
