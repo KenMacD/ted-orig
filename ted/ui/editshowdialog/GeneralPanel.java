@@ -79,7 +79,7 @@ public class GeneralPanel extends JPanel
 			checkUpdatePresets = new JCheckBox();
 			this.add(checkUpdatePresets, new CellConstraints("2, 11, 1, 1, default, default"));
 			checkUpdatePresets.setText(Lang
-				.getString("TedEpisodeDialog.CheckAutoUpdate"));
+				.getString("TedEpisodeDialog.UpdateShowValues"));
 			checkUpdatePresets.setOpaque(false);
 			checkUpdatePresets.setBounds(10, 49, 448, 28);
 			
