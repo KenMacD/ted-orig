@@ -57,7 +57,6 @@ public class AdvancedPanel extends JPanel implements ActionListener
 	private JCheckBox useAutoScheduleCheckBox;	
 	private JCheckBox filterTrackersCheckBox;
 	private JSeparator jSeparator3;
-	private JSeparator jSeparatorProxy;
 	private ButtonGroup seederSettingGroup;  //  @jve:decl-index=0:
 	private JCheckBox checkNotDownloadCompressed = null;
 	private JTextField filterExtensions;
@@ -76,9 +75,8 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			this.add(advancedPanel);	
 			FormLayout advancedPanelLayout = new FormLayout(
 					"max(p;6dlu), 10dlu, 22dlu, max(p;6dlu), 88dlu, 35dlu:grow, max(p;16dlu)", 
-					"max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
-			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 243));
-			advancedPanel.setSize(new java.awt.Dimension(500,500));
+					"max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 15dlu, max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
+			advancedPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 			advancedPanel.setLayout(advancedPanelLayout);
 
 			labelTorrentSettings = new JLabel();
@@ -118,21 +116,17 @@ public class AdvancedPanel extends JPanel implements ActionListener
 			advancedPanel.add(filterExtensions, new CellConstraints("2, 7, 5, 1, default, default"));
 			{
 				jSeparator3 = new JSeparator();
-				advancedPanel.add(jSeparator3, new CellConstraints("2, 8, 5, 1, default, default"));
+				advancedPanel.add(jSeparator3, new CellConstraints("2, 10, 5, 1, default, default"));
 			}
 			{
 				useAutoScheduleCheckBox = new JCheckBox();
-				advancedPanel.add(useAutoScheduleCheckBox, new CellConstraints("2, 9, 5, 1, default, default"));
+				advancedPanel.add(useAutoScheduleCheckBox, new CellConstraints("2, 11, 5, 1, default, default"));
 				useAutoScheduleCheckBox.setText(Lang.getString("TedConfigDialog.AutomaticSchedule"));
 			}
 			
 			{
-				jSeparatorProxy = new JSeparator();
-				advancedPanel.add(jSeparatorProxy, new CellConstraints("2, 10, 5, 1, default, default"));
-			}						
-			{
 				filterTrackersCheckBox = new JCheckBox();
-				advancedPanel.add(filterTrackersCheckBox, new CellConstraints("2, 11, 5, 1, default, default"));
+				advancedPanel.add(filterTrackersCheckBox, new CellConstraints("2, 9, 5, 1, default, default"));
 				filterTrackersCheckBox.setText(Lang.getString("TedConfigDialog.PrivateTrackers"));
 			}
 		}

@@ -65,7 +65,7 @@ public class NetworkPanel  extends JPanel implements ActionListener
 				"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
 				"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 		networkPanel.setLayout(networkPanelLayout);
-		networkPanel.setPreferredSize(new java.awt.Dimension(500, 230));
+		networkPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 		networkPanel.setOpaque(false);
 		
 
@@ -231,6 +231,8 @@ public class NetworkPanel  extends JPanel implements ActionListener
 		this.updateUseAuthProxy();
 		this.proxyHost.setEnabled(this.useProxy.isSelected());
 		this.proxyPort.setEnabled(this.useProxy.isSelected());
+		this.proxyHostLabel.setEnabled(this.useProxy.isSelected());
+		this.proxyPortLabel.setEnabled(this.useProxy.isSelected());
 	}
 
 	private void updateUseAuthProxy()
@@ -248,5 +250,7 @@ public class NetworkPanel  extends JPanel implements ActionListener
 	{
 		this.proxyUsername.setEnabled(this.useAuthProxy.isSelected());
 		this.proxyPassword.setEnabled(this.useAuthProxy.isSelected());
+		this.proxyUserNameLabel.setEnabled(this.useAuthProxy.isSelected());
+		this.proxyPasswordLabel.setEnabled(this.useAuthProxy.isSelected());
 	}
 }
