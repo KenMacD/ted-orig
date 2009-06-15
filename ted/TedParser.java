@@ -1957,7 +1957,7 @@ public class TedParser extends Thread implements Serializable{
 		// Retrieve the description.
 		String description = rssContent.getValue().toLowerCase();
 				
-		Pattern sizePattern = Pattern.compile("(size: )(\\d+)(.*)((megabyte|mb)|(gigabyte|gb))");
+		Pattern sizePattern = Pattern.compile("(size: )(\\d+(.\\d+)*)(.*)((megabyte|mb)|(gigabyte|gb))");
 		Matcher sizeMatcher = sizePattern.matcher(description);
 	
 		// Find the file size in the description.
@@ -1969,12 +1969,15 @@ public class TedParser extends Thread implements Serializable{
 			
 			// If the file size is in GB we've to multiply it by 1024
 			// to get it in MB.
-			String kindOfBytes = sizeMatcher.group(4);
+			String kindOfBytes = sizeMatcher.group(5);
 			
+			// Use this temporary double to store sizes of 1.5gb
+			// Cast it to an int before returning the size (after muliplying it by 1024).
+			double fileSizeDouble = 0;
 			try
 			{
 				// Retrieve the number from the string.
-				fileSize = Integer.parseInt(fileSizeMatch);
+				fileSizeDouble = Double.parseDouble(fileSizeMatch);
 			}
 			catch (Exception e)
 			{
@@ -1982,11 +1985,12 @@ public class TedParser extends Thread implements Serializable{
 				return 0;
 			}
 			
-			if (kindOfBytes.equals("gigabytes") || kindOfBytes.equals("gb"))
+			if (kindOfBytes.contains("gigabyte") || kindOfBytes.equals("gb"))
 			{
-				fileSize *= 1024;
+				fileSizeDouble *= 1024;
 			}
 			
+			fileSize = (int) fileSizeDouble;
 		}
 		else
 		{
