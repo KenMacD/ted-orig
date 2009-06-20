@@ -824,6 +824,11 @@ public class TedParser extends Thread implements Serializable{
 					TedLog.error(e,	"Error getting trackerstate for torrent " + torrentInfo.getName()); //$NON-NLS-1$
 				}
 			}
+			else
+			{
+				parseLogInfo[itemNr][1] = Lang.getString("TedLog.ErrorSeeders")	+ " (" + seedersFromRSS + ")";
+				TedLog.debug("Torrent has not enough seeders (" + seedersFromRSS + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
 		}
 		// TODO: catch all exceptions here and determine logging
 		catch (BencodingException e)
