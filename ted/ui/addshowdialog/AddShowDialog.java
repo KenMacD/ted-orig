@@ -114,7 +114,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			this.episodeChooserPanel.setActivityStatus(false);
 			FormLayout thisLayout = new FormLayout(
 					"max(p;5dlu), 68dlu:grow, max(p;68dlu), 10dlu, 250px, max(p;100px), 5dlu, 150px, max(p;5dlu)", 
-					"max(p;5dlu), max(p;15dlu), 5dlu, 50dlu:grow, 5dlu, max(p;15dlu), 5dlu, bottom:130dlu, 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
+					"max(p;5dlu), max(p;15dlu), 5dlu, 50dlu:grow, 5dlu, max(p;15dlu), 5dlu, bottom:130dlu, max(p;15dlu), 5dlu, max(p;15dlu), 5dlu, max(p;15dlu), max(p;5dlu)");
 			getContentPane().setLayout(thisLayout);
 
 			episodeChooserPanel.setVisible(false);			
@@ -124,20 +124,20 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			showsTable = new JTable();
 			//getContentPane().add(showsTable, new CellConstraints("4, 3, 1, 1, default, default"));
 			getShowsScrollPane().setViewportView(showsTable);
-			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 5, fill, fill"));
+			getContentPane().add(getShowsScrollPane(), new CellConstraints("2, 4, 2, 6, fill, fill"));
 			getContentPane().add(episodeChooserPanel, new CellConstraints("5, 4, 4, 1, fill, fill"));
 			getContentPane().add(subscribeOptionsPanel, new CellConstraints("5, 8, 4, 1, fill, fill"));
-			getContentPane().add(getOkButton(), new CellConstraints("8, 12, 1, 1, default, default"));
-			getContentPane().add(getCancelButton(), new CellConstraints("6, 12, 1, 1, default, default"));
+			getContentPane().add(getOkButton(), new CellConstraints("8, 13, 1, 1, default, default"));
+			getContentPane().add(getCancelButton(), new CellConstraints("6, 13, 1, 1, default, default"));
 			getContentPane().add(getShowInfoScrollPane(), new CellConstraints("5, 4, 4, 1, fill, fill"));
-			getContentPane().add(getJHelpButton(), new CellConstraints("2, 12, 1, 1, left, default"));
+			getContentPane().add(getJHelpButton(), new CellConstraints("2, 13, 1, 1, left, default"));
 			getContentPane().add(getSelectShowLabel(), new CellConstraints("2, 2, 2, 1, left, fill"));
-			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 4, 1, left, bottom"));
+			getContentPane().add(getSelectEpisodeLabel(), new CellConstraints("5, 6, 2, 1, left, bottom"));
 			getContentPane().add(getShowNameLabel(), new CellConstraints("5, 2, 4, 1, left, fill"));
-			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 10, 2, 1, left, default"));
-			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 10, 4, 1, left, default"));
+			getContentPane().add(getButtonAddEmptyShow(), new CellConstraints("2, 11, 2, 1, left, default"));
+			getContentPane().add(getBuyDVDLabel(), new CellConstraints("5, 11, 4, 1, left, default"));
 			getContentPane().add(getJSearchField(), new CellConstraints("3, 2, 1, 1, default, fill"));
-			getContentPane().add(getDownloadInHD(), new CellConstraints("3, 10, 1, 1, default, default"));
+			getContentPane().add(getDownloadInHD(), new CellConstraints("5, 9, 4, 1, left, center"));
 			showsTable.setModel(showsTableModel);
 			showsTableModel.setSeries(this.readShowNames());
 			
@@ -157,10 +157,13 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 				public void valueChanged(ListSelectionEvent arg0) {
 					showsTableSelectionChanged();
 					
-				}});		
+				}});
+			
+		    this.getSelectEpisodeLabel().setVisible(false);
+		    this.getDownloadInHD().setVisible(false);
 			
 			// This preference has been saved for the user's convenience.
-			downloadInHD.setSelected(TedConfig.getInstance().isHDDownloadPreference());
+		    getDownloadInHD().setSelected(TedConfig.getInstance().isHDDownloadPreference());
 			
 			// Get the screen size
 		    Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -227,12 +230,14 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		int selectedRow = showsTable.getSelectedRow();
 		
 		if (selectedRow >= 0)
-		{	
+		{			    
 			// get the simple info of the show
 			SimpleTedSerie selectedShow = this.showsTableModel.getSerieAt(selectedRow);
 			
 			if (this.selectedShow == null || !(this.selectedShow.getName().equals(selectedShow.getName())))
 			{
+			    this.getSelectEpisodeLabel().setVisible(true);
+			    this.getDownloadInHD().setVisible(true);
 
 				this.selectedShow = selectedShow;
 						
@@ -388,7 +393,7 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 	private void close() 
 	{
 		// Save this preference for the next time.
-		TedConfig.getInstance().setHDDownloadPreference(downloadInHD.isSelected());
+		TedConfig.getInstance().setHDDownloadPreference(this.getDownloadInHD().isSelected());
 		TedIO.getInstance().SaveConfig();
 		
 		this.showsTableModel.removeSeries();
