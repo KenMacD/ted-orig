@@ -20,7 +20,7 @@
 	
 	$tvcom_content = getPageContent($tvcom_url);
 	
-		// for performance sake: first find the summary
+	/*	// for performance sake: first find the summary
 		$summary = getTagContents("<div id=\"show_summary\" class=\"module show_summary\">", "<script type=\"text/javascript\">", $tvcom_content);
 		
 		// next, find show data from summary
@@ -46,8 +46,35 @@
 			$showgenres = getTagContents("<span class=\"genres\">",  "</span>", $summary);
 			$showwebsite = getTagContents("<span class=\"official_site\">",  "</span>", $summary);			
 		}
+		*/
 		
-		$tvcom_header_img = getTagContents("<div id=\"topslot\">", "</div>", $tvcom_content);
+		// Get full description		
+		$description = getTagContents("<p id=\"whole_summ\" style=\"display:none;\">", "<a class=\"show_hide\"", $tvcom_content);
+		
+		if ($description == "")
+		{
+			// get the short summary, needed if there is no "full" summary
+			$description = getTagContents("<p id=\"trunc_summ\">", "<a class=\"show_hide\"", $tvcom_content);
+		}
+		
+		// remove escaped characters
+		$description = str_replace("\'", "'", $description);
+		$description = str_replace("<br /><br /><br /><br />", "<br><br>", $description);
+		
+		$tvcom_header_img = "http://image.com.com/tv/images/content_headers/program_new/". $tvcom .".jpg";
+		
+		// get rating module
+		$ratingmodule = getTagContents("<div class=\"MODULE MODULE_FIRST\" id=\"rate_it\">", "<span class=\"num_votes\">", $tvcom_content);
+		// get rating
+		$showscore = getTagContents("<span class=\"number\">", "</span>", $ratingmodule);
+		$showscoredescription = getTagContents("<span class=\"description\">", "</span>", $ratingmodule);
+
+		// get buzz
+		$buzz = getTagContents("<div class=\"MODULE\" id=\"show_buzz_info\">", "</div>", $tvcom_content) . "</div>"; // add  div so next statement can filter out the buzz		
+		// get rating and airdate from buzz
+		$ratingstatusandpremierdate = "<h4>". getTagContents("<h4>", "</div>", $buzz); // append h4 for layout purposes
+		$ratingstatusandpremierdate = str_replace("<h4>", "<br><br><b>", $ratingstatusandpremierdate); //remove h4 and add "b"
+		$ratingstatusandpremierdate = str_replace("</h4>", "</b><br>", $ratingstatusandpremierdate); //remove h4 and add "b"
 		
 		function getPageContent($url)
 		{
@@ -92,7 +119,7 @@
 			// cut from opentag till closetag
 			$result = substr ($temp, 0, $endpos);
 				// remove open tag from result
-			$result = str_replace ($opentag, "", $result);
+			$result = substr($result, strlen($opentag));//str_replace ($opentag, "", $result);
 			
 			// change \> with >
 			$result = str_replace("/>", ">", $result);
@@ -108,7 +135,7 @@ if ($tvcom_header_img != "")
 	?>
 	<tr valign="top" width="480">
 		<td align="center" valign="top" bgcolor="#E9E9E9" colspan="2">
-			<?echo($tvcom_header_img)?>
+			<img src=<?echo($tvcom_header_img)?> border=0>
 		</td>
 	</tr>
 	<?
@@ -123,43 +150,24 @@ if ($tvcom_header_img != "")
 			{
 				?>
 				<font face="Arial, Helvetica, sans-serif">
-				<font size ="2"><b>Rating</b></font><br>
+				<b>Rating</b><br>
+				<center>
 				<font size="7">
 					<b><?echo($showscore)?></b>
 				</font>
+				<br>
+				<font size="3"><?echo($showscoredescription)?></font>
 				</font>
+				</center>
 				<hr>
 				<?
 			}
-			if ($showstatus !== "")
+
+			if ($ratingstatusandpremierdate != "")
 			{
-				?>
-				<font size="2" face="Arial, Helvetica, sans-serif">
-				<b>Status</b><br>
-				<?echo($showstatus)?>
-				</font>
-				<hr>
-				<?
-			}
-			if ($showpremierdate !== "")
-			{
-				?>
-				<font size="2" face="Arial, Helvetica, sans-serif">
-				<b>Premiered</b><br>
-				<?echo($showpremierdate)?>
-				</font>
-				<hr>
-				<?
-			}
-			if ($showgenres !== "")
-			{
-				?>
-				<font size="2" face="Arial, Helvetica, sans-serif">
-				<b>Categories</b><br>
-				<?echo($showgenres)?>
-				</font>
-				<hr>
-				<?
+				?><font face="Arial, Helvetica, sans-serif"><?
+				echo($ratingstatusandpremierdate);
+				?></font><?
 			}
 			if ($showwebsite !== "")
 			{
@@ -192,3 +200,10 @@ if ($tvcom_header_img != "")
 
 </body>
 </html>
+
+<?php
+define("_BBC_PAGE_NAME", $tvcom);
+define("_BBCLONE_DIR", "bbclone/");
+define("COUNTER", _BBCLONE_DIR."mark_page.php");
+if (is_readable(COUNTER)) include_once(COUNTER);
+?>

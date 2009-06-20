@@ -706,7 +706,7 @@
 		</show>
 		<show>
 			<name>Fifth Gear</name>
-			<minimumsize>400</minimumsize>
+			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>71360</tv_com>
@@ -1241,7 +1241,7 @@
 		</show>
 		<show>
 			<name>The Mentalist</name>
-			<minimumsize>400</minimumsize>
+			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>30</seeders>
 			<tv_com>75200</tv_com>
@@ -1573,7 +1573,7 @@
 		</show>
 		<show>
 			<name>Saturday Night Live</name>
-			<minimumsize>400</minimumsize>
+			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>20</seeders>
 			<tv_com>365</tv_com>
