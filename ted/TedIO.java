@@ -964,7 +964,7 @@ public class TedIO
 	    TedLog.debug(Lang.getString("TedIO.DownloadingTorrent") + url + Lang.getString("TedIO.Name") + name); //$NON-NLS-1$ //$NON-NLS-2$
 	    // remove weird characters and spaces that can cause problems while
 	    // opening the torrent
-	    name = name.replaceAll("[/:&*?|\"\\\\]", "");
+	    name = name.replaceAll("[\\[\\]/:&*?|\"\\\\]", "");
 	    name = name.replaceAll(" ()", ".");
 
 	    // create output torrent file
