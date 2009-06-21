@@ -757,9 +757,6 @@ public class TedConfig
 	public void setProxyUsername(String proxyUsername)
 	{
 		this.proxyUsername = proxyUsername;
-		
-		// Change the proxy password which contains the new name.
-		this.setProxyPassword(this.proxyPassword);
 	}
 
 	public String getProxyPassword()
@@ -769,15 +766,23 @@ public class TedConfig
 
 	public void setProxyPassword(String proxyPassword)
 	{
+		this.proxyPassword = proxyPassword;
+	}
+	
+	public String getProxyAuthentication()
+	{
+		String authentication = "";
 		try 
 		{
-			this.proxyPassword = Base64.encodeObject(proxyUsername + ":" + proxyPassword);
+			authentication = Base64.encodeObject(proxyUsername + ":" + proxyPassword);
 		} 
 		catch (IOException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		
+		return authentication;
 	}
 
 	public boolean getUseProxyAuth()

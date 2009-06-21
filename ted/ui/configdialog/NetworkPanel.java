@@ -205,12 +205,13 @@ public class NetworkPanel  extends JPanel implements ActionListener
 	public void saveValues()
 	{
 		int newTime = timeoutInSecondsSlider.getValue();
+		String pass = new String(this.proxyPassword.getPassword());
 		
 		TedConfig.getInstance().setTimeOutInSecs(newTime);
 		TedConfig.getInstance().setUseProxy(this.useProxy.isSelected());
 		TedConfig.getInstance().setUseProxyAuth(this.useAuthProxy.isSelected());
 		TedConfig.getInstance().setProxyUsername(this.proxyUsername.getText());
-		TedConfig.getInstance().setProxyPassword(this.proxyPassword.getPassword().toString());
+		TedConfig.getInstance().setProxyPassword(pass);
 		TedConfig.getInstance().setProxyHost(this.proxyHost.getText());
 		TedConfig.getInstance().setProxyPort(this.proxyPort.getText());
 	}

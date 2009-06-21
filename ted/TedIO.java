@@ -40,6 +40,7 @@ import ted.ui.TimedOptionPane;
 import ted.ui.editshowdialog.FeedPopupItem;
 import ted.ui.messaging.GrowlMessenger;
 import ted.ui.messaging.PopupMessenger;
+import ted.tools.StringEncrypter;
 
 /**
  * TED: Torrent Episode Downloader (2005 - 2006)
@@ -68,6 +69,9 @@ public class TedIO
     private boolean isSavingShows = false;
     
     private static TedIO ioSingleton = null;
+    
+    private String encryptionKey = "123456789012345678901234567890";
+    
 
     /****************************************************
      * CONSTRUCTORS
@@ -297,9 +301,14 @@ public class TedIO
 		    fw.append("useProxy=" + TedConfig.getInstance().getUseProxy() + "\n");
 		    fw.append("useProxyAuth=" + TedConfig.getInstance().getUseProxyAuth() + "\n");
 		    fw.append("proxyUsername=" + TedConfig.getInstance().getProxyUsername() + "\n");
-		    fw.append("proxyPassword=" + TedConfig.getInstance().getProxyPassword() + "\n");
 		    fw.append("proxyHost=" + TedConfig.getInstance().getProxyHost() + "\n");
 		    fw.append("proxyPort=" + TedConfig.getInstance().getProxyPort() + "\n");
+		    
+		     StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
+		     String encryptedString = encrypter.encrypt(TedConfig.getInstance().getProxyPassword());
+		     
+			 fw.append("proxyPassword=" + encryptedString + "\n");
+
 		    
 		    fw.append("filterPrivateTrackers=" + TedConfig.getInstance().isFilterPrivateTrackers());
 		    fw.close();
@@ -548,7 +557,10 @@ public class TedIO
 				}
 				else if (configItem.equals("proxyPassword"))
 				{
-				    TedConfig.getInstance().setProxyPassword(configItemValue);
+					String encryptedPassword = configItemValue;
+					StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
+				    String decryptedString = encrypter.decrypt(encryptedPassword);
+				    TedConfig.getInstance().setProxyPassword(decryptedString);
 				}
 				else if (configItem.equals("proxyUsername"))
 				{
@@ -1190,7 +1202,7 @@ public class TedIO
 	
 		    if (TedConfig.getInstance().getUseProxyAuth())
 		    {    	
-		    	conn.setRequestProperty("Proxy-Authorization", TedConfig.getInstance().getProxyPassword());
+		    	conn.setRequestProperty("Proxy-Authorization", TedConfig.getInstance().getProxyAuthentication());
 		    } 
 		} 
 		else
