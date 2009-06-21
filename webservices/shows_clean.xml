@@ -68,6 +68,12 @@
 			<website>http://www.ted.nu/</website>
 			<type>3</type>
 		</location>
+		<location>
+			<name>EZTV - Yahoo Pipes</name>
+			<feed>http://pipes.yahoo.com/pipes/pipe.run?_id=1d7df5fe363c3a736cc02848af655275&amp;_render=rss&amp;showname=#NAME#</feed>
+			<website> http://eztv.it/index.php?main=showlist</website>
+			<type>5</type>
+		</location>
 	</rsslocations>
 	<weblocations>
 		<Amazon>
@@ -82,6 +88,16 @@
 	<hdkeywords>720p &amp; HD</hdkeywords>
 	<private_trackers>
 		<tracker_url>pretome.net</tracker_url>
+		<tracker_url>xtremespeeds.net</tracker_url>
+		<tracker_url>xtremespeeds.com</tracker_url> 
+		<tracker_url>torrent-outpost.com</tracker_url> 
+		<tracker_url>thetorrentsource.com</tracker_url> 
+		<tracker_url>ceasers-palace.info</tracker_url> 
+		<tracker_url>thebox.bz</tracker_url>
+		<tracker_url>thebox.bz</tracker_url> 
+		<tracker_url>seedmore.org</tracker_url>
+        <tracker_url>thepeerhub.com</tracker_url>
+		<tracker_url>seekmybits.com</tracker_url>
 	</private_trackers>
 	<shows>
 		<show>
