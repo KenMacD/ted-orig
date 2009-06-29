@@ -465,15 +465,16 @@ public class TedXMLParser
 	
 	public Set<String> getPrivateTrackers(Element nodelist)
 	{
-		NodeList trackersList = nodelist.getElementsByTagName("private_trackers");
+		NodeList mainNode = nodelist.getElementsByTagName("private_trackers");
 		
 		Set<String> trackers = new HashSet<String>();
-		if (trackersList != null && trackersList.getLength() > 0)
+		if (mainNode != null && mainNode.getLength() > 0)
 		{			
+			NodeList trackersList = ((Element)mainNode.item(0)).getElementsByTagName("tracker_url");
 			for (int trackerIndex = 0; trackerIndex < trackersList.getLength(); ++trackerIndex)
 			{
 				Element trackerElement = (Element)trackersList.item(trackerIndex);
-				String trackerUrl = getTextValue(trackerElement, "tracker_url");
+				String trackerUrl = trackerElement.getTextContent();
 				trackers.add(trackerUrl);
 			}
 		}

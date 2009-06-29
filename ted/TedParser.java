@@ -727,7 +727,7 @@ public class TedParser extends Thread implements Serializable{
 				// get torrent info (for size)
 				torrentInfo = torrent.getInfo();
 				
-				// First see if we�re dealing with a private tracker.
+				// First see if we're dealing with a private tracker.
 				String trackerUrl = torrent.getTracker().getAnnounce();
 				if (TedConfig.getInstance().isFilterPrivateTrackers()
 				 && TedConfig.getInstance().isPrivateTracker(trackerUrl))
