@@ -953,10 +953,13 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	{
 		int result = 0;
 		
+		String firstName  = removeTheFromName(this.getName().toLowerCase());
+		String secondName = removeTheFromName(second.getName().toLowerCase()); 
+		
 		// sort on name
 		if (TedConfig.getInstance().getSortType() == TedConfig.SORT_NAME)
 		{
-			result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
+			result = firstName.compareTo(secondName);
 		}
 		// sort on status and airdate
 		else if (TedConfig.getInstance().getSortType() == TedConfig.SORT_STATUS)
@@ -985,11 +988,21 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 			// Until this point everything was the same. Sort on name.
 			if (result == 0)
 			{
-				result = this.getName().toLowerCase().compareTo(second.getName().toLowerCase());
+				result = firstName.compareTo(secondName);
 			}
 		}
 				
 		return result;
+	}
+	
+	private String removeTheFromName(String name)
+	{
+		if (name.startsWith("the "))
+		{
+			name = name.substring(4);
+		}
+		
+		return name; 
 	}
 
 
