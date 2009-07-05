@@ -420,7 +420,7 @@ public class TedParser extends Thread implements Serializable{
 		// number is also in the string of the torrent file.
 		if (foundCorrectEpisode && serie.currentEpisodeSS.isDouble())
 		{
-			foundCorrectEpisode = sTitle.contains("" + (episode + 1));
+			foundCorrectEpisode = sTitle.contains("-" + (episode + 1));
 		}
 
 		if (foundCorrectEpisode)
@@ -440,7 +440,6 @@ public class TedParser extends Thread implements Serializable{
 			else
 			{
 				// save found torrent to file
-
 				try 
 				{
 					this.checkIfBest(torrentUrl, serie, item);
@@ -508,24 +507,20 @@ public class TedParser extends Thread implements Serializable{
 						{					
 		
 							// ask user if he wants to download new season
-							answer = JOptionPane
-									.showOptionDialog(
-											null,
-											Lang
-													.getString("TedParser.DialogNewSeason1") + " " + season + " " + Lang.getString("TedParser.DialogNewSeason2") + " " + serie.getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-													+ "\n" + Lang.getString("TedParser.DialiogNewSeason3") + " " + season + "?" //$NON-NLS-1$ //$NON-NLS-2$
-													+ "\n"
-													+ Lang
-															.getString("TedParser.DialogNewSeason4")
-													+ " "
-													+ (season - 1)
-													+ "\n" + Lang.getString("TedParser.DialogNewSeason5"), //$NON-NLS-1$ //$NON-NLS-2$
-											Lang
-													.getString("TedParser.DialogNewSeasonHeader") + serie.getName(), //$NON-NLS-1$
-											JOptionPane.YES_NO_OPTION,
-											JOptionPane.QUESTION_MESSAGE, null, Lang
-													.getYesNoLocale(), Lang
-													.getYesNoLocale()[0]);
+							answer = JOptionPane.showOptionDialog(null, 
+									Lang.getString("TedParser.DialogNewSeason1") + " " + season + " " + Lang.getString("TedParser.DialogNewSeason2") + " " + serie.getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+									+ "\n" 
+									+ Lang.getString("TedParser.DialiogNewSeason3") + " " + season + "?" //$NON-NLS-1$ //$NON-NLS-2$
+									+ "\n"
+									+ Lang.getString("TedParser.DialogNewSeason4")
+									+ " " + (season - 1)
+									+ "\n" 
+									+ Lang.getString("TedParser.DialogNewSeason5"), //$NON-NLS-1$ //$NON-NLS-2$
+									Lang.getString("TedParser.DialogNewSeasonHeader") + serie.getName(), //$NON-NLS-1$
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE, null, 
+										Lang.getYesNoLocale(), 
+										Lang.getYesNoLocale()[0]);
 						}
 	
 						if (answer == JOptionPane.YES_OPTION)
@@ -698,6 +693,14 @@ public class TedParser extends Thread implements Serializable{
 
 		itemNr++;
 		parseLogInfo[itemNr][0] = torrentUrl.toString();
+		
+		// Check if this is a HD torrent before downloading the torrent.
+		if (  serie.isDownloadInHD()
+		  && !isHDEpisode(item))
+		{
+			parseLogInfo[itemNr][1] = Lang.getString("TedParser.NotHDEpisode");
+			return;
+		}		
 
 		try 
 		{
@@ -717,6 +720,7 @@ public class TedParser extends Thread implements Serializable{
 		try 
 		{
 			int seedersFromRSS = getSeedersFromRSS(item);
+
 			// Only load the torrent when the seeders found in the RSS entry are 0 or
 			// larger than the minimum number of seeders
 			if (seedersFromRSS <= 0 || seedersFromRSS >= serie.getMinNumOfSeeders())
@@ -1006,18 +1010,14 @@ public class TedParser extends Thread implements Serializable{
 
 	private boolean titleMatchesKeywords(SyndEntry item, TedSerie serie)
 	{
-		String torrentTitle = item.getTitle().toString();
-		boolean matchesNormalKeywords = tPKeyChecker.checkKeywords(
-				torrentTitle, serie.getKeywords());
-
-		boolean matchesHDKeywords = true;
-		if (serie.isDownloadInHD())
-		{
-			matchesHDKeywords = tPKeyChecker.checkKeywords(torrentTitle,
-					TedConfig.getInstance().getHDKeywords());
-		}
-
-		return matchesHDKeywords && matchesNormalKeywords;
+		return tPKeyChecker.checkKeywords(item.getTitle(), 
+										  serie.getKeywords());
+	}
+	
+	private boolean isHDEpisode(SyndEntry item)
+	{
+		return tPKeyChecker.checkKeywords(item.getTitle(),
+										  TedConfig.getInstance().getHDKeywords());
 	}
 
 	/**
