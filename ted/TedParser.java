@@ -422,6 +422,18 @@ public class TedParser extends Thread implements Serializable{
 		{
 			foundCorrectEpisode = sTitle.contains("-" + (episode + 1));
 		}
+		
+		// Double episodes are now skipped by ted. Only download single episodes.
+		// Both strings could indicate the presence of a double episode
+		String doubleEpisode1InTitle = episode + "-" + (episode + 1); // 10-11 or 7-8
+		String doubleEpisode2InTitle = episode + "-" + (episode + 1); // 10-011 or 7-08  
+		if ( foundCorrectEpisode
+		  && ( sTitle.contains(doubleEpisode1InTitle)
+			|| sTitle.contains(doubleEpisode2InTitle)))
+		{
+			parseLogInfo[itemNr][1] = Lang.getString("TedParser.RejectDoubleEpisode");
+			return;
+		}
 
 		if (foundCorrectEpisode)
 		{
