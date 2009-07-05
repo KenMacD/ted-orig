@@ -8,8 +8,10 @@ _fr_FR
 _he_IL
 _hu_HU
 _it_IT
+_iw_IL
 _nl_NL
 _no_NO
 _pl_PL
+_pt_BR
 _sv_SE
 _tr_TR
