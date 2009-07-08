@@ -303,12 +303,13 @@ public class TedIO
 		    fw.append("proxyUsername=" + TedConfig.getInstance().getProxyUsername() + "\n");
 		    fw.append("proxyHost=" + TedConfig.getInstance().getProxyHost() + "\n");
 		    fw.append("proxyPort=" + TedConfig.getInstance().getProxyPort() + "\n");
-		    
+		    if (TedConfig.getInstance().getProxyPassword() != null && TedConfig.getInstance().getProxyPassword() != "")
+		    {
 		     StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
 		     String encryptedString = encrypter.encrypt(TedConfig.getInstance().getProxyPassword());
 		     
 			 fw.append("proxyPassword=" + encryptedString + "\n");
-
+		    }
 		    
 		    fw.append("filterPrivateTrackers=" + TedConfig.getInstance().isFilterPrivateTrackers());
 		    fw.close();
