@@ -33,6 +33,16 @@ import com.jgoodies.forms.layout.FormLayout;
 */
 public class NetworkPanel  extends JPanel implements ActionListener
 {
+
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel("apple.laf.AquaLookAndFeel");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private JPanel networkPanel;
 	private JLabel labelTimeOut;
 	private JSlider timeoutInSecondsSlider;
@@ -62,15 +72,15 @@ public class NetworkPanel  extends JPanel implements ActionListener
 		networkPanel = new JPanel();
 		this.add(networkPanel);
 		FormLayout networkPanelLayout = new FormLayout(
-				"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, max(p;6dlu), 30dlu, max(p;16dlu)", 
-				"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
+				"6dlu, 39dlu, max(p;6dlu), 31dlu:grow, 5dlu, max(p;15dlu), max(p;6dlu), 30dlu, max(p;16dlu)", 
+				"5dlu, max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 		networkPanel.setLayout(networkPanelLayout);
 		networkPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 		networkPanel.setOpaque(false);
 		
 
 		labelTimeOut = new JLabel();
-		networkPanel.add(labelTimeOut, new CellConstraints("2, 2, 5, 1, default, default"));
+		networkPanel.add(labelTimeOut, new CellConstraints("2, 2, 4, 1, default, default"));
 		labelTimeOut.setText(Lang.getString("TedConfigDialog.LabelTimeout"));
 		labelTimeOut.setBounds(14, 381, 371, 28);
 		
@@ -91,28 +101,28 @@ public class NetworkPanel  extends JPanel implements ActionListener
 		timeoutInSecondsSlider.setPaintTrack(true);
 		timeoutInSecondsSlider.setSnapToTicks(true);
 
-		networkPanel.add(timeoutInSecondsSlider, new CellConstraints("2, 3, 5, 1, fill, fill"));
+		networkPanel.add(timeoutInSecondsSlider, new CellConstraints("2, 3, 7, 1, fill, fill"));
 		
 		{
 			useProxy = new JCheckBox();
-			networkPanel.add(useProxy, new CellConstraints("2, 5, 5, 1, default, default"));
+			networkPanel.add(useProxy, new CellConstraints("2, 5, 4, 1, default, default"));
 			useProxy.setText(Lang.getString("TedConfigDialog.UseProxy"));
 			useProxy.addActionListener(this);
 			useProxy.setActionCommand("useProxy");
 		}
 		{
 			proxyHost = new JTextField();
-			networkPanel.add(proxyHost, new CellConstraints("4, 6, 3, 1, default, default"));
+			networkPanel.add(proxyHost, new CellConstraints("4, 6, 1, 1, default, default"));
 			proxyHost.setEnabled(false);
 		}
 		{
 			proxyPort = new JTextField();
-			networkPanel.add(proxyPort, new CellConstraints("4, 7, 3, 1, default, default"));
+			networkPanel.add(proxyPort, new CellConstraints("8, 6, 1, 1, default, default"));
 			proxyPort.setEnabled(false);
 		}
 		{
 			useAuthProxy = new JCheckBox();
-			networkPanel.add(useAuthProxy, new CellConstraints("2, 8, 5, 1, default, default"));
+			networkPanel.add(useAuthProxy, new CellConstraints("2, 7, 4, 1, default, default"));
 			useAuthProxy.setEnabled(false);
 			useAuthProxy.setText(Lang.getString("TedConfigDialog.UseAuthProxy"));
 			useAuthProxy.addActionListener(this);
@@ -120,12 +130,12 @@ public class NetworkPanel  extends JPanel implements ActionListener
 		}
 		{
 			proxyUsername = new JTextField();
-			networkPanel.add(proxyUsername, new CellConstraints("4, 9, 3, 1, default, default"));
+			networkPanel.add(proxyUsername, new CellConstraints("4, 8, 5, 1, default, default"));
 			proxyUsername.setEnabled(false);
 		}
 		{
 			proxyPassword = new JPasswordField();
-			networkPanel.add(proxyPassword, new CellConstraints("4, 10, 3, 1, default, default"));
+			networkPanel.add(proxyPassword, new CellConstraints("4, 9, 5, 1, default, default"));
 			proxyPassword.setEnabled(false);
 		}
 		{
@@ -135,22 +145,22 @@ public class NetworkPanel  extends JPanel implements ActionListener
 		}
 		{
 			proxyPortLabel = new JLabel();
-			networkPanel.add(proxyPortLabel, new CellConstraints("2, 7, 1, 1, default, default"));
+			networkPanel.add(proxyPortLabel, new CellConstraints("6, 6, 1, 1, default, default"));
 			proxyPortLabel.setText(Lang.getString("TedConfigDialog.proxyPortLabel"));
 		}
 		{
 			proxyUserNameLabel = new JLabel();
-			networkPanel.add(proxyUserNameLabel, new CellConstraints("2, 9, 1, 1, default, default"));
+			networkPanel.add(proxyUserNameLabel, new CellConstraints("2, 8, 1, 1, default, default"));
 			proxyUserNameLabel.setText(Lang.getString("TedConfigDialog.proxyUserNameLabel"));
 		}
 		{
 			proxyPasswordLabel = new JLabel();
-			networkPanel.add(proxyPasswordLabel, new CellConstraints("2, 10, 1, 1, default, default"));
+			networkPanel.add(proxyPasswordLabel, new CellConstraints("2, 9, 1, 1, default, default"));
 			proxyPasswordLabel.setText(Lang.getString("TedConfigDialog.proxyPasswordLabel"));
 		}
 		{
 			jSeparator1 = new JSeparator();
-			networkPanel.add(jSeparator1, new CellConstraints("2, 4, 5, 1, default, default"));
+			networkPanel.add(jSeparator1, new CellConstraints("2, 4, 7, 1, default, default"));
 		}
 	}
 	
