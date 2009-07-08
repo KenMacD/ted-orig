@@ -33,16 +33,6 @@ import com.jgoodies.forms.layout.FormLayout;
 */
 public class NetworkPanel  extends JPanel implements ActionListener
 {
-
-	{
-		//Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel("apple.laf.AquaLookAndFeel");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	private JPanel networkPanel;
 	private JLabel labelTimeOut;
 	private JSlider timeoutInSecondsSlider;
