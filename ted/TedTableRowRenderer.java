@@ -20,12 +20,15 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 	private final ImageIcon showStopped	 = new ImageIcon(getClass().getClassLoader().getResource("icons/stop.png")); //$NON-NLS-1$
 	private final ImageIcon showActive   = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-active-ted.gif")); //$NON-NLS-1$
 	private final ImageIcon showDisabled    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted.gif")); //$NON-NLS-1$
+	private final ImageIcon HDIcon    = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-HD.png")); //$NON-NLS-1$
+
 	
 	JPanel currentPanel   = new JPanel();
 	JLabel nameLabel      = new JLabel();
 	JLabel searchforLabel = new JLabel();
 	JLabel progressLabel  = new JLabel();
 	JLabel iconLabel      = new JLabel();
+	JLabel HDIconLabel      = new JLabel();
 	JProgressBar progressBar = new JProgressBar(0, 100);
 	
 	
@@ -70,6 +73,17 @@ public class TedTableRowRenderer extends JPanel implements TableCellRenderer
 		iconLabel.setIcon(this.getIconForShow(serie));
 		iconLabel.setBounds(6, 4, iconLabel.getPreferredSize().width, iconLabel.getPreferredSize().height);
 		currentPanel.add(iconLabel);
+		// HD icon
+		if (serie.isDownloadInHD())
+		{
+			HDIconLabel.setIcon(this.HDIcon);
+			HDIconLabel.setBounds(6, 21, HDIconLabel.getPreferredSize().width, HDIconLabel.getPreferredSize().height);
+			currentPanel.add(HDIconLabel);
+		}
+		else
+		{
+			HDIconLabel.setIcon(null);
+		}
 		// progress bar
 		progressBar.setValue(serie.getProgress());
 		progressBar.setStringPainted(true);
