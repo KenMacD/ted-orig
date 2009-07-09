@@ -628,7 +628,7 @@ public class TedIO
     {
 	try
 	{
-	    TedLog.debug("Checking for new version of ted..."); //$NON-NLS-1$
+	    TedLog.debug(Lang.getString("TedMain.CheckingNewTed")); //$NON-NLS-1$
 	    URL url = new URL(versionUrl); //$NON-NLS-1$
 	    String line;
 	    StringTokenizer tokenizer;
@@ -649,7 +649,7 @@ public class TedIO
 	    data.close();
 	} catch (Exception e)
 	{
-	    TedLog.error(e, "Error checking the version of ted"); //$NON-NLS-1$
+	    TedLog.error(e, Lang.getString("TedMain.CheckingError")); //$NON-NLS-1$
 	}
 	return d;
     }
