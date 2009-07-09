@@ -175,13 +175,22 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 						
 			if(this.isUsePresets())
 			{
-				if(XMLserie.getMinSize()!=0)
-					this.setMinSize(XMLserie.getMinSize());
+				int minSize = XMLserie.getMinSize();
+				int maxSize = XMLserie.getMaxSize();
 				
-				if(XMLserie.getMaxSize()!=0)
-					this.setMaxSize(XMLserie.getMaxSize());
+				if (this.isDownloadInHD())
+				{
+					minSize *= 2;
+					maxSize *= 2;
+				}
 				
-				if(XMLserie.getMinNumOfSeeders()!=0)
+				if(minSize != 0)
+					this.setMinSize(minSize);
+				
+				if(maxSize != 0)
+					this.setMaxSize(maxSize);
+				
+				if(XMLserie.getMinNumOfSeeders() != 0)
 					this.setMinNumOfSeeders(XMLserie.getMinNumOfSeeders());
 				
 				//add the new keywords if they didn't already existed
@@ -1114,4 +1123,19 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		}
 	}
 
-	public void setDownloadInHD(boolean isDownloadInHD) 	{		this.isDownloadInHD = isDownloadInHD;	}	public boolean isDownloadInHD() 	{		return isDownloadInHD;	}	/**	 * Cancels the retrieval of schedule/torrent site info per episode	 */	public void interruptPubishedAndAiredEpisodes() 	{		this.scheduler.interruptPubishedAndAiredEpisodes();	}}
+	public void setDownloadInHD(boolean isDownloadInHD) 	
+	{		
+		this.isDownloadInHD = isDownloadInHD;	
+	}	
+	
+	public boolean isDownloadInHD() 	
+	{		
+		return isDownloadInHD;	
+	}	
+	
+	/**	 * Cancels the retrieval of schedule/torrent site info per episode	 */	
+	public void interruptPubishedAndAiredEpisodes() 	
+	{		
+		this.scheduler.interruptPubishedAndAiredEpisodes();	
+	}
+}
