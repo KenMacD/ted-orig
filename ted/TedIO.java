@@ -303,13 +303,15 @@ public class TedIO
 		    fw.append("proxyUsername=" + TedConfig.getInstance().getProxyUsername() + "\n");
 		    fw.append("proxyHost=" + TedConfig.getInstance().getProxyHost() + "\n");
 		    fw.append("proxyPort=" + TedConfig.getInstance().getProxyPort() + "\n");
-		    if (TedConfig.getInstance().getProxyPassword() != null && TedConfig.getInstance().getProxyPassword() != "")
+		    
+		    String encryptedString = "";
+		    String proxyPassword = TedConfig.getInstance().getProxyPassword(); 
+		    if (proxyPassword != null && !proxyPassword.equals(""))
 		    {
-		     StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
-		     String encryptedString = encrypter.encrypt(TedConfig.getInstance().getProxyPassword());
-		     
-			 fw.append("proxyPassword=" + encryptedString + "\n");
+		    	StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
+		    	encryptedString = encrypter.encrypt(TedConfig.getInstance().getProxyPassword());
 		    }
+	    	fw.append("proxyPassword=" + encryptedString + "\n");
 		    
 		    fw.append("filterPrivateTrackers=" + TedConfig.getInstance().isFilterPrivateTrackers());
 		    fw.close();
@@ -383,6 +385,13 @@ public class TedIO
 				// string (available tokens) so also values with an '=' in
 				// them are correctly used.
 				String configItemValue = line.substring(seperatorIndex + 1);
+				
+				// Nothing set for this config item.
+				if (configItemValue == null || configItemValue.equals(""))
+				{
+					// Go to the next line.
+					continue;
+				}
 		
 				if (configItem.equals("refresh")) //$NON-NLS-1$
 				{
@@ -558,9 +567,15 @@ public class TedIO
 				}
 				else if (configItem.equals("proxyPassword"))
 				{
+					String decryptedString   = "";					
 					String encryptedPassword = configItemValue;
-					StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
-				    String decryptedString = encrypter.decrypt(encryptedPassword);
+					
+					if (!encryptedPassword.equals(""))
+					{
+						StringEncrypter encrypter = new StringEncrypter("DESede", encryptionKey);
+						decryptedString = encrypter.decrypt(encryptedPassword);
+					}
+					
 				    TedConfig.getInstance().setProxyPassword(decryptedString);
 				}
 				else if (configItem.equals("proxyUsername"))
