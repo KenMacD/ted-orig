@@ -7,7 +7,10 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -231,17 +234,26 @@ public class TedXMLParser
 	 * @param el Element obtainend from readXMLFile
 	 * @param shows Vector to put shows in
 	 */
-	public Vector getNames(Element el)
+	public Vector<SimpleTedSerie> getNames(Element el)
 	{
-		Vector shows = new Vector();
+		Vector<SimpleTedSerie> shows = new Vector<SimpleTedSerie>();
 		NodeList nl = el.getElementsByTagName("show");
-		
+	
+		// Load the show names in a sorted set.
+		SortedSet<SimpleTedSerie> sortedShows = new TreeSet<SimpleTedSerie>();
 		for(int i=0; i<nl.getLength(); i++)
 		{
 			Element show = (Element)nl.item(i);
 			SimpleTedSerie serie = new SimpleTedSerie();
 			serie.setName(getTextValue(show, "name"));
-			shows.addElement(serie);
+			sortedShows.add(serie);
+		}
+		
+		// Copy the sorted set into a vector as this is the return type of this function.
+		Iterator<SimpleTedSerie> iterator = sortedShows.iterator();		
+		while (iterator.hasNext())
+		{
+			shows.addElement(iterator.next());
 		}
 		
 		return shows;

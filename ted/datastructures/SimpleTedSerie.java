@@ -4,7 +4,7 @@ package ted.datastructures;
  * @author Roel
  *
  */
-public class SimpleTedSerie
+public class SimpleTedSerie implements Comparable<SimpleTedSerie>
 {
 	private String name;
 
@@ -29,6 +29,24 @@ public class SimpleTedSerie
 		this.name = name;
 	}
 	
+	public int compareTo(SimpleTedSerie second)
+	{
+		String firstName  = removeTheFromName(this.getName().toLowerCase());
+		String secondName = removeTheFromName(second.getName().toLowerCase()); 
+		
+		return firstName.compareTo(secondName);
+	}
+	
+	private String removeTheFromName(String name)
+	{
+		if (name.startsWith("the "))
+		{
+			name = name.substring(4);
+		}
+		
+		return name; 
+	}
+
 	/**
 	 * @return A vector of episodes that are currently aired (from epguides info)
 	 * and the next episode
