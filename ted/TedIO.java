@@ -704,23 +704,47 @@ public class TedIO
 		// if there is a new version
 		if (onlineversion > version)
 		{
+			// Information for in the info/update panel.
+			String messageUpdate = "<html><body>" 
+								 + Lang.getString("TedIO.DialogNewPredefinedShows1") 
+								 + " " 
+								 + onlineversion 
+								 + Lang.getString("TedIO.DialogNewPredefinedShows2") 
+								 + "</body></html>";
+			
+			String messageInfo = "<html><body>" 
+				               + Lang.getString("TedIO.DialogNewPredefinedShowsInfo") 
+				               + " " + onlineversion + ")."
+				               + "</body></html>";
+			
+			String title = Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
+	
 		    // Always download the new XML file.
 		    if (TedConfig.getInstance().isAutoUpdateFeedList())
 		    {
 		    	// download the XML file
 				downloadXML();
-		
+				
 				// update the shows (if the user wants to).
-				updateShows(main, mainTable);
+				updateShows(main, mainTable);	
+
+				new TedUpdateWindow(title, 
+									messageInfo, 
+									"http://ted.sourceforge.net/newshowsinfo.php", 
+									Lang.getString("TedGeneral.ButtonOk"), 
+									main);
 		    } 
 		    else if (TedConfig.getInstance().askAutoUpdateFeedList() || showresult)
 		    {
 				// Ask user for confirmation if we have to.
 				// The downloadXML function is called from within this window.
-				String message = "<html><body>" + Lang.getString("TedIO.DialogNewPredefinedShows1") + " " + onlineversion + Lang.getString("TedIO.DialogNewPredefinedShows2") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$;
-				String title = Lang.getString("TedIO.DialogNewPredefinedShowsHeader");
-		
-				new TedUpdateWindow(title, message, "http://ted.sourceforge.net/newshowsinfo.php", "DownloadXml", Lang.getString("TedGeneral.ButtonDownload"), Lang.getString("TedGeneral.ButtonLater"), main);
+				new TedUpdateWindow(title, 
+									messageUpdate, 
+									"http://ted.sourceforge.net/newshowsinfo.php", 
+									"DownloadXml", 
+									Lang.getString("TedGeneral.ButtonDownload"), 
+									Lang.getString("TedGeneral.ButtonLater"), 
+									main);
 		    }
 		} 
 		else if (showresult)

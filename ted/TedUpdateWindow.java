@@ -43,7 +43,23 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 	private TedMainDialog mainDialog;
 	String startHTML = "<html><font face=\"Arial, Helvetica, sans-serif\">";
 	String endHTML = "</font></html>";
-
+	
+	public TedUpdateWindow(String title,
+						   String message,
+						   String url,
+						   String buttonMessage,
+						   TedMainDialog mainDialog)
+	{
+		TedUpdateWindow infoWindow = new TedUpdateWindow(title, 
+														 message, 
+														 url, 
+														 "", 
+														 "", 
+														 buttonMessage, 
+														 mainDialog, 
+														 true);
+	}
+	
 	public TedUpdateWindow(String title,
 						   String message,
 						   String url,
@@ -52,12 +68,39 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 						   String buttonCancel,
 						   TedMainDialog mainDialog)
 	{
+		TedUpdateWindow askWindow = new TedUpdateWindow(title, 
+														message, 
+														url, 
+														actionCommand, 
+														buttonOk, 
+														buttonCancel, 
+														mainDialog, 
+														false);
+	}
+
+	private TedUpdateWindow(String title,
+			 			    String message,
+			 			    String url,
+			 			    String actionCommand,
+			 			    String buttonOk,
+			 			    String buttonCancel,
+			 			    TedMainDialog mainDialog,
+			 			    boolean infoPanel)
+	{
 		this.mainDialog = mainDialog;
-		this.okActionCommand = actionCommand;
-		this.getOkButton().setText(buttonOk);
+		
+		// If this is an info panel (you can only click donate or okay) we disguise the cancel
+		// button as the okay button. This way no call back will be done to the main class while
+		// the result is the same in the end.
+		if (!infoPanel)
+		{
+			this.okActionCommand = actionCommand;
+			this.getOkButton().setText(buttonOk);
+		}
+		
 		this.getCancelButton().setText(buttonCancel);
 		
-		this.initGUI(message);
+		this.initGUI(message, infoPanel);
 		
 		try 
 		{
@@ -71,7 +114,8 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 		this.setResizable(false);
 	}
 	
-	private void initGUI(String message) 
+	private void initGUI(String message,
+						 boolean infoPanel) 
 	{
 		try 
 		{
@@ -89,7 +133,11 @@ public class TedUpdateWindow extends JDialog implements ActionListener
 				getContentPane().add(getDonateButton(), new CellConstraints("2, 6, 1, 1, left, default"));
 				getContentPane().add(infoLabel, new CellConstraints("2, 2, 4, 1, fill, fill"));
 				getContentPane().add(getCancelButton(), new CellConstraints("4, 6, 1, 1, default, default"));
-				getContentPane().add(getOkButton(), new CellConstraints("5, 6, 1, 1, default, default"));
+				
+				if (!infoPanel)
+				{
+					getContentPane().add(getOkButton(), new CellConstraints("5, 6, 1, 1, default, default"));
+				}
 			}
 			
 			// Get the screen size
