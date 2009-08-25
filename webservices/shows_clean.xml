@@ -1103,14 +1103,14 @@
 			<name>Law and Order: Criminal Intent</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<keywords>ci</keywords>
+			<keywords>criminal intent</keywords>
 			<tv_com>1381</tv_com>
 		</show>
 		<show>
 			<name>Law and Order: Special Victims Unit</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<keywords>svu</keywords>
+			<keywords>special victims unit</keywords>
 			<tv_com>334</tv_com>
 			<epguides>LawandOrderSVU</epguides>
 		</show>
