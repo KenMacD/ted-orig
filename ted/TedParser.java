@@ -1676,9 +1676,9 @@ public class TedParser extends Thread implements Serializable{
 		String xMatch = "x"; //$NON-NLS-1$
 
 		// make 2 patterns, one to match season and one to match episode
-		Pattern pSeason = Pattern.compile(sMatch + "(\\d)+"); //$NON-NLS-1$
-		Pattern pEpisode = Pattern.compile(eMatch + "(\\d)+"); //$NON-NLS-1$
-		Pattern pX = Pattern.compile("(\\d)+" + xMatch + "(\\d)+"); //$NON-NLS-1$ //$NON-NLS-2$
+		Pattern pSeason = Pattern.compile(sMatch + "(\\s)*(\\d)+"); //$NON-NLS-1$
+		Pattern pEpisode = Pattern.compile(eMatch + "(\\s)*(\\d)+"); //$NON-NLS-1$
+		Pattern pX = Pattern.compile("(\\d)+(\\s)*" + xMatch + "(\\s)*(\\d)+"); //$NON-NLS-1$ //$NON-NLS-2$
 		Pattern pNum = Pattern.compile("(\\d){3,4}"); //$NON-NLS-1$
 
 		// match the patterns to the title
@@ -1691,23 +1691,20 @@ public class TedParser extends Thread implements Serializable{
 		if (mSeason.find() && mEpisode.find())
 		{
 			// get the substrings that matched
-			String sSeason = mSeason.group();
-			String sEpisode = mEpisode.group();
-
-			// replace all found episode strings or seasonstrings with one
-			// letter so we dont confuse them
-			// sSeason.replaceAll(sMatch, "s");
-			// sEpisode.replaceAll(eMatch, "e");
+			String sSeason = mSeason.group().trim();
+			String sEpisode = mEpisode.group().trim();
 
 			// split the title to get the integers
 			String[] splitSeason = sSeason.split(sMatch);
 			String[] splitEpisode = sEpisode.split(eMatch);
 
 			// parse the integers
-			try {
+			try 
+			{
 				se.setSeason(Integer.parseInt(splitSeason[1]));
 				se.setEpisode(Integer.parseInt(splitEpisode[1]));
-			} catch (Exception e)
+			} 
+			catch (Exception e)
 			{
 				TedLog.error(e, Lang.getString("TedParser.ErrorParsing1")
 						+ " (" + splitSeason[1] + ") "
@@ -1715,16 +1712,19 @@ public class TedParser extends Thread implements Serializable{
 						+ " (" + splitEpisode[1] + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return null;
 			}
-		} else if (mX.find())
+		} 
+		else if (mX.find())
 		{
 			String x = mX.group();
 
 			String[] splitX = x.split(xMatch);
 
-			try {
-				se.setSeason(Integer.parseInt(splitX[0]));
-				se.setEpisode(Integer.parseInt(splitX[1]));
-			} catch (Exception e)
+			try 
+			{
+				se.setSeason(Integer.parseInt(splitX[0].trim()));
+				se.setEpisode(Integer.parseInt(splitX[1].trim()));
+			} 
+			catch (Exception e)
 			{
 				TedLog.error(e, Lang.getString("TedParser.ErrorParsing1")
 						+ " (" + splitX[0] + ") "
@@ -1732,33 +1732,38 @@ public class TedParser extends Thread implements Serializable{
 						+ " (" + splitX[2] + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return null;
 			}
-		} else if (mNum.find() && !checkLatest)
+		} 
+		else if (mNum.find() && !checkLatest)
 		{
-			String x = mNum.group();
-			if (x.length() == 3)
+			String x = mNum.group().trim();
+			if (  x.length() == 3
+			  && !x.equals("720")) // Filter out 720p. I am not quite sure what checkLatest is supposed to do so this seems to be the easiest fix.
 			{
 				// first number is season, following two are episode
 				se.setSeason(Integer.parseInt(x.substring(0, 1)));
 				se.setEpisode(Integer.parseInt(x.substring(1, 3)));
 
-			} else if (x.length() == 4)
+			} 
+			else if (x.length() == 4)
 			{
 				// first two numbers are season, second two numbers episode
 				se.setSeason(Integer.parseInt(x.substring(0, 2)));
 				se.setEpisode(Integer.parseInt(x.substring(2, 4)));
 			}
 
-		} else
+		} 
+		else
 		{
 			// nothing found
 			return null;
 		}
-
+		
 		if (!(serie.getName().equals("" + se.getSeason()))
 				&& se.getSeason() < 50 && se.getEpisode() < 50)
 		{
 			return se;
-		} else
+		} 
+		else
 		{
 			return null;
 		}
