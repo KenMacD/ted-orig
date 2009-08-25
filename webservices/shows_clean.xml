@@ -9,29 +9,23 @@
 			<type>5</type>
 		</location>
 		<location>
-			<name>tvRSS</name>
-			<feed>http://tvrss.net/search/index.php?show_name=#NAME#&amp;mode=rss</feed>
-			<website>http://tvrss.net/</website>
-			<type>5</type>
-		</location>
-		<location>
 			<name>isoHunt</name>
 			<feed>http://www.isohunt.com/js/rss/#NAME#?iht=3</feed>
 			<website>http://www.isohunt.com/</website>
-			<type>0</type>
+			<type>5</type>
 		</location>
 		<location>
 			<name>Mininova</name>
 			<feed>http://www.mininova.org/rss/#NAME#/8</feed>
 			<website>http://www.mininova.org</website>
 			<type>5</type>
-		</location>		
-		<location>
-			<name>XTVi</name>
-			<feed>http://www.xtvi.com/rss.php?query=#NAME#</feed>
-			<website>http://www.xtvi.com/</website>
-			<type>5</type>
 		</location>	
+		<location>
+			<name>EZRSS</name>
+			<feed>http://ezrss.it/search/index.php?show_name=#NAME#&amp;mode=rss</feed>
+			<website>http://ezrss.it/</website>
+			<type>5</type>
+		</location>		
 		<location>
 			<name>Torrentreactor</name>
 			<feed>http://www.torrentreactor.net/browse.php?id=8</feed>
@@ -67,12 +61,6 @@
 			<feed>http://www.ted.nu/wiki/index.php/Supported_torrent_sites</feed>
 			<website>http://www.ted.nu/</website>
 			<type>3</type>
-		</location>
-		<location>
-			<name>EZTV - Yahoo Pipes</name>
-			<feed>http://pipes.yahoo.com/pipes/pipe.run?_id=1d7df5fe363c3a736cc02848af655275&amp;_render=rss&amp;showname=#NAME#</feed>
-			<website> http://eztv.it/index.php?main=showlist</website>
-			<type>5</type>
 		</location>
 	</rsslocations>
 	<weblocations>
