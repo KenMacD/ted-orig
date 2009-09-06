@@ -153,11 +153,14 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 			showsTable.setShowHorizontalLines(false);
 			showsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			
-			showsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-				public void valueChanged(ListSelectionEvent arg0) {
-					showsTableSelectionChanged();
+			showsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() 
+				{
+					public void valueChanged(ListSelectionEvent arg0)
+					{
+						showsTableSelectionChanged();
 					
-				}});
+					}
+				});
 			
 		    this.getSelectEpisodeLabel().setVisible(false);
 		    this.getDownloadInHD().setVisible(false);
@@ -203,15 +206,17 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		}
 		else
 		{
-			this.getShowInfoPane().setText((Lang.getString("TedEpisodeDialog.ShowXmlNotFound")));
+			this.getShowInfoPane().setText((Lang.getString("TedEpisodeDialog.ShowXmlNotFound2")));
 			TedLog.error(Lang.getString("TedEpisodeDialog.LogXmlNotFound")); //$NON-NLS-1$
 		}
 		
 		return names;
 	}
 	
-	private JScrollPane getShowsScrollPane() {
-		if (showsScrollPane == null) {
+	private JScrollPane getShowsScrollPane() 
+	{
+		if (showsScrollPane == null) 
+		{
 			showsScrollPane = new JScrollPane();
 			
 		}
@@ -421,7 +426,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return showInfoScrollPane;
 	}
 	
-	private JTextPane getShowInfoPane() {
+	private JTextPane getShowInfoPane() 
+	{
 		if (showInfoPane == null) 
 		{
 			showInfoPane = new JTextPane();
@@ -456,7 +462,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return showInfoPane;
 	}
 	
-	private JButton getJHelpButton() {
+	private JButton getJHelpButton() 
+	{
 		if (jHelpButton == null) {
 			jHelpButton = new JButton();
 			jHelpButton.setActionCommand("Help");
@@ -473,7 +480,8 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return jHelpButton;
 	}
 	
-	private JLabel getSelectShowLabel() {
+	private JLabel getSelectShowLabel() 
+	{
 		if (selectShowLabel == null) {
 			selectShowLabel = new JLabel();
 			selectShowLabel.setText(Lang.getString("TedAddShowDialog.LabelSelectShow"));
@@ -481,8 +489,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return selectShowLabel;
 	}
 	
-	private JLabel getSelectEpisodeLabel() {
-		if (selectEpisodeLabel == null) {
+	private JLabel getSelectEpisodeLabel() 
+	{
+		if (selectEpisodeLabel == null) 
+		{
 			selectEpisodeLabel = new JLabel();
 			selectEpisodeLabel
 				.setText(Lang.getString("TedAddShowDialog.LabelSelectEpisode"));
@@ -490,8 +500,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return selectEpisodeLabel;
 	}
 	
-	private JLabel getShowNameLabel() {
-		if (showNameLabel == null) {
+	private JLabel getShowNameLabel() 
+	{
+		if (showNameLabel == null) 
+		{
 			showNameLabel = new JLabel();
 			showNameLabel.setFont(new java.awt.Font("Dialog",1,25));
 
@@ -499,8 +511,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return showNameLabel;
 	}
 	
-	private JButton getButtonAddEmptyShow() {
-		if (buttonAddEmptyShow == null) {
+	private JButton getButtonAddEmptyShow() 
+	{
+		if (buttonAddEmptyShow == null) 
+		{
 			buttonAddEmptyShow = new JButton();
 			buttonAddEmptyShow.setText(Lang.getString("TedAddShowDialog.ButtonAddCustomShow"));
 			buttonAddEmptyShow.addActionListener(this);
@@ -509,8 +523,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		return buttonAddEmptyShow;
 	}
 	
-	private JLabel getBuyDVDLabel() {
-		if (buyDVDLabel == null) {
+	private JLabel getBuyDVDLabel() 
+	{
+		if (buyDVDLabel == null) 
+		{
 			buyDVDLabel = new JLabel();
 			buyDVDLabel.setText("");
 			buyDVDLabel.setForeground(Color.BLUE);
@@ -563,8 +579,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		this.addShow();
 	}
 	
-	private JTextField getJSearchField() {
-		if(jSearchField == null) {
+	private JTextField getJSearchField() 
+	{
+		if(jSearchField == null) 
+		{
 			jSearchField = new SearchTextField();
 			jSearchField.addKeyListener(this);
 			jSearchField.putClientProperty("JTextField.Search.CancelAction", this);
@@ -641,8 +659,10 @@ public class AddShowDialog extends JDialog implements ActionListener, MouseListe
 		
 	}
 	
-	private JCheckBox getDownloadInHD() {
-		if(downloadInHD == null) {
+	private JCheckBox getDownloadInHD() 
+	{
+		if(downloadInHD == null) 
+		{
 			downloadInHD = new JCheckBox();
 			downloadInHD.setText(Lang.getString("TedAddShowDialog.DownloadInHd"));
 		}

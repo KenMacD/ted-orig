@@ -41,7 +41,7 @@ public class TedXMLParser
 	 */
 	public Element readXMLFromFile(String args)
 	{	
-//		 get the factory
+		// get the factory
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
 		// using factory get an instance of document builder
