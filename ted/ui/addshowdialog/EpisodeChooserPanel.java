@@ -142,6 +142,9 @@ public class EpisodeChooserPanel extends JPanel
 			column = episodesTable.getColumnModel().getColumn(0);
 			column.setPreferredWidth(60);
 	    	column.setMinWidth(150);
+			column = episodesTable.getColumnModel().getColumn(2);
+			column.setPreferredWidth(20);
+	    	column.setMinWidth(20);
 		}
 		return episodesTable;
 	}
@@ -185,6 +188,7 @@ public class EpisodeChooserPanel extends JPanel
 	 */
 	public void clear()
 	{
+		this.activityCanvas.setVisible(false);
 		this.selectedStructure = null;
 		this.episodesTableModel.clear();	
 	}

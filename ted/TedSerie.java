@@ -569,62 +569,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	{		
 		if (this.isHold())
 		{
-			// if we use the breakschedule: return next date we put the show on check again			
-			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-			
-			// get day of the week
-			String day_of_week = null;
-			Calendar c = Calendar.getInstance();
-			c.setTimeInMillis(breakUntil);
-			switch(c.get(Calendar.DAY_OF_WEEK)){
-				case 1:
-					day_of_week = Lang.getString("TedSerie.Sunday");
-				break;
-				case 2:
-					day_of_week = Lang.getString("TedSerie.Monday");
-				break;
-				case 3:
-					day_of_week = Lang.getString("TedSerie.Tuesday");
-				break;
-				case 4:
-					day_of_week = Lang.getString("TedSerie.Wednesday");
-				break;
-				case 5:
-					day_of_week = Lang.getString("TedSerie.Thursday");
-				break;
-				case 6:
-					day_of_week = Lang.getString("TedSerie.Friday");
-				break;
-				case 7:
-					day_of_week = Lang.getString("TedSerie.Saturday");
-				break;
-			}
-			// compare the breakUntil date to the current date 
-			int diff = (int)((breakUntil - new Date().getTime())/86400000);
-			String untilValue = null;
-			switch(diff){
-				case -1:
-					untilValue = Lang.getString("TedSerie.Today");
-					break;
-				case 0:
-					untilValue = Lang.getString("TedSerie.Tomorow");
-					break;
-				case 1:
-					untilValue = Lang.getString("TedSerie.DayAfterTomorow");
-					break;
-				// if its within the next week just display the day of the week
-				case 2:
-				case 3:
-				case 4:
-				case 5:
-					untilValue = day_of_week;
-					break;
-				// if its more than a week away display the day and date
-				default:
-						untilValue = day_of_week + " " + df.format(breakUntil);
-					break;
-			}
-			return Lang.getString("TedSerie.StatusOnHoldUntill") + " " + untilValue; //$NON-NLS-1$	
+			return currentEpisodeSS.getFormattedAirDateWithText(); //$NON-NLS-1$	
 		}
 		else if (this.isHiatus())
 		{

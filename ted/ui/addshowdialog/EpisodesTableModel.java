@@ -56,7 +56,7 @@ public class EpisodesTableModel extends AbstractTableModel
 			case 2:
 				return sRow.getQuality()+"";
 			case 1:
-				return sRow.getFormattedAirDate();
+				return sRow.getFormattedAirDate(false);
 		}
 		return null;
 		

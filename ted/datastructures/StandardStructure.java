@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -165,16 +166,82 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		this.title = title;
 	}
 	/**
+	 * addAiredText indicates if the formatted airdate should be pre/post appended with 'will air on' or 'aired on' strings
 	 * @return The formatted air date. When no airdate is known: formatted torrent publish date.
 	 */
-	public String getFormattedAirDate() 
+	public String getFormattedAirDate(boolean addAiredText) 
 	{
-		String result;
+		String day = "";
+		String result = "";
 		try 
 		{
-			Date tempAirDate = this.getAirDate();
-			DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-			result = df.format(tempAirDate);
+			long airTime = this.getAirDate().getTime();
+			
+			// compare the breakUntil date to the current date 
+			int diff = (int)((airTime - new Date().getTime())/86400000);
+			switch(diff)
+			{
+				case 0:
+					day = Lang.getString("TedSerie.Today");
+					break;
+				case 1:
+					day = Lang.getString("TedSerie.Tomorow");
+					break;
+				case 2:
+					day = Lang.getString("TedSerie.DayAfterTomorow");
+					break;
+				// if its within the next week just display the day of the week
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				{
+					SimpleDateFormat dayFormat = new SimpleDateFormat("EEEEE");
+					day = dayFormat.format(airTime);
+					break;
+				}
+				// if its more than a week away display the day and date
+				default:
+				{
+					DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
+					day = df.format(airTime);
+					break;
+				}
+			}
+			if (addAiredText)
+			{
+				switch(diff)
+				{
+					case 0:
+					case 1:
+					case 2:					// if its within the next week just display the day of the week
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					{
+						result = Lang.getString("StandardStructure.WillAirOnPart1") + " " + day + " " + Lang.getString("StandardStructure.WillAirOnPart2");
+						break;
+					}
+					// if its more than a week away display the day and date
+					default:
+					{
+						if (this.airedBeforeOrOnToday())
+						{
+							result = Lang.getString("StandardStructure.AiredOn") + " " + day;
+						}
+						else
+						{
+							result = Lang.getString("StandardStructure.WillAirOn") + " " + day;	
+						}
+						break;
+					}
+				}
+			}
+			else
+			{
+				result = day;
+			}
 		} 
 		catch (AirDateUnknownException e)
 		{
@@ -208,11 +275,11 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	
 	public String getFormattedAirDateWithText()
 	{
-		String result = "";
+		/*String result = "";
 		
 		if (this.airDate != null)
 		{
-			if (this.airedBeforeOrOnToday())
+			/*if (this.airedBeforeOrOnToday())
 			{
 				result = Lang.getString("StandardStructure.AiredOn") + " " + this.getFormattedAirDate();
 			}
@@ -226,7 +293,8 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 			result =  Lang.getString("StandardStructure.UnknownAirdate");
 		}
 		
-		return result;
+		return result;*/
+		return this.getFormattedAirDate(true);
 	}
 	
 	public int compareTo(StandardStructure arg0)
