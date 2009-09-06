@@ -827,10 +827,12 @@ public class TedIO
 	
 		    returnVal = chooser.showOpenDialog(chooser);
 	
-		    location = chooser.getSelectedFile().getName();
+		    location = chooser.getSelectedFile().getAbsolutePath();
 	
 		    if (!location.endsWith(".xml")) //$NON-NLS-1$
-			location += ".xml"; //$NON-NLS-1$
+		    {
+		    	location += ".xml"; //$NON-NLS-1$
+		    }
 		} 
 		else
 		{
