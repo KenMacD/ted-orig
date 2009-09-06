@@ -235,6 +235,10 @@ public class ConfigDialog extends javax.swing.JDialog
 			this.main.saveConfig(resetTime);
 			this.main.updateAllSeries();
 			this.setVisible(false);
+			
+			// Check for a new version of the shows file in case the network settings have been adjusted. 
+			this.main.isNewPredefinedShowsXML(false);
+			
 			this.dispose();
 		}
 	}
