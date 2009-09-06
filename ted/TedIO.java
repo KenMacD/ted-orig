@@ -997,96 +997,99 @@ public class TedIO
      */
     public void downloadTorrent(URL url, String name) throws Exception
     {
-	try
-	{
-	    // remove strange tokens from name string so torrent can be opened
-	    // by client
-	    TedLog.debug(Lang.getString("TedIO.DownloadingTorrent") + url + Lang.getString("TedIO.Name") + name); //$NON-NLS-1$ //$NON-NLS-2$
-	    // remove weird characters and spaces that can cause problems while
-	    // opening the torrent
-	    name = name.replaceAll("[\\[\\]/:&*?|\"\\\\]", "");
-	    name = name.replaceAll(" ()", ".");
-
-	    // create output torrent file
-	    String loc = TedConfig.getInstance().getDirectory() + File.separator + name + ".torrent"; //$NON-NLS-1$
-	    File outputFile = new File(loc);
-
-	    // file already exists
-	    int i = 1;
-	    while (outputFile.exists())
-	    {
-		loc = TedConfig.getInstance().getDirectory() + File.separator + name + "-" + i + ".torrent"; //$NON-NLS-1$ //$NON-NLS-2$
-		outputFile = new File(loc);
-		i++;
-	    }
-
-	    URLConnection urlc2 = null;
-
-	    urlc2 = TedIO.makeUrlConnection(url, 1000 * TedConfig.getInstance().getTimeOutInSecs());
-	    int length = urlc2.getContentLength();
-	    InputStream in = urlc2.getInputStream();
-
-	    // incredible ugly hack to retrieve torrents from isohunt
-	    if (length == -1)
-	    {
-		length = 250000;
-	    }
-
-	    BufferedInputStream bis = new BufferedInputStream(in);
-	    FileOutputStream bos = new FileOutputStream(outputFile);
-
-	    byte[] buff = new byte[length];
-	    int bytesRead;
-
-	    while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
-	    {
-		bos.write(buff, 0, bytesRead);
-	    }
-
-	    TedLog.debug("downloaded and saved torrent to " + loc);
-
-	    in.close();
-	    bis.close();
-	    bos.close();
-
-	    // open the torrent by default program
-	    if (TedConfig.getInstance().isOpenTorrent() && !TedSystemInfo.isHeadless())
-	    {
-		TedLog.debug(Lang.getString("TedIO.OpenningTorrent")); //$NON-NLS-1$
-		this.openFile(loc);
-	    }
-	} catch (Exception e)
-	{
-	    throw e;
-	}
-
+		try
+		{
+		    // remove strange tokens from name string so torrent can be opened
+		    // by client
+		    TedLog.debug(Lang.getString("TedIO.DownloadingTorrent") + url + Lang.getString("TedIO.Name") + name); //$NON-NLS-1$ //$NON-NLS-2$
+		    // remove weird characters and spaces that can cause problems while
+		    // opening the torrent
+		    name = name.replaceAll("[\\[\\]/:&*?|\"\\\\]", "");
+		    name = name.replaceAll(" ()", ".");
+	
+		    // create output torrent file
+		    String loc = TedConfig.getInstance().getDirectory() + File.separator + name + ".torrent"; //$NON-NLS-1$
+		    File outputFile = new File(loc);
+	
+		    // file already exists
+		    int i = 1;
+		    while (outputFile.exists())
+		    {
+				loc = TedConfig.getInstance().getDirectory() + File.separator + name + "-" + i + ".torrent"; //$NON-NLS-1$ //$NON-NLS-2$
+				outputFile = new File(loc);
+				i++;
+		    }
+	
+		    URLConnection urlc2 = null;
+	
+		    urlc2 = TedIO.makeUrlConnection(url, 1000 * TedConfig.getInstance().getTimeOutInSecs());
+		    int length = urlc2.getContentLength();
+		    InputStream in = urlc2.getInputStream();
+	
+		    // incredible ugly hack to retrieve torrents from isohunt
+		    if (length == -1)
+		    {
+		    	length = 250000;
+		    }
+	
+		    BufferedInputStream bis = new BufferedInputStream(in);
+		    FileOutputStream bos = new FileOutputStream(outputFile);
+	
+		    byte[] buff = new byte[length];
+		    int bytesRead;
+	
+		    while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
+		    {
+		    	bos.write(buff, 0, bytesRead);
+		    }
+	
+		    TedLog.debug("downloaded and saved torrent to " + loc);
+	
+		    in.close();
+		    bis.close();
+		    bos.close();
+	
+		    // open the torrent by default program
+		    if (TedConfig.getInstance().isOpenTorrent() && !TedSystemInfo.isHeadless())
+		    {
+		    	TedLog.debug(Lang.getString("TedIO.OpenningTorrent")); //$NON-NLS-1$
+		    	this.openFile(loc);
+		    }
+		} 
+		catch (Exception e)
+		{
+		    throw e;
+		}
     }
 
     public void openFile(String loc)
     {
-	try
-	{
-	    if (TedSystemInfo.osIsWindows())
-	    {
-		String[] open =
-		{ "cmd", "/C", loc }; //$NON-NLS-1$ //$NON-NLS-2$
-
-		Runtime.getRuntime().exec(open);
-	    } else if (TedSystemInfo.osIsMac())
-	    {
-		String[] args = new String[]
-		{ "open", loc };
-		Runtime.getRuntime().exec(args);
-	    } else if (TedSystemInfo.osIsLinux())
-	    {
-		Runtime.getRuntime().exec(new String[]
-		{ "gnome-open", loc }); //$NON-NLS-1$
-	    }
-	} catch (IOException e)
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+		try
+		{
+		    if (TedSystemInfo.osIsWindows())
+		    {
+		    	String[] open =
+		    	{ "cmd", "/C", loc }; //$NON-NLS-1$ //$NON-NLS-2$
+	
+		    	Runtime.getRuntime().exec(open);
+		    } 
+		    else if (TedSystemInfo.osIsMac())
+		    {
+		    	String[] args = new String[]
+		    	{ "open", loc };
+		    	Runtime.getRuntime().exec(args);
+		    } 
+		    else if (TedSystemInfo.osIsLinux())
+		    {
+		    	Runtime.getRuntime().exec(new String[]
+		    	{ "gnome-open", loc }); //$NON-NLS-1$
+		    }
+		}
+		catch (IOException e)
+		{
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
 	/*
 	 * catch (ClassNotFoundException e) {
 	 * 
@@ -1133,83 +1136,91 @@ public class TedIO
 		    return true;
 		}
     }
-
+    
     public void ExportShows(TedMainDialog main)
     {
-	JFileChooser chooser = new JFileChooser();
-	TedFileFilter filter = new TedFileFilter();
-	chooser.setFileFilter(filter);
-
-	int returnVal = chooser.showSaveDialog(main);
-	if (returnVal == JFileChooser.APPROVE_OPTION)
-	{
-	    try
-	    {
-		String fileOut = chooser.getSelectedFile().getCanonicalPath();
-
-		// Files should always have the .properties extension.
-		if (!fileOut.endsWith(".ted"))
+		JFileChooser chooser = new JFileChooser();
+		TedFileFilter filter = new TedFileFilter();
+		chooser.setFileFilter(filter);
+	
+		int returnVal = chooser.showSaveDialog(main);
+		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
-		    fileOut += ".ted";
+		    try
+		    {
+		    	String fileOut = chooser.getSelectedFile().getCanonicalPath();
+	
+				// Files should always have the .properties extension.
+				if (!fileOut.endsWith(".ted"))
+				{
+				    fileOut += ".ted";
+				}
+		
+				FileChannel inChannel = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
+				FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
+		
+				try
+				{
+				    inChannel.transferTo(0, inChannel.size(), outChannel);
+				} 
+				catch (IOException e)
+				{
+				    throw e;
+				} 
+				finally
+				{
+				    if (inChannel != null)
+				    	inChannel.close();
+				    
+				    if (outChannel != null)
+				    	outChannel.close();
+				}
+			} 
+		    catch (IOException e)
+			{
+				TedLog.error(e.toString());
+		    }
 		}
-
-		FileChannel inChannel = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
-		FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
-
-		try
-		{
-		    inChannel.transferTo(0, inChannel.size(), outChannel);
-		} catch (IOException e)
-		{
-		    throw e;
-		} finally
-		{
-		    if (inChannel != null)
-			inChannel.close();
-		    if (outChannel != null)
-			outChannel.close();
-		}
-	    } catch (IOException e)
-	    {
-		TedLog.error(e.toString());
-	    }
 	}
-    }
-
+	
     public void ImportShows(TedMainDialog main)
     {
-	JFileChooser chooser = new JFileChooser();
-	TedFileFilter filter = new TedFileFilter();
-	chooser.setFileFilter(filter);
-
-	int returnVal = chooser.showOpenDialog(main);
-	if (returnVal == JFileChooser.APPROVE_OPTION)
-	{
-	    try
-	    {
-		String fileIn = chooser.getSelectedFile().getCanonicalPath();
-
-		FileChannel inChannel = new FileInputStream(fileIn).getChannel();
-		FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
-
-		try
+		JFileChooser chooser = new JFileChooser();
+		TedFileFilter filter = new TedFileFilter();
+		chooser.setFileFilter(filter);
+	
+		int returnVal = chooser.showOpenDialog(main);
+		if (returnVal == JFileChooser.APPROVE_OPTION)
 		{
-		    inChannel.transferTo(0, inChannel.size(), outChannel);
-		} catch (IOException e)
-		{
-		    throw e;
-		} finally
-		{
-		    if (inChannel != null)
-			inChannel.close();
-		    if (outChannel != null)
-			outChannel.close();
+		    try
+		    {
+				String fileIn = chooser.getSelectedFile().getCanonicalPath();
+		
+				FileChannel inChannel = new FileInputStream(fileIn).getChannel();
+				FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
+		
+				try
+				{
+				    inChannel.transferTo(0, inChannel.size(), outChannel);
+				} 
+				catch (IOException e)
+				{
+				    throw e;
+				} 
+				finally
+				{
+				    if (inChannel != null)
+				    	inChannel.close();
+				    
+				    if (outChannel != null)
+				    	outChannel.close();
+				}
+		    } 
+		    catch (IOException e)
+		    {
+		    	TedLog.error(e.toString());
+		    }
 		}
-	    } catch (IOException e)
-	    {
-		TedLog.error(e.toString());
-	    }
-	}
     }
 
     /****************************************************
