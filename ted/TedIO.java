@@ -626,32 +626,33 @@ public class TedIO
      */
     public double checkNewTed(double d)
     {
-	try
-	{
-	    TedLog.debug(Lang.getString("TedMain.CheckingNewTed")); //$NON-NLS-1$
-	    URL url = new URL(versionUrl); //$NON-NLS-1$
-	    String line;
-	    StringTokenizer tokenizer;
-	    String token;
-
-	    BufferedReader data = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
-
-	    while ((line = data.readLine()) != null)
-	    {
-		tokenizer = new StringTokenizer(line, "="); //$NON-NLS-1$
-		token = tokenizer.nextToken();
-		if (token.equals("version")) //$NON-NLS-1$
+		try
 		{
-		    return Double.parseDouble(tokenizer.nextToken());
+		    TedLog.debug(Lang.getString("TedMain.CheckingNewTed")); //$NON-NLS-1$
+		    URL url = new URL(versionUrl); //$NON-NLS-1$
+		    String line;
+		    StringTokenizer tokenizer;
+		    String token;
+	
+		    BufferedReader data = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
+	
+		    while ((line = data.readLine()) != null)
+		    {
+				tokenizer = new StringTokenizer(line, "="); //$NON-NLS-1$
+				token = tokenizer.nextToken();
+				if (token.equals("version")) //$NON-NLS-1$
+				{
+				    return Double.parseDouble(tokenizer.nextToken());
+				}
+		    }
+	
+		    data.close();
+		} 
+		catch (Exception e)
+		{
+		    TedLog.error(e, Lang.getString("TedMain.CheckingError")); //$NON-NLS-1$
 		}
-	    }
-
-	    data.close();
-	} catch (Exception e)
-	{
-	    TedLog.error(e, Lang.getString("TedMain.CheckingError")); //$NON-NLS-1$
-	}
-	return d;
+		return d;
     }
 
     /**
@@ -659,32 +660,34 @@ public class TedIO
      */
     private int getXMLVersion()
     {
-	try
-	{
-	    TedLog.debug(Lang.getString("TedIO.Checking")); //$NON-NLS-1$
-	    URL url = new URL(versionUrl); //$NON-NLS-1$
-	    String line;
-	    StringTokenizer tokenizer;
-	    String token;
-
-	    BufferedReader data = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
-
-	    while ((line = data.readLine()) != null)
-	    {
-		tokenizer = new StringTokenizer(line, "="); //$NON-NLS-1$
-		token = tokenizer.nextToken();
-		if (token.equals("show_xml_version")) //$NON-NLS-1$
+		try
 		{
-		    return Integer.parseInt(tokenizer.nextToken());
+		    TedLog.debug(Lang.getString("TedIO.Checking")); //$NON-NLS-1$
+		    URL url = new URL(versionUrl); //$NON-NLS-1$
+		    String line;
+		    StringTokenizer tokenizer;
+		    String token;
+	
+		    BufferedReader data = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
+	
+		    while ((line = data.readLine()) != null)
+		    {
+		    	tokenizer = new StringTokenizer(line, "="); //$NON-NLS-1$
+		    	token = tokenizer.nextToken();
+		    	
+				if (token.equals("show_xml_version")) //$NON-NLS-1$
+				{
+				    return Integer.parseInt(tokenizer.nextToken());
+				}
+		    }
+	
+		    data.close();
+		} 
+		catch (Exception e)
+		{
+		    TedLog.error(e, Lang.getString("TedIO.ErrorChecking")); //$NON-NLS-1$
 		}
-	    }
-
-	    data.close();
-	} catch (Exception e)
-	{
-	    TedLog.error(e, Lang.getString("TedIO.ErrorChecking")); //$NON-NLS-1$
-	}
-	return -1;
+		return -1;
     }
 
     /**
