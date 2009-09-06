@@ -565,16 +565,17 @@ public class TedParser extends Thread implements Serializable{
 	private int getSeedersFromRSS(SyndEntry item) 
 	{
 		int numberOfSeeders = -1;
-		String urlInFeed = item.getLink();
-		if (urlInFeed.contains("mininova"))
+			
+		// First try to get the seeders from the title of the RSS item.
+		numberOfSeeders = getSeedersFromRssTitle(item.getTitle());
+		
+		if (numberOfSeeders == -1)
 		{
-			numberOfSeeders = getMininovaDescriptionSeeders(item);
-		}
-		else if (urlInFeed.contains("btjunkie"))
-		{
-			numberOfSeeders = getBtJunkieDescriptionSeeders(item.getTitle());
+			// If the seeders weren't in the title try to get it from the description.
+			numberOfSeeders = getSeedersFromRssDescription(item);
 		}
 		
+		// Write the seeders to the log, even when it isn't found (for debugging).
 		TedLog.debug("Seeders from RSS:" + " " + numberOfSeeders);
 		
 		return numberOfSeeders;
@@ -1874,7 +1875,7 @@ public class TedParser extends Thread implements Serializable{
 		stopGetItems = true;
 	}
 	
-	private int getMininovaDescriptionSeeders(SyndEntry rssItem)
+	private int getSeedersFromRssDescription(SyndEntry rssItem)
 	{
 		// See if there is a description.
 		SyndContent rssContent = rssItem.getDescription();
@@ -1925,7 +1926,7 @@ public class TedParser extends Thread implements Serializable{
 		return nrOfSeeders;
 	}
 	
-	private int getBtJunkieDescriptionSeeders(String rssItemTitle)
+	private int getSeedersFromRssTitle(String rssItemTitle)
 	{
 		if (rssItemTitle.equals(""))
 		{
