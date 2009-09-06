@@ -275,25 +275,6 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	
 	public String getFormattedAirDateWithText()
 	{
-		/*String result = "";
-		
-		if (this.airDate != null)
-		{
-			/*if (this.airedBeforeOrOnToday())
-			{
-				result = Lang.getString("StandardStructure.AiredOn") + " " + this.getFormattedAirDate();
-			}
-			else
-			{
-				result =  Lang.getString("StandardStructure.WillAirOn") + " " + this.getFormattedAirDate();
-			}
-		}
-		else
-		{
-			result =  Lang.getString("StandardStructure.UnknownAirdate");
-		}
-		
-		return result;*/
 		return this.getFormattedAirDate(true);
 	}
 	
