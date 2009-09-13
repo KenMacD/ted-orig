@@ -61,9 +61,11 @@ public class ScheduleParser
 	    // Format:   1.   1- 1        100     22 Sep 04   <a target="_blank" href="http://www.tv.com/lost/pilot-1/episode/334467/summary.html">Pilot (1)</a>
 		//         640.   7-28       7028     22 Aug 02   <a target="_blank" href="http://www.tv.com/the-daily-show/matthew-perry/episode/992799/summary.html">Matthew Perry</a>
 
-	    String regex       = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)(\\d+)(\\s+)(\\w+)(\\s+)(\\d+)";
-	    String regexNoDate = "(\\d+.\\s+)(\\d+)(\\-\\s*)(\\d+)((\\s|\\w)+\\s)";
-	    String regexName   = "(>)(.+)(</a>)(\\s*)$";
+	    String regex       = "(\\d+\\.*\\s+)(\\d+)(\\-\\s*)(\\d+)(\\s{2,}(\\w|\\p{Punct})+\\s{2,})(\\d+)((\\s|\\p{Punct}))(\\w+)((\\s|\\p{Punct}))(\\d+)";
+	    String regexNoDate = "(\\d+\\.*\\s+)(\\d+)(\\-\\s*)(\\d+)(\\s{2,}(\\w|\\p{Punct})+\\s{2,})";
+	    
+	    // Do a negative look behind on the <img> tag so you only get the name and not the image url.
+	    String regexName   = "(?!<img)(.+)(>)(.+)(</a>)(\\s*)$";
 	    
         Date parsedAirDate=null;
         String DATE_FORMAT = "d/MMM/yy";        
@@ -99,7 +101,7 @@ public class ScheduleParser
                 
                 if (matcherName.find())
                 {
-               	 title = matcherName.group(2);
+               	 title = matcherName.group(3);
                 }                
                 
                 if (date) 
@@ -107,7 +109,7 @@ public class ScheduleParser
                     try
                     {
                         // Convert between String and Date
-                        parsedAirDate = sdf.parse(matcher.group(7)+"/" + matcher.group(9) + "/" + matcher.group(11));
+                        parsedAirDate = sdf.parse(matcher.group(7)+"/" + matcher.group(10) + "/" + matcher.group(13));
                          
                          if (parsedAirDate.after(from) && parsedAirDate.before(to))
                          {
@@ -123,7 +125,7 @@ public class ScheduleParser
                 } // matcher.find() ends 
                 else if (noDate)
                 {
-                	// We've found an episode without a date.                	
+                	// We've found an episode without a date.
                     season  = Integer.parseInt(matcherNoDate.group(2));
                     episode = Integer.parseInt(matcherNoDate.group(4));
                 }
