@@ -199,6 +199,12 @@ public class ScheduleParser
 		TedXMLParser parser = new TedXMLParser();
 		Element foundShowsElement = parser.readXMLFromURL(url);
 		
+		// If there is no internet connection the xml file cannot be retrieved.
+		if (foundShowsElement == null)
+		{
+			return "";
+		}
+		
 		NodeList foundShowsList = foundShowsElement.getElementsByTagName("show");
 		
 		// Only continue if we've found at least one show with this name.
