@@ -1,4 +1,5 @@
 package ted.ui.editshowdialog;
+import java.awt.Font;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -75,6 +76,8 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 	private SpinnerNumberModel minSizeSpinnerModel = new SpinnerNumberModel();
 	private SpinnerNumberModel minSeedersSpinnerModel = new SpinnerNumberModel();
 	
+	private final Font SMALL_FONT = new Font("Dialog",0,10);
+	
 	public FilterPanel()
 	{
 		this.initUI();
@@ -85,11 +88,11 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 		try 
 		{
 			FormLayout thisLayout = new FormLayout(
-					"max(p;5dlu), max(p;0dlu), 90dlu:grow, 40dlu, 5dlu, max(p;5dlu):grow, max(p;15dlu)", 
+					"max(p;5dlu), max(p;0dlu), 61dlu, 40dlu, 5dlu, max(p;5dlu):grow, max(p;15dlu)", 
 					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;5dlu), 5dlu, max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu), max(p;15dlu), 5dlu, max(p;15dlu), max(p;15dlu), max(p;15dlu)");
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(379, 299));
-			{
+			{ 
 				label_sizeFilters = new JLabel();
 				this.add(label_sizeFilters, new CellConstraints("2, 2, 5, 1, default, default"));
 				label_sizeFilters.setText(Lang.getString("TedEpisodeDialog.LabelSize2"));
@@ -155,31 +158,34 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 			}
 			{
 				label_keywords1 = new JLabel();
-				this.add(label_keywords1, new CellConstraints("2, 9, 5, 1, default, default"));
+				this.add(label_keywords1, new CellConstraints("3, 10, 4, 1, default, default"));
 				label_keywords1.setText(Lang
 					.getString("TedEpisodeDialog.LabelKeywords"));
-			}
+				label_keywords1.setFont(SMALL_FONT);
+				}
 			{
 				label_keywords2 = new JLabel();
-				this.add(label_keywords2, new CellConstraints("2, 10, 5, 1, default, default"));
+				this.add(label_keywords2, new CellConstraints("3, 11, 4, 1, default, default"));
 				label_keywords2.setText(Lang
 					.getString("TedEpisodeDialog.LabelKeywordsHelp2"));
+				label_keywords2.setFont(SMALL_FONT);
 			}
 			{
 				label_keywords3 = new JLabel();
-				this.add(label_keywords3, new CellConstraints("2, 11, 5, 1, default, default"));
+				this.add(label_keywords3, new CellConstraints("3, 12, 5, 1, default, default"));
 				label_keywords3.setText(Lang
 					.getString("TedEpisodeDialog.LabelKeywordsHelp3"));
+				label_keywords3.setFont(SMALL_FONT);
 			}
 			{
 				label_keywords = new JLabel();
-				this.add(label_keywords, new CellConstraints("3, 12, 1, 1, default, top"));
+				this.add(label_keywords, new CellConstraints("3, 9, 1, 1, default, fill"));
 				label_keywords.setText(Lang
 					.getString("TedEpisodeDialog.LabelKeywords1"));
 			}
 			{
 				keyword_text = new TextField();
-				this.add(keyword_text, new CellConstraints("4, 12, 3, 1, default, fill"));
+				this.add(keyword_text, new CellConstraints("4, 9, 3, 1, default, fill"));
 			}
 			{
 				jSeparator2 = new JSeparator();
@@ -195,8 +201,9 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 			{
 				hdLabel = new JLabel();
 				this.add(hdLabel, new CellConstraints("3, 15, 4, 1, default, default"));
-				hdLabel.setText(Lang.getString("TedEpisodeDialog.LabelHD") + "(" + 
+				hdLabel.setText(Lang.getString("TedEpisodeDialog.LabelHD") + " (" + 
 						TedConfig.getInstance().getHDKeywords() + ")");
+				hdLabel.setFont(SMALL_FONT);
 			}
 			{
 			}
@@ -310,7 +317,7 @@ public class FilterPanel extends JPanel implements ChangeListener, TextListener,
 		this.add(check_applyMinSize, new CellConstraints("2, 3, 1, 1, default, default"));
 		this.add(check_applyMaxSize, new CellConstraints("2, 4, 1, 1, default, default"));
 		this.add(check_applySeeders, new CellConstraints("2, 7, 1, 1, default, default"));
-		this.add(check_applyKeyWords, new CellConstraints("2, 12, 1, 1, default, default"));
+		this.add(check_applyKeyWords, new CellConstraints("2, 9, 1, 1, default, default"));
 		this.add(check_applyHD, new CellConstraints("2, 14, 1, 1, default, default"));
 	
 		// check if one of the values is equal for all shows, then pre-populate
