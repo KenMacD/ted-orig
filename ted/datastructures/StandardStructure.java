@@ -176,9 +176,9 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		try 
 		{
 			long airTime = this.getAirDate().getTime();
-			
+						
 			// compare the breakUntil date to the current date 
-			int diff = (int)((airTime - new Date().getTime())/86400000);
+			int diff = (int) Math.ceil((airTime - new Date().getTime())/86400000.0);
 			switch(diff)
 			{
 				case 0:
