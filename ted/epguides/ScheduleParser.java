@@ -195,9 +195,11 @@ public class ScheduleParser
 	
 	public String getTVRageID(String showName)
 	{
+		String urlShowName = showName.replace(" ", "%20");
+		
 		// First we want to detect the id of this show on tvrage. For this we need
         // to parse the search results on the name of the show.
-    	String url = "http://www.tvrage.com/feeds/search.php?show=" + showName;
+    	String url = "http://www.tvrage.com/feeds/search.php?show=" + urlShowName;
 		TedXMLParser parser = new TedXMLParser();
 		Element foundShowsElement = parser.readXMLFromURL(url);
 		
