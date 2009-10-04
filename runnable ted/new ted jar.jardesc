@@ -1,108 +1,110 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
-<jar path="/Users/roel/Documents/workspace/ted/runnable ted/ted.jar"/>
-<options buildIfNeeded="true" compress="false" descriptionLocation="/ted/runnable ted/new ted jar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
-<storedRefactorings deprecationInfo="true" structuralOnly="false"/>
-<selectedProjects/>
-<manifest generateManifest="false" mainClassHandleIdentifier="=ted/&lt;ted{TedMain.java[TedMain" manifestLocation="/ted/runnable ted/manifest" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
-<sealing sealJar="true">
-<packagesToSeal/>
-<packagesToUnSeal/>
-</sealing>
-</manifest>
-<selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-<javaElement handleIdentifier="=ted/&lt;ted{TedColorPicker.java"/>
-<file path="/ted/icons/pause.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{FileSizeException.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted.epguides"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedLog.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedSerie.java"/>
-<file path="/ted/icons/TedConfigDialog-advanced.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted.datastructures"/>
-<file path="/ted/icons/TedConfigDialog-general.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedParseHandler.java"/>
-<file path="/ted/icons/Aid.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted.headless"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedLogWriter.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted.ui.configdialog"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedMainToolBar.java"/>
-<file path="/ted/icons/TedMainDialog.addshow32.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedUpdateWindow.java"/>
-<file path="/ted/icons/down.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedXMLWriter.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedIO.java"/>
-<file path="/ted/icons/activity.gif"/>
-<javaElement handleIdentifier="=ted/&lt;ted.translations"/>
-<javaElement handleIdentifier="=ted/&lt;ted.interfaces"/>
-<file path="/ted/icons/up.png"/>
-<file path="/ted/icons/EditShowDialog-feeds.png"/>
-<file path="/ted/icons/EditShowDialog-feeds-open.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedAboutDialog.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedSystemInfo.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedLogDialog.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedParserDateChecker.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedXMLParser.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{Base64.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedMainMenuBar.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{SeasonEpisodeScheduler.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTableRowRenderer.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{IntegratedResourceBundle.java"/>
-<file path="/ted/icons/TedMainDialog.deleteshow32.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted.tools"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTableProgressbarRenderer.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedExampleFileFilter.java"/>
-<file path="/ted/icons/EditShowDialog-filter.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{Lang.java"/>
-<file path="/ted/icons/icon-ted2.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted.ui.editshowdialog"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedParserKeywordChecker.java"/>
-<file path="/ted/icons/EditShowDialog-schedule.png"/>
-<file path="/ted/icons/TedMainDialog.editshow32.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedFeedsTableModel.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedConfig.java"/>
-<javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.hash"/>
-<javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.bencoding"/>
-<javaElement handleIdentifier="=ted/&lt;ted.ui"/>
-<file path="/ted/icons/Cancel.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{ProxyAuthenticator.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedDailySerie.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted.ui.addshowdialog"/>
-<file path="/ted/icons/StopChecking.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTrayIcon.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTable.java"/>
-<file path="/ted/icons/bril.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedMainToolBarButton.java"/>
-<file path="/ted/icons/TedMainDialog.stopsearching.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTranslateDialog.java"/>
-<file path="/ted/icons/TedConfigDialog-updates.png"/>
-<file path="/ted/icons/dir.png"/>
-<javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.tracker"/>
-<file path="/ted/icons/stop.png"/>
-<file path="/ted/icons/TedMainDialog.startsearching.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTableRenderer.java"/>
-<file path="/ted/icons/icon-active-ted.gif"/>
-<file path="/ted/icons/logo.jpg"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedCounter.java"/>
-<javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.torrent"/>
-<javaElement handleIdentifier="=ted/&lt;ted{BrowserLauncher.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedKeywordTokenizer.java"/>
-<file path="/ted/icons/help.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedMain.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedMainMacListener.java"/>
-<file path="/ted/icons/AddShowDialog-search.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTablePopupMenu.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedMainDialog.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted.ui.messaging"/>
-<javaElement handleIdentifier="=ted/&lt;ted.infrastructure"/>
-<file path="/ted/icons/EditShowDialog-general.png"/>
-<javaElement handleIdentifier="=ted/&lt;com.growl"/>
-<file path="/ted/icons/icon-ted.gif"/>
-<file path="/ted/icons/play.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedParser.java"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedSerieFeed.java"/>
-<file path="/ted/icons/TedConfigDialog-looknfeel.png"/>
-<javaElement handleIdentifier="=ted/&lt;ted{TedTableModel.java"/>
-<file path="/ted/ted/AppleJavaExtensions.jar"/>
-</selectedElements>
-<fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
+    <jar path="/Users/roel/Documents/workspace/ted/runnable ted/ted.jar"/>
+    <options buildIfNeeded="true" compress="false" descriptionLocation="/ted/runnable ted/new ted jar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" mainClassHandleIdentifier="=ted/&lt;ted{TedMain.java[TedMain" manifestLocation="/ted/runnable ted/manifest" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+        <sealing sealJar="true">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=ted/&lt;ted.tools"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedMainToolBarButton.java"/>
+        <file path="/ted/icons/activity.gif"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedXMLParser.java"/>
+        <javaElement handleIdentifier="=ted/&lt;com.growl"/>
+        <file path="/ted/icons/icon-active-ted.gif"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTablePopupMenu.java"/>
+        <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.tracker"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedSystemInfo.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedIO.java"/>
+        <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.torrent"/>
+        <file path="/ted/icons/pause.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.translations"/>
+        <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.hash"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedParseHandler.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedDailySerie.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedMainDialog.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.datastructures"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedParserKeywordChecker.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedCounter.java"/>
+        <file path="/ted/icons/dir.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedConfig.java"/>
+        <file path="/ted/icons/EditShowDialog-schedule.png"/>
+        <file path="/ted/icons/StopChecking.png"/>
+        <file path="/ted/icons/TedConfigDialog-looknfeel.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedLog.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTranslateDialog.java"/>
+        <file path="/ted/icons/TedMainDialog.deleteshow32.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedMainToolBar.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedParser.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.interfaces"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{Base64.java"/>
+        <file path="/ted/icons/TedMainDialog.editshow32.png"/>
+        <file path="/ted/icons/help.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.epguides"/>
+        <file path="/ted/icons/TedMainDialog.startsearching.png"/>
+        <file path="/ted/icons/EditShowDialog-feeds.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{IntegratedResourceBundle.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{ProxyAuthenticator.java"/>
+        <file path="/ted/icons/TedConfigDialog-updates.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.ui.messaging"/>
+        <file path="/ted/icons/icon-ted.gif"/>
+        <file path="/ted/icons/icon-ted2.png"/>
+        <file path="/ted/icons/logo.jpg"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTableModel.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{SeasonEpisodeScheduler.java"/>
+        <file path="/ted/icons/TedMainDialog.addshow32.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{WindowComponentListener.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTable.java"/>
+        <file path="/ted/icons/Aid.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTableProgressbarRenderer.java"/>
+        <file path="/ted/icons/EditShowDialog-feeds-open.png"/>
+        <file path="/ted/icons/EditShowDialog-filter.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedLogWriter.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedSerieFeed.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.ui.editshowdialog"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.ui.addshowdialog"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{BrowserLauncher.java"/>
+        <file path="/ted/icons/AddShowDialog-search.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedLogDialog.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.ui.configdialog"/>
+        <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.bencoding"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedColorPicker.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedUpdateWindow.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedMainMenuBar.java"/>
+        <file path="/ted/icons/EditShowDialog-general.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedExampleFileFilter.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedKeywordTokenizer.java"/>
+        <file path="/ted/icons/down.png"/>
+        <file path="/ted/icons/icon-HD.png"/>
+        <file path="/ted/icons/stop.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.infrastructure"/>
+        <file path="/ted/icons/play.png"/>
+        <file path="/ted/icons/Cancel.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedMain.java"/>
+        <file path="/ted/icons/TedConfigDialog-advanced.png"/>
+        <file path="/ted/icons/up.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedMainMacListener.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedParserDateChecker.java"/>
+        <file path="/ted/icons/TedConfigDialog-general.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTableRowRenderer.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedXMLWriter.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedAboutDialog.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.headless"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedSerie.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTableRenderer.java"/>
+        <file path="/ted/ted/AppleJavaExtensions.jar"/>
+        <javaElement handleIdentifier="=ted/&lt;ted.ui"/>
+        <file path="/ted/icons/bril.png"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{Lang.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedTrayIcon.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{FileSizeException.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{TedFeedsTableModel.java"/>
+        <file path="/ted/icons/TedMainDialog.stopsearching.png"/>
+    </selectedElements>
+    <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
 </jardesc>
