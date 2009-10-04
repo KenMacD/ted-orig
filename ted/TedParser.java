@@ -462,7 +462,8 @@ public class TedParser extends Thread implements Serializable{
 				}
 			}
 		} 
-		else if (season == serie.getCurrentSeason() + 1 && episode == 1)
+		else if (season == serie.getCurrentSeason() + 1 && episode == 1
+				&& !serie.isSerieAndGlobalUseAutoSchedule())
 		{
 			TedLog.debug(Lang.getString("TedParser.FoundNextSeason"));
 			torrentUrl = TedIO.getInstance().translateUrl(torrentUrl, 
