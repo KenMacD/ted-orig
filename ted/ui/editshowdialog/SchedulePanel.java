@@ -98,7 +98,6 @@ public class SchedulePanel extends JPanel implements ActionListener
 					buttonOpenEpguides.setText(Lang.getString("TedEpisodeDialog.ButtonOpen"));
 					buttonOpenEpguides.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/EditShowDialog-feeds-open.png")));
 					buttonOpenEpguides.setActionCommand("openepguides");
-					buttonOpenEpguides.setToolTipText("Open Epguides in je browser");
 					buttonOpenEpguides.setBounds(205, 248, 70, 21);
 					buttonOpenEpguides.addActionListener(this);
 				}
@@ -118,7 +117,6 @@ public class SchedulePanel extends JPanel implements ActionListener
 					buttonOpenTVRage.setText(Lang.getString("TedEpisodeDialog.ButtonOpen"));
 					buttonOpenTVRage.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/EditShowDialog-feeds-open.png")));
 					buttonOpenTVRage.setActionCommand("opentvrage");
-					buttonOpenTVRage.setToolTipText("Open TVRage in je browser");
 					buttonOpenTVRage.setBounds(205, 248, 70, 21);
 					buttonOpenTVRage.addActionListener(this);
 				}
@@ -135,7 +133,7 @@ public class SchedulePanel extends JPanel implements ActionListener
 				{
 					buttonRefreshNow = new JButton();
 					this.add(buttonRefreshNow, new CellConstraints("3, 6, 4, 1, left, default"));
-					buttonRefreshNow.setText("Refresh now!");
+					buttonRefreshNow.setText(Lang.getString("TedEpisodeDialog.RefreshSchedule"));
 					buttonRefreshNow.setActionCommand("refreshschedule");
 					buttonRefreshNow.addActionListener(this);
 					
@@ -175,14 +173,14 @@ public class SchedulePanel extends JPanel implements ActionListener
 		if (lastRefreshDate != null)
 		{
 			String lastRefresh = this.formatDate(lastRefreshDate);
-			this.labelRefresh.setText("The schedule was last refreshed on "
+			this.labelRefresh.setText(Lang.getString("TedEpisodeDialog.ScheduleLastRefresh") + " "
 					+ lastRefresh
 					+ ".");
 		}
 		if (nextRefreshDate != null)
 		{
 			String nextRefresh = this.formatDate(nextRefreshDate);
-			this.labelRefreshNext.setText("The next refresh is scheduled for "
+			this.labelRefreshNext.setText(Lang.getString("TedEpisodeDialog.ScheduleNextRefresh") + " "
 					+ nextRefresh
 					+ ".");
 		}
