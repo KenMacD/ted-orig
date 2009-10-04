@@ -62,7 +62,7 @@ public class TedConfig
 	private int y = 0;
 	private int RSSVersion = 0;
 	private int TimeOutInSecs = 10;
-	private int SeederSetting = 0;
+	private int SeederSetting = DOWNLOADMOSTSEEDERS;
 	private Locale tedLocale = Locale.getDefault();
 	private boolean addSysTray = TedSystemInfo.osSupportsTray();
 	private boolean getCompressed = true;
