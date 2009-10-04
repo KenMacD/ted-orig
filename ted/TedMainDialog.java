@@ -6,8 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -49,7 +47,7 @@ import ted.ui.messaging.MessengerCenter;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 /**
- * TED: Torrent Episode Downloader (2005 - 2007)
+ * TED: Torrent Episode Downloader (2005 - 2009)
  * 
  * This is the mainwindow of ted
  * It shows all the shows with their urls, status and more and includes menus
@@ -74,7 +72,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	
 	private TedMainCore tedCore = new TedMainCore();
 
-	private static final double tedVersion = 0.96;
+	private static final double tedVersion = 0.97;
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
