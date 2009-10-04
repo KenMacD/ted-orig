@@ -10,29 +10,35 @@
 <table width="95%" border="0" cellpadding="5">
   <tr>
     <td width="100" align="left"><a href="http://www.ted.nu/"><img src="http://www.ted.nu/img/header_logo.png" alt="ted logo" width="98" height="85" border="0"></a></td>
-    <td align="left" valign="middle"><p><font face="Arial, Helvetica, sans-serif" size="+1">v35</font></p>
-    <p><font face="Arial, Helvetica, sans-serif" size="-1">released: 20-10-2009</font></p></td>
+    <td align="left" valign="middle"><p><font face="Arial, Helvetica, sans-serif" size="+1">v37</font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="-1">released: 04-10-2009</font></p></td>
   </tr>
   <tr>
     <td colspan="2">
-    	<font face="Arial, Helvetica, sans-serif" size="-1"><strong><font color="#225A8D" size="+1">New shows</font></strong>
-    	</font>
-        <font face="Arial, Helvetica, sans-serif"><ul type="disc">
-          <li><font size="-1">Bachelor</font></li>
-          <li><font size="-1">Cupid</font></li>
-          <li><font size="-1">Castle</font></li>
-          <li><font size="-1">Henk</font></li>
-          <li><font size="-1">Lost</font></li>
-          <li><font size="-1">Test</font></li>
-          <li><font size="-1">Piet</font></li>
-          <li><font size="-1">Bachelor</font></li>
-          <li><font size="-1">Cupid</font></li>
-          <li><font size="-1">Castle</font></li>
-          <li><font size="-1">Henk</font></li>
-          <li><font size="-1">Lost</font></li>
-          <li><font size="-1">Test</font></li>
-          <li><font size="-1">Piet</font></li> 
-    	</ul>
+        <font face="Arial, Helvetica, sans-serif">
+		<p>Changed default RSS feeds. Ted now uses EZRSS, BTJunkie, isoHunt and Mininova.</p>
+		<strong><font color="#225A8D" size="+1">added</font></strong>
+		</p>
+		<ul><li>FlashForward
+		</li><li>Cleveland show
+		</li><li>Stargate Universe
+		</li><li>Three Rivers
+		</li><li>The Vampire Diaries
+		</li><li>Glee
+		</li><li>Melrose Place
+		</li><li>The Jay Leno Show
+		</li><li>The Good Wife
+		</li><li>Cougar Town
+		</li><li>Modern Family
+		</li></ul>
+		<strong><font color="#225A8D" size="+1">removed</font></strong>
+		</p>
+		<ul><li>The Tonight Show with Jay Leno
+
+		</li></ul>
+		<p><br />
+		</p>
+
         </font>
         
     </td>
