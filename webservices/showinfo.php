@@ -49,12 +49,12 @@
 		*/
 		
 		// Get full description		
-		$description = getTagContents("<p id=\"whole_summ\" style=\"display:none;\">", "<a class=\"show_hide\"", $tvcom_content);
+		$description = getTagContents("<p id=\"whole_summ\" style=\"display:none;\">", "<a class=\"show_hide", $tvcom_content);
 		
 		if ($description == "")
 		{
 			// get the short summary, needed if there is no "full" summary
-			$description = getTagContents("<p id=\"trunc_summ\">", "<a class=\"show_hide\"", $tvcom_content);
+			$description = getTagContents("<p id=\"trunc_summ\">", "<a class=\"show_hide", $tvcom_content);
 		}
 		
 		// remove escaped characters
@@ -200,10 +200,3 @@ if ($tvcom_header_img != "")
 
 </body>
 </html>
-
-<?php
-define("_BBC_PAGE_NAME", $tvcom);
-define("_BBCLONE_DIR", "bbclone/");
-define("COUNTER", _BBCLONE_DIR."mark_page.php");
-if (is_readable(COUNTER)) include_once(COUNTER);
-?>

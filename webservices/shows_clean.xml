@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>36</version>
+	<version>37</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -1103,14 +1103,14 @@
 			<name>Law and Order: Criminal Intent</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<keywords>criminal intent</keywords>
+			<keywords>(ci | criminal intent)</keywords>
 			<tv_com>1381</tv_com>
 		</show>
 		<show>
 			<name>Law and Order: Special Victims Unit</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<keywords>special victims unit</keywords>
+			<keywords>(svu | special victims unit)</keywords>
 			<tv_com>334</tv_com>
 			<epguides>LawandOrderSVU</epguides>
 		</show>
