@@ -712,7 +712,8 @@ public class TedParser extends Thread implements Serializable{
 		if (  serie.isDownloadInHD()
 		  && !isHDEpisode(item))
 		{
-			parseLogInfo[itemNr][1] = Lang.getString("TedParser.NotHDEpisode");
+			String missingKeywords = TedConfig.getInstance().getHDKeywords() + " " + Lang.getString("TedParser.HDKeywordsMissing");
+			parseLogInfo[itemNr][1] = Lang.getString("TedParser.NotHDEpisode") + ": " + missingKeywords;
 			return;
 		}		
 
