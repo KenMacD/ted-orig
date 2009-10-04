@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ted>
-	<version>37</version>
+	<version>38</version>
 	<rsslocations>		
 		<location>
 			<name>btjunkie</name>
@@ -426,6 +426,13 @@
 			<tv_com>75358</tv_com>
 		</show>
 		<show>
+			<name>The Cleveland Show</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>75594</tv_com>
+		</show>
+		<show>
 			<name>The Closer</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -452,6 +459,13 @@
 			<maximumsize>400</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>28229</tv_com>
+		</show>
+		<show>
+			<name>Cougar Town</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>76362</tv_com>
 		</show>
 		<show>
 			<name>Criminal Minds</name>
@@ -730,6 +744,13 @@
 			<tv_com>75209</tv_com>
 		</show>
 		<show>
+			<name>FlashForward</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>25</seeders>
+			<tv_com>76455</tv_com>
+		</show>
+		<show>
 			<name>Flight of the Conchords</name>
 			<keywords>flight of the conchords</keywords>
 			<minimumsize>150</minimumsize>
@@ -816,10 +837,23 @@
 			<tv_com>75606</tv_com>
 		</show>
 		<show>
+			<name>Glee</name>
+			<minimumsize>200</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>10</seeders>
+			<tv_com>75988</tv_com>
+		</show>
+		<show>
 			<name>Good Eats</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>250</maximumsize>
 			<tv_com>21612</tv_com>
+		</show>
+		<show>
+			<name>The Good Wife</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<tv_com>76761</tv_com>
 		</show>
 		<show>
 			<name>Gossip Girl</name>
@@ -1244,6 +1278,13 @@
 			<tv_com>22414</tv_com>
 		</show>
 		<show>
+			<name>Melrose Place</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>30</seeders>
+			<tv_com>76864</tv_com>
+		</show>
+		<show>
 			<name>The Mentalist</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
@@ -1252,7 +1293,6 @@
 		</show>
 		<show>
 			<name>Merlin</name>
-			<daily>False</daily>
 			<minimumsize>150</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
@@ -1286,6 +1326,13 @@
 			<maximumsize>800</maximumsize>
 			<seeders>25</seeders>
 			<tv_com>75211</tv_com>
+		</show>		
+		<show>
+			<name>Modern Family</name>
+			<minimumsize>150</minimumsize>
+			<maximumsize>400</maximumsize>
+			<seeders>15</seeders>
+			<tv_com>77270</tv_com>
 		</show>
 		<show>
 			<name>Monk</name>
@@ -1720,18 +1767,23 @@
 		</show>
 		<show>
 			<name>Stargate</name>
-			<daily>False</daily>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 		</show>
 		<show>
 			<name>Stargate Atlantis</name>
-			<daily>False</daily>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>11415</tv_com>
+		</show>
+		<show>
+			<name>Stargate Universe</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>76070</tv_com>
 		</show>
 		<show>
 			<name>Star Wars: The Clone Wars</name>
@@ -1804,6 +1856,13 @@
 			<tv_com>76361</tv_com>
 		</show>
 		<show>
+			<name>The Jay Leno Show</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>5</seeders>
+			<tv_com>77316</tv_com>
+		</show>
+		<show>
 			<name>The Life and Times of Tim</name>
 			<minimumsize>150</minimumsize>
 			<maximumsize>400</maximumsize>
@@ -1811,12 +1870,11 @@
 			<tv_com>68699</tv_com>
 		</show>
 		<show>
-			<name>The Tonight Show with Jay Leno</name>
+			<name>Three Rivers</name>
 			<minimumsize>300</minimumsize>
 			<maximumsize>800</maximumsize>
-			<seeders>35</seeders>
-			<daily>True</daily>
-			<tv_com>10020</tv_com>
+			<seeders>50</seeders>
+			<tv_com>76759</tv_com>
 		</show>
 		<show>
 			<name>Til Death</name>
@@ -1952,6 +2010,13 @@
 			<maximumsize>750</maximumsize>
 			<seeders>50</seeders>
 			<tv_com>75700</tv_com>
+		</show>
+		<show>
+			<name>The Vampire Diaries</name>
+			<minimumsize>300</minimumsize>
+			<maximumsize>800</maximumsize>
+			<seeders>50</seeders>
+			<tv_com>76739</tv_com>
 		</show>
 		<show>
 			<name>The Venture Brothers</name>
