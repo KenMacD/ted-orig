@@ -278,16 +278,6 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 			}
 		);
 		
-		// Save the window settings after resize.
-		this.addComponentListener(new ComponentAdapter()
-			{
-				public void componentResized(ComponentEvent evt)
-				{
-					saveConfig(false);
-				}
-			}
-		);
-		
 		tLog = TedLogDialog.getInstance();
 		TedLog.debug(Lang.getString("TedMainDialog.LogTedStarted")); //$NON-NLS-1$
 		
@@ -306,6 +296,9 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		this.setSize(TedConfig.getInstance().getWidth(), TedConfig.getInstance().getHeight());
 		this.setLocation(TedConfig.getInstance().getX(), TedConfig.getInstance().getY());
 		this.setMinimumSize(new java.awt.Dimension(320, 320));
+				
+		// Save the window settings after resize or move.
+		this.addComponentListener(new WindowComponentListener());
 		
 		// only if the os is supported by the trayicon program
 		// currently supports windows, linux and solaris		
