@@ -311,6 +311,10 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		{
 			thisDate = this.getPublishDate();
 		}
+		if (thisDate == null)
+		{
+			return 0;
+		}
 		
 		try 
 		{
@@ -319,6 +323,10 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 		catch (AirDateUnknownException e) 
 		{
 			secondDate = secondSStructure.getPublishDate();
+		}
+		if (secondDate == null)
+		{
+			return 0;
 		}
 	
 		if (thisDate.before(secondDate))
