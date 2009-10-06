@@ -235,6 +235,7 @@ public class TedDailySerie extends TedSerie
 		}
 		this.currentEpisodeSS = episode;
 		setLatestDownloadDate(episode.getDate().getTimeInMillis());
+		this.statusString = this.makeDefaultStatusString();
 	}
 	
 	public StandardStructure getCurrentStandardStructure()

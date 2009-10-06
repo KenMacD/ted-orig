@@ -55,7 +55,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	// General
 	private String name;
 	private String url;
-	private String statusString;
+	protected String statusString;
 	private String searchName = "";
 	private boolean usePresets;
 	private int progress = 0;
@@ -565,7 +565,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 	/**
 	 * @return Default status string according to status of show
 	 */
-	private String makeDefaultStatusString()
+	protected String makeDefaultStatusString()
 	{		
 		if (this.isHold())
 		{
@@ -856,6 +856,7 @@ public class TedSerie implements Serializable, Comparable<TedSerie>
 		}
 
 		this.updateShowStatus();
+		this.statusString = this.makeDefaultStatusString();
 	}
 
 	public void setStatusString(String string) 
