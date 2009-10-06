@@ -1,3 +1,51 @@
+v0.97
+new:
+- ezrss feed parser support
+- option to update show schedule
+- parsing shows log
+- support for HD shows
+- different show sorting options
+- yyyy mm dd is added as a valid date
+- tray icon disabled on 64 bits machines so ted starts
+- nicer dates in main table
+- seeders and file sizes are taken from rss feed before contacting tracker
+- update window with update information
+- adjustments so it is easier to work with the translator
+- changed rss library because of extensive logging
+- multiple show edit support
+- im/export shows function support
+- added never/always to update pop up dialogs
+- help button on tabs dialogs points to correct help page
+- filter on private trackers option
+- config network tab which has proxy support
+
+fixed:
+- fix for lost shows after adding show and restart
+- show list is downloaded when not present
+- schedule parser fix when season 0 is present
+- adjusted default download folders for different OS
+- if download folder not present create it (otherwise warn user)
+- wild clicking in add show dialog caused inconsistent data
+- rejected torrents because of keywords show up in log
+- when the directory path was too lang UI of preferences menu was disarragend
+- renamed compressed file filter into generic file filter
+- fixed allowing '=' in the config (directory path)
+- right mouse click in main table doesn't need focus of main table
+- message that dis/enable tray icon needs reboot
+- linux tray support
+- fixed some epguides parsing problems
+- don't crash when xml file from TVRage can't be downloaded
+- fixed bug in synchronizer show definitions
+- the characters [ and ] are invalid in torrent name
+- don't increase episode number when torrent can't be downloaded
+- don't always update schedule when closing edit show dialog
+- some connection time outs were hard coded now linked to config
+- add show dialog has a title
+
+removed:
+- manual schedulers
+- double episode support
+
 v0.96
 Bug fixes:
 - Parse shows did not work at start of ted on Windows OS
