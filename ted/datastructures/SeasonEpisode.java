@@ -118,7 +118,7 @@ public class SeasonEpisode extends StandardStructure
 		{
 			result += " & " + (this.episode + 1);
 		}
-		if (this.airDate == null && (this.getTitle() == "" || this.getTitle() == null))
+		if (this.airDate == null && (this.getTitle().length() == 0 || this.getTitle() == null))
 		{
 			// add "or season s+1"
 			result += " "+Lang.getString("TedTableModel.Or")+" " + Lang.getString("TedTableModel.Season") + ": " + (this.season+1);
