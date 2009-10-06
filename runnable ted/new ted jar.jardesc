@@ -33,9 +33,9 @@
         <javaElement handleIdentifier="=ted/&lt;ted{TedCounter.java"/>
         <file path="/ted/icons/dir.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedConfig.java"/>
-        <file path="/ted/icons/TedConfigDialog-looknfeel.png"/>
-        <file path="/ted/icons/StopChecking.png"/>
         <file path="/ted/icons/EditShowDialog-schedule.png"/>
+        <file path="/ted/icons/StopChecking.png"/>
+        <file path="/ted/icons/TedConfigDialog-looknfeel.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedLog.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedTranslateDialog.java"/>
         <file path="/ted/icons/TedMainDialog.deleteshow32.png"/>
@@ -43,13 +43,13 @@
         <javaElement handleIdentifier="=ted/&lt;ted{TedParser.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted.interfaces"/>
         <javaElement handleIdentifier="=ted/&lt;ted{Base64.java"/>
-        <file path="/ted/icons/help.png"/>
         <file path="/ted/icons/TedMainDialog.editshow32.png"/>
+        <file path="/ted/icons/help.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted.epguides"/>
         <file path="/ted/icons/TedMainDialog.startsearching.png"/>
         <file path="/ted/icons/EditShowDialog-feeds.png"/>
-        <javaElement handleIdentifier="=ted/&lt;ted{ProxyAuthenticator.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted{IntegratedResourceBundle.java"/>
+        <javaElement handleIdentifier="=ted/&lt;ted{ProxyAuthenticator.java"/>
         <file path="/ted/icons/TedConfigDialog-updates.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted.ui.messaging"/>
         <file path="/ted/icons/TedConfigDialog-network.png"/>
@@ -63,8 +63,8 @@
         <javaElement handleIdentifier="=ted/&lt;ted{TedTable.java"/>
         <file path="/ted/icons/Aid.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedTableProgressbarRenderer.java"/>
-        <file path="/ted/icons/EditShowDialog-filter.png"/>
         <file path="/ted/icons/EditShowDialog-feeds-open.png"/>
+        <file path="/ted/icons/EditShowDialog-filter.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedLogWriter.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedSerieFeed.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted.ui.editshowdialog"/>
@@ -72,8 +72,8 @@
         <javaElement handleIdentifier="=ted/&lt;ted{BrowserLauncher.java"/>
         <file path="/ted/icons/AddShowDialog-search.png"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedLogDialog.java"/>
-        <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.bencoding"/>
         <javaElement handleIdentifier="=ted/&lt;ted.ui.configdialog"/>
+        <javaElement handleIdentifier="=ted/&lt;net.sf.torrentsniffer.bencoding"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedColorPicker.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedUpdateWindow.java"/>
         <javaElement handleIdentifier="=ted/&lt;ted{TedMainMenuBar.java"/>
