@@ -1,3 +1,9 @@
+v0.971
+fixed:
+- For some users ted would not start anymore after upgrading to v0.97
+- Missing network icon added
+- Small adjustements to date strings: "will air on today" is now "will air today"
+
 v0.97
 new:
 - ezrss feed parser support
