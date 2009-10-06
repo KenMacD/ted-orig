@@ -301,10 +301,12 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 	{
 		return this.toString();
 	}
+	
 	public String getSubscribtionOptionsTitle()
 	{
 		return this.getTitle();
 	}
+	
 	public int compareDateTo(StandardStructure secondSStructure) 
 	{
 		int result = 0;
