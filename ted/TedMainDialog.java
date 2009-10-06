@@ -72,7 +72,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	
 	private TedMainCore tedCore = new TedMainCore();
 
-	private static final double tedVersion = 0.97;
+	private static final double tedVersion = 0.971;
 	
 	// menu images
 	private ImageIcon tedProgramIcon = new ImageIcon(getClass().getClassLoader().getResource("icons/icon-ted2.png")); //$NON-NLS-1$
