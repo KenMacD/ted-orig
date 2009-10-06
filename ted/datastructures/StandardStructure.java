@@ -212,8 +212,17 @@ public class StandardStructure implements Serializable, Comparable<StandardStruc
 			{
 				switch(diff)
 				{
+					// Today and tomorrow are different. The 'on' part is not there.
 					case 0:
+					{
+						result = Lang.getString("StandardStructure.WillAir") + " " + day + " " + Lang.getString("StandardStructure.WillAirOnPart2");
+						break;
+					}
 					case 1:
+					{
+						result = Lang.getString("StandardStructure.WillAir") + " " + day + " " + Lang.getString("StandardStructure.WillAirOnPart2");
+						break;
+					}
 					case 2:					// if its within the next week just display the day of the week
 					case 3:
 					case 4:
