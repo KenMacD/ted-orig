@@ -11,7 +11,7 @@
   <tr>
     <td width="100" align="left"><a href="http://www.ted.nu/"><img src="http://www.ted.nu/img/header_logo.png" alt="ted logo" width="98" height="85" border="0"></a></td>
     <td align="left" valign="middle"><p><font face="Arial, Helvetica, sans-serif" size="+1">new in version 0.971</font></p>
-    <p><font face="Arial, Helvetica, sans-serif" size="-1">released: 06-10-2009</font></p></td>
+    <p><font face="Arial, Helvetica, sans-serif" size="-1">released: 07-10-2009</font></p></td>
   </tr>
   <tr>
     <td colspan="2">
