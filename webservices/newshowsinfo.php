@@ -10,31 +10,45 @@
 <table width="95%" border="0" cellpadding="5">
   <tr>
     <td width="100" align="left"><a href="http://www.ted.nu/"><img src="http://www.ted.nu/img/header_logo.png" alt="ted logo" width="98" height="85" border="0"></a></td>
-    <td align="left" valign="middle"><p><font face="Arial, Helvetica, sans-serif" size="+1">v37</font></p>
-    <p><font face="Arial, Helvetica, sans-serif" size="-1">released: 04-10-2009</font></p></td>
+    <td align="left" valign="middle"><p><font face="Arial, Helvetica, sans-serif" size="+1">v38</font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="-1">released: 07-10-2009</font></p></td>
   </tr>
   <tr>
     <td colspan="2">
         <font face="Arial, Helvetica, sans-serif">
-		<p>Changed default RSS feeds. Ted now uses EZRSS, BTJunkie, isoHunt and Mininova.</p>
 		<strong><font color="#225A8D" size="+1">added</font></strong>
 		</p>
-		<ul><li>FlashForward
-		</li><li>Cleveland show
-		</li><li>Stargate Universe
-		</li><li>Three Rivers
-		</li><li>The Vampire Diaries
-		</li><li>Glee
-		</li><li>Melrose Place
-		</li><li>The Jay Leno Show
-		</li><li>The Good Wife
-		</li><li>Cougar Town
-		</li><li>Modern Family
+		<ul><li>Community
+		</li><li>The Middle
+		</li><li>Trauma
+		</li><li>Bored to Death
+		</li><li>Brothers
+		</li><li>The Forgotten
+		</li><li>Hank
+		</li><li>Mercy
+		</li><li>Warehouse 13
+		</li><li>Better of Ted
+		</li><li>Caprica
+		</li><li>Defying Gravity
+		</li><li>Drop Dead Diva
+		</li><li>Hope Springs
+		</li><li>Hung
+		</li><li>Nurse Jackie
+		</li><li>Royal Pains
+		</li><li>Crash
+		</li><li>The Tudors
+		</li><li>Southland
+		</li><li>V
 		</li></ul>
-		<strong><font color="#225A8D" size="+1">removed</font></strong>
+		<strong><font color="#225A8D" size="+1">adjusted</font></strong>
 		</p>
-		<ul><li>The Tonight Show with Jay Leno
-
+		<ul><li>Added tv.com for Without a Trace
+		</li><li>Adjusted search name for It's Always Sunny in Philadelphia
+		</li></ul>
+		<p>
+		<strong><font color="#225A8D" size="+1">private trackers added</font></strong>
+		</p>
+		<ul><li>immortalseed.com
 		</li></ul>
 		<p><br />
 		</p>
