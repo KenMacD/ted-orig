@@ -446,7 +446,7 @@ public class ScheduleParser
 					}
 					else if (s1AirDate != null && s2AirDate == null)
 					{
-						s2.setAirDate(s2AirDate);
+						s2.setAirDate(s1AirDate);
 					}
 					
 					// Could be that one source has a title, the other does not:
