@@ -79,7 +79,7 @@ public class TedParserDateChecker implements Serializable
 	 */
 	public int getMonth(String s)
 	{
-		s.toLowerCase();
+		s = s.toLowerCase();
 		
         if(s.equals("jan") || s.equals("january"))
         	return 0;
