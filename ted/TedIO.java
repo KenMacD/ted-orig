@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,6 +27,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -66,7 +67,7 @@ public class TedIO
     public static String SHOWS_FILE = TedSystemInfo.getUserDirectory() + "shows.ted"; //$NON-NLS-1$
     public static String XML_SHOWS_FILE = TedSystemInfo.getUserDirectory() + "shows_clean.xml"; //$NON-NLS-1$
     
-    private boolean isSavingShows = false;
+    private Lock savingShows = new ReentrantLock();
     
     private static TedIO ioSingleton = null;
     
@@ -117,7 +118,7 @@ public class TedIO
      */
     public void SaveShows(Vector series)
     {
-    	if (isSavingShows)
+    	if (!savingShows.tryLock())
     	{
         	// Do this check first to prevent two processes writing in the
         	// file at the same time. As the saves are so close together
@@ -125,9 +126,6 @@ public class TedIO
         	// by this.
     		return;
     	}
-    	
-    	// Get exclusive access to the file.
-    	isSavingShows = true;
     	
 		try
 		{
@@ -145,12 +143,12 @@ public class TedIO
 		} 
 		catch (Exception e)
 		{
-			isSavingShows = false;
 		    TedLog.error(e, "Shows File writing error"); //$NON-NLS-1$
 		}
-		
-		// Give up exclusive access.
-		isSavingShows = false;
+		finally
+		{
+			savingShows.unlock();
+		}
     }
 
     /**
