@@ -8,15 +8,18 @@
 	</tstamp>
 
 	<property name="project.base.dir" value="${basedir}" />
-	<property name="ted.src.dir" value="ted" />
-	<property name="com.src.dir" value="com" />
-	<property name="icons.src.dir" value="icons" />
-	<property name="net.src.dir" value="net" />
+	<property name="ted.src.dir" value="src/main/java/ted" />
+	<property name="ted.mvnlib.dir" value="target/dependency" />
+	<property name="ted.lib.dir" value="lib" />
+	<property name="resources.dir" value="src/main/resources" />
+	<property name="com.src.dir" value="src/main/java/com" />
+	<property name="icons.src.dir" value="${resources.dir}/icons" />
+	<property name="net.src.dir" value="src/main/java/net" />
 	<property name="build.dir" value="build" />
 	<property name="jar.dir" value="jar" />
 	<property name="jar.file" value="${jar.dir}/ted.jar" />
 	<property name="manifest.file" value="runnable ted/manifest" />
-	<property name="translations.dir" value="${ted.src.dir}/translations" />
+	<property name="translations.dir" value="${resources.dir}/ted/translations" />
 
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
@@ -34,7 +37,10 @@
 			<src path="${com.src.dir}" />
 			<src path="${net.src.dir}" />
 			<classpath>
-				<fileset dir="${ted.src.dir}">
+				<fileset dir="${ted.mvnlib.dir}">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${ted.lib.dir}">
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
@@ -65,6 +71,12 @@
 			<fileset dir="${ted.src.dir}">
 				<include name="*.jar" />
 				<exclude name="AppleJavaExtensions.jar" />
+			</fileset>
+			<fileset dir="${ted.mvnlib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${ted.lib.dir}">
+				<include name="*.jar" />
 			</fileset>
 		</copy>
 
