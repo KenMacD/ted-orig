@@ -55,7 +55,7 @@
 			<fileset dir="${translations.dir}" />
 		</copy>
 		<copy todir="${build.dir}/ted/">
-			<fileset dir="${ted.src.dir}">
+			<fileset dir="${ted.lib.dir}">
 				<include name="AppleJavaExtensions.jar" />
 			</fileset>
 		</copy>
