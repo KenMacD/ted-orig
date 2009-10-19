@@ -1024,9 +1024,8 @@ public class TedIO
 		    }
 	
 		    URLConnection urlc2 = null;
-	
-		    // TODO: likely bug, doesn't need the 1000, or named wrong.
-		    urlc2 = TedIO.makeUrlConnection(url, 1000 * TedConfig.getInstance().getTimeOutInSecs());
+		    urlc2 = TedIO.makeUrlConnection(url, TedConfig.getInstance().getTimeOutInSecs());
+		    
 		    int length = urlc2.getContentLength();
 		    InputStream in = urlc2.getInputStream();
 	
