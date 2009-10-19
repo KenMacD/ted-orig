@@ -201,11 +201,11 @@ public class Lang
 				try
 				{
 					JarFile jarFile = new JarFile(jar);
-					Enumeration entries = jarFile.entries();
-					ArrayList list = new ArrayList(250);
+					Enumeration<JarEntry> entries = jarFile.entries();
+					ArrayList<String> list = new ArrayList<String>(250);
 					while (entries.hasMoreElements())
 					{
-						JarEntry jarEntry = (JarEntry) entries.nextElement();
+						JarEntry jarEntry = entries.nextElement();
 						if (jarEntry.getName().startsWith(bundleFolder)
 								&& jarEntry.getName().endsWith(extension))
 						{
@@ -233,7 +233,7 @@ public class Lang
 			});
 		}
 
-		HashSet bundleSet = new HashSet();
+		HashSet<String> bundleSet = new HashSet<String>();
 
 		// Add AppDir 2nd
 		File appDir = new File(".");
@@ -256,12 +256,9 @@ public class Lang
 		bundleSet.addAll(Arrays.asList(bundles));
 
 		
-		ArrayList foundLocalesList = new ArrayList(bundleSet.size());
+		ArrayList<Locale> foundLocalesList = new ArrayList<Locale>(bundleSet.size());
 
-		foundLocalesList.add(LOCALE_ENGLISH);
-
-		Iterator val = bundleSet.iterator();
-		int i = 0;
+		Iterator<String> val = bundleSet.iterator();
 		while (val.hasNext())
 		{
 			String sBundle = (String) val.next();
@@ -307,13 +304,18 @@ public class Lang
 
 		try
 		{
-			Arrays.sort(foundLocales, new Comparator()
+			Arrays.sort(foundLocales, new Comparator<Locale>()
 			{
-				public final int compare(Object a, Object b)
+				public final int compare(Locale a, Locale b)
 				{
-					return ((Locale) a).getDisplayName((Locale) a)
-							.compareToIgnoreCase(
-									((Locale) b).getDisplayName((Locale) b));
+					// If the languages are the same, order by country.
+					if (a.getDisplayLanguage() == b.getDisplayLanguage())
+					{
+						return a.getDisplayCountry().compareToIgnoreCase(b.getDisplayCountry());
+					}
+					
+					// Otherwise by language.
+					return a.getDisplayLanguage().compareToIgnoreCase(b.getDisplayLanguage());
 				}
 			});
 		} catch (Throwable e)

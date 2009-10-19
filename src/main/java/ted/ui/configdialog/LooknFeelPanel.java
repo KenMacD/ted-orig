@@ -204,13 +204,37 @@ public class LooknFeelPanel extends JPanel implements ActionListener, MouseListe
 		}
 		
 		
-		// fill combobox with available languages, and select current language
+		// fill combo box with available languages, and select current language
 		String currentLanguage = TedConfig.getInstance().getLocale().getDisplayLanguage();
+		String currentCountry  = TedConfig.getInstance().getLocale().getDisplayCountry();
+		
 		int toSelect = 0;
-		for (int i = 0; i < locales.length; i++)
+		int nrOfLocales = locales.length - 1;
+		for (int i = 0; i <= nrOfLocales; i++)
 		{
-			comboLanguages.addItem(locales[i].getDisplayLanguage());
-			if (locales[i].getDisplayLanguage().equals(currentLanguage))
+			String country  = "";
+			String language = locales[i].getDisplayLanguage();
+			
+			// If the next or the previous language is the same also add the country
+			// to the display name. Check for array out of bounds.
+			if (   (i != 0           && locales[i-1].getDisplayLanguage().equals(language))
+				|| (i != nrOfLocales && locales[i+1].getDisplayLanguage().equals(language)))
+			{
+				country = locales[i].getDisplayCountry();
+			}
+			
+			// Format the output string if the country is specified.
+			if (!country.equals(""))
+			{
+				language += " (" + country + ")";
+			}
+			
+			// Add the language to the combo box.
+			comboLanguages.addItem(language);
+			
+			// Select the correct language. Take into account the country if needed.
+			if (   locales[i].getDisplayLanguage().equals(currentLanguage)
+				&& (locales[i].getDisplayCountry().equals(currentCountry) || country.equals("")))
 			{
 				toSelect = i;
 			}
