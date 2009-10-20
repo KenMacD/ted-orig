@@ -12,6 +12,21 @@
           <target>1.5</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>ted.TedMain</mainClass>
+            </manifest>
+            <manifestEntries>
+              <Sealed>true</Sealed>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -37,6 +52,24 @@
       <groupId>net.java.dev.jgoodies</groupId>
       <artifactId>forms</artifactId>
       <version>1.1.0</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.jdesktop</groupId>
+        <artifactId>JDIC</artifactId>
+        <!-- TODO: Random old version  -->
+        <version>0.8.4</version>
+        <scope>system</scope>
+        <systemPath>${basedir}/lib/jdic.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.apple</groupId>
+        <artifactId>JavaExtensions</artifactId>
+        <!-- TODO: no idea if this is actually 1.0 -->
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${basedir}/lib/AppleJavaExtensions.jar</systemPath>
     </dependency>
 
     <!-- JAXB Support for XML to Java Translation -->
