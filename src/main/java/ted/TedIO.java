@@ -32,7 +32,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Element;
 
@@ -1118,93 +1117,59 @@ public class TedIO
 		}
     }
     
-    public void ExportShows(TedMainDialog main)
-    {
-		JFileChooser chooser = new JFileChooser();
-		TedFileFilter filter = new TedFileFilter();
-		chooser.setFileFilter(filter);
-	
-		int returnVal = chooser.showSaveDialog(main);
-		if (returnVal == JFileChooser.APPROVE_OPTION)
+    public static void exportToShowFile(String fileOut) throws FileNotFoundException,
+			IOException {
+		// Files should always have the .properties extension.
+		if (!fileOut.endsWith(".ted"))
 		{
-		    try
-		    {
-		    	String fileOut = chooser.getSelectedFile().getCanonicalPath();
+		    fileOut += ".ted";
+		}
 	
-				// Files should always have the .properties extension.
-				if (!fileOut.endsWith(".ted"))
-				{
-				    fileOut += ".ted";
-				}
-		
-				FileChannel inChannel = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
-				FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
-		
-				try
-				{
-				    inChannel.transferTo(0, inChannel.size(), outChannel);
-				} 
-				catch (IOException e)
-				{
-				    throw e;
-				} 
-				finally
-				{
-				    if (inChannel != null)
-				    	inChannel.close();
-				    
-				    if (outChannel != null)
-				    	outChannel.close();
-				}
-			} 
-		    catch (IOException e)
-			{
-				TedLog.error(e.toString());
-		    }
+		FileChannel inChannel = new FileInputStream(SHOWS_FILE).getChannel();
+		FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
+	
+		try
+		{
+		    inChannel.transferTo(0, inChannel.size(), outChannel);
+		} 
+		catch (IOException e)
+		{
+		    throw e;
+		} 
+		finally
+		{
+		    if (inChannel != null)
+		    	inChannel.close();
+		    
+		    if (outChannel != null)
+		    	outChannel.close();
 		}
 	}
-	
-    public void ImportShows(TedMainDialog main)
-    {
-		JFileChooser chooser = new JFileChooser();
-		TedFileFilter filter = new TedFileFilter();
-		chooser.setFileFilter(filter);
-	
-		int returnVal = chooser.showOpenDialog(main);
-		if (returnVal == JFileChooser.APPROVE_OPTION)
-		{
-		    try
-		    {
-				String fileIn = chooser.getSelectedFile().getCanonicalPath();
-		
-				FileChannel inChannel = new FileInputStream(fileIn).getChannel();
-				FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
-		
-				try
-				{
-				    inChannel.transferTo(0, inChannel.size(), outChannel);
-				} 
-				catch (IOException e)
-				{
-				    throw e;
-				} 
-				finally
-				{
-				    if (inChannel != null)
-				    	inChannel.close();
-				    
-				    if (outChannel != null)
-				    	outChannel.close();
-				}
-		    } 
-		    catch (IOException e)
-		    {
-		    	TedLog.error(e.toString());
-		    }
-		}
-    }
 
-    /****************************************************
+	public static void importFromShowFile(String fileIn) throws FileNotFoundException,
+			IOException {
+		FileChannel inChannel = new FileInputStream(fileIn).getChannel();
+		FileChannel outChannel = new FileOutputStream(SHOWS_FILE).getChannel();
+	
+		try
+		{
+		    inChannel.transferTo(0, inChannel.size(), outChannel);
+		} 
+		catch (IOException e)
+		{
+		    throw e;
+		} 
+		finally
+		{
+		    if (inChannel != null)
+		    	inChannel.close();
+		    
+		    if (outChannel != null)
+		    	outChannel.close();
+		}
+	}
+
+	/****************************************************
      * PRIVATE METHODS
      ****************************************************/
 
@@ -1264,18 +1229,5 @@ public class TedIO
     public static BufferedReader makeBufferedReader(URL url, int timeOutInSecs) throws IOException
     {
     	return new BufferedReader(new InputStreamReader(TedIO.makeBufferedInputStream(url, timeOutInSecs)));
-    }
-
-    class TedFileFilter extends FileFilter
-    {
-		public boolean accept(File f)
-		{
-		    return f.toString().toLowerCase().endsWith(".ted");
-		}
-
-		public String getDescription()
-		{
-		    return "show definitions";
-		}
     }
 }
