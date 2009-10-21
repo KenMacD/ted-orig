@@ -437,9 +437,9 @@ public class TedXMLParser
 	 * @param nodelist
 	 * @return
 	 */
-	public Vector getAmazonURLs(Element nodelist)
+	public Vector<String> getAmazonURLs(Element nodelist)
 	{
-		Vector v = new Vector();
+		Vector<String> v = new Vector<String>();
 		NodeList nl = nodelist.getElementsByTagName("weblocations");
 		
 		if(nl!=null && nl.getLength()>0)

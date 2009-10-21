@@ -32,7 +32,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Element;
 
@@ -60,8 +59,8 @@ import ted.tools.StringEncrypter;
  */
 public class TedIO
 {
-    private String XMLurl = "http://ted.sourceforge.net/shows_clean.xml"; //$NON-NLS-1$
-    private String versionUrl = "http://ted.sourceforge.net/version.txt";
+    private static String XMLurl = "http://ted.sourceforge.net/shows_clean.xml"; //$NON-NLS-1$
+    private static String versionUrl = "http://ted.sourceforge.net/version.txt";
 
     private static String CONFIG_FILE = TedSystemInfo.getUserDirectory() + "config.ted"; //$NON-NLS-1$
     public static String SHOWS_FILE = TedSystemInfo.getUserDirectory() + "shows.ted"; //$NON-NLS-1$
@@ -71,7 +70,7 @@ public class TedIO
     
     private static TedIO ioSingleton = null;
     
-    private String encryptionKey = "123456789012345678901234567890";
+    private static String encryptionKey = "123456789012345678901234567890";
     
 
     /****************************************************
@@ -116,7 +115,7 @@ public class TedIO
      * @param series
      *            Current vector of shows in ted
      */
-    public void SaveShows(Vector series)
+    public void SaveShows(Vector<TedSerie> series)
     {
     	if (!savingShows.tryLock())
     	{
@@ -156,9 +155,11 @@ public class TedIO
      * 
      * @return Shows saved on the harddisk
      */
-    public Vector GetShows()
+    /* TODO-KMD: remove uncheck when shows are stored in xml */
+    @SuppressWarnings("unchecked")
+	public Vector<TedSerie> GetShows()
     {
-		Vector vec = new Vector();
+		Vector<TedSerie> vec = new Vector<TedSerie>();
 		try
 		{
 		    // check application folder for all shows file
@@ -199,10 +200,10 @@ public class TedIO
 		    // Read an object
 		    Object obj = obj_in.readObject();
 	
-		    if (obj instanceof Vector)
+		    if (obj instanceof Vector<?>)
 		    {
-				// Cast object to a Vector
-				vec = (Vector) obj;
+				// Cast object to a Vector<TedSerie>
+				vec = (Vector<TedSerie>) obj;
 				return vec;
 		    }
 	
@@ -250,7 +251,7 @@ public class TedIO
      * @param tc
      *            TedConfig.getInstance() we have to save
      */
-    public void SaveConfig()
+    public static void SaveConfig()
     {
 		try
 		{
@@ -632,7 +633,7 @@ public class TedIO
 		    StringTokenizer tokenizer;
 		    String token;
 	
-		    BufferedReader data = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
+		    BufferedReader data = makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
 	
 		    while ((line = data.readLine()) != null)
 		    {
@@ -656,7 +657,7 @@ public class TedIO
     /**
      * @return The current XML version as published on ted's website
      */
-    private int getXMLVersion()
+    private static int getXMLVersion()
     {
 		try
 		{
@@ -666,7 +667,7 @@ public class TedIO
 		    StringTokenizer tokenizer;
 		    String token;
 	
-		    BufferedReader data = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
+		    BufferedReader data = makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
 	
 		    while ((line = data.readLine()) != null)
 		    {
@@ -696,11 +697,11 @@ public class TedIO
      * @param showresult
      *            Whether the user wants to see the result of the check
      */
-    public void checkNewXMLFile(TedMainDialog main, boolean showresult, TedTable mainTable)
+    public static void checkNewXMLFile(TedMainDialog main, boolean showresult, TedTable mainTable)
     {
 		// check the website if there is a new version available
 		int version = TedConfig.getInstance().getRSSVersion();
-		int onlineversion = this.getXMLVersion();
+		int onlineversion = getXMLVersion();
 	
 		// if there is a new version
 		if (onlineversion > version)
@@ -727,7 +728,7 @@ public class TedIO
 				downloadXML();
 				
 				// update the shows (if the user wants to).
-				updateShows(main, mainTable);	
+				updateShows(mainTable);	
 
 				new TedUpdateWindow(title, 
 									messageInfo, 
@@ -755,7 +756,7 @@ public class TedIO
 		}
     }
 
-    public void updateShows(TedMainDialog main, TedTable mainTable)
+    public static void updateShows(TedTable mainTable)
     {
 		int rows = mainTable.getRowCount();
 	
@@ -776,14 +777,14 @@ public class TedIO
 				{
 				    // The user clicked the always button, so store it in the
 				    // configuration.
-				    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().ALWAYS);
-				    this.SaveConfig();
+				    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.ALWAYS);
+				    SaveConfig();
 				} 
 				else if (answer == 3)
 				{
 				    // Do the same for the never button.
-				    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.getInstance().NEVER);
-				    this.SaveConfig();
+				    TedConfig.getInstance().setAutoAdjustFeeds(TedConfig.NEVER);
+				    SaveConfig();
 				}
 				// For the yes/no option nothing has to be done as when the user
 				// sees this message
@@ -793,7 +794,7 @@ public class TedIO
 		    if (TedConfig.getInstance().isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
 			{
 				// adjust the feeds
-				this.UpdateShow(main, true, mainTable);
+				UpdateShow(true, mainTable);
 		    }
 		}
     }
@@ -801,10 +802,8 @@ public class TedIO
     /**
      * Update the feeds with the correct urls User defined feeds will not be
      * adjusted
-     * 
-     * @param main
      */
-    public void UpdateShow(TedMainDialog main, boolean AutoUpdate, TedTable mainTable)
+    public static void UpdateShow(boolean AutoUpdate, TedTable mainTable)
     {
 		String s;
 		String location;
@@ -898,7 +897,7 @@ public class TedIO
 		    URL url = new URL("http://ted.sourceforge.net/urltranslator.php?url=" + uri + "&sTitle=" + URLEncoder.encode(title, "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		    String line;
 	
-		    BufferedReader data = this.makeBufferedReader(url, timeOut);
+		    BufferedReader data = makeBufferedReader(url, timeOut);
 	
 		    while ((line = data.readLine()) != null)
 		    {
@@ -930,14 +929,14 @@ public class TedIO
      * 
      * @param main
      */
-    public void downloadXML()
+    public static void downloadXML()
     {
 		try
 		{
 		    TedLog.debug("Downloading new show definitions XML"); //$NON-NLS-1$
 		    // open connection to the XML file
-		    URL url = new URL(this.XMLurl);
-		    BufferedReader br = this.makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
+		    URL url = new URL(XMLurl);
+		    BufferedReader br = makeBufferedReader(url, TedConfig.getInstance().getTimeOutInSecs());
 	
 		    // write the xml file
 		    FileWriter fw = new FileWriter(XML_SHOWS_FILE);
@@ -962,7 +961,7 @@ public class TedIO
 		    TedConfig.getInstance().setRSSVersion(onlineVersion);
 		    TedConfig.getInstance().setHDKeywords(hdKeywords);
 	
-		    this.SaveConfig();
+		    SaveConfig();
 		} 
 		catch (MalformedURLException e)
 		{
@@ -1140,26 +1139,15 @@ public class TedIO
 		}
     }
     
-    public void ExportShows(TedMainDialog main)
-    {
-		JFileChooser chooser = new JFileChooser();
-		TedFileFilter filter = new TedFileFilter();
-		chooser.setFileFilter(filter);
-	
-		int returnVal = chooser.showSaveDialog(main);
-		if (returnVal == JFileChooser.APPROVE_OPTION)
-		{
-		    try
-		    {
-		    	String fileOut = chooser.getSelectedFile().getCanonicalPath();
-	
+    public static void exportToShowFile(String fileOut) throws FileNotFoundException,
+			IOException {
 				// Files should always have the .properties extension.
 				if (!fileOut.endsWith(".ted"))
 				{
 				    fileOut += ".ted";
 				}
 		
-				FileChannel inChannel = new FileInputStream(TedIO.SHOWS_FILE).getChannel();
+		FileChannel inChannel = new FileInputStream(SHOWS_FILE).getChannel();
 				FileChannel outChannel = new FileOutputStream(fileOut).getChannel();
 		
 				try
@@ -1179,28 +1167,11 @@ public class TedIO
 				    	outChannel.close();
 				}
 			} 
-		    catch (IOException e)
-			{
-				TedLog.error(e.toString());
-		    }
-		}
-	}
-	
-    public void ImportShows(TedMainDialog main)
-    {
-		JFileChooser chooser = new JFileChooser();
-		TedFileFilter filter = new TedFileFilter();
-		chooser.setFileFilter(filter);
-	
-		int returnVal = chooser.showOpenDialog(main);
-		if (returnVal == JFileChooser.APPROVE_OPTION)
-		{
-		    try
-		    {
-				String fileIn = chooser.getSelectedFile().getCanonicalPath();
 		
+	public static void importFromShowFile(String fileIn) throws FileNotFoundException,
+			IOException {
 				FileChannel inChannel = new FileInputStream(fileIn).getChannel();
-				FileChannel outChannel = new FileOutputStream(TedIO.SHOWS_FILE).getChannel();
+		FileChannel outChannel = new FileOutputStream(SHOWS_FILE).getChannel();
 		
 				try
 				{
@@ -1219,12 +1190,6 @@ public class TedIO
 				    	outChannel.close();
 				}
 		    } 
-		    catch (IOException e)
-		    {
-		    	TedLog.error(e.toString());
-		    }
-		}
-    }
 
     /****************************************************
      * PRIVATE METHODS
@@ -1286,18 +1251,5 @@ public class TedIO
     public static BufferedReader makeBufferedReader(URL url, int timeOutInSecs) throws IOException
     {
     	return new BufferedReader(new InputStreamReader(TedIO.makeBufferedInputStream(url, timeOutInSecs)));
-    }
-
-    class TedFileFilter extends FileFilter
-    {
-		public boolean accept(File f)
-		{
-		    return f.toString().toLowerCase().endsWith(".ted");
-		}
-
-		public String getDescription()
-		{
-		    return "show definitions";
-		}
     }
 }

@@ -17,12 +17,14 @@ import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Element;
 
@@ -606,7 +608,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		}
 		else if(action.equals("New")) //$NON-NLS-1$
 		{
-			AddShowDialog asd = new AddShowDialog(this);
+            new AddShowDialog(this);
 		}
 		else if(action.equals("Exit")) //$NON-NLS-1$
 		{
@@ -744,7 +746,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		else if (action.equals("DownloadXml"))
 		{
 			TedIO.getInstance().downloadXML();
-			TedIO.getInstance().updateShows(this, serieTable);
+			TedIO.getInstance().updateShows(serieTable);
 		}
 		else if (action.equals("buydvd")) //$NON-NLS-1$
 		{
@@ -842,16 +844,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		else if(action.equals("Export")) //$NON-NLS-1$
 		{
 			this.saveShows();
-			TedIO.getInstance().ExportShows(this);
+            exportShows();
 		}
 		else if (action.equals("Import"))
 		{
-			TedIO.getInstance().ImportShows(this);
+            importShows();
 			serieTable.setSeries(this.tedCore.getSeries());
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
 		{
-			TedIO.getInstance().UpdateShow(this, false, serieTable);
+			TedIO.getInstance().UpdateShow(false, serieTable);
 			serieTable.fireTableDataChanged();
 		}
 		else if(action.equals("translate"))
@@ -1102,7 +1104,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	{
 		TedXMLParser parser = new TedXMLParser();
 		Element nl = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE);
-		Vector locations = parser.getAmazonURLs(nl);
+        Vector<String> locations = parser.getAmazonURLs(nl);
 		
 		if(locations.size()==3)
 		{
@@ -1202,4 +1204,62 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	{
 		this.tMenuBar.checkAutoSchedule(firstShowEnabled, showBothOptions);
 	}
+
+
+    public void importShows()
+    {
+        JFileChooser chooser = new JFileChooser();
+        TedFileFilter filter = new TedFileFilter();
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            try
+            {
+                String fileIn = chooser.getSelectedFile().getCanonicalPath();
+
+                TedIO.importFromShowFile(fileIn);
+            }
+            catch (IOException e)
+            {
+                TedLog.error(e.toString());
+            }
+        }
+    }
+
+    public void exportShows()
+    {
+        JFileChooser chooser = new JFileChooser();
+        TedFileFilter filter = new TedFileFilter();
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            try
+            {
+                String fileOut = chooser.getSelectedFile().getCanonicalPath();
+
+                TedIO.exportToShowFile(fileOut);
+            }
+            catch (IOException e)
+            {
+                TedLog.error(e.toString());
+            }
+        }
+    }
+
+    class TedFileFilter extends FileFilter
+    {
+        public boolean accept(File f)
+        {
+            return f.toString().toLowerCase().endsWith(".ted");
+        }
+
+        public String getDescription()
+        {
+            return "show definitions";
+        }
+    }
 }

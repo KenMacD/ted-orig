@@ -3,9 +3,7 @@ package ted.infrastructure;
 import java.util.Collection;
 import java.util.Vector;
 
-import ted.TedDailySerie;
 import ted.TedIO;
-import ted.TedLog;
 import ted.TedSerie;
 import ted.headless.DaemonLog;
 
@@ -13,12 +11,13 @@ public class TedMainCore implements ITedMain
 {
     protected Vector<TedSerie> series = new Vector<TedSerie>();
 
-    public void setSeries(Collection c)
+    public void setSeries(Collection<? extends TedSerie> c)
     {
     	this.series.clear();
     	this.series.addAll(c);
     }
 
+    // TODO-KMD: return unmodifiable collection
     public Vector<TedSerie> getSeries()
     {
     	return this.series;
@@ -34,7 +33,7 @@ public class TedMainCore implements ITedMain
 
     public void saveConfig(boolean resetTime)
     {
-    	TedIO.getInstance().SaveConfig();
+        TedIO.SaveConfig();
     }
 
     public void repaint()
