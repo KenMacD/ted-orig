@@ -56,10 +56,6 @@ public class TedConfig
 	private boolean parseAtStart = true;
 	private int autoUpdateFeedList = ALWAYS;
 	private int autoAdjustFeeds = ALWAYS;
-	private int width = 400;
-	private int height = 550;
-	private int x = 0;
-	private int y = 0;
 	private int RSSVersion = 0;
 	private int TimeOutInSecs = 10;
 	private int SeederSetting = DOWNLOADMOSTSEEDERS;
@@ -259,70 +255,6 @@ public class TedConfig
 	public void setStartMinimized(boolean startMinimized) 
 	{
 		StartMinimized = startMinimized;
-	}
-
-	/**
-	 * @return Returns the stored height of the mainwindow.
-	 */
-	public int getHeight() 
-	{
-		return height;
-	}
-
-	/**
-	 * @param h The height of the mainwindow to set.
-	 */
-	public void setHeight(int h) 
-	{
-		height = h;
-	}
-
-	/**
-	 * @return Returns the width of the mainwindow.
-	 */
-	public int getWidth()
-	{
-		return width;
-	}
-
-	/**
-	 * @param w The width of the mainwindow to set.
-	 */
-	public void setWidth(int w) 
-	{
-		width = w;
-	}
-
-	/**
-	 * @return Returns the x of the mainwindow.
-	 */
-	public int getX() 
-	{
-		return x;
-	}
-
-	/**
-	 * @param x_pos The x of the mainwindow to set.
-	 */
-	public void setX(int x_pos) 
-	{
-		x = x_pos;
-	}
-
-	/**
-	 * @return Returns the y of the mainwindow.
-	 */
-	public int getY() 
-	{
-		return y;
-	}
-
-	/**
-	 * @param y_pos The y of the mainwindow to set.
-	 */
-	public void setY(int y_pos) 
-	{
-		y = y_pos;
 	}
 
 	/**

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Vector;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -103,6 +105,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	
 	private MessengerCenter messengerCenter;
 	
+	private Preferences preferences;
 
   	/****************************************************
 	 * CONSTRUCTORS
@@ -113,7 +116,8 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	 */
 	public TedMainDialog(boolean userWantsTray, boolean saveInLocalDir) 
 	{
-		//super();
+		this.preferences = Preferences.userNodeForPackage(TedMainDialog.class);
+
 		this.osHasTray = this.osHasTray && userWantsTray;
 		
 		// set if user wants to save / read files from local dir instead of users dir
@@ -156,22 +160,11 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 			TedIO.getInstance().GetConfig();
 		} 
 		catch (FileNotFoundException e) 
-		{		
-			// initialize size and position of ted
-			
-		    Toolkit toolkit = Toolkit.getDefaultToolkit();
-		    Dimension screenSize = toolkit.getScreenSize();
-		    TedConfig.getInstance().setHeight((int) Math.round(screenSize.height * 0.8));
-		    
-		    this.setSize(TedConfig.getInstance().getWidth(), TedConfig.getInstance().getHeight());
-		    
-			int x = (screenSize.width - this.getWidth()) / 2;
-		    int y = (screenSize.height - this.getHeight()) / 2;
-		    TedConfig.getInstance().setX(x);
-		    TedConfig.getInstance().setY(y);
+		{
+			// Doesn't matter, and is going away.
 		}
 		
-		Lang.setLanguage(TedConfig.getInstance().getLocale());	
+		Lang.setLanguage(TedConfig.getInstance().getLocale());
 				
 		try 
 		{
@@ -290,9 +283,16 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		this.tedCore.setSeries(TedIO.getInstance().GetShows());
 		serieTable.setSeries(this.tedCore.getSeries());
 		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = toolkit.getScreenSize();
+
+		int defaultHeight = (int) Math.round(screenSize.height * 0.8);
+		int defaultX = (screenSize.width - this.getWidth()) / 2;
+		int defaultY = (screenSize.height - this.getHeight()) / 2;
+
 		// set size and position of ted
-		this.setSize(TedConfig.getInstance().getWidth(), TedConfig.getInstance().getHeight());
-		this.setLocation(TedConfig.getInstance().getX(), TedConfig.getInstance().getY());
+		this.setSize(preferences.getInt("width", 400), preferences.getInt("height", defaultHeight));
+		this.setLocation(preferences.getInt("x", defaultX), preferences.getInt("y", defaultY));
 		this.setMinimumSize(new java.awt.Dimension(320, 320));
 				
 		// Save the window settings after resize or move.
@@ -946,10 +946,15 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 	public void saveConfig(boolean resetTime) 
 	{			
 		// set the current width, heigth and position of the window
-		TedConfig.getInstance().setWidth(this.getWidth());
-		TedConfig.getInstance().setHeight(this.getHeight());
-		TedConfig.getInstance().setX(this.getX());
-		TedConfig.getInstance().setY(this.getY());
+		this.preferences.putInt("width", this.getWidth());
+		this.preferences.putInt("height", this.getHeight());
+		this.preferences.putInt("x", this.getX());
+		this.preferences.putInt("y", this.getY());
+		try {
+			this.preferences.flush();
+		} catch (BackingStoreException e) {
+			// TODO-KMD: Unable to save preferences. Log and ignore
+		}
 		
 		tedCore.saveConfig(resetTime);
 		this.updateGUI();

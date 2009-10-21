@@ -264,10 +264,6 @@ public class TedIO
 		    fw.append("checkversion=" + TedConfig.getInstance().isCheckVersion() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		    fw.append("showerrors=" + TedConfig.getInstance().isShowErrors() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		    fw.append("showhurray=" + TedConfig.getInstance().isShowHurray() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-		    fw.append("windowwidth=" + TedConfig.getInstance().getWidth() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-		    fw.append("windowheight=" + TedConfig.getInstance().getHeight() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-		    fw.append("windowx=" + TedConfig.getInstance().getX() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-		    fw.append("windowy=" + TedConfig.getInstance().getY() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		    fw.append("startminimized=" + TedConfig.getInstance().isStartMinimized() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		    fw.append("timeoutsecs=" + TedConfig.getInstance().getTimeOutInSecs() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 		    fw.append("seedersetting=" + TedConfig.getInstance().getSeederSetting() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -442,22 +438,6 @@ public class TedIO
 				else if (configItem.equals("showhurray")) //$NON-NLS-1$
 				{
 				    TedConfig.getInstance().setShowHurray(Boolean.parseBoolean(configItemValue));
-				} 
-				else if (configItem.equals("windowwidth")) //$NON-NLS-1$
-				{
-				    TedConfig.getInstance().setWidth(Integer.parseInt(configItemValue));
-				} 
-				else if (configItem.equals("windowheight")) //$NON-NLS-1$
-				{
-				    TedConfig.getInstance().setHeight(Integer.parseInt(configItemValue));
-				} 
-				else if (configItem.equals("windowx")) //$NON-NLS-1$
-				{
-				    TedConfig.getInstance().setX(Integer.parseInt(configItemValue));
-				} 
-				else if (configItem.equals("windowy")) //$NON-NLS-1$
-				{
-				    TedConfig.getInstance().setY(Integer.parseInt(configItemValue));
 				} 
 				else if (configItem.equals("startminimized")) //$NON-NLS-1$
 				{
