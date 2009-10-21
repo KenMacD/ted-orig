@@ -1109,7 +1109,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
     {
         TedXMLParser parser = new TedXMLParser();
         Element nl = parser.readXMLFromFile(TedIO.XML_SHOWS_FILE);
-        Vector locations = parser.getAmazonURLs(nl);
+        Vector<String> locations = parser.getAmazonURLs(nl);
 
         if(locations.size()==3)
         {
