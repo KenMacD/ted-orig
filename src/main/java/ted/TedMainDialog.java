@@ -744,7 +744,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		else if (action.equals("DownloadXml"))
 		{
 			TedIO.getInstance().downloadXML();
-			TedIO.getInstance().updateShows(this, serieTable);
+			TedIO.getInstance().updateShows(serieTable);
 		}
 		else if (action.equals("buydvd")) //$NON-NLS-1$
 		{
@@ -851,7 +851,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
 		}
 		else if(action.equals("synchronize")) //$NON-NLS-1$
 		{
-			TedIO.getInstance().UpdateShow(this, false, serieTable);
+			TedIO.getInstance().UpdateShow(false, serieTable);
 			serieTable.fireTableDataChanged();
 		}
 		else if(action.equals("translate"))

@@ -707,7 +707,7 @@ public class TedIO
 				downloadXML();
 				
 				// update the shows (if the user wants to).
-				updateShows(main, mainTable);	
+				updateShows(mainTable);	
 
 				new TedUpdateWindow(title, 
 									messageInfo, 
@@ -735,7 +735,7 @@ public class TedIO
 		}
     }
 
-    public void updateShows(TedMainDialog main, TedTable mainTable)
+    public void updateShows(TedTable mainTable)
     {
 		int rows = mainTable.getRowCount();
 	
@@ -773,7 +773,7 @@ public class TedIO
 		    if (TedConfig.getInstance().isAutoAdjustFeeds() || answer == JOptionPane.YES_OPTION)
 			{
 				// adjust the feeds
-				this.UpdateShow(main, true, mainTable);
+				this.UpdateShow(true, mainTable);
 		    }
 		}
     }
@@ -781,10 +781,8 @@ public class TedIO
     /**
      * Update the feeds with the correct urls User defined feeds will not be
      * adjusted
-     * 
-     * @param main
      */
-    public void UpdateShow(TedMainDialog main, boolean AutoUpdate, TedTable mainTable)
+    public void UpdateShow(boolean AutoUpdate, TedTable mainTable)
     {
 		String s;
 		String location;
