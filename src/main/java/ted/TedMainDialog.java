@@ -608,7 +608,7 @@ public class TedMainDialog extends javax.swing.JFrame implements ActionListener,
         }
         else if(action.equals("New")) //$NON-NLS-1$
         {
-            AddShowDialog asd = new AddShowDialog(this);
+            new AddShowDialog(this);
         }
         else if(action.equals("Exit")) //$NON-NLS-1$
         {
